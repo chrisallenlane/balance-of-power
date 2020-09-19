@@ -12,11 +12,13 @@ function _update()
   game.cursor:update()
   -- XXX: this causes MEM to thrash
   game.camera:update()
+  -- TODO: debugging inputs
+  --  - next/prev map
 end
 
 function _draw()
   cls()
-  game.map.draw(0)
+  game.map.draw(game.map.number)
   game.cursor:draw()
   spr(5, 8, 8)
 
