@@ -6,10 +6,11 @@ function debug(game)
     [1] = "cam:  " .. game.camera.x     .. ", " .. game.camera.y,
     -- TODO: ceil should probably be calculated elsewhere, rather than here
     [2] = "cell: " .. (game.cursor.x/8) .. ", " .. (game.cursor.y/8),
-    [3] = "tile: " .. mget(game.cursor.x/8, game.cursor.y/8),
-    [4] = "spr:  ?",
-    [5] = "mem:  " .. stat(0) .. " kb",
-    [6] = "cpu:  " .. stat(1),
+    [3] = "tile: ?",
+    [4] = "mspr: " .. mget(game.cursor.x/8, game.cursor.y/8),
+    [5] = "spr:  ?",
+    [6] = "mem:  " .. stat(0) .. " kb",
+    [7] = "cpu:  " .. stat(1),
   }
 
   -- iterate over and print each debug message
