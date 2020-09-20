@@ -5,6 +5,7 @@ CAT    := cat
 COLUMN := column
 DOCKER := docker
 GREP   := grep
+LUA    := lua5.2
 SED    := sed
 SORT   := sort
 
@@ -19,7 +20,8 @@ setup:
 ## test: run unit-tests
 .PHONY: test
 test:
-	echo "TODO"
+	$(DOCKER) run -v $(realpath .):/app $(docker_image) $(LUA) \
+		./test/example.lua
 
 ## distclean: remove the docker container
 .PHONY: distclean
@@ -31,10 +33,10 @@ distclean:
 sh:
 	$(DOCKER) run -v $(realpath .):/app -ti $(docker_image) /bin/ash || true
 
-## lua: open a lua5.2 REPL within the docker container (exit with `os.exit()`)
+## lua: open a lua REPL within the docker container (exit with `os.exit()`)
 .PHONY: lua
 lua:
-	$(DOCKER) run -v $(realpath .):/app -ti $(docker_image) lua5.2
+	$(DOCKER) run -v $(realpath .):/app -ti $(docker_image) $(LUA)
 
 ## help: display this help text
 help:
