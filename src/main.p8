@@ -6,6 +6,7 @@ local game = {}
 
 function _init()
   -- TODO: load the title screen
+  game.map.load(0)
 end
 
 function _update()
@@ -18,7 +19,7 @@ end
 
 function _draw()
   cls()
-  game.map.draw(game.map.number)
+  game.map.draw()
   game.cursor:draw()
   spr(5, 8, 8)
 

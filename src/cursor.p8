@@ -3,12 +3,13 @@
 game.cursor = {
   x = 0,
   y = 0,
+  tile = 0,
   direction = "stop",
-  tile = 0
 }
 
 -- update cursor state
 function game.cursor:update()
+
   -- left
   if btnp(0) and self.x > 0 then
     self.direction = "left"
@@ -16,7 +17,7 @@ function game.cursor:update()
   end
 
   -- right
-  if btnp(1) and self.x < (game.maps[game.map.number].celw-1) then
+  if btnp(1) and self.x < (game.map.celw-1) then
     self.direction = "right"
     self.x += 1
   end
@@ -28,13 +29,13 @@ function game.cursor:update()
   end
 
   -- down
-  if btnp(3) and self.y < (game.maps[game.map.number].celh-1) then
+  if btnp(3) and self.y < (game.map.celh-1) then
     self.direction = "down"
     self.y += 1
   end
 
   -- calculate the tile on which the cursor is resting
-  self.tile = self.y*game.maps[game.map.number].celw + self.x
+  self.tile = self.y*game.map.celw + self.x
 end
 
 -- render the cursor

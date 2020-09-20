@@ -4,8 +4,7 @@ function debug(game)
   local msgs = {
     [0] = "cur:  " ..  game.cursor.x    .. ", " .. game.cursor.y,
     [1] = "cam:  " .. game.camera.x     .. ", " .. game.camera.y,
-    -- TODO: ceil should probably be calculated elsewhere, rather than here
-    [2] = "cell: " .. (game.cursor.x/8) .. ", " .. (game.cursor.y/8),
+    [2] = "cell: " .. (game.cursor.x) .. ", " .. (game.cursor.y),
     [3] = "tile: " .. game.cursor.tile,
     [4] = "mspr: " .. mget(game.cursor.x/8, game.cursor.y/8),
     [5] = "spr:  ?",

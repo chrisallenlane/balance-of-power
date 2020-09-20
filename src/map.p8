@@ -28,20 +28,22 @@ game.maps = {
   },
 }
 
-game.map = {
-  number = 0,
-  height = 64*8,
-  width  = 128*8,
-}
+-- XXX: does this belong here?
+game.map = game.maps[0]
 
 -- load the specified map
-function game.map.draw(num)
+function game.map.load(num)
+  game.map = game.maps[num]
+end
+
+-- draw the current map
+function game.map.draw()
   map(
-    game.maps[num].celx,
-    game.maps[num].cely,
-    game.maps[num].sx,
-    game.maps[num].sy,
-    game.maps[num].celw,
-    game.maps[num].celh
+    game.map.celx,
+    game.map.cely,
+    game.map.sx,
+    game.map.sy,
+    game.map.celw,
+    game.map.celh
   )
 end
