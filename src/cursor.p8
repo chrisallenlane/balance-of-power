@@ -5,6 +5,8 @@ game.cursor = {
   direction = "stop",
 }
 
+-- TODO: refactor to use cell dimensions
+
 -- update cursor state
 function game.cursor:update()
   -- left
@@ -14,7 +16,7 @@ function game.cursor:update()
   end
 
   -- right
-  if btnp(1) and self.x < game.map.width+8 then
+  if btnp(1) and self.x < (game.maps[game.map.number].celw-1)*8 then
     self.direction = "right"
     self.x += 8
   end
@@ -26,7 +28,7 @@ function game.cursor:update()
   end
 
   -- down
-  if btnp(3) and self.y < game.map.height+8 then
+  if btnp(3) and self.y < (game.maps[game.map.number].celh-1)*8 then
     self.direction = "down"
     self.y += 8
   end
