@@ -5,12 +5,12 @@ game.maps = {
     cely = 0,
     sx = 0,
     sy = 0,
-    celw = 16,
+    celw = 32,
     celh = 16,
   },
 
   [1] = {
-    celx = 16,
+    celx = 32,
     cely = 0,
     sx = 0,
     sy = 0,
@@ -19,7 +19,7 @@ game.maps = {
   },
 
   [2] = {
-    celx = 32,
+    celx = 48,
     cely = 0,
     sx = 0,
     sy = 0,
