@@ -1,13 +1,14 @@
 makefile := $(realpath $(lastword $(MAKEFILE_LIST)))
 
 # executable paths
-CAT    := cat
-COLUMN := column
-DOCKER := docker
-GREP   := grep
-LUA    := lua5.2
-SED    := sed
-SORT   := sort
+CAT      := cat
+COLUMN   := column
+DOCKER   := docker
+GREP     := grep
+LUA      := lua5.2
+LUACHECK := luacheck
+SED      := sed
+SORT     := sort
 
 # vars
 docker_image := bop
@@ -20,8 +21,14 @@ setup:
 ## test: run unit-tests
 .PHONY: test
 test:
-	$(DOCKER) run -v $(realpath .):/app $(docker_image) $(LUA) \
-		./test/example.lua
+	$(DOCKER) run -v $(realpath .):/app $(docker_image) \
+		$(LUA) ./test/example.lua
+
+## lint: lint files
+.PHONY: lint
+lint:
+	$(DOCKER) run -v $(realpath .):/app $(docker_image) \
+		$(LUACHECK) src/* test/*
 
 ## distclean: remove the docker container
 .PHONY: distclean
