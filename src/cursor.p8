@@ -4,6 +4,7 @@ game.cursor = {
   x = 0,
   y = 0,
   direction = "stop",
+  tile = 0
 }
 
 -- update cursor state
@@ -31,6 +32,9 @@ function game.cursor:update()
     self.direction = "down"
     self.y += 1
   end
+
+  -- calculate the tile on which the cursor is resting
+  self.tile = self.y*game.maps[game.map.number].celw + self.x
 end
 
 -- render the cursor
