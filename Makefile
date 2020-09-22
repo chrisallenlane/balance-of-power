@@ -28,7 +28,7 @@ test:
 .PHONY: lint
 lint:
 	$(DOCKER) run -v $(realpath .):/app $(docker_image) \
-		$(LUACHECK) src/* test/*
+		$(LUACHECK) src/* test/* --formatter=plain --no-color --quiet
 
 ## distclean: remove the docker container
 .PHONY: distclean
