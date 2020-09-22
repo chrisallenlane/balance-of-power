@@ -17,7 +17,7 @@ function game.camera:update()
     and game.cursor.celx - self.celx > 11
     and self.celx < game.map.celw-16
   then
-    self.celx += 1
+    self.celx = self.celx+1
   end
 
   -- left
@@ -25,7 +25,7 @@ function game.camera:update()
     and self.celx > 0
     and game.cursor.celx - self.celx < 4
   then
-    self.celx -= 1
+    self.celx = self.celx-1
   end
 
   -- down
@@ -33,7 +33,7 @@ function game.camera:update()
     and game.cursor.cely - self.cely > 11
     and self.cely < game.map.celh-16
   then
-    self.cely += 1
+    self.cely = self.cely+1
   end
 
   -- up
@@ -41,22 +41,23 @@ function game.camera:update()
     and self.cely > 0
     and game.cursor.cely - self.cely < 4
   then
-    self.cely -= 1
+    self.cely = self.cely-1
   end
 
   -- Track camera pixel position. Ease toward the cell coordinates to make
   -- scrolling look smoother.
   if self.px < self.celx*8 then
-    self.px += 2
+    self.px = self.px+2
+
   end
   if self.px > self.celx*8 then
-    self.px -= 2
+    self.px = self.px-2
   end
   if self.py < self.cely*8 then
-    self.py += 2
+    self.py = self.py+2
   end
   if self.py < self.cely*8 then
-    self.py -= 2
+    self.py = self.py-2
   end
 end
 
