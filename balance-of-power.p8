@@ -3,11 +3,11 @@ version 29
 __lua__
 
 -- externaize non-media assets
-#include main.p8
-#include camera.p8
-#include cursor.p8
-#include map.p8
-#include debug.p8
+#include src/main.p8
+#include src/camera.p8
+#include src/cursor.p8
+#include src/map.p8
+#include src/debug.p8
 
 -- media assets
 __gfx__

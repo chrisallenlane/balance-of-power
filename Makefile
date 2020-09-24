@@ -7,6 +7,7 @@ DOCKER   := docker
 GREP     := grep
 LUA      := lua5.2
 LUACHECK := luacheck
+LUAFMT   := lua-format
 SED      := sed
 SORT     := sort
 
@@ -30,15 +31,21 @@ lint:
 	$(DOCKER) run -v $(realpath .):/app $(docker_image) \
 		$(LUACHECK) src/* test/* --formatter=plain --no-color --quiet
 
+## fmt: format files
+.PHONY: fmt
+fmt:
+	$(DOCKER) run -v $(realpath .):/app $(docker_image) \
+		$(LUAFMT) -i src/* test/*
+
 ## distclean: remove the docker container
 .PHONY: distclean
 distclean:
 	$(DOCKER) image rm $(docker_image) --force
 
-## sh: spawn an ash shell inside the docker container
+## sh: spawn an bash shell inside the docker container
 .PHONY: sh
 sh:
-	$(DOCKER) run -v $(realpath .):/app -ti $(docker_image) /bin/ash || true
+	$(DOCKER) run -v $(realpath .):/app -ti $(docker_image) /bin/bash || true
 
 ## lua: open a lua REPL within the docker container (exit with `os.exit()`)
 .PHONY: lua
