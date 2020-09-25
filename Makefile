@@ -19,6 +19,10 @@ docker_image := bop
 setup:
 	$(DOCKER) build -t $(docker_image) -f ./Dockerfile .
 
+## check: format, lint, and test
+.PHONY: check
+check: | fmt lint test
+
 ## test: run unit-tests
 .PHONY: test
 test:
