@@ -38,9 +38,7 @@ RUN cd /tmp                       && \
 RUN apt-get remove --yes      \
   build-essential             \
   cmake                       \
-  git                         \
-  liblua5.2-dev               \
-  luarocks                 && \
+  git                      && \
   rm -rf /tmp/LuaFormatter && \
   apt-get clean --yes      && \
   apt-get autoremove --yes
