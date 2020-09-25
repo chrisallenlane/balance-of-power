@@ -3,5 +3,4 @@
 -- Attack
 -- Defense (regenerative shield?
 -- Movement/Speed
-
 -- Land/Sea/Air?
