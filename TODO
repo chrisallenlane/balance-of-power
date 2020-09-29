@@ -1,0 +1,4 @@
+- Implement unit-tests
+- Implement benchmarking harness
+- Implement `make sloc` target
+- Make linter pass

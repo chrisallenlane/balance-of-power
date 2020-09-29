@@ -7,16 +7,13 @@ game.maps = {
     [2] = {celx = 48, cely = 0, sx = 0, sy = 0, celw = 16, celh = 16},
 }
 
--- XXX: does this belong here?
-game.map = game.maps[0]
-
 -- load the specified map
-function game.map.load(num)
+function game.maps.load(num)
     game.map = game.maps[num]
 end
 
 -- draw the current map
-function game.map.draw()
-    map(game.map.celx, game.map.cely, game.map.sx, game.map.sy, game.map.celw,
-        game.map.celh)
+function game.maps.draw()
+    local m = game.map
+    map(m.celx, m.cely, m.sx, m.sy, m.celw, m.celh)
 end
