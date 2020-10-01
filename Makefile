@@ -8,6 +8,7 @@ GREP     := grep
 LUA      := lua5.2
 LUACHECK := luacheck
 LUAFMT   := lua-format
+SCC      := /root/go/bin/scc
 SED      := sed
 SORT     := sort
 
@@ -40,6 +41,12 @@ lint:
 fmt:
 	$(DOCKER) run -v $(realpath .):/app $(docker_image) \
 		$(LUAFMT) -i src/* test/*
+
+## sloc: count "semantic lines of code"
+.PHONY: sloc
+sloc:
+	$(DOCKER) run -v $(realpath .):/app $(docker_image) \
+		$(SCC) --exclude-dir=vendor --count-as p8:lua
 
 ## distclean: remove the docker container
 .PHONY: distclean

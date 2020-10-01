@@ -16,6 +16,7 @@ RUN apt-get update       && \
       ca-certificates       \
       cmake                 \
       git                   \
+	  golang                \
       liblua5.2-dev         \
       lua5.2                \
       luarocks
@@ -34,11 +35,15 @@ RUN cd /tmp                       && \
   make                            && \
   make install
 
+# install go tooling
+RUN go get -u github.com/boyter/scc
+
 # uninstall build dependencies
 RUN apt-get remove --yes      \
   build-essential             \
   cmake                       \
-  git                      && \
+  git                         \
+  golang                   && \
   rm -rf /tmp/LuaFormatter && \
   apt-get clean --yes      && \
   apt-get autoremove --yes
