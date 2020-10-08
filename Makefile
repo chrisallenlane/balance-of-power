@@ -34,7 +34,7 @@ test:
 .PHONY: lint
 lint:
 	$(DOCKER) run -v $(realpath .):/app $(docker_image) \
-		$(LUACHECK) src/* test/* --formatter=plain --no-color --quiet
+		$(LUACHECK) src/* --formatter=plain --no-color --quiet
 
 ## fmt: format files
 .PHONY: fmt

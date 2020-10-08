@@ -1,4 +1,4 @@
-luaunit = require('../vendor/luaunit')
+local luaunit = require('../vendor/luaunit')
 
 function add(v1, v2)
     -- add positive numbers

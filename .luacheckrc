@@ -2,6 +2,7 @@ exclude_files = {
   "src/balance-of-power.p8"
 }
 globals = {
+  -- pico 8 globals
   "_draw",
   "_init",
   "_update",
@@ -86,4 +87,8 @@ globals = {
   "trace",
   "type",
   "yield",
+
+  -- bop globals
+  "game",
+  "debug",
 }
