@@ -3,13 +3,13 @@ function debug.vars(game)
 
     -- compose debugging messages
     local msgs = {
-        [0] = "cur:  " .. game.cursor.celx .. ", " .. game.cursor.cely,
-        [1] = "cam:  " .. game.camera.celx .. ", " .. game.camera.cely,
-        [2] = "tile: " .. game.cursor.tile,
-        [3] = "mspr: " .. mget(game.cursor.celx, game.cursor.cely),
-        [4] = "spr:  ?",
-        [5] = "mem:  " .. stat(0) .. " kb",
-        [6] = "cpu:  " .. stat(1),
+        "cur:  " .. game.cursor.celx .. ", " .. game.cursor.cely,
+        "cam:  " .. game.camera.celx .. ", " .. game.camera.cely,
+        "tile: " .. game.cursor.tile,
+        "mspr: " .. mget(game.cursor.celx, game.cursor.cely),
+        "spr:  ?",
+        "mem:  " .. stat(0) .. " kb",
+        "cpu:  " .. stat(1),
     }
 
     -- iterate over and print each debug message
