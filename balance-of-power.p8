@@ -11,16 +11,16 @@ game = {
 }
 
 -- externaize non-media assets
-#include src/screen.p8
-#include src/screen-battle.p8
-#include src/screen-title.p8
-#include src/screen-victory.p8
-#include src/screen-defeat.p8
-#include src/camera.p8
-#include src/cursor.p8
-#include src/map.p8
-#include src/debug.p8
-#include src/main.p8
+#include src/screen.lua
+#include src/screen-battle.lua
+#include src/screen-title.lua
+#include src/screen-victory.lua
+#include src/screen-defeat.lua
+#include src/camera.lua
+#include src/cursor.lua
+#include src/map.lua
+#include src/debug.lua
+#include src/main.lua
 
 -- media assets
 __gfx__
