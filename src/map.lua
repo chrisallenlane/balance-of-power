@@ -9,7 +9,16 @@ game.maps = {
 
 -- load the specified map
 function game.maps.load(num)
+    -- load the specified map
+    game.state.map = num
     game.map = game.maps[num]
+
+    -- reset the cursor position
+    game.cursor.celx, game.cursor.cely = 0, 0
+
+    -- reset the camera position
+    game.camera.celx, game.camera.celx = 0, 0
+    game.camera.px, game.camera.px = 0, 0
 end
 
 -- draw the current map
