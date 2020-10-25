@@ -1,5 +1,10 @@
 makefile := $(realpath $(lastword $(MAKEFILE_LIST)))
 
+# file paths
+CARTS_PATH := ~/.lexaloffle/pico-8/carts
+CART_PICO  := $(CARTS_PATH)/balance-of-power
+CART_LOCAL := $(shell pwd)
+
 # executable paths
 CAT      := cat
 COLUMN   := column
@@ -52,6 +57,16 @@ sloc:
 .PHONY: distclean
 distclean:
 	$(DOCKER) image rm $(docker_image) --force
+
+## install: link cartridge into Pico-8 environment
+.PHONY: install
+install:
+	ln -sf $(CART_LOCAL) $(CART_PICO)
+
+## uninstall: unlink cartridge from Pico-8 environment
+.PHONY: uninstall
+uninstall:
+	rm $(CART_PICO)
 
 ## sh: spawn an bash shell inside the docker container
 .PHONY: sh
