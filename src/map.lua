@@ -17,8 +17,8 @@ function game.maps.load(num)
     game.cursor.celx, game.cursor.cely = 0, 0
 
     -- reset the camera position
-    game.camera.celx, game.camera.celx = 0, 0
-    game.camera.px, game.camera.px = 0, 0
+    game.camera.celx, game.camera.cely = 0, 0
+    game.camera.px, game.camera.py = 0, 0
 end
 
 -- draw the current map
