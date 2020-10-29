@@ -28,7 +28,7 @@ function game.camera:update()
     if self.px < self.celx * 8 then self.px = self.px + 2 end
     if self.px > self.celx * 8 then self.px = self.px - 2 end
     if self.py < self.cely * 8 then self.py = self.py + 2 end
-    if self.py < self.cely * 8 then self.py = self.py - 2 end
+    if self.py > self.cely * 8 then self.py = self.py - 2 end
 end
 
 -- move the game camera
