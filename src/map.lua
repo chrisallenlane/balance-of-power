@@ -2,9 +2,9 @@
 game.maps = {
     {celx = 0, cely = 0, sx = 0, sy = 0, celw = 32, celh = 16},
 
-    {celx = 32, cely = 0, sx = 0, sy = 0, celw = 16, celh = 16},
+    {celx = 32, cely = 0, sx = 0, sy = 0, celw = 16, celh = 32},
 
-    {celx = 48, cely = 0, sx = 0, sy = 0, celw = 16, celh = 16},
+    {celx = 48, cely = 0, sx = 0, sy = 0, celw = 32, celh = 32},
 }
 
 -- load the specified map

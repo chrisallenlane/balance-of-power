@@ -1,7 +1,6 @@
 -- update the battle screen
 function game.screens.battle.update()
 
-    -- TODO: make a debug command for going to the game over screen
     -- TODO: map interstitials
 
     if debug.chord(2) then
