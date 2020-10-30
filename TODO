@@ -1,6 +1,3 @@
-Maps:
-  - Set camera/cursor start position when loading new map
-
 Units:
   - Implement concept of "units"
   - Initialize each map with player/CPU units
