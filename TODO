@@ -1,3 +1,15 @@
-- Implement unit-tests
-- Implement benchmarking harness
-- Update the README
+Maps:
+  - Set camera/cursor start position when loading new map
+
+Units:
+  - Implement concept of "units"
+  - Initialize each map with player/CPU units
+  - Movement: "warp" unit from cell to sell
+  - Movement: "animate" unit from cell to sell
+
+Tooling:
+  - Implement unit-tests
+  - Implement benchmarking harness
+
+Etc:
+  - Update the README
