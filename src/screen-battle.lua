@@ -24,7 +24,7 @@ function game.screens.battle.draw()
     cls()
     game.maps.draw()
     game.cursor:draw()
-    spr(5, 8, 8)
+    game.units.draw()
 
     -- move the camera
     game.camera:move()

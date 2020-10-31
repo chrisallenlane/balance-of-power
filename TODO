@@ -1,6 +1,4 @@
 Units:
-  - Implement concept of "units"
-  - Initialize each map with player/CPU units
   - Movement: "warp" unit from cell to sell
   - Movement: "animate" unit from cell to sell
 

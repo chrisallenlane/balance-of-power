@@ -17,6 +17,7 @@ game = {
 #include src/screen-victory.lua
 #include src/screen-defeat.lua
 #include src/camera.lua
+#include src/units.lua
 #include src/cursor.lua
 #include src/map.lua
 #include src/debug.lua
