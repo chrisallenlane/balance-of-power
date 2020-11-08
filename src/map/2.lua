@@ -6,7 +6,16 @@ add(game.maps, {
   cursor = {x = 1, y = 28},
 
   units = {
-    p1 = {{21, 3 * 8, 28 * 8}, {21, 3 * 8, 29 * 8}, {21, 3 * 8, 30 * 8}},
-    p2 = {{5, 8, 8}, {5, 16, 16}, {5, 24, 24}},
+    p1 = {
+      Unit:new({spr = 21, cell = {x = 3*8, y = 28*8}}),
+      Unit:new({spr = 21, cell = {x = 3*8, y = 29*8}}),
+      Unit:new({spr = 21, cell = {x = 3*8, y = 30*8}}),
+    },
+
+    p2 = {
+      Unit:new({spr = 5, cell = {x = 8, y = 8}}),
+      Unit:new({spr = 5, cell = {x = 8, y = 16}}),
+      Unit:new({spr = 5, cell = {x = 8, y = 24}}),
+    }
   },
 })

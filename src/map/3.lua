@@ -5,5 +5,5 @@ add(game.maps, {
 
   cursor = {x = 28, y = 30},
 
-  units = {p1 = {{21, 8, 8}}, p2 = {{5, 16, 16}}},
+  units = {},
 })
