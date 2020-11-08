@@ -1,7 +1,6 @@
 Refactoring:
   - Initialize units with constructors
   - Change debug key chords
-  - Break map declarations into multiple files
 
 Units:
   - Movement: "warp" unit from cell to sell

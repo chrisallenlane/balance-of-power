@@ -20,6 +20,9 @@ game = {
 #include src/units.lua
 #include src/cursor.lua
 #include src/map.lua
+#include src/map/1.lua
+#include src/map/2.lua
+#include src/map/3.lua
 #include src/debug.lua
 #include src/main.lua
 
