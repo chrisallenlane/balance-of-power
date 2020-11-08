@@ -3,10 +3,10 @@ function debug.vars(game)
 
     -- compose debugging messages
     local msgs = {
-        "cur:  " .. game.cursor.celx .. ", " .. game.cursor.cely,
-        "cam:  " .. game.camera.celx .. ", " .. game.camera.cely,
+        "cur:  " .. game.cursor.cell.x .. ", " .. game.cursor.cell.y,
+        "cam:  " .. game.camera.cell.x .. ", " .. game.camera.cell.y,
         "tile: " .. game.cursor.tile,
-        "mspr: " .. mget(game.cursor.celx, game.cursor.cely),
+        "mspr: " .. mget(game.cursor.cell.x, game.cursor.cell.y),
         "spr:  ?",
         "mem:  " .. stat(0) .. " kb",
         "cpu:  " .. stat(1),
@@ -14,7 +14,7 @@ function debug.vars(game)
 
     -- iterate over and print each debug message
     for i, msg in pairs(msgs) do
-        print(msg, 4 + game.camera.px, (4 + 8 * i) + game.camera.py, 7)
+        print(msg, 4 + game.camera.p.x, (4 + 8 * i) + game.camera.p.y, 7)
     end
 end
 

@@ -1,6 +1,14 @@
+Refactoring:
+  - Initialize units with constructors
+  - Change debug key chords
+  - Break map declarations into multiple files
+
 Units:
   - Movement: "warp" unit from cell to sell
   - Movement: "animate" unit from cell to sell
+  - Track "selected" unit
+  - Store units in table, keyed by cell ID
+  - Write method (and tests) for converting coords to ID
 
 Tooling:
   - Implement unit-tests
@@ -8,3 +16,6 @@ Tooling:
 
 Etc:
   - Update the README
+  - Create additional lua/pico8 (api) cheatsheets
+  - Create pico8 (cli) cheatsheets
+  - Improve Selenized colorscheme

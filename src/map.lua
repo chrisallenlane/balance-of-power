@@ -1,16 +1,12 @@
 -- specify map coordinates
 game.maps = {
     {
-        celx = 0,
-        cely = 0,
-        sx = 0,
-        sy = 0,
-        celw = 32,
-        celh = 16,
-        curx = 1,
-        cury = 1,
-        camx = 0,
-        camy = 0,
+        camera = {x = 0, y = 0},
+
+        cell = {x = 0, y = 0, w = 32, h = 16},
+
+        cursor = {x = 1, y = 1},
+
         units = {
             p1 = {{21, 8, 8}, {21, 16, 16}, {21, 24, 24}},
             p2 = {{5, 26 * 8, 64}},
@@ -18,16 +14,12 @@ game.maps = {
     },
 
     {
-        celx = 32,
-        cely = 0,
-        sx = 0,
-        sy = 0,
-        celw = 16,
-        celh = 32,
-        curx = 1,
-        cury = 28,
-        camx = 0,
-        camy = 15,
+        camera = {x = 0, y = 15},
+
+        cell = {x = 32, y = 0, w = 16, h = 32},
+
+        cursor = {x = 1, y = 28},
+
         units = {
             p1 = {{21, 3 * 8, 28 * 8}, {21, 3 * 8, 29 * 8}, {21, 3 * 8, 30 * 8}},
             p2 = {{5, 8, 8}, {5, 16, 16}, {5, 24, 24}},
@@ -35,16 +27,12 @@ game.maps = {
     },
 
     {
-        celx = 48,
-        cely = 0,
-        sx = 0,
-        sy = 0,
-        celw = 32,
-        celh = 32,
-        curx = 28,
-        cury = 30,
-        camx = 16,
-        camy = 16,
+        camera = {x = 16, y = 16},
+
+        cell = {x = 48, y = 0, w = 32, h = 32},
+
+        cursor = {x = 28, y = 30},
+
         units = {p1 = {{21, 8, 8}}, p2 = {{5, 16, 16}}},
     },
 }
@@ -56,15 +44,18 @@ function game.maps.load(num)
     game.map = game.maps[num]
 
     -- reset the cursor position
-    game.cursor.celx, game.cursor.cely = game.map.curx, game.map.cury
+    game.cursor.cell.x, game.cursor.cell.y = game.map.cursor.x,
+                                             game.map.cursor.y
 
     -- reset the camera position
-    game.camera.celx, game.camera.cely = game.map.camx, game.map.camy
-    game.camera.px, game.camera.py = game.map.camx * 8, game.map.camy * 8
+    game.camera.cell.x, game.camera.cell.y = game.map.camera.x,
+                                             game.map.camera.y
+    game.camera.p.x, game.camera.p.y = game.map.camera.x * 8,
+                                       game.map.camera.y * 8
 end
 
 -- draw the current map
 function game.maps.draw()
     local m = game.map
-    map(m.celx, m.cely, m.sx, m.sy, m.celw, m.celh)
+    map(m.cell.x, m.cell.y, 0, 0, m.cell.w, m.cell.h)
 end
