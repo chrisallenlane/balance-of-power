@@ -7,15 +7,15 @@ add(game.maps, {
 
   units = {
     p1 = {
-      Unit:new({spr = 21, cell = {x = 3*8, y = 28*8}}),
-      Unit:new({spr = 21, cell = {x = 3*8, y = 29*8}}),
-      Unit:new({spr = 21, cell = {x = 3*8, y = 30*8}}),
+      Unit:new({spr = 21, cell = {x = 3, y = 28}}),
+      Unit:new({spr = 21, cell = {x = 3, y = 29}}),
+      Unit:new({spr = 21, cell = {x = 3, y = 30}}),
     },
 
     p2 = {
-      Unit:new({spr = 5, cell = {x = 8, y = 8}}),
-      Unit:new({spr = 5, cell = {x = 8, y = 16}}),
-      Unit:new({spr = 5, cell = {x = 8, y = 24}}),
+      Unit:new({spr = 5, cell = {x = 1, y = 1}}),
+      Unit:new({spr = 5, cell = {x = 1, y = 2}}),
+      Unit:new({spr = 5, cell = {x = 1, y = 3}}),
     }
   },
 })

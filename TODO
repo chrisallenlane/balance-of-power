@@ -1,11 +1,11 @@
-Refactoring:
+Next:
   - Change debug key chords
+  - Store units in table, keyed by cell ID *
+  - Track "selected" unit
 
 Units:
   - Movement: "warp" unit from cell to sell
   - Movement: "animate" unit from cell to sell
-  - Track "selected" unit
-  - Store units in table, keyed by cell ID
   - Write method (and tests) for converting coords to ID
 
 Tooling:
