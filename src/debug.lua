@@ -4,6 +4,8 @@ function debug.vars(game)
     -- compose debugging messages
     local msgs = {
         "cur:  " .. game.cursor.cell.x .. ", " .. game.cursor.cell.y,
+        "sel:  " .. (game.cursor.sel.x or "na") .. ", " ..
+            (game.cursor.sel.y or "na"),
         "cam:  " .. game.camera.cell.x .. ", " .. game.camera.cell.y,
         "tile: " .. game.cursor.tile,
         "mspr: " .. mget(game.cursor.cell.x, game.cursor.cell.y),

@@ -2,6 +2,7 @@
 game.cursor = {
     cell = {x = 0, y = 0},
     direction = "stop",
+    sel = {x = nil, y = nil},
     tile = 0,
 
     btn_0 = 3,
@@ -62,6 +63,21 @@ function game.cursor:update()
         end
     elseif not btn(3) then
         self.btn_3 = frame - 1
+    end
+
+    -- "Z"
+    if btnp(4) then
+        -- if a player unit is available beneath the cursor, select it
+        if game.map.units.p1[self.cell.x] and
+            game.map.units.p1[self.cell.x][self.cell.y] then
+            self.sel.x, self.sel.y = self.cell.x, self.cell.y
+
+            -- otherwise, unselect it
+        else
+            self.sel.x, self.sel.y = nil, nil
+        end
+
+        -- TODO: handle selection of enemy units
     end
 
     -- calculate the tile on which the cursor is resting
