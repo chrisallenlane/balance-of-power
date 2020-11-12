@@ -14,9 +14,6 @@ Unit = {
 
     -- speed
     spd = 0,
-
-    -- position
-    cell = {x = 0, y = 0},
 }
 
 -- Unit constructor
