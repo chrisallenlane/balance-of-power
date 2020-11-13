@@ -1,6 +1,5 @@
 Next:
   - Set default `make` target
-  - Debug: one "NA" on sel coords only
   - Change debug key chords
   - Fix diagonal cursor movement bug
   - Movement: "warp" unit from cell to sell

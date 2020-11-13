@@ -1,11 +1,18 @@
 debug = {}
 function debug.vars(game)
 
+    -- compose "selection" information
+    local sel
+    if game.cursor.sel.x and game.cursor.sel.y then
+        sel = game.cursor.sel.x .. ", " .. game.cursor.sel.y
+    else
+        sel = "na"
+    end
+
     -- compose debugging messages
     local msgs = {
         "cur:  " .. game.cursor.cell.x .. ", " .. game.cursor.cell.y,
-        "sel:  " .. (game.cursor.sel.x or "na") .. ", " ..
-            (game.cursor.sel.y or "na"),
+        "sel:  " .. sel,
         "cam:  " .. game.camera.cell.x .. ", " .. game.camera.cell.y,
         "tile: " .. game.cursor.tile,
         "mspr: " .. mget(game.cursor.cell.x, game.cursor.cell.y),
