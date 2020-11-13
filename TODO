@@ -1,12 +1,11 @@
 Next:
+  - Set default `make` target
+  - Debug: one "NA" on sel coords only
   - Change debug key chords
-  - Store units in table, keyed by cell ID *
-  - Track "selected" unit
-
-Units:
+  - Fix diagonal cursor movement bug
   - Movement: "warp" unit from cell to sell
   - Movement: "animate" unit from cell to sell
-  - Write method (and tests) for converting coords to ID
+  - Add a LICENSE
 
 Tooling:
   - Implement unit-tests
