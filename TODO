@@ -1,5 +1,4 @@
 Next:
-  - Set default `make` target
   - Change debug key chords
   - Fix diagonal cursor movement bug
   - Movement: "warp" unit from cell to sell

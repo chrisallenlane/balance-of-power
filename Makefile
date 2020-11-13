@@ -1,3 +1,5 @@
+.DEFAULT_GOAL := check
+
 makefile := $(realpath $(lastword $(MAKEFILE_LIST)))
 
 # file paths
