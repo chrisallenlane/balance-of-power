@@ -7,6 +7,8 @@ function game.camera:update()
     -- track camera position as cell coordinates, and compare those coordinates
     -- to the cursor and screen position.
 
+    -- TODO: refactor all of this
+
     -- right
     if game.cursor.direction == "right" and game.cursor.cell.x - self.cell.x >
         11 and self.cell.x < game.map.cell.w - 16 then

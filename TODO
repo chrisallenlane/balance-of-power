@@ -1,7 +1,6 @@
 Next:
   - Change debug key chords
   - Fix diagonal cursor movement bug
-  - Movement: "warp" unit from cell to sell
   - Movement: "animate" unit from cell to sell
   - Add a LICENSE
 
