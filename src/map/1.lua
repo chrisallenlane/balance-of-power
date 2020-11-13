@@ -7,13 +7,13 @@ add(game.maps, {
 
   units = {
     p1 = {
-      [1] = { [1] = Unit:new({spr = 21}) },
-      [2] = { [2] = Unit:new({spr = 21}) },
-      [3] = { [3] = Unit:new({spr = 21}) },
+      [1] = { [1] = Unit:new({spr = 80}) },
+      [2] = { [2] = Unit:new({spr = 80}) },
+      [3] = { [3] = Unit:new({spr = 80}) },
     },
 
     p2 = {
-      [26] = { [8] = Unit:new({spr = 5}) }
+      [26] = { [8] = Unit:new({spr = 64}) }
     }
   },
 })

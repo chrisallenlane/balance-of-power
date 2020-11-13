@@ -86,5 +86,5 @@ end
 
 -- render the cursor
 function game.cursor:draw()
-    spr(7, self.cell.x * 8, self.cell.y * 8)
+    spr(16, self.cell.x * 8, self.cell.y * 8)
 end
