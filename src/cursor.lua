@@ -3,7 +3,6 @@ game.cursor = {
     cell = {x = 0, y = 0},
     direction = "stop",
     sel = {x = nil, y = nil},
-    tile = 0,
 
     btn_0 = 3,
     btn_1 = 3,
@@ -79,9 +78,6 @@ function game.cursor:update()
 
         -- TODO: handle selection of enemy units
     end
-
-    -- calculate the tile on which the cursor is resting
-    self.tile = self.cell.y * game.map.cell.w + self.cell.x
 end
 
 -- render the cursor

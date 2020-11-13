@@ -14,7 +14,6 @@ function debug.vars(game)
         "cur:  " .. game.cursor.cell.x .. ", " .. game.cursor.cell.y,
         "sel:  " .. sel,
         "cam:  " .. game.camera.cell.x .. ", " .. game.camera.cell.y,
-        "tile: " .. game.cursor.tile,
         "mspr: " .. mget(game.cursor.cell.x, game.cursor.cell.y),
         "spr:  ?",
         "mem:  " .. stat(0) .. " kb",
