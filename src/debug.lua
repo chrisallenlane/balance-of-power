@@ -9,13 +9,21 @@ function debug.vars(game)
         sel = "na"
     end
 
+    -- indicate whether the tile is passable
+    local pass
+    if game.cursor.cell.pass then
+        pass = "y"
+    else
+        pass = "n"
+    end
+
     -- compose debugging messages
     local msgs = {
         "cur:  " .. game.cursor.cell.x .. ", " .. game.cursor.cell.y,
         "sel:  " .. sel,
         "cam:  " .. game.camera.cell.x .. ", " .. game.camera.cell.y,
-        "mspr: " .. mget(game.cursor.cell.x, game.cursor.cell.y),
-        "spr:  ?",
+        "mspr: " .. game.cursor.cell.spr,
+        "pass: " .. pass,
         "mem:  " .. stat(0) .. " kb",
         "cpu:  " .. stat(1),
     }

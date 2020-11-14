@@ -1,14 +1,18 @@
 Next:
-  - Change debug key chords
+  - 2-player game loop
+
   - Fix diagonal cursor movement bug
   - Movement: "animate" unit from cell to sell
-  - Add a LICENSE
+  - Movement: unit movement radius
+  - Movement: visually indicate unit selection
 
 Tooling:
   - Implement unit-tests
   - Implement benchmarking harness
 
 Etc:
+  - Add a LICENSE
+  - Change debug key chords
   - Update the README
   - Create additional lua/pico8 (api) cheatsheets
   - Create pico8 (cli) cheatsheets

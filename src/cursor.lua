@@ -1,6 +1,6 @@
 -- encapsulate cursor state
 game.cursor = {
-    cell = {x = 0, y = 0},
+    cell = {x = 0, y = 0, spr = 0, pass = true},
     direction = "stop",
     sel = {x = nil, y = nil},
 
@@ -64,6 +64,16 @@ function game.cursor:update()
         self.btn_3 = frame - 1
     end
 
+    -- get the ID of the sprite beneath the cursor
+    self.cell.spr = mget(self.cell.x, self.cell.y)
+
+    -- determine whether the cell is passable
+    if fget(self.cell.spr, 0) then
+        self.cell.pass = false
+    else
+        self.cell.pass = true
+    end
+
     -- "X"
     -- move a unit
     if btnp(5) then
@@ -75,24 +85,27 @@ function game.cursor:update()
             -- if we have a unit selected, attempt to move it
         elseif self.sel.x then
 
-            -- TODO: account for a movement radius
-            -- TODO: account for impassible terrain
-            -- TODO: account for player 2
+            -- TODO: ensure that the cursor's current position is not on
+            -- impassible terrain
+            if self.cell.pass then
+                -- TODO: account for a movement radius
+                -- TODO: account for player 2
 
-            -- vivify the map table if it does not exist
-            if not game.map.units.p1[self.cell.x] then
-                game.map.units.p1[self.cell.x] = {}
+                -- vivify the map table if it does not exist
+                if not game.map.units.p1[self.cell.x] then
+                    game.map.units.p1[self.cell.x] = {}
+                end
+
+                -- move the selected unit to the current cursor position
+                game.map.units.p1[self.cell.x][self.cell.y] =
+                    game.map.units.p1[self.sel.x][self.sel.y]
+
+                -- remove the prior reference to the unit
+                game.map.units.p1[self.sel.x][self.sel.y] = nil
+
+                -- clear the unit selection
+                self.sel.x, self.sel.y = nil, nil
             end
-
-            -- move the selected unit to the current cursor position
-            game.map.units.p1[self.cell.x][self.cell.y] =
-                game.map.units.p1[self.sel.x][self.sel.y]
-
-            -- remove the prior reference to the unit
-            game.map.units.p1[self.sel.x][self.sel.y] = nil
-
-            -- clear the unit selection
-            self.sel.x, self.sel.y = nil, nil
         end
 
         -- TODO: handle selection of enemy units
