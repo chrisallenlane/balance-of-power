@@ -19,6 +19,7 @@ function debug.vars(game)
 
     -- compose debugging messages
     local msgs = {
+        "turn: " .. game.cursor.turn,
         "cur:  " .. game.cursor.cell.x .. ", " .. game.cursor.cell.y,
         "sel:  " .. sel,
         "cam:  " .. game.camera.cell.x .. ", " .. game.camera.cell.y,

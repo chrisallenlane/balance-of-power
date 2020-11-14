@@ -3,6 +3,7 @@ game.cursor = {
     cell = {x = 0, y = 0, spr = 0, pass = true},
     direction = "stop",
     sel = {x = nil, y = nil},
+    turn = "p1",
 
     btn_0 = 3,
     btn_1 = 3,
@@ -78,8 +79,8 @@ function game.cursor:update()
     -- move a unit
     if btnp(5) then
         -- if a player unit is available beneath the cursor, select it
-        if game.map.units.p1[self.cell.x] and
-            game.map.units.p1[self.cell.x][self.cell.y] then
+        if game.map.units[self.turn][self.cell.x] and
+            game.map.units[self.turn][self.cell.x][self.cell.y] then
             self.sel.x, self.sel.y = self.cell.x, self.cell.y
 
             -- if we have a unit selected, attempt to move it
@@ -92,19 +93,28 @@ function game.cursor:update()
                 -- TODO: account for player 2
 
                 -- vivify the map table if it does not exist
-                if not game.map.units.p1[self.cell.x] then
-                    game.map.units.p1[self.cell.x] = {}
+                if not game.map.units[self.turn][self.cell.x] then
+                    game.map.units[self.turn][self.cell.x] = {}
                 end
 
                 -- move the selected unit to the current cursor position
-                game.map.units.p1[self.cell.x][self.cell.y] =
-                    game.map.units.p1[self.sel.x][self.sel.y]
+                game.map.units[self.turn][self.cell.x][self.cell.y] =
+                    game.map.units[self.turn][self.sel.x][self.sel.y]
 
                 -- remove the prior reference to the unit
-                game.map.units.p1[self.sel.x][self.sel.y] = nil
+                game.map.units[self.turn][self.sel.x][self.sel.y] = nil
 
                 -- clear the unit selection
                 self.sel.x, self.sel.y = nil, nil
+
+                -- automatically end the player's turn after a unit has been
+                -- moved
+                -- TODO: DRY this out
+                if self.turn == "p1" then
+                    self.turn = "p2"
+                else
+                    self.turn = "p1"
+                end
             end
         end
 
@@ -113,7 +123,18 @@ function game.cursor:update()
 
     -- "Z"
     -- unselect a selected unit
-    if btnp(4) then self.sel.x, self.sel.y = nil, nil end
+    -- TODO: restore this functionality
+    -- if btnp(4) then self.sel.x, self.sel.y = nil, nil end
+
+    -- "Z"
+    -- end the player's turn
+    if btnp(4) then
+        if self.turn == "p1" then
+            self.turn = "p2"
+        else
+            self.turn = "p1"
+        end
+    end
 end
 
 -- render the cursor

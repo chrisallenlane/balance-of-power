@@ -1,6 +1,4 @@
 Next:
-  - 2-player game loop
-
   - Fix diagonal cursor movement bug
   - Movement: "animate" unit from cell to sell
   - Movement: unit movement radius
