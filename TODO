@@ -1,5 +1,4 @@
 Next:
-  - Fix diagonal cursor movement bug
   - Movement: "animate" unit from cell to sell
   - Movement: unit movement radius
   - Movement: visually indicate unit selection
@@ -9,6 +8,7 @@ Tooling:
   - Implement benchmarking harness
 
 Etc:
+  - Implement menuing system
   - Add a LICENSE
   - Change debug key chords
   - Update the README
