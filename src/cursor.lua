@@ -115,12 +115,7 @@ function game.cursor:update()
 
                 -- automatically end the player's turn after a unit has been
                 -- moved
-                -- TODO: DRY this out
-                if self.turn == "p1" then
-                    self.turn = "p2"
-                else
-                    self.turn = "p1"
-                end
+                self:turn_end()
             end
         end
 
@@ -134,16 +129,19 @@ function game.cursor:update()
 
     -- "Z"
     -- end the player's turn
-    if btnp(4) then
-        if self.turn == "p1" then
-            self.turn = "p2"
-        else
-            self.turn = "p1"
-        end
-    end
+    if btnp(4) then self:turn_end() end
 end
 
 -- render the cursor
 function game.cursor:draw()
     spr(16, self.cell.x * 8, self.cell.y * 8)
+end
+
+-- change the player turn
+function game.cursor:turn_end()
+    if self.turn == "p1" then
+        self.turn = "p2"
+    else
+        self.turn = "p1"
+    end
 end
