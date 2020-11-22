@@ -1,10 +1,10 @@
 game.screen = {}
 
 game.screens = {
-    ["title"] = {},
-    ["battle"] = {},
-    ["defeat"] = {},
-    ["victory"] = {},
+    title = {menu = {choices = {"1 player", "2 player", "skirmish"}, sel = 1}},
+    battle = {},
+    defeat = {},
+    victory = {},
 }
 
 -- loads a screen
