@@ -13,6 +13,7 @@ game = {
 -- externaize non-media assets
 #include src/screen.lua
 #include src/screen-battle.lua
+#include src/screen-battle-menu.lua
 #include src/screen-title.lua
 #include src/screen-victory.lua
 #include src/screen-defeat.lua

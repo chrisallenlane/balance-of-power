@@ -17,5 +17,5 @@ function _update()
 end
 
 function _draw()
-    game.screen.draw()
+    game.screen:draw()
 end

@@ -117,6 +117,12 @@ function game.cursor:update()
                 -- moved
                 self:turn_end()
             end
+
+            -- XXX: this exhibits surprising behavior when clicking on an enemy
+            -- unit.
+        else
+            game.screens.battle.menu.sel = 1
+            game.screens.battle.menu.vis = true
         end
 
         -- TODO: handle selection of enemy units
@@ -124,12 +130,7 @@ function game.cursor:update()
 
     -- "Z"
     -- unselect a selected unit
-    -- TODO: restore this functionality
-    -- if btnp(4) then self.sel.x, self.sel.y = nil, nil end
-
-    -- "Z"
-    -- end the player's turn
-    if btnp(4) then self:turn_end() end
+    if btnp(4) and self.sel.x then self.sel.x, self.sel.y = nil, nil end
 end
 
 -- render the cursor
