@@ -72,7 +72,8 @@ function game.cursor:update()
     end
 
     -- get the ID of the sprite beneath the cursor
-    self.cell.spr = mget(self.cell.x, self.cell.y)
+    self.cell.spr = mget(game.map.cell.x + self.cell.x,
+                         game.map.cell.y + self.cell.y)
 
     -- determine whether the cell is passable
     if fget(self.cell.spr, 0) then
