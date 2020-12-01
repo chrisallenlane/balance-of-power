@@ -8,7 +8,7 @@ function game.maps.load(num)
     game.map = game.maps[num]
 
     -- make it player 1's turn
-    game.cursor.turn = "p1"
+    game.cursor.turn = 1
 
     -- reset the cursor position
     game.cursor.cell.x, game.cursor.cell.y = game.map.cursor.x,

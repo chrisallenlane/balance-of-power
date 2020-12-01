@@ -2,7 +2,7 @@
 game.cursor = {
     cell = {x = 0, y = 0, spr = 0, pass = true},
     sel = {x = nil, y = nil},
-    turn = "p1",
+    turn = 1,
 
     -- track if the cursor is moving in a direction
     move = {d = false, l = false, r = false, u = false},
@@ -142,9 +142,9 @@ end
 
 -- change the player turn
 function game.cursor:turn_end()
-    if self.turn == "p1" then
-        self.turn = "p2"
+    if self.turn == 1 then
+        self.turn = 2
     else
-        self.turn = "p1"
+        self.turn = 1
     end
 end
