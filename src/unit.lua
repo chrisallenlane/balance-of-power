@@ -29,16 +29,3 @@ function Unit:new(u)
     self.__index = self
     return u
 end
-
--- Move the unit to the designated cell
---function Unit:move(x, y)
-
---end
-
---function Unit:sel()
-
---end
-
---function Unit:unsel()
-
---end
