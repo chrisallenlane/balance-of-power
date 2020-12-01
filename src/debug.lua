@@ -31,7 +31,7 @@ function debug.vars(game)
 
     -- iterate over and print each debug message
     for i, msg in pairs(msgs) do
-        print(msg, 4 + game.camera.p.x, (4 + 8 * i) + game.camera.p.y, 7)
+        print(msg, 4 + game.camera.px.x, (4 + 8 * i) + game.camera.px.y, 7)
     end
 end
 

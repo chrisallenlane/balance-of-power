@@ -1,5 +1,5 @@
 -- encapsulate camera state
-game.camera = {cell = {x = 0, y = 0}, p = {x = 0, y = 0}}
+game.camera = {cell = {x = 0, y = 0}, px = {x = 0, y = 0}}
 
 -- update camera state
 function game.camera:update()
@@ -25,13 +25,13 @@ function game.camera:update()
 
     -- Track camera pixel position. Ease toward the cell coordinates to make
     -- scrolling look smoother.
-    if self.p.x < self.cell.x * 8 then self.p.x = self.p.x + 2 end
-    if self.p.x > self.cell.x * 8 then self.p.x = self.p.x - 2 end
-    if self.p.y < self.cell.y * 8 then self.p.y = self.p.y + 2 end
-    if self.p.y > self.cell.y * 8 then self.p.y = self.p.y - 2 end
+    if self.px.x < self.cell.x * 8 then self.px.x = self.px.x + 2 end
+    if self.px.x > self.cell.x * 8 then self.px.x = self.px.x - 2 end
+    if self.px.y < self.cell.y * 8 then self.px.y = self.px.y + 2 end
+    if self.px.y > self.cell.y * 8 then self.px.y = self.px.y - 2 end
 end
 
 -- move the game camera
 function game.camera:move()
-    camera(self.p.x, self.p.y)
+    camera(self.px.x, self.px.y)
 end
