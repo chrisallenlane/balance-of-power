@@ -86,8 +86,9 @@ function game.cursor:update()
     -- move a unit
     if btnp(5) then
         -- if a player unit is available beneath the cursor, select it
-        if game.map.units[self.turn][self.cell.x] and
-            game.map.units[self.turn][self.cell.x][self.cell.y] then
+        -- TODO: create a registry in `units` to track unit coordinates
+        if game.map.units[self.cell.x] and
+            game.map.units[self.cell.x][self.cell.y] then
             self.sel.x, self.sel.y = self.cell.x, self.cell.y
 
             -- if we have a unit selected, attempt to move it
@@ -100,16 +101,16 @@ function game.cursor:update()
                 -- TODO: account for player 2
 
                 -- vivify the map table if it does not exist
-                if not game.map.units[self.turn][self.cell.x] then
-                    game.map.units[self.turn][self.cell.x] = {}
+                if not game.map.units[self.cell.x] then
+                    game.map.units[self.cell.x] = {}
                 end
 
                 -- move the selected unit to the current cursor position
-                game.map.units[self.turn][self.cell.x][self.cell.y] =
-                    game.map.units[self.turn][self.sel.x][self.sel.y]
+                game.map.units[self.cell.x][self.cell.y] =
+                    game.map.units[self.sel.x][self.sel.y]
 
                 -- remove the prior reference to the unit
-                game.map.units[self.turn][self.sel.x][self.sel.y] = nil
+                game.map.units[self.sel.x][self.sel.y] = nil
 
                 -- clear the unit selection
                 self.sel.x, self.sel.y = nil, nil
