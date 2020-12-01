@@ -87,6 +87,8 @@ function game.cursor:update()
     if btnp(5) then
         -- if a player unit is available beneath the cursor, select it
         -- TODO: create a registry in `units` to track unit coordinates
+        -- TODO: each unit must know its own coordinates in order to implement
+        -- animations
         if game.map.units[self.cell.x] and
             game.map.units[self.cell.x][self.cell.y] then
             self.sel.x, self.sel.y = self.cell.x, self.cell.y
