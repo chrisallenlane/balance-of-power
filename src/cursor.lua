@@ -92,8 +92,9 @@ function game.cursor:update()
             self.sel.x, self.sel.y = self.cell.x, self.cell.y
 
             -- if we have a unit selected, attempt to move it
-        elseif self.sel.x then
-
+        elseif game.map.units[self.sel.x] and
+            game.map.units[self.sel.x][self.sel.y] and
+            game.map.units[self.sel.x][self.sel.y].team == self.turn then
             -- TODO: ensure that the cursor's current position is not on
             -- impassible terrain
             if self.cell.pass then
