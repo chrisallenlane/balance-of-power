@@ -53,6 +53,11 @@ function Unit.move(from_x, from_y, to_x, to_y, units)
     -- move the selected unit to the current cursor position
     units[to_x][to_y] = units[from_x][from_y]
 
+    -- make the unit aware of its new position
+    -- XXX KLUDGE: refactor this
+    units[to_x][to_y].cell = {x = to_x, y = to_y}
+    units[to_x][to_y].px = {x = to_x * 8, y = to_y * 8}
+
     -- remove the prior reference to the unit
     units[from_x][from_y] = nil
 

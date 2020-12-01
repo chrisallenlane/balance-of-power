@@ -89,6 +89,9 @@ function game.cursor:update()
         if Unit.at(self.cell.x, self.cell.y, game.map.units) then
             self.sel.x, self.sel.y = self.cell.x, self.cell.y
 
+            -- FIXME: if you click on an enemy unit, you will unselect your own
+            -- unit
+
             -- if we have a unit selected, attempt to move it
         elseif Unit.at(self.sel.x, self.sel.y, game.map.units) and
             Unit.at(self.sel.x, self.sel.y, game.map.units).team == self.turn then
