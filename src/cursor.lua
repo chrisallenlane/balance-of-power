@@ -86,34 +86,21 @@ function game.cursor:update()
     -- move a unit
     if btnp(5) then
         -- if a player unit is available beneath the cursor, select it
-        -- TODO: create a registry in `units` to track unit coordinates
-        -- TODO: each unit must know its own coordinates in order to implement
-        -- animations
-        if game.map.units[self.cell.x] and
-            game.map.units[self.cell.x][self.cell.y] then
+        if Unit.at(self.cell.x, self.cell.y, game.map.units) then
             self.sel.x, self.sel.y = self.cell.x, self.cell.y
 
             -- if we have a unit selected, attempt to move it
-        elseif game.map.units[self.sel.x] and
-            game.map.units[self.sel.x][self.sel.y] and
-            game.map.units[self.sel.x][self.sel.y].team == self.turn then
-            -- TODO: ensure that the cursor's current position is not on
-            -- impassible terrain
+        elseif Unit.at(self.sel.x, self.sel.y, game.map.units) and
+            Unit.at(self.sel.x, self.sel.y, game.map.units).team == self.turn then
+
+            -- ensure that the cursor's current position is not on impassible terrain
+            -- TODO: account for a movement radius
             if self.cell.pass then
-                -- TODO: account for a movement radius
-                -- TODO: account for player 2
 
-                -- vivify the map table if it does not exist
-                if not game.map.units[self.cell.x] then
-                    game.map.units[self.cell.x] = {}
-                end
-
-                -- move the selected unit to the current cursor position
-                game.map.units[self.cell.x][self.cell.y] =
-                    game.map.units[self.sel.x][self.sel.y]
-
-                -- remove the prior reference to the unit
-                game.map.units[self.sel.x][self.sel.y] = nil
+                -- move the unit
+                -- TODO: each unit must know its own coordinates
+                game.map.units = Unit.move(self.sel.x, self.sel.y, self.cell.x,
+                                           self.cell.y, game.map.units)
 
                 -- clear the unit selection
                 self.sel.x, self.sel.y = nil, nil
