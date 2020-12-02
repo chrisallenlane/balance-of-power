@@ -28,6 +28,14 @@ Unit = {
     sel = false,
 }
 
+-- Move moves a unit
+function Unit:move(to_x, to_y)
+    self.cell.x = to_x
+    self.cell.y = to_y
+    self.px.x = to_x * 8
+    self.px.y = to_y * 8
+end
+
 -- Unit constructor
 function Unit:new(u)
     u = u or {}
@@ -42,24 +50,10 @@ end
 
 -- At returns the unit at the specified coordinates, or false if none is there
 function Unit.at(x, y, units)
-    return units[x] and units[x][y]
-end
+    -- XXX: this runs in linear time
+    for _, unit in pairs(units) do
+        if unit.cell.x == x and unit.cell.y == y then return unit end
+    end
 
--- Move moves a unit
-function Unit.move(from_x, from_y, to_x, to_y, units)
-    -- vivify the map table if it does not exist
-    if not units[to_x] then units[to_x] = {} end
-
-    -- move the selected unit to the current cursor position
-    units[to_x][to_y] = units[from_x][from_y]
-
-    -- make the unit aware of its new position
-    -- XXX KLUDGE: refactor this
-    units[to_x][to_y].cell = {x = to_x, y = to_y}
-    units[to_x][to_y].px = {x = to_x * 8, y = to_y * 8}
-
-    -- remove the prior reference to the unit
-    units[from_x][from_y] = nil
-
-    return units
+    return false
 end

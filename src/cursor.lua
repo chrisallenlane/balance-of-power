@@ -1,12 +1,13 @@
 -- encapsulate cursor state
 game.cursor = {
     cell = {x = 0, y = 0, spr = 0, pass = true},
-    sel = {x = nil, y = nil},
+    sel = false,
     turn = 1,
 
     -- track if the cursor is moving in a direction
     move = {d = false, l = false, r = false, u = false},
 
+    -- TODO: encapsulate these in a table
     btn_0 = 3,
     btn_1 = 3,
     btn_2 = 3,
@@ -85,37 +86,28 @@ function game.cursor:update()
     -- "X"
     -- move a unit
     if btnp(5) then
+
+        -- determine whether a unit is beneath the cursor
+        local unit = Unit.at(self.cell.x, self.cell.y, game.map.units)
+
         -- if a player unit is available beneath the cursor, select it
-        if Unit.at(self.cell.x, self.cell.y, game.map.units) then
-            self.sel.x, self.sel.y = self.cell.x, self.cell.y
+        if unit and unit.team == self.turn then
+            self.sel = unit
 
-            -- FIXME: if you click on an enemy unit, you will unselect your own
+            -- if there is no unit beneath our cursor, and we have a unit
+            -- selected, and the terrain beneath our cursor is passable, move the
             -- unit
+        elseif not unit and self.sel and self.cell.pass then
+            -- move the unit
+            self.sel:move(self.cell.x, self.cell.y)
 
-            -- if we have a unit selected, attempt to move it
-        elseif Unit.at(self.sel.x, self.sel.y, game.map.units) and
-            Unit.at(self.sel.x, self.sel.y, game.map.units).team == self.turn then
+            -- clear the unit selection
+            self.sel = false
 
-            -- ensure that the cursor's current position is not on impassible terrain
-            -- TODO: account for a movement radius
-            if self.cell.pass then
+            -- end the player's turn
+            self:turn_end()
 
-                -- move the unit
-                -- TODO: each unit must know its own coordinates
-                game.map.units = Unit.move(self.sel.x, self.sel.y, self.cell.x,
-                                           self.cell.y, game.map.units)
-
-                -- clear the unit selection
-                self.sel.x, self.sel.y = nil, nil
-
-                -- automatically end the player's turn after a unit has been
-                -- moved
-                self:turn_end()
-            end
-
-            -- XXX: this exhibits surprising behavior when clicking on an enemy
-            -- unit.
-        else
+        elseif not unit and not self.sel then
             game.screens.battle.menu.sel = 1
             game.screens.battle.menu.vis = true
         end
@@ -125,7 +117,7 @@ function game.cursor:update()
 
     -- "Z"
     -- unselect a selected unit
-    if btnp(4) and self.sel.x then self.sel.x, self.sel.y = nil, nil end
+    if btnp(4) and self.sel then self.sel = false end
 end
 
 -- render the cursor

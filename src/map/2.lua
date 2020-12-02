@@ -6,15 +6,11 @@ add(game.maps, {
   cursor = {x = 1, y = 28},
 
   units = {
-    [3] = {
-      [28] = Unit:new({spr = 80, team = 1, cell = {x = 3, y = 28}}),
-      [29] = Unit:new({spr = 80, team = 1, cell = {x = 3, y = 29}}),
-      [30] = Unit:new({spr = 80, team = 1, cell = {x = 3, y = 30}}),
-    },
-    [1] = {
-      [1] = Unit:new({spr = 64, team = 2, cell = {x = 1, y = 1}}),
-      [2] = Unit:new({spr = 64, team = 2, cell = {x = 1, y = 2}}),
-      [3] = Unit:new({spr = 64, team = 2, cell = {x = 1, y = 3}}),
-    },
+    Unit:new({spr = 80, team = 1, cell = {x = 3, y = 28}}),
+    Unit:new({spr = 80, team = 1, cell = {x = 3, y = 29}}),
+    Unit:new({spr = 80, team = 1, cell = {x = 3, y = 30}}),
+    Unit:new({spr = 64, team = 2, cell = {x = 1, y = 1}}),
+    Unit:new({spr = 64, team = 2, cell = {x = 1, y = 2}}),
+    Unit:new({spr = 64, team = 2, cell = {x = 1, y = 3}}),
   },
 })

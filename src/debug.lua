@@ -3,8 +3,9 @@ function debug.vars(game)
 
     -- compose "selection" information
     local sel
-    if game.cursor.sel.x and game.cursor.sel.y then
-        sel = game.cursor.sel.x .. ", " .. game.cursor.sel.y
+    -- if game.cursor.sel.x and game.cursor.sel.y then
+    if game.cursor.sel then
+        sel = game.cursor.sel.cell.x .. ", " .. game.cursor.sel.cell.y
     else
         sel = "na"
     end
