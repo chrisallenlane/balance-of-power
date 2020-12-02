@@ -28,14 +28,6 @@ Unit = {
     sel = false,
 }
 
--- Move moves a unit
-function Unit:move(to_x, to_y)
-    self.cell.x = to_x
-    self.cell.y = to_y
-    self.px.x = to_x * 8
-    self.px.y = to_y * 8
-end
-
 -- Unit constructor
 function Unit:new(u)
     u = u or {}
@@ -56,4 +48,12 @@ function Unit.at(x, y, units)
     end
 
     return false
+end
+
+-- Move moves a unit
+function Unit:move(to_x, to_y)
+    self.cell.x = to_x
+    self.cell.y = to_y
+    self.px.x = to_x * 8
+    self.px.y = to_y * 8
 end
