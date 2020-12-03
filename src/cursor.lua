@@ -148,4 +148,7 @@ function game.cursor:turn_end()
         self.cell.x = self.last[self.turn].x
         self.cell.y = self.last[self.turn].y
     end
+
+    -- center the screen on the specified coordinates
+    game.camera:focus(self.cell.x, self.cell.y, game.map.cell.w, game.map.cell.h)
 end

@@ -35,3 +35,27 @@ end
 function game.camera:draw()
     camera(self.px.x, self.px.y)
 end
+
+-- move the camera to the specified grid position
+function game.camera:focus(x, y, w, h)
+    -- Apply offsets to center on the specified coordinates. (An offset of 8
+    -- is being applied because the screen is 16 cells wide.)
+    x, y = x - 8, y - 8
+
+    -- apply constraints to x coordinate
+    if x < 0 then
+        x = 0
+    elseif x > w - 16 then
+        x = w - 16
+    end
+
+    -- apply constraints to y coordinate
+    if y < 0 then
+        y = 0
+    elseif y > h - 16 then
+        y = h - 16
+    end
+
+    -- update the camera position
+    self.cell.x, self.cell.y = x, y
+end
