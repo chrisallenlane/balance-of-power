@@ -32,6 +32,6 @@ function game.camera:update()
 end
 
 -- move the game camera
-function game.camera:move()
+function game.camera:draw()
     camera(self.px.x, self.px.y)
 end

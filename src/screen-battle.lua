@@ -20,7 +20,7 @@ function game.screens.battle:draw()
     self.menu:draw()
 
     -- move the camera
-    game.camera:move()
+    game.camera:draw()
 
     -- display debug output
     debug.vars(game)
