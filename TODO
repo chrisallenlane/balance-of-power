@@ -1,5 +1,4 @@
 Next:
-  - Cursor: consolidate `btn_` vars into table
   - Movement: "animate" unit from cell to sell
   - Movement: path arrow
   - Movement: unit movement radius
