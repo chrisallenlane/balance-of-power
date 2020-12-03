@@ -50,6 +50,15 @@ function Unit.at(x, y, units)
     return false
 end
 
+-- Returns the first unit on the specified team
+function Unit.first(team, units)
+    -- XXX: this runs in linear time
+    for _, unit in pairs(units) do if unit.team == team then return unit end end
+
+    -- NB: we realistically should never end up here
+    return false
+end
+
 -- Move moves a unit
 function Unit:move(to_x, to_y)
     self.cell.x = to_x

@@ -10,6 +10,9 @@ game.cursor = {
     -- regulate cursor speed by manually implementing `btnp`-like
     -- functionality
     delay = {[0] = 3, [1] = 3, [2] = 3, [3] = 3},
+
+    -- record the position of the cursor when each player's turn ends
+    last = {[1] = {x = nil, y = nil}, [2] = {x = nil, y = nil}},
 }
 
 -- update cursor state
@@ -125,9 +128,24 @@ end
 
 -- change the player turn
 function game.cursor:turn_end()
+
+    -- record the current player's cursor position
+    self.last[self.turn] = {x = self.cell.x, y = self.cell.y}
+
+    -- end the turn
     if self.turn == 1 then
         self.turn = 2
     else
         self.turn = 1
+    end
+
+    -- load the next player's cursor
+    if self.last[self.turn].x == nil or self.last[self.turn].y == nil then
+        local unit = Unit.first(self.turn, game.map.units)
+        self.cell.x = unit.cell.x
+        self.cell.y = unit.cell.y
+    else
+        self.cell.x = self.last[self.turn].x
+        self.cell.y = self.last[self.turn].y
     end
 end
