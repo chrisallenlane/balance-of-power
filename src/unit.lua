@@ -54,6 +54,4 @@ end
 function Unit:move(to_x, to_y)
     self.cell.x = to_x
     self.cell.y = to_y
-    self.px.x = to_x * 8
-    self.px.y = to_y * 8
 end

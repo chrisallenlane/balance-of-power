@@ -1,14 +1,13 @@
 -- update the battle screen
 function game.screens.battle.update()
-    -- TODO: map interstitials
-
     -- If the "end turn" menu is visible, run its update loop
     if game.screens.battle.menu.vis then
         game.screens.battle.menu:update()
-    else
-        game.cursor:update()
+        return
     end
 
+    game.cursor:update()
+    game.units:update()
     game.camera:update()
 end
 
