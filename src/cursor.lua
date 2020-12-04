@@ -18,6 +18,26 @@ game.cursor = {
 -- update cursor state
 function game.cursor:update()
 
+    -- TODO: externalize this logic elsewhere
+    -- NB: this is a stub
+    -- move the CPU player
+    if self.turn == 2 and game.state.cpu then
+        local mv = -1
+
+        -- select the first enemy unit
+        local unit = Unit.first(2, game.map.units)
+
+        -- if moving left is invalid, move right
+        if not self.passable(unit.cell.x + mv, unit.cell.y, game.map) then
+            mv = mv * -1
+        end
+
+        -- move the unit and end the turn
+        unit:move(unit.cell.x + mv, unit.cell.y)
+        self:turn_end()
+        return
+    end
+
     -- don't register a re-press until `frame` frames
     local frame = 4
 
@@ -73,16 +93,8 @@ function game.cursor:update()
         self.move.d = false
     end
 
-    -- get the ID of the sprite beneath the cursor
-    self.cell.spr = mget(game.map.cell.x + self.cell.x,
-                         game.map.cell.y + self.cell.y)
-
     -- determine whether the cell is passable
-    if fget(self.cell.spr, 0) then
-        self.cell.pass = false
-    else
-        self.cell.pass = true
-    end
+    self.cell.pass = self.passable(self.cell.x, self.cell.y, game.map)
 
     -- "X"
     -- move a unit
@@ -124,6 +136,11 @@ end
 -- render the cursor
 function game.cursor:draw()
     spr(16, self.cell.x * 8, self.cell.y * 8)
+end
+
+-- return true if the map tile is passable
+function game.cursor.passable(x, y, map)
+    return not fget(mget(map.cell.x + x, map.cell.y + y), 0)
 end
 
 -- change the player turn

@@ -15,7 +15,13 @@ end
 function game.screens.battle:draw()
     cls()
     game.maps.draw()
-    game.cursor:draw()
+
+    -- always draw the cursor for player one
+    -- only draw the cursor for player 2 when fighting a human enemy
+    if game.cursor.turn == 1 or (game.cursor.turn == 2 and not game.state.cpu) then
+        game.cursor:draw()
+    end
+
     game.units.draw()
     self.menu:draw()
 

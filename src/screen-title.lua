@@ -12,6 +12,9 @@ function game.screens.title.update()
 
         -- "select"
     elseif btnp(5) then
+        -- if a 1-player game is selected, set a CPU opponent state flag
+        if game.screens.title.menu.sel == 1 then game.state.cpu = true end
+
         -- TODO: load the screen/loop appropriate for the menu selection
         game.maps.load(1)
         game.screens.load("battle")

@@ -2,11 +2,15 @@ pico-8 cartridge // http://www.pico-8.com
 version 29
 __lua__
 
+-- TODO: refactor this
 game = {
 	map   = {},
 	state = {
 		map    = 0,
 		screen = "title",
+
+    -- CPU opponent?
+    cpu    = false,
 	},
 }
 
