@@ -34,8 +34,8 @@ check: | fmt lint test
 ## test: run unit-tests
 .PHONY: test
 test:
-	$(DOCKER) run -v $(realpath .):/app $(docker_image) \
-		$(LUA) ./test/example.lua
+	@$(DOCKER) run -v $(realpath .):/app $(docker_image) \
+		bash -c 'for f in ./test/*; do echo $$f; $(LUA) $$f; done'
 
 ## lint: lint files
 .PHONY: lint
