@@ -3,10 +3,19 @@ game.units = {}
 -- update unit coordinates
 function game.units.update()
     for _, unit in pairs(game.map.units) do
-        if unit.px.x < unit.cell.x * 8 then unit.px.x = unit.px.x + 4 end
-        if unit.px.x > unit.cell.x * 8 then unit.px.x = unit.px.x - 4 end
-        if unit.px.y < unit.cell.y * 8 then unit.px.y = unit.px.y + 4 end
-        if unit.px.y > unit.cell.y * 8 then unit.px.y = unit.px.y - 4 end
+        -- x
+        if unit.px.x < unit.cell.x * 8 then
+            unit.px.x = unit.px.x + 4
+        elseif unit.px.x > unit.cell.x * 8 then
+            unit.px.x = unit.px.x - 4
+        end
+
+        -- y
+        if unit.px.y < unit.cell.y * 8 then
+            unit.px.y = unit.px.y + 4
+        elseif unit.px.y > unit.cell.y * 8 then
+            unit.px.y = unit.px.y - 4
+        end
     end
 end
 

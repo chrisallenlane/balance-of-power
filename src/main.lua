@@ -13,7 +13,7 @@ function _init()
 end
 
 function _update()
-    game.screen.update()
+    game.screen:update()
 end
 
 function _draw()

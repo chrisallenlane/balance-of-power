@@ -1,4 +1,4 @@
--- specify map coordinates
+-- initialize the map table
 game.maps = {}
 
 -- load the specified map

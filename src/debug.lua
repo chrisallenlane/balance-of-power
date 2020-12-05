@@ -12,8 +12,8 @@ function debug.vars(game)
     if game.cursor.cell.pass then pass = "y" end
 
     -- indicate whether playing a human or CPU opponent
-    local p2 = "human"
-    if game.state.cpu then p2 = "cpu" end
+    -- local p2 = "human"
+    -- if game.state.cpu then p2 = "cpu" end
 
     -- compose debugging messages
     local msgs = {
@@ -24,7 +24,7 @@ function debug.vars(game)
         "pass: " .. pass,
         "mem:  " .. stat(0) .. " kb",
         "cpu:  " .. stat(1),
-        "p2:   " .. p2,
+        -- "p2:   " .. p2,
     }
 
     -- iterate over and print each debug message
