@@ -14,6 +14,9 @@ function debug.vars(game)
     -- local p2 = "human"
     -- if game.state.cpu then p2 = "cpu" end
 
+    local lock = "n"
+    if game.lock.cursor then lock = "y" end
+
     -- compose debugging messages
     local msgs = {
         "turn: " .. game.cursor.turn,
@@ -23,6 +26,7 @@ function debug.vars(game)
         "pass: " .. pass,
         "mem:  " .. stat(0) .. " kb",
         "cpu:  " .. stat(1),
+        "lock: " .. lock,
         -- "p2:   " .. p2,
     }
 

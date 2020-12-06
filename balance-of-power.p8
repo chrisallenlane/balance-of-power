@@ -4,7 +4,11 @@ __lua__
 
 -- TODO: refactor this
 game = {
-	map   = {},
+	map  = {},
+  lock = {
+    camera = false,
+    cursor = true,
+  },
 	state = {
 		map    = 0,
 		screen = "title",

@@ -18,6 +18,9 @@ game.cursor = {
 -- update cursor state
 function game.cursor:update()
 
+    -- if a unit is in-motion, lock the cursor
+    if game.lock.cursor then return end
+
     -- TODO: externalize this logic elsewhere
     -- NB: this is a stub
     -- move the CPU player
