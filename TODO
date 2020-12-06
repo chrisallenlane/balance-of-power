@@ -1,7 +1,10 @@
 Next:
+  - Menu: restart level
+  - Movement: animation lock
   - Movement: path arrow
   - Movement: unit movement radius
   - Movement: visually indicate unit selection
+  - SFX: stub
 
 Tooling:
   - Implement unit-tests
@@ -12,6 +15,3 @@ Etc:
   - Add a LICENSE
   - Change debug key chords
   - Update the README
-  - Create additional lua/pico8 (api) cheatsheets
-  - Create pico8 (cli) cheatsheets
-  - Improve Selenized colorscheme

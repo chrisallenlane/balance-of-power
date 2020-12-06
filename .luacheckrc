@@ -6,6 +6,7 @@ globals = {
   "_draw",
   "_init",
   "_update",
+  "_update60",
   "abs",
   "add",
   "all",

@@ -1,6 +1,5 @@
 debug = {}
 function debug.vars(game)
-
     -- compose "selection" information
     local sel = "na"
     if game.cursor.sel then

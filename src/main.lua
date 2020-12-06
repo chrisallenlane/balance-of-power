@@ -12,7 +12,7 @@ function _init()
     game.screens.load("title")
 end
 
-function _update()
+function _update60()
     game.screen:update()
 end
 

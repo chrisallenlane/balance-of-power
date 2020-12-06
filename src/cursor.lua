@@ -38,19 +38,19 @@ function game.cursor:update()
         return
     end
 
-    -- don't register a re-press until `frame` frames
-    local frame = 4
+    -- don't register a re-press until `wait` frames
+    local wait = 7
 
     -- left
     if btn(0) and self.cell.x > 0 then
         self.move.l = true
         self.delay[0] = self.delay[0] + 1
-        if self.delay[0] >= frame then
+        if self.delay[0] >= wait then
             self.delay[0] = 0
             self.cell.x = self.cell.x - 1
         end
     elseif not btn(0) then
-        self.delay[0] = frame - 1
+        self.delay[0] = wait - 1
         self.move.l = false
     end
 
@@ -58,12 +58,12 @@ function game.cursor:update()
     if btn(1) and self.cell.x < game.map.cell.w - 1 then
         self.move.r = true
         self.delay[1] = self.delay[1] + 1
-        if self.delay[1] >= frame then
+        if self.delay[1] >= wait then
             self.delay[1] = 0
             self.cell.x = self.cell.x + 1
         end
     elseif not btn(1) then
-        self.delay[1] = frame - 1
+        self.delay[1] = wait - 1
         self.move.r = false
     end
 
@@ -71,12 +71,12 @@ function game.cursor:update()
     if btn(2) and self.cell.y > 0 then
         self.move.u = true
         self.delay[2] = self.delay[2] + 1
-        if self.delay[2] >= frame then
+        if self.delay[2] >= wait then
             self.delay[2] = 0
             self.cell.y = self.cell.y - 1
         end
     elseif not btn(2) then
-        self.delay[2] = frame - 1
+        self.delay[2] = wait - 1
         self.move.u = false
     end
 
@@ -84,12 +84,12 @@ function game.cursor:update()
     if btn(3) and self.cell.y < game.map.cell.h - 1 then
         self.move.d = true
         self.delay[3] = self.delay[3] + 1
-        if self.delay[3] >= frame then
+        if self.delay[3] >= wait then
             self.delay[3] = 0
             self.cell.y = self.cell.y + 1
         end
     elseif not btn(3) then
-        self.delay[3] = frame - 1
+        self.delay[3] = wait - 1
         self.move.d = false
     end
 
