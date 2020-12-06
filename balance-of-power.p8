@@ -7,7 +7,7 @@ game = {
 	map  = {},
   lock = {
     camera = false,
-    cursor = true,
+    unit = true,
   },
 	state = {
 		map    = 0,

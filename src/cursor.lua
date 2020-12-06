@@ -18,8 +18,9 @@ game.cursor = {
 -- update cursor state
 function game.cursor:update()
 
+    -- TODO: move this lock outside of this method
     -- if a unit is in-motion, lock the cursor
-    if game.lock.cursor then return end
+    if game.lock.unit or game.lock.camera then return end
 
     -- TODO: externalize this logic elsewhere
     -- NB: this is a stub
@@ -148,7 +149,6 @@ end
 
 -- change the player turn
 function game.cursor:turn_end()
-
     -- record the current player's cursor position
     self.last[self.turn] = {x = self.cell.x, y = self.cell.y}
 

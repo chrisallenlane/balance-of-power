@@ -3,6 +3,12 @@ game.camera = {cell = {x = 0, y = 0}, px = {x = 0, y = 0}}
 
 -- update camera state
 function game.camera:update()
+    -- if a unit is being animated, do not allow the
+    -- camera to move
+    if game.lock.unit then return end
+
+    -- unlock the cursor
+    game.lock.camera = false
 
     -- track camera position as cell coordinates, and compare those coordinates
     -- to the cursor and screen position.
@@ -27,15 +33,19 @@ function game.camera:update()
     -- Track camera pixel position. Ease toward the cell coordinates to make
     -- scrolling look smoother.
     if self.px.x < self.cell.x * 8 then
-        self.px.x = self.px.x + 2
+        self.px.x = self.px.x + 4
+        game.lock.camera = true
     elseif self.px.x > self.cell.x * 8 then
-        self.px.x = self.px.x - 2
+        self.px.x = self.px.x - 4
+        game.lock.camera = true
     end
 
     if self.px.y < self.cell.y * 8 then
-        self.px.y = self.px.y + 2
+        self.px.y = self.px.y + 4
+        game.lock.camera = true
     elseif self.px.y > self.cell.y * 8 then
-        self.px.y = self.px.y - 2
+        self.px.y = self.px.y - 4
+        game.lock.camera = true
     end
 end
 
@@ -46,7 +56,6 @@ end
 
 -- move the camera to the specified grid position
 function game.camera:focus(x, y, w, h)
-
     -- Apply offsets to center on the specified coordinates. (An offset of 8
     -- is being applied because the screen is 16 cells wide.)
     x, y = x - 8, y - 8
@@ -65,8 +74,9 @@ function game.camera:focus(x, y, w, h)
         y = h - 16
     end
 
+    -- TODO: this needs to be refined
     -- if the adjustment to make is minor, don't bother
-    if (abs(self.cell.x - x) < 8) and (abs(self.cell.y - y) < 8) then return end
+    if (abs(self.cell.x - x) < 4) and (abs(self.cell.y - y) < 4) then return end
 
     -- update the camera position
     self.cell.x, self.cell.y = x, y

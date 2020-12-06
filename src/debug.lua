@@ -15,7 +15,7 @@ function debug.vars(game)
     -- if game.state.cpu then p2 = "cpu" end
 
     local lock = "n"
-    if game.lock.cursor then lock = "y" end
+    if game.lock.camera then lock = "y" end
 
     -- compose debugging messages
     local msgs = {

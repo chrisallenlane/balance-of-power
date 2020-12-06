@@ -3,26 +3,26 @@ game.units = {}
 -- update unit coordinates
 function game.units.update()
     -- unlock the cursor
-    game.lock.cursor = false
+    game.lock.unit = false
 
     -- if a unit is in-motion, lock the cursor
     for _, unit in pairs(game.map.units) do
         -- x
         if unit.px.x < unit.cell.x * 8 then
             unit.px.x = unit.px.x + 4
-            game.lock.cursor = true
+            game.lock.unit = true
         elseif unit.px.x > unit.cell.x * 8 then
             unit.px.x = unit.px.x - 4
-            game.lock.cursor = true
+            game.lock.unit = true
         end
 
         -- y
         if unit.px.y < unit.cell.y * 8 then
             unit.px.y = unit.px.y + 4
-            game.lock.cursor = true
+            game.lock.unit = true
         elseif unit.px.y > unit.cell.y * 8 then
             unit.px.y = unit.px.y - 4
-            game.lock.cursor = true
+            game.lock.unit = true
         end
     end
 end

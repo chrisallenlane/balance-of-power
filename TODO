@@ -1,6 +1,6 @@
 Next:
   - Menu: restart level
-  - Movement: animation lock
+  - Movement: camera delay before/after unit move
   - Movement: path arrow
   - Movement: unit movement radius
   - Movement: visually indicate unit selection
@@ -13,5 +13,4 @@ Tooling:
 Etc:
   - Implement menuing system
   - Add a LICENSE
-  - Change debug key chords
   - Update the README
