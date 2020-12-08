@@ -9,6 +9,10 @@ game = {
     camera = false,
     unit = true,
   },
+  delay = {
+    cpu = 0,
+    unit = 0,
+  },
 	state = {
 		map    = 0,
 		screen = "title",

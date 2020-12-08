@@ -7,6 +7,13 @@ function game.camera:update()
     -- camera to move
     if game.lock.unit then return end
 
+    -- prevent the camera from moving immediately if a unit has just moved
+    game.lock.camera = true
+    if game.delay.unit > 0 then
+        game.delay.unit = game.delay.unit - 1
+        return
+    end
+
     -- unlock the cursor
     game.lock.camera = false
 

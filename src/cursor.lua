@@ -36,6 +36,13 @@ function game.cursor:update()
             mv = mv * -1
         end
 
+        -- pause in place for a moment before the CPU moves
+        if game.delay.cpu > 0 then
+            game.delay.cpu = game.delay.cpu - 1
+            return
+        end
+        game.delay.cpu = 30
+
         -- move the unit and end the turn
         unit:move(unit.cell.x + mv, unit.cell.y)
         self:turn_end()

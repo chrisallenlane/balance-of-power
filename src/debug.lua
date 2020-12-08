@@ -27,6 +27,7 @@ function debug.vars(game)
         "mem:  " .. stat(0) .. " kb",
         "cpu:  " .. stat(1),
         "lock: " .. lock,
+        "del:  " .. game.delay.unit .. ", " .. game.delay.cpu,
         -- "p2:   " .. p2,
     }
 

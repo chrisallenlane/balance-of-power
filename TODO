@@ -1,9 +1,16 @@
-Next:
+Todo:
+  - Animation: cursor "throb"
+  - Animation: make cursor/camera movement smooth
+  - Animation: map tiles (rivers, grass)
+  - Art: make units smaller?
+  - Config: add config (debug)
   - Menu: restart level
-  - Movement: camera delay before/after unit move
-  - Movement: path arrow
+  - Movement: `passable` should check for presence of other units
+  - Movement: handle "no valid moves" contingency (AI)
+  - Movement: path arrow (with different color marker for impassible)
   - Movement: unit movement radius
   - Movement: visually indicate unit selection
+  - Refactor: create a `turn` table?
   - SFX: stub
 
 Tooling:
