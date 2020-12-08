@@ -13,6 +13,8 @@ game.cursor = {
 
     -- record the position of the cursor when each player's turn ends
     last = {[1] = {x = nil, y = nil}, [2] = {x = nil, y = nil}},
+
+    frame = 0,
 }
 
 -- update cursor state
@@ -146,7 +148,18 @@ end
 
 -- render the cursor
 function game.cursor:draw()
-    spr(16, self.cell.x * 8, self.cell.y * 8)
+    local sprite = 16
+    if self.frame < 30 then
+        sprite = 32
+    elseif self.frame > 60 then
+        self.frame = 0
+    end
+
+    -- increment the frame counter
+    self.frame = self.frame + 1
+
+    -- draw the sprite
+    spr(sprite, self.cell.x * 8, self.cell.y * 8)
 end
 
 -- return true if the map tile is passable
