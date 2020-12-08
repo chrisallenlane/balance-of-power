@@ -151,7 +151,13 @@ end
 
 -- return true if the map tile is passable
 function game.cursor.passable(x, y, map)
-    return not fget(mget(map.cell.x + x, map.cell.y + y), 0)
+    -- return false if the map tile at the specified coordinates is flagged as
+    -- impassible
+    if fget(mget(map.cell.x + x, map.cell.y + y), 0) then return false end
+
+    -- return false if a unit is at the specified coordinates
+    if Unit.at(x, y, game.map.units) then return false end
+    return true
 end
 
 -- change the player turn
