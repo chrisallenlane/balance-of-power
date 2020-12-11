@@ -21,7 +21,7 @@ function Debug.vars()
         "mem:  " .. stat(0) .. " kb",
         "cpu:  " .. stat(1),
         "lock: " .. lock,
-        "del:  " .. Game.delay.unit .. ", " .. Game.delay.cpu,
+        "del:  " .. Delay.unit .. ", " .. Delay.cpu,
     }
 
     -- iterate over and print each debug message

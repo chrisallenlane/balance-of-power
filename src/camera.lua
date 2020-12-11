@@ -9,8 +9,8 @@ function Camera:update()
 
     -- prevent the camera from moving immediately if a unit has just moved
     Lock.camera = true
-    if Game.delay.unit > 0 then
-        Game.delay.unit = Game.delay.unit - 1
+    if Delay.unit > 0 then
+        Delay.unit = Delay.unit - 1
         return
     end
 

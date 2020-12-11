@@ -9,10 +9,6 @@ Game = {
     camera = false,
     unit = true,
   },
-  delay = {
-    cpu = 0,
-    unit = 0,
-  },
 	state = {
 		map    = 0,
 		screen = "title",
@@ -31,6 +27,7 @@ Game = {
 #include src/screen-defeat.lua
 #include src/cell.lua
 #include src/lock.lua
+#include src/delay.lua
 #include src/turn.lua
 #include src/camera.lua
 #include src/unit.lua

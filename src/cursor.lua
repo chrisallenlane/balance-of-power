@@ -38,11 +38,11 @@ function Cursor:update()
         end
 
         -- pause in place for a moment before the CPU moves
-        if Game.delay.cpu > 0 then
-            Game.delay.cpu = Game.delay.cpu - 1
+        if Delay.cpu > 0 then
+            Delay.cpu = Delay.cpu - 1
             return
         end
-        Game.delay.cpu = 30
+        Delay.cpu = 30
 
         -- move the unit and end the turn
         unit:move(unit.cell.x + mv, unit.cell.y)
@@ -160,4 +160,3 @@ function Cursor:draw()
     -- draw the sprite
     spr(sprite, self.cell.x * 8, self.cell.y * 8)
 end
-

@@ -63,5 +63,5 @@ end
 function Unit:move(to_x, to_y)
     self.cell.x = to_x
     self.cell.y = to_y
-    Game.delay.unit = 30
+    Delay.unit = 30
 end

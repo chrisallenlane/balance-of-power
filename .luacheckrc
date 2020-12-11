@@ -94,6 +94,7 @@ globals = {
   "Cell",
   "Cursor",
   "Debug",
+  "Delay",
   "Game",
   "Lock",
   "MenuTurnEnd",
