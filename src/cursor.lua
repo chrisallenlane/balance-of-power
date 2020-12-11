@@ -1,5 +1,5 @@
 -- encapsulate cursor state
-game.cursor = {
+Game.cursor = {
     cell = {x = 0, y = 0, spr = 0, pass = true},
     sel = false,
     turn = 1,
@@ -18,32 +18,32 @@ game.cursor = {
 }
 
 -- update cursor state
-function game.cursor:update()
+function Game.cursor:update()
 
     -- TODO: move this lock outside of this method
     -- if a unit is in-motion, lock the cursor
-    if game.lock.unit or game.lock.camera then return end
+    if Game.lock.unit or Game.lock.camera then return end
 
     -- TODO: externalize this logic elsewhere
     -- NB: this is a stub
     -- move the CPU player
-    if self.turn == 2 and game.state.cpu then
+    if self.turn == 2 and Game.state.cpu then
         local mv = -1
 
         -- select the first enemy unit
-        local unit = Unit.first(2, game.map.units)
+        local unit = Unit.first(2, Game.map.units)
 
         -- if moving left is invalid, move right
-        if not self.passable(unit.cell.x + mv, unit.cell.y, game.map) then
+        if not self.passable(unit.cell.x + mv, unit.cell.y, Game.map) then
             mv = mv * -1
         end
 
         -- pause in place for a moment before the CPU moves
-        if game.delay.cpu > 0 then
-            game.delay.cpu = game.delay.cpu - 1
+        if Game.delay.cpu > 0 then
+            Game.delay.cpu = Game.delay.cpu - 1
             return
         end
-        game.delay.cpu = 30
+        Game.delay.cpu = 30
 
         -- move the unit and end the turn
         unit:move(unit.cell.x + mv, unit.cell.y)
@@ -68,7 +68,7 @@ function game.cursor:update()
     end
 
     -- right
-    if btn(1) and self.cell.x < game.map.cell.w - 1 then
+    if btn(1) and self.cell.x < Game.map.cell.w - 1 then
         self.move.r = true
         self.delay[1] = self.delay[1] + 1
         if self.delay[1] >= wait then
@@ -94,7 +94,7 @@ function game.cursor:update()
     end
 
     -- down
-    if btn(3) and self.cell.y < game.map.cell.h - 1 then
+    if btn(3) and self.cell.y < Game.map.cell.h - 1 then
         self.move.d = true
         self.delay[3] = self.delay[3] + 1
         if self.delay[3] >= wait then
@@ -107,14 +107,14 @@ function game.cursor:update()
     end
 
     -- determine whether the cell is passable
-    self.cell.pass = self.passable(self.cell.x, self.cell.y, game.map)
+    self.cell.pass = self.passable(self.cell.x, self.cell.y, Game.map)
 
     -- "X"
     -- move a unit
     if btnp(5) then
 
         -- determine whether a unit is beneath the cursor
-        local unit = Unit.at(self.cell.x, self.cell.y, game.map.units)
+        local unit = Unit.at(self.cell.x, self.cell.y, Game.map.units)
 
         -- if a player unit is available beneath the cursor, select it
         if unit and unit.team == self.turn then
@@ -134,8 +134,8 @@ function game.cursor:update()
             self:turn_end()
 
         elseif not unit and not self.sel then
-            game.screens.battle.menu.sel = 1
-            game.screens.battle.menu.vis = true
+            Game.screens.battle.menu.sel = 1
+            Game.screens.battle.menu.vis = true
         end
 
         -- TODO: handle selection of enemy units
@@ -147,7 +147,7 @@ function game.cursor:update()
 end
 
 -- render the cursor
-function game.cursor:draw()
+function Game.cursor:draw()
     local sprite = 16
     if self.frame < 30 then
         sprite = 32
@@ -163,18 +163,18 @@ function game.cursor:draw()
 end
 
 -- return true if the map tile is passable
-function game.cursor.passable(x, y, map)
+function Game.cursor.passable(x, y, map)
     -- return false if the map tile at the specified coordinates is flagged as
     -- impassible
     if fget(mget(map.cell.x + x, map.cell.y + y), 0) then return false end
 
     -- return false if a unit is at the specified coordinates
-    if Unit.at(x, y, game.map.units) then return false end
+    if Unit.at(x, y, Game.map.units) then return false end
     return true
 end
 
 -- change the player turn
-function game.cursor:turn_end()
+function Game.cursor:turn_end()
     -- record the current player's cursor position
     self.last[self.turn] = {x = self.cell.x, y = self.cell.y}
 
@@ -187,7 +187,7 @@ function game.cursor:turn_end()
 
     -- load the next player's cursor
     if self.last[self.turn].x == nil or self.last[self.turn].y == nil then
-        local unit = Unit.first(self.turn, game.map.units)
+        local unit = Unit.first(self.turn, Game.map.units)
         self.cell.x = unit.cell.x
         self.cell.y = unit.cell.y
     else
@@ -196,5 +196,5 @@ function game.cursor:turn_end()
     end
 
     -- center the screen on the specified coordinates
-    game.camera:focus(self.cell.x, self.cell.y, game.map.cell.w, game.map.cell.h)
+    Game.camera:focus(self.cell.x, self.cell.y, Game.map.cell.w, Game.map.cell.h)
 end

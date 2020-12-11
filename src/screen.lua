@@ -1,6 +1,6 @@
-game.screen = {}
+Game.screen = {}
 
-game.screens = {
+Game.screens = {
     title = {menu = {choices = {"1 player", "2 player", "skirmish"}, sel = 1}},
     battle = {},
     defeat = {},
@@ -8,6 +8,6 @@ game.screens = {
 }
 
 -- loads a screen
-function game.screens.load(name)
-    game.screen = game.screens[name]
+function Game.screens.load(name)
+    Game.screen = Game.screens[name]
 end

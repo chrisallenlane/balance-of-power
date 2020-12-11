@@ -1,35 +1,35 @@
-game.units = {}
+Game.units = {}
 
 -- update unit coordinates
-function game.units.update()
+function Game.units.update()
     -- unlock the cursor
-    game.lock.unit = false
+    Game.lock.unit = false
 
     -- if a unit is in-motion, lock the cursor
-    for _, unit in pairs(game.map.units) do
+    for _, unit in pairs(Game.map.units) do
         -- x
         if unit.px.x < unit.cell.x * 8 then
             unit.px.x = unit.px.x + 4
-            game.lock.unit = true
+            Game.lock.unit = true
         elseif unit.px.x > unit.cell.x * 8 then
             unit.px.x = unit.px.x - 4
-            game.lock.unit = true
+            Game.lock.unit = true
         end
 
         -- y
         if unit.px.y < unit.cell.y * 8 then
             unit.px.y = unit.px.y + 4
-            game.lock.unit = true
+            Game.lock.unit = true
         elseif unit.px.y > unit.cell.y * 8 then
             unit.px.y = unit.px.y - 4
-            game.lock.unit = true
+            Game.lock.unit = true
         end
     end
 end
 
 -- draw the units
-function game.units.draw()
-    for _, unit in pairs(game.map.units) do
+function Game.units.draw()
+    for _, unit in pairs(Game.map.units) do
         spr(unit.spr, unit.px.x, unit.px.y)
     end
 end

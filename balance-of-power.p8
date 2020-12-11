@@ -3,7 +3,7 @@ version 29
 __lua__
 
 -- TODO: refactor this
-game = {
+Game = {
 	map  = {},
   lock = {
     camera = false,

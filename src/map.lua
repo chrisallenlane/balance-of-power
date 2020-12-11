@@ -1,28 +1,28 @@
 -- initialize the map table
-game.maps = {}
+Game.maps = {}
 
 -- load the specified map
-function game.maps.load(num)
+function Game.maps.load(num)
     -- load the specified map
-    game.state.map = num
-    game.map = game.maps[num]()
+    Game.state.map = num
+    Game.map = Game.maps[num]()
 
     -- make it player 1's turn
-    game.cursor.turn = 1
+    Game.cursor.turn = 1
 
     -- reset the cursor position
-    game.cursor.cell.x, game.cursor.cell.y = game.map.cursor.x,
-                                             game.map.cursor.y
+    Game.cursor.cell.x, Game.cursor.cell.y = Game.map.cursor.x,
+                                             Game.map.cursor.y
 
     -- reset the camera position
-    game.camera.cell.x, game.camera.cell.y = game.map.camera.x,
-                                             game.map.camera.y
-    game.camera.px.x, game.camera.px.y = game.map.camera.x * 8,
-                                         game.map.camera.y * 8
+    Game.camera.cell.x, Game.camera.cell.y = Game.map.camera.x,
+                                             Game.map.camera.y
+    Game.camera.px.x, Game.camera.px.y = Game.map.camera.x * 8,
+                                         Game.map.camera.y * 8
 end
 
 -- draw the current map
-function game.maps.draw()
-    local m = game.map
+function Game.maps.draw()
+    local m = Game.map
     map(m.cell.x, m.cell.y, 0, 0, m.cell.w, m.cell.h)
 end

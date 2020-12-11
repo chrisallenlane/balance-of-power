@@ -14,4 +14,8 @@ function testUnitNew()
     luaunit.assertEquals(u.px.y, 32)
 end
 
+function testUnitMove()
+
+end
+
 os.exit(luaunit.LuaUnit.run())

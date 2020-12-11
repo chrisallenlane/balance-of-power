@@ -1,7 +1,7 @@
-game.screens.battle.menu = {choices = {"yes", "no"}, sel = 1, vis = false}
+Game.screens.battle.menu = {choices = {"yes", "no"}, sel = 1, vis = false}
 
 -- update "end turn?" menu state
-function game.screens.battle.menu:update()
+function Game.screens.battle.menu:update()
 
     -- right
     if self.sel == 1 and btnp(1) then
@@ -14,7 +14,7 @@ function game.screens.battle.menu:update()
 
     -- selection: "yes"
     if btnp(5) and self.sel == 1 then
-        game.cursor:turn_end()
+        Game.cursor:turn_end()
         self.vis = false
 
         -- selection: "no"
@@ -24,11 +24,11 @@ function game.screens.battle.menu:update()
 end
 
 -- draw the "end turn" menu
-function game.screens.battle.menu:draw()
+function Game.screens.battle.menu:draw()
     if self.vis then
         -- offset the menu location to align with the camera
-        local padx = game.camera.px.x
-        local pady = game.camera.px.y
+        local padx = Game.camera.px.x
+        local pady = Game.camera.px.y
 
         -- draw the menu
         rectfill(42 + padx, 52 + pady, 86 + padx, 74 + pady, 0)

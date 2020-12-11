@@ -4,26 +4,26 @@ function _init()
     -- implement an "advance stage" debug function
     -- TODO: remove this later
     menuitem(1, "advance stage", function()
-        if game.state.map < #game.maps then
-            game.state.map = game.state.map + 1
-            game.maps.load(game.state.map)
+        if Game.state.map < #Game.maps then
+            Game.state.map = Game.state.map + 1
+            Game.maps.load(Game.state.map)
         else
-            game.screens.load("victory")
+            Game.screens.load("victory")
         end
     end)
 
     -- implement a "reset map" menu function
     menuitem(2, "reset map", function()
-        game.maps.load(game.state.map)
+        Game.maps.load(Game.state.map)
     end)
 
-    game.screens.load("title")
+    Game.screens.load("title")
 end
 
 function _update60()
-    game.screen:update()
+    Game.screen:update()
 end
 
 function _draw()
-    game.screen:draw()
+    Game.screen:draw()
 end

@@ -1,33 +1,33 @@
 -- update the battle screen
-function game.screens.battle:update()
+function Game.screens.battle:update()
     -- If the "end turn" menu is visible, run its update loop
     if self.menu.vis then
         self.menu:update()
         return
     end
 
-    game.cursor:update()
-    game.units:update()
-    game.camera:update()
+    Game.cursor:update()
+    Game.units:update()
+    Game.camera:update()
 end
 
 -- draw the battle screen
-function game.screens.battle:draw()
+function Game.screens.battle:draw()
     cls()
-    game.maps.draw()
+    Game.maps.draw()
 
     -- always draw the cursor for player one
     -- only draw the cursor for player 2 when fighting a human enemy
-    if game.cursor.turn == 1 or (game.cursor.turn == 2 and not game.state.cpu) then
-        game.cursor:draw()
+    if Game.cursor.turn == 1 or (Game.cursor.turn == 2 and not Game.state.cpu) then
+        Game.cursor:draw()
     end
 
-    game.units.draw()
+    Game.units.draw()
     self.menu:draw()
 
     -- move the camera
-    game.camera:draw()
+    Game.camera:draw()
 
     -- display debug output
-    debug.vars(game)
+    debug.vars(Game)
 end

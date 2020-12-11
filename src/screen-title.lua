@@ -1,5 +1,5 @@
 -- update the title screen
-function game.screens.title:update()
+function Game.screens.title:update()
     local sel = self.menu.sel
 
     -- up
@@ -13,16 +13,16 @@ function game.screens.title:update()
         -- "select"
     elseif btnp(5) then
         -- if a 1-player game is selected, set a CPU opponent state flag
-        if self.menu.sel == 1 then game.state.cpu = true end
+        if self.menu.sel == 1 then Game.state.cpu = true end
 
         -- TODO: load the screen/loop appropriate for the menu selection
-        game.maps.load(1)
-        game.screens.load("battle")
+        Game.maps.load(1)
+        Game.screens.load("battle")
     end
 end
 
 -- draw the title screen
-function game.screens.title:draw()
+function Game.screens.title:draw()
     rectfill(0, 0, 127, 127, 12)
     print("balance of power", 39, 30, 1)
 
