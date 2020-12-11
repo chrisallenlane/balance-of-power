@@ -18,7 +18,7 @@ function Screens.battle.draw()
 
     -- always draw the cursor for player one
     -- only draw the cursor for player 2 when fighting a human enemy
-    if Cursor.turn == 1 or (Cursor.turn == 2 and not Game.state.cpu) then
+    if Turn.player == 1 or (Turn.player == 2 and not Game.state.cpu) then
         Cursor:draw()
     end
 

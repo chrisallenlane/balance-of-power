@@ -13,7 +13,7 @@ function Debug.vars()
 
     -- compose debugging messages
     local msgs = {
-        "turn: " .. Cursor.turn,
+        "turn: " .. Turn.player,
         "cur:  " .. Cursor.cell.x .. ", " .. Cursor.cell.y,
         "sel:  " .. sel,
         "cam:  " .. Camera.cell.x .. ", " .. Camera.cell.y,

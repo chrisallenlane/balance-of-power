@@ -26,7 +26,7 @@ function Cursor:update()
     -- TODO: externalize this logic elsewhere
     -- NB: this is a stub
     -- move the CPU player
-    if self.turn == 2 and Game.state.cpu then
+    if Turn.player == 2 and Game.state.cpu then
         local mv = -1
 
         -- select the first enemy unit
