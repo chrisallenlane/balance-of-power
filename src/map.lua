@@ -5,7 +5,7 @@ game.maps = {}
 function game.maps.load(num)
     -- load the specified map
     game.state.map = num
-    game.map = game.maps[num]
+    game.map = game.maps[num]()
 
     -- make it player 1's turn
     game.cursor.turn = 1

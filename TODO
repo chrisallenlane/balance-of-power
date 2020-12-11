@@ -1,13 +1,13 @@
 Todo:
+  - Refactor: create a `turn` table?
+
   - Animation: make cursor/camera movement smooth
   - Animation: map tiles (rivers, grass)
   - Art: make units smaller?
   - Config: add config (debug)
-  - Menu: restart level
   - Movement: path arrow (with different color marker for impassible)
   - Movement: unit movement radius
   - Movement: visually indicate unit selection
-  - Refactor: create a `turn` table?
   - SFX: stub
 
 Tooling:
