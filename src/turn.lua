@@ -14,7 +14,7 @@ function Turn:turn_end()
 
     -- load the next player's cursor
     if Cursor.last[self.player].x == nil or Cursor.last[self.player].y == nil then
-        local unit = Unit.first(self.player, Game.map.units)
+        local unit = Unit.first(self.player, Map.current.units)
         Cursor.cell.x = unit.cell.x
         Cursor.cell.y = unit.cell.y
     else
@@ -23,5 +23,6 @@ function Turn:turn_end()
     end
 
     -- center the screen on the specified coordinates
-    Camera:focus(Cursor.cell.x, Cursor.cell.y, Game.map.cell.w, Game.map.cell.h)
+    Camera:focus(Cursor.cell.x, Cursor.cell.y, Map.current.cell.w,
+                 Map.current.cell.h)
 end

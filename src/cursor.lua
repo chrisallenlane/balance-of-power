@@ -29,10 +29,10 @@ function Cursor:update()
         local mv = -1
 
         -- select the first enemy unit
-        local unit = Unit.first(2, Game.map.units)
+        local unit = Unit.first(2, Map.current.units)
 
         -- if moving left is invalid, move right
-        if not Cell.passable(unit.cell.x + mv, unit.cell.y, Game.map) then
+        if not Cell.passable(unit.cell.x + mv, unit.cell.y, Map.current) then
             mv = mv * -1
         end
 
@@ -66,7 +66,7 @@ function Cursor:update()
     end
 
     -- right
-    if btn(1) and self.cell.x < Game.map.cell.w - 1 then
+    if btn(1) and self.cell.x < Map.current.cell.w - 1 then
         self.move.r = true
         self.delay[1] = self.delay[1] + 1
         if self.delay[1] >= wait then
@@ -92,7 +92,7 @@ function Cursor:update()
     end
 
     -- down
-    if btn(3) and self.cell.y < Game.map.cell.h - 1 then
+    if btn(3) and self.cell.y < Map.current.cell.h - 1 then
         self.move.d = true
         self.delay[3] = self.delay[3] + 1
         if self.delay[3] >= wait then
@@ -105,13 +105,13 @@ function Cursor:update()
     end
 
     -- determine whether the cell is passable
-    self.cell.pass = Cell.passable(self.cell.x, self.cell.y, Game.map)
+    self.cell.pass = Cell.passable(self.cell.x, self.cell.y, Map.current)
 
     -- "X"
     -- move a unit
     if btnp(5) then
         -- determine whether a unit is beneath the cursor
-        local unit = Unit.at(self.cell.x, self.cell.y, Game.map.units)
+        local unit = Unit.at(self.cell.x, self.cell.y, Map.current.units)
 
         -- if a player unit is available beneath the cursor, select it
         if unit and unit.team == Turn.player then

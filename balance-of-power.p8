@@ -4,9 +4,7 @@ __lua__
 
 -- TODO: refactor this
 Game = {
-	map  = {},
 	state = {
-		map    = 0,
 		screen = "title",
 
     -- CPU opponent?

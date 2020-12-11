@@ -8,6 +8,6 @@ function Cell.passable(x, y, map)
 
     -- return false if a unit is at the specified coordinates
     -- TODO: pass as param
-    if Unit.at(x, y, Game.map.units) then return false end
+    if Unit.at(x, y, Map.current.units) then return false end
     return true
 end

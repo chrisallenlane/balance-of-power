@@ -16,7 +16,7 @@ function Screens.title:update()
         if self.menu.sel == 1 then Game.state.cpu = true end
 
         -- TODO: load the screen/loop appropriate for the menu selection
-        Game.maps.load(1)
+        Map:load(1)
         Screens.load("battle")
     end
 end

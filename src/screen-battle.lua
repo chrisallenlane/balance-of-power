@@ -14,7 +14,7 @@ end
 -- draw the battle screen
 function Screens.battle.draw()
     cls()
-    Game.maps.draw()
+    Map:draw()
 
     -- always draw the cursor for player one
     -- only draw the cursor for player 2 when fighting a human enemy

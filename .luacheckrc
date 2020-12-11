@@ -97,6 +97,7 @@ globals = {
   "Delay",
   "Game",
   "Lock",
+  "Map",
   "MenuTurnEnd",
   "Screens",
   "Turn",

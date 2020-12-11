@@ -23,7 +23,7 @@ function Camera:update()
 
     -- right/left
     if cur.move.r and cur.cell.x - self.cell.x > 11 and self.cell.x <
-        Game.map.cell.w - 16 then
+        Map.current.cell.w - 16 then
         self.cell.x = self.cell.x + 1
     elseif cur.move.l and self.cell.x > 0 and cur.cell.x - self.cell.x < 4 then
         self.cell.x = self.cell.x - 1
@@ -31,7 +31,7 @@ function Camera:update()
 
     -- down/up
     if cur.move.d and cur.cell.y - self.cell.y > 11 and self.cell.y <
-        Game.map.cell.h - 16 then
+        Map.current.cell.h - 16 then
         self.cell.y = self.cell.y + 1
     elseif cur.move.u and self.cell.y > 0 and cur.cell.y - self.cell.y < 4 then
         self.cell.y = self.cell.y - 1

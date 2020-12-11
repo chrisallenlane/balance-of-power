@@ -1,5 +1,4 @@
-
-add(Game.maps, function ()
+add(Map.defs, function ()
   return {
     camera = {x = 0, y = 0},
 
