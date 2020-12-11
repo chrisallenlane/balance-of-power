@@ -7,7 +7,7 @@ function Screens.battle:update()
     end
 
     Cursor:update()
-    Game.units:update()
+    Units:update()
     Camera:update()
 end
 
@@ -22,7 +22,7 @@ function Screens.battle:draw()
         Cursor:draw()
     end
 
-    Game.units.draw()
+    Units.draw()
     self.menu:draw()
 
     -- move the camera

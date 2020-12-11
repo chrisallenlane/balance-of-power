@@ -96,4 +96,5 @@ globals = {
   "Game",
   "Screens",
   "Unit",
+  "Units",
 }

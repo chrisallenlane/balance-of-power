@@ -1,7 +1,7 @@
-Game.units = {}
+Units = {}
 
 -- update unit coordinates
-function Game.units.update()
+function Units.update()
     -- unlock the cursor
     Game.lock.unit = false
 
@@ -28,7 +28,7 @@ function Game.units.update()
 end
 
 -- draw the units
-function Game.units.draw()
+function Units.draw()
     for _, unit in pairs(Game.map.units) do
         spr(unit.spr, unit.px.x, unit.px.y)
     end
