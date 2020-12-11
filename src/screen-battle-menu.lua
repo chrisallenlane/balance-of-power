@@ -2,7 +2,6 @@ Screens.battle.menu = {choices = {"yes", "no"}, sel = 1, vis = false}
 
 -- update "end turn?" menu state
 function Screens.battle.menu:update()
-
     -- right
     if self.sel == 1 and btnp(1) then
         self.sel = 2

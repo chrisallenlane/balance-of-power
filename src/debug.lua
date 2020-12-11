@@ -8,10 +8,6 @@ function Debug.vars()
     local pass = "n"
     if Cursor.cell.pass then pass = "y" end
 
-    -- indicate whether playing a human or CPU opponent
-    -- local p2 = "human"
-    -- if game.state.cpu then p2 = "cpu" end
-
     local lock = "n"
     if Game.lock.camera then lock = "y" end
 
@@ -26,7 +22,6 @@ function Debug.vars()
         "cpu:  " .. stat(1),
         "lock: " .. lock,
         "del:  " .. Game.delay.unit .. ", " .. Game.delay.cpu,
-        -- "p2:   " .. p2,
     }
 
     -- iterate over and print each debug message
