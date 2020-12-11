@@ -46,7 +46,7 @@ function Cursor:update()
 
         -- move the unit and end the turn
         unit:move(unit.cell.x + mv, unit.cell.y)
-        self:turn_end()
+        Turn:turn_end()
         return
     end
 
@@ -130,7 +130,7 @@ function Cursor:update()
             self.sel = false
 
             -- end the player's turn
-            self:turn_end()
+            Turn:turn_end()
 
         elseif not unit and not self.sel then
             Screens.battle.menu.sel = 1
@@ -161,28 +161,3 @@ function Cursor:draw()
     spr(sprite, self.cell.x * 8, self.cell.y * 8)
 end
 
--- change the player turn
-function Cursor:turn_end()
-    -- record the current player's cursor position
-    self.last[self.turn] = {x = self.cell.x, y = self.cell.y}
-
-    -- end the turn
-    if self.turn == 1 then
-        self.turn = 2
-    else
-        self.turn = 1
-    end
-
-    -- load the next player's cursor
-    if self.last[self.turn].x == nil or self.last[self.turn].y == nil then
-        local unit = Unit.first(self.turn, Game.map.units)
-        self.cell.x = unit.cell.x
-        self.cell.y = unit.cell.y
-    else
-        self.cell.x = self.last[self.turn].x
-        self.cell.y = self.last[self.turn].y
-    end
-
-    -- center the screen on the specified coordinates
-    Camera:focus(self.cell.x, self.cell.y, Game.map.cell.w, Game.map.cell.h)
-end

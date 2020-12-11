@@ -97,6 +97,7 @@ globals = {
   "Game",
   "Lock",
   "Screens",
+  "Turn",
   "Unit",
   "Units",
 }
