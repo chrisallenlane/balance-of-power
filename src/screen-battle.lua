@@ -29,5 +29,5 @@ function Game.screens.battle:draw()
     Camera:draw()
 
     -- display debug output
-    debug.vars(Game)
+    Debug.vars()
 end

@@ -1,5 +1,5 @@
-debug = {}
-function debug.vars(game)
+Debug = {}
+function Debug.vars()
     -- compose "selection" information
     local sel = "na"
     if Cursor.sel then sel = Cursor.sel.cell.x .. ", " .. Cursor.sel.cell.y end
@@ -13,7 +13,7 @@ function debug.vars(game)
     -- if game.state.cpu then p2 = "cpu" end
 
     local lock = "n"
-    if game.lock.camera then lock = "y" end
+    if Game.lock.camera then lock = "y" end
 
     -- compose debugging messages
     local msgs = {
@@ -25,7 +25,7 @@ function debug.vars(game)
         "mem:  " .. stat(0) .. " kb",
         "cpu:  " .. stat(1),
         "lock: " .. lock,
-        "del:  " .. game.delay.unit .. ", " .. game.delay.cpu,
+        "del:  " .. Game.delay.unit .. ", " .. Game.delay.cpu,
         -- "p2:   " .. p2,
     }
 
