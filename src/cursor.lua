@@ -2,7 +2,6 @@
 Cursor = {
     cell = {x = 0, y = 0, spr = 0, pass = true},
     sel = false,
-    turn = 1,
 
     -- track if the cursor is moving in a direction
     move = {d = false, l = false, r = false, u = false},
@@ -111,12 +110,11 @@ function Cursor:update()
     -- "X"
     -- move a unit
     if btnp(5) then
-
         -- determine whether a unit is beneath the cursor
         local unit = Unit.at(self.cell.x, self.cell.y, Game.map.units)
 
         -- if a player unit is available beneath the cursor, select it
-        if unit and unit.team == self.turn then
+        if unit and unit.team == Turn.player then
             self.sel = unit
 
             -- if there is no unit beneath our cursor, and we have a unit
