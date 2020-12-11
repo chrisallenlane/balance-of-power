@@ -1,7 +1,7 @@
-Game.screens.battle.menu = {choices = {"yes", "no"}, sel = 1, vis = false}
+Screens.battle.menu = {choices = {"yes", "no"}, sel = 1, vis = false}
 
 -- update "end turn?" menu state
-function Game.screens.battle.menu:update()
+function Screens.battle.menu:update()
 
     -- right
     if self.sel == 1 and btnp(1) then
@@ -24,7 +24,7 @@ function Game.screens.battle.menu:update()
 end
 
 -- draw the "end turn" menu
-function Game.screens.battle.menu:draw()
+function Screens.battle.menu:draw()
     if self.vis then
         -- offset the menu location to align with the camera
         local padx = Camera.px.x

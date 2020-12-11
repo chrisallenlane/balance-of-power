@@ -1,5 +1,5 @@
 -- update the title screen
-function Game.screens.title:update()
+function Screens.title:update()
     local sel = self.menu.sel
 
     -- up
@@ -17,12 +17,12 @@ function Game.screens.title:update()
 
         -- TODO: load the screen/loop appropriate for the menu selection
         Game.maps.load(1)
-        Game.screens.load("battle")
+        Screens.load("battle")
     end
 end
 
 -- draw the title screen
-function Game.screens.title:draw()
+function Screens.title:draw()
     rectfill(0, 0, 127, 127, 12)
     print("balance of power", 39, 30, 1)
 

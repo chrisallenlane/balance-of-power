@@ -1,5 +1,5 @@
 -- update the battle screen
-function Game.screens.battle:update()
+function Screens.battle:update()
     -- If the "end turn" menu is visible, run its update loop
     if self.menu.vis then
         self.menu:update()
@@ -12,7 +12,7 @@ function Game.screens.battle:update()
 end
 
 -- draw the battle screen
-function Game.screens.battle:draw()
+function Screens.battle:draw()
     cls()
     Game.maps.draw()
 

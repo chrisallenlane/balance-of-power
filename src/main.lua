@@ -8,7 +8,7 @@ function _init()
             Game.state.map = Game.state.map + 1
             Game.maps.load(Game.state.map)
         else
-            Game.screens.load("victory")
+            Screens.load("victory")
         end
     end)
 
@@ -17,7 +17,7 @@ function _init()
         Game.maps.load(Game.state.map)
     end)
 
-    Game.screens.load("title")
+    Screens.load("title")
 end
 
 function _update60()
