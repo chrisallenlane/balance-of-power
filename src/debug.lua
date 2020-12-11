@@ -9,7 +9,7 @@ function Debug.vars()
     if Cursor.cell.pass then pass = "y" end
 
     local lock = "n"
-    if Game.lock.camera then lock = "y" end
+    if Lock.camera then lock = "y" end
 
     -- compose debugging messages
     local msgs = {

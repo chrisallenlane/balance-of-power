@@ -94,6 +94,7 @@ globals = {
   "Cursor",
   "Debug",
   "Game",
+  "Lock",
   "Screens",
   "Unit",
   "Units",

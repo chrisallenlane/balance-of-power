@@ -5,17 +5,17 @@ Camera = {cell = {x = 0, y = 0}, px = {x = 0, y = 0}}
 function Camera:update()
     -- if a unit is being animated, do not allow the
     -- camera to move
-    if Game.lock.unit then return end
+    if Lock.unit then return end
 
     -- prevent the camera from moving immediately if a unit has just moved
-    Game.lock.camera = true
+    Lock.camera = true
     if Game.delay.unit > 0 then
         Game.delay.unit = Game.delay.unit - 1
         return
     end
 
     -- unlock the cursor
-    Game.lock.camera = false
+    Lock.camera = false
 
     -- track camera position as cell coordinates, and compare those coordinates
     -- to the cursor and screen position.
@@ -41,18 +41,18 @@ function Camera:update()
     -- scrolling look smoother.
     if self.px.x < self.cell.x * 8 then
         self.px.x = self.px.x + 4
-        Game.lock.camera = true
+        Lock.camera = true
     elseif self.px.x > self.cell.x * 8 then
         self.px.x = self.px.x - 4
-        Game.lock.camera = true
+        Lock.camera = true
     end
 
     if self.px.y < self.cell.y * 8 then
         self.px.y = self.px.y + 4
-        Game.lock.camera = true
+        Lock.camera = true
     elseif self.px.y > self.cell.y * 8 then
         self.px.y = self.px.y - 4
-        Game.lock.camera = true
+        Lock.camera = true
     end
 end
 

@@ -21,7 +21,7 @@ Cursor = {
 function Cursor:update()
     -- TODO: move this lock outside of this method
     -- if a unit is in-motion, lock the cursor
-    if Game.lock.unit or Game.lock.camera then return end
+    if Lock.unit or Lock.camera then return end
 
     -- TODO: externalize this logic elsewhere
     -- NB: this is a stub
