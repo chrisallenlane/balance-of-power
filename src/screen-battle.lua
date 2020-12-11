@@ -1,8 +1,8 @@
 -- update the battle screen
-function Screens.battle:update()
+function Screens.battle.update()
     -- If the "end turn" menu is visible, run its update loop
-    if self.menu.vis then
-        self.menu:update()
+    if MenuTurnEnd.vis then
+        MenuTurnEnd:update()
         return
     end
 
@@ -12,7 +12,7 @@ function Screens.battle:update()
 end
 
 -- draw the battle screen
-function Screens.battle:draw()
+function Screens.battle.draw()
     cls()
     Game.maps.draw()
 
@@ -23,7 +23,7 @@ function Screens.battle:draw()
     end
 
     Units.draw()
-    self.menu:draw()
+    MenuTurnEnd:draw()
 
     -- move the camera
     Camera:draw()

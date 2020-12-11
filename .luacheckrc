@@ -96,6 +96,7 @@ globals = {
   "Debug",
   "Game",
   "Lock",
+  "MenuTurnEnd",
   "Screens",
   "Turn",
   "Unit",

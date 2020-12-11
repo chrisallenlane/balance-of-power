@@ -133,8 +133,8 @@ function Cursor:update()
             Turn:turn_end()
 
         elseif not unit and not self.sel then
-            Screens.battle.menu.sel = 1
-            Screens.battle.menu.vis = true
+            MenuTurnEnd.sel = 1
+            MenuTurnEnd.vis = true
         end
 
         -- TODO: handle selection of enemy units
