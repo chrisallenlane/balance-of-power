@@ -5,10 +5,6 @@ __lua__
 -- TODO: refactor this
 Game = {
 	map  = {},
-  lock = {
-    camera = false,
-    unit = true,
-  },
 	state = {
 		map    = 0,
 		screen = "title",
@@ -21,10 +17,10 @@ Game = {
 -- externaize non-media assets
 #include src/screen.lua
 #include src/screen-battle.lua
-#include src/menu-turn-end.lua
 #include src/screen-title.lua
 #include src/screen-victory.lua
 #include src/screen-defeat.lua
+#include src/menu-turn-end.lua
 #include src/cell.lua
 #include src/lock.lua
 #include src/delay.lua

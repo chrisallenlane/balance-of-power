@@ -1,6 +1,4 @@
 Todo:
-  - Refactor: create a `turn` table?
-
   - Animation: make cursor/camera movement smooth
   - Animation: map tiles (rivers, grass)
   - Art: make units smaller?
@@ -15,6 +13,5 @@ Tooling:
   - Implement benchmarking harness
 
 Etc:
-  - Implement menuing system
   - Add a LICENSE
   - Update the README

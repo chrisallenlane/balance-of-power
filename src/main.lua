@@ -1,5 +1,3 @@
--- https://www.lua.org/pil/contents.html#P1
--- https://pico-8.fandom.com/wiki/APIReference
 function _init()
     -- implement an "advance stage" debug function
     -- TODO: remove this later
