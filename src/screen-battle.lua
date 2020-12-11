@@ -8,7 +8,7 @@ function Game.screens.battle:update()
 
     Game.cursor:update()
     Game.units:update()
-    Game.camera:update()
+    Camera:update()
 end
 
 -- draw the battle screen
@@ -26,7 +26,7 @@ function Game.screens.battle:draw()
     self.menu:draw()
 
     -- move the camera
-    Game.camera:draw()
+    Camera:draw()
 
     -- display debug output
     debug.vars(Game)

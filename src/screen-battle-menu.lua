@@ -27,8 +27,8 @@ end
 function Game.screens.battle.menu:draw()
     if self.vis then
         -- offset the menu location to align with the camera
-        local padx = Game.camera.px.x
-        local pady = Game.camera.px.y
+        local padx = Camera.px.x
+        local pady = Camera.px.y
 
         -- draw the menu
         rectfill(42 + padx, 52 + pady, 86 + padx, 74 + pady, 0)

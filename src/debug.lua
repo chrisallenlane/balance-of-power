@@ -22,7 +22,7 @@ function debug.vars(game)
         "turn: " .. game.cursor.turn,
         "cur:  " .. game.cursor.cell.x .. ", " .. game.cursor.cell.y,
         "sel:  " .. sel,
-        "cam:  " .. game.camera.cell.x .. ", " .. game.camera.cell.y,
+        "cam:  " .. Camera.cell.x .. ", " .. Camera.cell.y,
         "pass: " .. pass,
         "mem:  " .. stat(0) .. " kb",
         "cpu:  " .. stat(1),
@@ -33,6 +33,6 @@ function debug.vars(game)
 
     -- iterate over and print each debug message
     for i, msg in pairs(msgs) do
-        print(msg, 4 + game.camera.px.x, (4 + 8 * i) + game.camera.px.y, 7)
+        print(msg, 4 + Camera.px.x, (4 + 8 * i) + Camera.px.y, 7)
     end
 end

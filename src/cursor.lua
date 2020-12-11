@@ -196,5 +196,5 @@ function Game.cursor:turn_end()
     end
 
     -- center the screen on the specified coordinates
-    Game.camera:focus(self.cell.x, self.cell.y, Game.map.cell.w, Game.map.cell.h)
+    Camera:focus(self.cell.x, self.cell.y, Game.map.cell.w, Game.map.cell.h)
 end

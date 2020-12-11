@@ -1,8 +1,8 @@
 -- encapsulate camera state
-Game.camera = {cell = {x = 0, y = 0}, px = {x = 0, y = 0}}
+Camera = {cell = {x = 0, y = 0}, px = {x = 0, y = 0}}
 
 -- update camera state
-function Game.camera:update()
+function Camera:update()
     -- if a unit is being animated, do not allow the
     -- camera to move
     if Game.lock.unit then return end
@@ -57,12 +57,12 @@ function Game.camera:update()
 end
 
 -- move the game camera
-function Game.camera:draw()
+function Camera:draw()
     camera(self.px.x, self.px.y)
 end
 
 -- move the camera to the specified grid position
-function Game.camera:focus(x, y, w, h)
+function Camera:focus(x, y, w, h)
     -- Apply offsets to center on the specified coordinates. (An offset of 8
     -- is being applied because the screen is 16 cells wide.)
     x, y = x - 8, y - 8

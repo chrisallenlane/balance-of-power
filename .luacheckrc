@@ -90,6 +90,7 @@ globals = {
   "yield",
 
   -- bop globals
+  "Camera",
   "Game",
   "Unit",
   "debug",

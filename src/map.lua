@@ -15,10 +15,8 @@ function Game.maps.load(num)
                                              Game.map.cursor.y
 
     -- reset the camera position
-    Game.camera.cell.x, Game.camera.cell.y = Game.map.camera.x,
-                                             Game.map.camera.y
-    Game.camera.px.x, Game.camera.px.y = Game.map.camera.x * 8,
-                                         Game.map.camera.y * 8
+    Camera.cell.x, Camera.cell.y = Game.map.camera.x, Game.map.camera.y
+    Camera.px.x, Camera.px.y = Game.map.camera.x * 8, Game.map.camera.y * 8
 end
 
 -- draw the current map
