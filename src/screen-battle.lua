@@ -6,7 +6,7 @@ function Game.screens.battle:update()
         return
     end
 
-    Game.cursor:update()
+    Cursor:update()
     Game.units:update()
     Camera:update()
 end
@@ -18,8 +18,8 @@ function Game.screens.battle:draw()
 
     -- always draw the cursor for player one
     -- only draw the cursor for player 2 when fighting a human enemy
-    if Game.cursor.turn == 1 or (Game.cursor.turn == 2 and not Game.state.cpu) then
-        Game.cursor:draw()
+    if Cursor.turn == 1 or (Cursor.turn == 2 and not Game.state.cpu) then
+        Cursor:draw()
     end
 
     Game.units.draw()

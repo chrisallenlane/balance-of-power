@@ -2,13 +2,11 @@ debug = {}
 function debug.vars(game)
     -- compose "selection" information
     local sel = "na"
-    if game.cursor.sel then
-        sel = game.cursor.sel.cell.x .. ", " .. game.cursor.sel.cell.y
-    end
+    if Cursor.sel then sel = Cursor.sel.cell.x .. ", " .. Cursor.sel.cell.y end
 
     -- indicate whether the tile is passable
     local pass = "n"
-    if game.cursor.cell.pass then pass = "y" end
+    if Cursor.cell.pass then pass = "y" end
 
     -- indicate whether playing a human or CPU opponent
     -- local p2 = "human"
@@ -19,8 +17,8 @@ function debug.vars(game)
 
     -- compose debugging messages
     local msgs = {
-        "turn: " .. game.cursor.turn,
-        "cur:  " .. game.cursor.cell.x .. ", " .. game.cursor.cell.y,
+        "turn: " .. Cursor.turn,
+        "cur:  " .. Cursor.cell.x .. ", " .. Cursor.cell.y,
         "sel:  " .. sel,
         "cam:  " .. Camera.cell.x .. ", " .. Camera.cell.y,
         "pass: " .. pass,

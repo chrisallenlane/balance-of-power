@@ -1,5 +1,5 @@
 -- encapsulate cursor state
-Game.cursor = {
+Cursor = {
     cell = {x = 0, y = 0, spr = 0, pass = true},
     sel = false,
     turn = 1,
@@ -18,7 +18,7 @@ Game.cursor = {
 }
 
 -- update cursor state
-function Game.cursor:update()
+function Cursor:update()
 
     -- TODO: move this lock outside of this method
     -- if a unit is in-motion, lock the cursor
@@ -147,7 +147,7 @@ function Game.cursor:update()
 end
 
 -- render the cursor
-function Game.cursor:draw()
+function Cursor:draw()
     local sprite = 16
     if self.frame < 30 then
         sprite = 32
@@ -163,7 +163,7 @@ function Game.cursor:draw()
 end
 
 -- return true if the map tile is passable
-function Game.cursor.passable(x, y, map)
+function Cursor.passable(x, y, map)
     -- return false if the map tile at the specified coordinates is flagged as
     -- impassible
     if fget(mget(map.cell.x + x, map.cell.y + y), 0) then return false end
@@ -174,7 +174,7 @@ function Game.cursor.passable(x, y, map)
 end
 
 -- change the player turn
-function Game.cursor:turn_end()
+function Cursor:turn_end()
     -- record the current player's cursor position
     self.last[self.turn] = {x = self.cell.x, y = self.cell.y}
 

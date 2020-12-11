@@ -8,11 +8,10 @@ function Game.maps.load(num)
     Game.map = Game.maps[num]()
 
     -- make it player 1's turn
-    Game.cursor.turn = 1
+    Cursor.turn = 1
 
     -- reset the cursor position
-    Game.cursor.cell.x, Game.cursor.cell.y = Game.map.cursor.x,
-                                             Game.map.cursor.y
+    Cursor.cell.x, Cursor.cell.y = Game.map.cursor.x, Game.map.cursor.y
 
     -- reset the camera position
     Camera.cell.x, Camera.cell.y = Game.map.camera.x, Game.map.camera.y

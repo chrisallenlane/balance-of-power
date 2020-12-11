@@ -19,7 +19,7 @@ function Camera:update()
 
     -- track camera position as cell coordinates, and compare those coordinates
     -- to the cursor and screen position.
-    local cur = Game.cursor
+    local cur = Cursor
 
     -- right/left
     if cur.move.r and cur.cell.x - self.cell.x > 11 and self.cell.x <

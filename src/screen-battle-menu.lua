@@ -14,7 +14,7 @@ function Game.screens.battle.menu:update()
 
     -- selection: "yes"
     if btnp(5) and self.sel == 1 then
-        Game.cursor:turn_end()
+        Cursor:turn_end()
         self.vis = false
 
         -- selection: "no"

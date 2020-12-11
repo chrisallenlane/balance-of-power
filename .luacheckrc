@@ -91,6 +91,7 @@ globals = {
 
   -- bop globals
   "Camera",
+  "Cursor",
   "Game",
   "Unit",
   "debug",
