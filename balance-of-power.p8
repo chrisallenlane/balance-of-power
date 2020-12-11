@@ -29,6 +29,7 @@ Game = {
 #include src/screen-title.lua
 #include src/screen-victory.lua
 #include src/screen-defeat.lua
+#include src/cell.lua
 #include src/lock.lua
 #include src/camera.lua
 #include src/unit.lua

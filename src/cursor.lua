@@ -33,7 +33,7 @@ function Cursor:update()
         local unit = Unit.first(2, Game.map.units)
 
         -- if moving left is invalid, move right
-        if not self.passable(unit.cell.x + mv, unit.cell.y, Game.map) then
+        if not Cell.passable(unit.cell.x + mv, unit.cell.y, Game.map) then
             mv = mv * -1
         end
 
@@ -106,7 +106,7 @@ function Cursor:update()
     end
 
     -- determine whether the cell is passable
-    self.cell.pass = self.passable(self.cell.x, self.cell.y, Game.map)
+    self.cell.pass = Cell.passable(self.cell.x, self.cell.y, Game.map)
 
     -- "X"
     -- move a unit
@@ -159,17 +159,6 @@ function Cursor:draw()
 
     -- draw the sprite
     spr(sprite, self.cell.x * 8, self.cell.y * 8)
-end
-
--- return true if the map tile is passable
-function Cursor.passable(x, y, map)
-    -- return false if the map tile at the specified coordinates is flagged as
-    -- impassible
-    if fget(mget(map.cell.x + x, map.cell.y + y), 0) then return false end
-
-    -- return false if a unit is at the specified coordinates
-    if Unit.at(x, y, Game.map.units) then return false end
-    return true
 end
 
 -- change the player turn
