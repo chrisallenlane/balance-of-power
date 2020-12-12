@@ -1,19 +1,25 @@
 -- Unit prototype
 Unit = {
+    -- player-facing unit stats
+    stat = {
+        -- power points
+        pwr = 0,
+
+        -- attack
+        atk = 0,
+
+        -- def
+        def = 0,
+
+        -- range
+        rng = 0,
+
+        -- speed
+        spd = 0,
+    },
+
     -- sprite id
     spr = 0,
-
-    -- hit points
-    hp = 0,
-
-    -- attack
-    atk = 0,
-
-    -- def
-    def = 0,
-
-    -- speed
-    spd = 0,
 
     -- cell position
     cell = {x = 0, y = 0},
