@@ -20,6 +20,7 @@ Game = {
 #include src/screen-defeat.lua
 #include src/menu-screen-title.lua
 #include src/menu-turn-end.lua
+#include src/input.lua
 #include src/cell.lua
 #include src/lock.lua
 #include src/delay.lua

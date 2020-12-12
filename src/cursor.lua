@@ -3,13 +3,6 @@ Cursor = {
     cell = {x = 0, y = 0, spr = 0, pass = true},
     sel = false,
 
-    -- track if the cursor is moving in a direction
-    move = {d = false, l = false, r = false, u = false},
-
-    -- regulate cursor speed by manually implementing `btnp`-like
-    -- functionality
-    delay = {[0] = 3, [1] = 3, [2] = 3, [3] = 3},
-
     -- record the position of the cursor when each player's turn ends
     last = {[1] = {x = nil, y = nil}, [2] = {x = nil, y = nil}},
 
@@ -49,59 +42,18 @@ function Cursor:update()
         return
     end
 
-    -- don't register a re-press until `wait` frames
-    local wait = 7
-
-    -- left
-    if btn(0) and self.cell.x > 0 then
-        self.move.l = true
-        self.delay[0] = self.delay[0] + 1
-        if self.delay[0] >= wait then
-            self.delay[0] = 0
-            self.cell.x = self.cell.x - 1
-        end
-    elseif not btn(0) then
-        self.delay[0] = wait - 1
-        self.move.l = false
+    -- left/right
+    if Left:btnp() and self.cell.x > 0 then
+        self.cell.x = self.cell.x - 1
+    elseif Right:btnp() and self.cell.x < Map.current.cell.w - 1 then
+        self.cell.x = self.cell.x + 1
     end
 
-    -- right
-    if btn(1) and self.cell.x < Map.current.cell.w - 1 then
-        self.move.r = true
-        self.delay[1] = self.delay[1] + 1
-        if self.delay[1] >= wait then
-            self.delay[1] = 0
-            self.cell.x = self.cell.x + 1
-        end
-    elseif not btn(1) then
-        self.delay[1] = wait - 1
-        self.move.r = false
-    end
-
-    -- up
-    if btn(2) and self.cell.y > 0 then
-        self.move.u = true
-        self.delay[2] = self.delay[2] + 1
-        if self.delay[2] >= wait then
-            self.delay[2] = 0
-            self.cell.y = self.cell.y - 1
-        end
-    elseif not btn(2) then
-        self.delay[2] = wait - 1
-        self.move.u = false
-    end
-
-    -- down
-    if btn(3) and self.cell.y < Map.current.cell.h - 1 then
-        self.move.d = true
-        self.delay[3] = self.delay[3] + 1
-        if self.delay[3] >= wait then
-            self.delay[3] = 0
-            self.cell.y = self.cell.y + 1
-        end
-    elseif not btn(3) then
-        self.delay[3] = wait - 1
-        self.move.d = false
+    -- up/down
+    if Up:btnp() and self.cell.y > 0 then
+        self.cell.y = self.cell.y - 1
+    elseif Down:btnp() and self.cell.y < Map.current.cell.h - 1 then
+        self.cell.y = self.cell.y + 1
     end
 
     -- determine whether the cell is passable
