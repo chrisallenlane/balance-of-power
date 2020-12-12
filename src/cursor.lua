@@ -1,7 +1,7 @@
 -- encapsulate cursor state
 Cursor = {
     -- current cursor cell position
-    cell = {x = 0, y = 0, spr = 0, pass = true},
+    cell = {x = 0, y = 0, spr = 0},
 
     -- selected unit
     sel = false,
@@ -33,9 +33,6 @@ function Cursor:update()
         self.cell.y = self.cell.y + 1
     end
 
-    -- determine whether the cell is passable
-    self.cell.pass = Cell.passable(self.cell.x, self.cell.y, Map.current)
-
     -- "X"
     -- move a unit
     if BtnX:btnp() then
@@ -49,7 +46,8 @@ function Cursor:update()
             -- if there is no unit beneath our cursor, and we have a unit
             -- selected, and the terrain beneath our cursor is passable, move the
             -- unit
-        elseif not unit and self.sel and self.cell.pass then
+        elseif not unit and self.sel and
+            Cell.passable(self.cell.x, self.cell.y, Map.current) then
             -- move the unit
             self.sel:move(self.cell.x, self.cell.y)
             Units.delay = 30

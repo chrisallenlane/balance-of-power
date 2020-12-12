@@ -6,7 +6,9 @@ function Debug.vars()
 
     -- indicate whether the tile is passable
     local pass = "n"
-    if Cursor.cell.pass then pass = "y" end
+    if Cell.passable(Cursor.cell.x, Cursor.cell.y, Map.current) then
+        pass = "y"
+    end
 
     -- compose debugging messages
     local msgs = {
