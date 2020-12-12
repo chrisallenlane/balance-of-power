@@ -13,10 +13,17 @@ function Screens.title.update()
 
         -- "select"
     elseif btnp(5) then
-        -- if a 1-player game is selected, set a CPU opponent state flag
-        if menu.sel == 1 then Game.state.cpu = true end
+        -- initialize player 1
+        add(Players, Player:new({num = 1, cpu = false}))
 
-        -- TODO: load the screen/loop appropriate for the menu selection
+        -- if a 1-player game is selected, create a CPU opponent
+        local cpu = false
+        if menu.sel == 1 then cpu = true end
+
+        -- initialize player 2
+        add(Players, Player:new({num = 2, cpu = cpu}))
+
+        -- TODO: remove this explict call
         Map:load(1)
         Screens.load("battle")
     end

@@ -16,6 +16,12 @@ function Map:load(num)
     self.num = num
     self.current = self.defs[num]()
 
+    -- TODO: clean this up
+    Cursor.last = {
+        {x = nil, y = nil}, -- p1
+        {x = nil, y = nil}, -- p2
+    }
+
     -- make it player 1's turn
     Turn.player = 1
 

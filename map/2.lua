@@ -4,7 +4,7 @@ add(Map.defs, function ()
 
     cell = {x = 32, y = 0, w = 16, h = 32},
 
-    cursor = {x = 1, y = 28},
+    cursor = {x = 3, y = 28},
 
     units = {
       Unit:new({spr = 80, team = 1, cell = {x = 3, y = 28}}),

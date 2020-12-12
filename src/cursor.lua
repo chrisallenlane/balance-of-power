@@ -7,6 +7,7 @@ Cursor = {
     sel = false,
 
     -- record the position of the cursor when each player's turn ends
+    -- TODO: move into Player?
     last = {
         {x = nil, y = nil}, -- p1
         {x = nil, y = nil}, -- p2
@@ -22,44 +23,17 @@ function Cursor:update()
     -- if a unit is in-motion, lock the cursor
     if Lock.unit or Lock.camera then return end
 
-    -- TODO: externalize this logic elsewhere
-    -- NB: this is a stub
-    -- move the CPU player
-    if Turn.player == 2 and Game.state.cpu then
-        local mv = -1
-
-        -- select the first enemy unit
-        local unit = Unit.first(2, Map.current.units)
-
-        -- if moving left is invalid, move right
-        if not Cell.passable(unit.cell.x + mv, unit.cell.y, Map.current) then
-            mv = mv * -1
-        end
-
-        -- pause in place for a moment before the CPU moves
-        if Delay.cpu > 0 then
-            Delay.cpu = Delay.cpu - 1
-            return
-        end
-        Delay.cpu = 30
-
-        -- move the unit and end the turn
-        unit:move(unit.cell.x + mv, unit.cell.y)
-        Turn:turn_end()
-        return
-    end
-
     -- left/right
-    if Left:btnp() and self.cell.x > 0 then
+    if BtnLeft:btnp() and self.cell.x > 0 then
         self.cell.x = self.cell.x - 1
-    elseif Right:btnp() and self.cell.x < Map.current.cell.w - 1 then
+    elseif BtnRight:btnp() and self.cell.x < Map.current.cell.w - 1 then
         self.cell.x = self.cell.x + 1
     end
 
     -- up/down
-    if Up:btnp() and self.cell.y > 0 then
+    if BtnUp:btnp() and self.cell.y > 0 then
         self.cell.y = self.cell.y - 1
-    elseif Down:btnp() and self.cell.y < Map.current.cell.h - 1 then
+    elseif BtnDown:btnp() and self.cell.y < Map.current.cell.h - 1 then
         self.cell.y = self.cell.y + 1
     end
 
@@ -68,7 +42,7 @@ function Cursor:update()
 
     -- "X"
     -- move a unit
-    if btnp(5) then
+    if BtnX:btnp() then
         -- determine whether a unit is beneath the cursor
         local unit = Unit.at(self.cell.x, self.cell.y, Map.current.units)
 
@@ -99,7 +73,7 @@ function Cursor:update()
 
     -- "Z"
     -- unselect a selected unit
-    if btnp(4) and self.sel then self.sel = false end
+    if BtnZ:btnp() and self.sel then self.sel = false end
 end
 
 -- render the cursor

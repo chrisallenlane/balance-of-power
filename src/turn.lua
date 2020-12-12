@@ -1,7 +1,11 @@
 Turn = {player = 1}
 
+-- TODO: move this into player?
 -- change the player turn
 function Turn:turn_end()
+    -- unselect the unit
+    Cursor.sel = false
+
     -- record the current player's cursor position
     Cursor.last[self.player] = {x = Cursor.cell.x, y = Cursor.cell.y}
 

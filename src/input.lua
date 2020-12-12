@@ -31,7 +31,9 @@ function Input:btnp()
 end
 
 -- Initialize globals for reading button inputs
-Left = Input:new({btn = 0})
-Right = Input:new({btn = 1})
-Up = Input:new({btn = 2})
-Down = Input:new({btn = 3})
+BtnLeft = Input:new({btn = 0})
+BtnRight = Input:new({btn = 1})
+BtnUp = Input:new({btn = 2})
+BtnDown = Input:new({btn = 3})
+BtnX = Input:new({btn = 5})
+BtnZ = Input:new({btn = 4})

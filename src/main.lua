@@ -15,7 +15,12 @@ function _init()
         Map:load(Map.num)
     end)
 
+    -- load the title screen
+    -- TODO: set this default; remove this call
     Screens.load("title")
+
+    -- TODO: initialize two players, one of which may be a CPU depending on
+    -- the title screen selection
 end
 
 function _update60()

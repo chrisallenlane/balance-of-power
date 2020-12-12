@@ -3,14 +3,7 @@ version 29
 __lua__
 
 -- TODO: refactor this
-Game = {
-	state = {
-		screen = "title",
-
-    -- CPU opponent?
-    cpu    = false,
-	},
-}
+Game = { state = { screen = "title" } }
 
 -- externaize non-media assets
 #include src/screen.lua
@@ -20,6 +13,8 @@ Game = {
 #include src/screen-defeat.lua
 #include src/menu-screen-title.lua
 #include src/menu-turn-end.lua
+#include src/player.lua
+#include src/cpu.lua
 #include src/input.lua
 #include src/cell.lua
 #include src/lock.lua
