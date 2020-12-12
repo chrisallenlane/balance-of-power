@@ -8,8 +8,8 @@ function Camera:update()
 
     -- TODO: externalize this
     -- prevent the camera from moving immediately if a unit has just moved
-    if Delay.unit > 0 then
-        Delay.unit = Delay.unit - 1
+    if Units.delay > 0 then
+        Units.delay = Units.delay - 1
         return
     end
 
@@ -20,6 +20,7 @@ function Camera:update()
     -- to the cursor and screen position.
     local cur = Cursor
 
+    -- TODO: do we even need to track the camera's cell coordinates?
     -- right/left
     if cur.cell.x - self.cell.x > 11 and self.cell.x < Map.current.cell.w - 16 then
         self.cell.x = self.cell.x + 1

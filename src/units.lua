@@ -1,4 +1,4 @@
-Units = {ready = true}
+Units = {ready = true, delay = 0}
 
 -- update unit coordinates
 function Units.update()

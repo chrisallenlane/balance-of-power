@@ -52,6 +52,7 @@ function Cursor:update()
         elseif not unit and self.sel and self.cell.pass then
             -- move the unit
             self.sel:move(self.cell.x, self.cell.y)
+            Units.delay = 30
 
             -- clear the unit selection
             self.sel = false

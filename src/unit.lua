@@ -56,6 +56,7 @@ function Unit.first(team, units)
     for _, unit in pairs(units) do if unit.team == team then return unit end end
 
     -- NB: we realistically should never end up here
+    -- TODO: throw exception if we somehow do
     return false
 end
 
@@ -63,6 +64,4 @@ end
 function Unit:move(to_x, to_y)
     self.cell.x = to_x
     self.cell.y = to_y
-    -- TODO: externalize this
-    Delay.unit = 30
 end

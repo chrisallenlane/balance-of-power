@@ -1,7 +1,13 @@
-CPU = {}
+CPU = {delay = 0}
 
 -- NB: this is a stub
 function CPU.update()
+    -- pause in place for a moment before the CPU moves
+    if CPU.delay > 0 then
+        CPU.delay = CPU.delay - 1
+        return
+    end
+
     local mv = -1
 
     -- select the first enemy unit
@@ -12,15 +18,13 @@ function CPU.update()
         mv = mv * -1
     end
 
-    -- pause in place for a moment before the CPU moves
-    if Delay.cpu > 0 then
-        Delay.cpu = Delay.cpu - 1
-        return
-    end
-    Delay.cpu = 30
-
     -- move the unit and end the turn
     unit:move(unit.cell.x + mv, unit.cell.y)
+
+    -- reset delays
+    CPU.delay = 30
+    Units.delay = 30
+
     Turn:turn_end()
     return
 end
