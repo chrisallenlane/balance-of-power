@@ -1,10 +1,7 @@
 CPU = {}
 
+-- NB: this is a stub
 function CPU.update()
-    if Lock.unit or Lock.camera then return end
-
-    -- NB: this is a stub
-    -- move the CPU player
     local mv = -1
 
     -- select the first enemy unit

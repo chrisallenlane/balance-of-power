@@ -8,9 +8,6 @@ function Debug.vars()
     local pass = "n"
     if Cursor.cell.pass then pass = "y" end
 
-    local lock = "n"
-    if Lock.camera then lock = "y" end
-
     -- compose debugging messages
     local msgs = {
         "turn: " .. Turn.player,
@@ -20,8 +17,6 @@ function Debug.vars()
         "pass: " .. pass,
         "mem:  " .. stat(0) .. " kb",
         "cpu:  " .. stat(1),
-        "lock: " .. lock,
-        "del:  " .. Delay.unit .. ", " .. Delay.cpu,
     }
 
     -- iterate over and print each debug message

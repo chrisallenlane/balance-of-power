@@ -19,10 +19,6 @@ Cursor = {
 
 -- update cursor state
 function Cursor:update()
-    -- TODO: move this lock outside of this method
-    -- if a unit is in-motion, lock the cursor
-    if Lock.unit or Lock.camera then return end
-
     -- left/right
     if BtnLeft:btnp() and self.cell.x > 0 then
         self.cell.x = self.cell.x - 1

@@ -17,7 +17,6 @@ Game = { state = { screen = "title" } }
 #include src/cpu.lua
 #include src/input.lua
 #include src/cell.lua
-#include src/lock.lua
 #include src/delay.lua
 #include src/turn.lua
 #include src/camera.lua

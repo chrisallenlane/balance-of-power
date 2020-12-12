@@ -63,5 +63,6 @@ end
 function Unit:move(to_x, to_y)
     self.cell.x = to_x
     self.cell.y = to_y
+    -- TODO: externalize this
     Delay.unit = 30
 end

@@ -1,21 +1,20 @@
 -- encapsulate camera state
-Camera = {cell = {x = 0, y = 0}, px = {x = 0, y = 0}}
+Camera = {ready = false, cell = {x = 0, y = 0}, px = {x = 0, y = 0}}
 
 -- update camera state
 function Camera:update()
-    -- if a unit is being animated, do not allow the
-    -- camera to move
-    if Lock.unit then return end
+    -- TODO: get rid of this
+    self.ready = false
 
+    -- TODO: externalize this
     -- prevent the camera from moving immediately if a unit has just moved
-    Lock.camera = true
     if Delay.unit > 0 then
         Delay.unit = Delay.unit - 1
         return
     end
 
-    -- unlock the cursor
-    Lock.camera = false
+    -- assume that the camera is ready
+    self.ready = true
 
     -- track camera position as cell coordinates, and compare those coordinates
     -- to the cursor and screen position.
@@ -39,18 +38,18 @@ function Camera:update()
     -- scrolling look smoother.
     if self.px.x < self.cell.x * 8 then
         self.px.x = self.px.x + 4
-        Lock.camera = true
+        self.ready = false
     elseif self.px.x > self.cell.x * 8 then
         self.px.x = self.px.x - 4
-        Lock.camera = true
+        self.ready = false
     end
 
     if self.px.y < self.cell.y * 8 then
         self.px.y = self.px.y + 4
-        Lock.camera = true
+        self.ready = false
     elseif self.px.y > self.cell.y * 8 then
         self.px.y = self.px.y - 4
-        Lock.camera = true
+        self.ready = false
     end
 end
 

@@ -6,16 +6,19 @@ function Screens.battle.update()
         return
     end
 
-    -- TODO: move locks here?
-
-    if Turn.player == 1 or (Turn.player == 2 and not Players[2].cpu) then
-        Cursor:update()
-    else
-        CPU.update()
+    -- do not run player/CPU update loops if a lock is engaged
+    if Camera.ready and Units.ready then
+        if Turn.player == 1 or (Turn.player == 2 and not Players[2].cpu) then
+            Cursor:update()
+        else
+            CPU.update()
+        end
     end
 
     Units:update()
-    Camera:update()
+
+    -- only move the camera if units have finished moving
+    if Units.ready then Camera:update() end
 end
 
 -- draw the battle screen
