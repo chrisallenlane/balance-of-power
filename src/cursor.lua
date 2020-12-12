@@ -1,11 +1,18 @@
 -- encapsulate cursor state
 Cursor = {
+    -- current cursor cell position
     cell = {x = 0, y = 0, spr = 0, pass = true},
+
+    -- selected unit
     sel = false,
 
     -- record the position of the cursor when each player's turn ends
-    last = {[1] = {x = nil, y = nil}, [2] = {x = nil, y = nil}},
+    last = {
+        {x = nil, y = nil}, -- p1
+        {x = nil, y = nil}, -- p2
+    },
 
+    -- frame counter used for animations
     frame = 0,
 }
 
