@@ -21,8 +21,8 @@ Unit = {
     -- pixel position
     px = {x = 0, y = 0},
 
-    -- team
-    team = 1,
+    -- player
+    player = 1,
 
     -- is the unit selected?
     sel = false,
@@ -50,10 +50,12 @@ function Unit.at(x, y, units)
     return false
 end
 
--- Returns the first unit on the specified team
-function Unit.first(team, units)
+-- Returns the first unit on `player`'s team team
+function Unit.first(player, units)
     -- XXX: this runs in linear time
-    for _, unit in pairs(units) do if unit.team == team then return unit end end
+    for _, unit in pairs(units) do
+        if unit.player == player then return unit end
+    end
 
     -- NB: we realistically should never end up here
     -- TODO: throw exception if we somehow do

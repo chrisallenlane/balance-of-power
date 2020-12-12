@@ -40,7 +40,7 @@ function Cursor:update()
         local unit = Unit.at(self.cell.x, self.cell.y, Map.current.units)
 
         -- if a player unit is available beneath the cursor, select it
-        if unit and unit.team == Turn.player then
+        if unit and unit.player == Turn.player then
             self.sel = unit
 
             -- if there is no unit beneath our cursor, and we have a unit
