@@ -98,6 +98,7 @@ globals = {
   "Game",
   "Lock",
   "Map",
+  "MenuScreenTitle",
   "MenuTurnEnd",
   "Screens",
   "Turn",
