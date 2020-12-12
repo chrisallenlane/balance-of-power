@@ -18,9 +18,6 @@ Unit = {
         spd = 0,
     },
 
-    -- sprite id
-    spr = 0,
-
     -- cell position
     cell = {x = 0, y = 0},
 
@@ -30,8 +27,8 @@ Unit = {
     -- player
     player = 1,
 
-    -- is the unit selected?
-    sel = false,
+    -- sprite id
+    spr = 0,
 }
 
 -- Unit constructor
