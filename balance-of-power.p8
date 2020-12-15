@@ -6,6 +6,7 @@ __lua__
 Game = { state = { screen = "title" } }
 
 -- externaize non-media assets
+#include src/radius.lua
 #include src/screen.lua
 #include src/screen-battle.lua
 #include src/screen-title.lua

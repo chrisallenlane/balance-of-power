@@ -110,6 +110,7 @@ globals = {
 	"MenuTurnEnd",
 	"Player",
 	"Players",
+	"Radius",
 	"Screens",
 	"Turn",
 	"Unit",
