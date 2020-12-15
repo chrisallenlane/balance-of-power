@@ -49,7 +49,8 @@ function Cursor:update()
             -- selected, and the terrain beneath our cursor is passable, move the
             -- unit
         elseif not unit and self.sel and
-            Cell.passable(self.cell.x, self.cell.y, Map.current) then
+            Cell.passable(self.cell.x, self.cell.y, Map.current) and
+            Radius:contains(self.cell.x, self.cell.y) then
             -- move the unit
             self.sel:move(self.cell.x, self.cell.y)
             Radius:clear()
