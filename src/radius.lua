@@ -2,6 +2,10 @@ Radius = {cells = {}, center = {x = nil, y = nil}, radius = nil}
 
 -- draw a radius at the specified coordinates
 function Radius:update(x, y, r)
+    -- clear the prior radius
+    self:clear()
+
+    -- assign new property values
     self.center.x = x
     self.center.y = y
     self.radius = r
