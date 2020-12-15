@@ -8,6 +8,7 @@ Cursor = {
 
     -- record the position of the cursor when each player's turn ends
     -- TODO: move into Player?
+    -- TODO: can probably refactor into single table
     last = {
         {x = nil, y = nil}, -- p1
         {x = nil, y = nil}, -- p2

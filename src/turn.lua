@@ -16,6 +16,7 @@ function Turn:turn_end()
         self.player = 1
     end
 
+    -- TODO: refactor into Cursor save/load or something?
     -- load the next player's cursor
     if Cursor.last[self.player].x == nil or Cursor.last[self.player].y == nil then
         local unit = Unit.first(self.player, Map.current.units)

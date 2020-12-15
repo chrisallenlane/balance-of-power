@@ -25,6 +25,6 @@ function CPU.update()
     CPU.delay = 30
     Units.delay = 30
 
+    -- end the CPU turn
     Turn:turn_end()
-    return
 end
