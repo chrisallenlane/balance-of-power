@@ -11,14 +11,14 @@ function Radius:update(x, y, r)
     self.radius = r
 
     -- algo starts
-    self:cell(self.center.x + self.radius, self.center.y)
-    self:cell(self.center.x - self.radius, self.center.y)
-    self:cell(self.center.x, self.center.y + self.radius)
-    self:cell(self.center.x, self.center.y - self.radius)
+    self:append(self.center.x + self.radius, self.center.y)
+    self:append(self.center.x - self.radius, self.center.y)
+    self:append(self.center.x, self.center.y + self.radius)
+    self:append(self.center.x, self.center.y - self.radius)
 end
 
--- register a cell as within the radius
-function Radius:cell(x, y)
+-- append the specified coordinate pair to set of radius cells
+function Radius:append(x, y)
     if not self.cells[x] then self.cells[x] = {} end
 
     self.cells[x][y] = true
