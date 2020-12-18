@@ -5,7 +5,6 @@ Todo:
   - Config: add config (debug)
   - Movement: path arrow (with different color marker for impassible)
   - Movement: unit movement radius
-  - Movement: visually indicate unit selection
   - SFX: stub
 
 Tooling:

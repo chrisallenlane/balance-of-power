@@ -1,27 +1,36 @@
-Radius = {cells = {}, center = {x = nil, y = nil}, radius = nil}
+Radius = {cells = {}}
 
 -- draw a radius at the specified coordinates
-function Radius:update(x, y, r)
+function Radius:update(x, y)
     -- clear the prior radius
     self:clear()
 
-    -- assign new property values
-    self.center.x = x
-    self.center.y = y
-    self.radius = r
-
-    -- algo starts
-    self:append(self.center.x + self.radius, self.center.y)
-    self:append(self.center.x - self.radius, self.center.y)
-    self:append(self.center.x, self.center.y + self.radius)
-    self:append(self.center.x, self.center.y - self.radius)
+    for _, cell in pairs(self.near(x, y)) do self:append(cell.x, cell.y) end
 end
 
 -- append the specified coordinate pair to set of radius cells
 function Radius:append(x, y)
     if not self.cells[x] then self.cells[x] = {} end
-
     self.cells[x][y] = true
+end
+
+-- return the set of cells adjacent to the specified cell
+function Radius.near(x, y)
+    return {
+        {x = x + 1, y = y},
+        {x = x - 1, y = y},
+        {x = x, y = y + 1},
+        {x = x, y = y - 1},
+    }
+end
+
+-- filter to cells that are reachable with `move` movement points
+function Radius.reachable(cells, move)
+    local reach = {}
+    for _, cell in pairs(cells) do
+        if move >= cell.move then add(reach, cell) end
+    end
+    return reach
 end
 
 -- return true if x,y is among the cells within the radius
@@ -32,7 +41,6 @@ end
 -- reset the radius coordinates
 function Radius:clear()
     self.cells = {}
-    self.center = {}
     self.radius = nil
 end
 
