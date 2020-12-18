@@ -43,7 +43,7 @@ function Cursor:update()
         -- if a player unit is available beneath the cursor, select it
         if unit and unit.player == Turn.player then
             self.sel = unit
-            Radius:update(unit.cell.x, unit.cell.y, 1)
+            Radius:update(unit.cell.x, unit.cell.y, 3)
 
             -- if there is no unit beneath our cursor, and we have a unit
             -- selected, and the terrain beneath our cursor is passable, move the

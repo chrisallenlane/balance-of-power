@@ -1,11 +1,24 @@
 Radius = {cells = {}}
 
 -- draw a radius at the specified coordinates
-function Radius:update(x, y)
+function Radius:update(x, y, mvmt)
     -- clear the prior radius
     self:clear()
+    self:search(x, y, mvmt)
+end
 
-    for _, cell in pairs(self.near(x, y)) do self:append(cell.x, cell.y) end
+-- TODO: account for "reachability"
+function Radius:search(x, y, mvmt)
+    for _, cell in pairs(Radius.near(x, y)) do
+        if Cell.passable(cell.x, cell.y, Map.current) then
+            self:append(cell.x, cell.y)
+            -- limit recursive depth
+            if mvmt >= 0 then
+                -- TODO: decrement by tile movement cost
+                Radius:search(cell.x, cell.y, mvmt - 1)
+            end
+        end
+    end
 end
 
 -- append the specified coordinate pair to set of radius cells
@@ -25,6 +38,7 @@ function Radius.near(x, y)
 end
 
 -- filter to cells that are reachable with `move` movement points
+--[[
 function Radius.reachable(cells, move)
     local reach = {}
     for _, cell in pairs(cells) do
@@ -32,6 +46,7 @@ function Radius.reachable(cells, move)
     end
     return reach
 end
+--]]
 
 -- return true if x,y is among the cells within the radius
 function Radius:contains(x, y)
@@ -41,7 +56,6 @@ end
 -- reset the radius coordinates
 function Radius:clear()
     self.cells = {}
-    self.radius = nil
 end
 
 -- draw the radius to the map
