@@ -13,7 +13,7 @@ function Radius:search(x, y, mvmt)
         if Cell.passable(cell.x, cell.y, Map.current) then
             self:append(cell.x, cell.y)
             -- limit recursive depth
-            if mvmt >= 0 then
+            if mvmt > 1 then
                 -- TODO: decrement by tile movement cost
                 Radius:search(cell.x, cell.y, mvmt - 1)
             end
