@@ -2,14 +2,8 @@
 Unit = {
     -- player-facing unit stats
     stat = {
-        -- power points
-        pwr = 0,
-
         -- attack
         atk = 0,
-
-        -- def
-        def = 0,
 
         -- range
         rng = 0,
