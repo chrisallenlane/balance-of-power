@@ -1,19 +1,5 @@
 Radius = {cells = {}, cache = {}}
 
--- return true if we have already visited a cell with `m` movement remaining
-function Radius:cached(x, y, m)
-    -- return true if we've been here before
-    if self.cache[x] and self.cache[x][y] and self.cache[x][y][m] then
-        return true
-    end
-
-    -- otherwise, note that we've *now* been here, and return false
-    if not self.cache[x] then self.cache[x] = {} end
-    if not self.cache[x][y] then self.cache[x][y] = {} end
-    if not self.cache[x][y][m] then self.cache[x][y][m] = true end
-    return false
-end
-
 -- draw a radius at the specified coordinates
 function Radius:update(x, y, mvmt)
     -- clear the prior radius
@@ -38,6 +24,20 @@ function Radius:search(x, y, mvmt)
             end
         end
     end
+end
+
+-- return true if we have already visited a cell with `m` movement remaining
+function Radius:cached(x, y, m)
+    -- return true if we've been here before
+    if self.cache[x] and self.cache[x][y] and self.cache[x][y][m] then
+        return true
+    end
+
+    -- otherwise, note that we've *now* been here, and return false
+    if not self.cache[x] then self.cache[x] = {} end
+    if not self.cache[x][y] then self.cache[x][y] = {} end
+    if not self.cache[x][y][m] then self.cache[x][y][m] = true end
+    return false
 end
 
 -- append the specified coordinate pair to set of radius cells
