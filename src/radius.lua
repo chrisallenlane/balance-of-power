@@ -27,7 +27,8 @@ function Radius:search(x, y, mvmt)
 
     printh("visiting: " .. x .. ", " .. y .. " (" .. mvmt .. ")")
 
-    for _, cell in pairs(Radius.near(x, y)) do
+    for _, cell in pairs(Radius.neighbors(x, y)) do
+        -- TODO: refactor map width into function call param
         if Cell.passable(cell.x, cell.y, Map.current) then
             self:append(cell.x, cell.y)
             -- limit recursive depth
@@ -46,14 +47,16 @@ function Radius:append(x, y)
 end
 
 -- return the set of cells adjacent to the specified cell
--- TODO: account for out-of-bounds cells
-function Radius.near(x, y)
-    return {
-        {x = x + 1, y = y},
-        {x = x - 1, y = y},
-        {x = x, y = y + 1},
-        {x = x, y = y - 1},
-    }
+function Radius.neighbors(x, y)
+    local neighbors = {}
+
+    -- add cells, while being mindful to stay in bounds
+    if x + 1 <= Map.current.cell.w then add(neighbors, {x = x + 1, y = y}) end
+    if x - 1 >= 0 then add(neighbors, {x = x - 1, y = y}) end
+    if y + 1 <= Map.current.cell.h then add(neighbors, {x = x, y = y + 1}) end
+    if y - 1 >= 0 then add(neighbors, {x = x, y = y - 1}) end
+
+    return neighbors
 end
 
 -- return true if x,y is among the cells within the radius
