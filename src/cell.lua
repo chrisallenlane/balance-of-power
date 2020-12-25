@@ -1,4 +1,13 @@
-Cell = {}
+Cell = {
+    -- enum of cell traversal costs
+    cost = {
+        [1] = 1, -- grass
+        [49] = 1, -- sand
+        [33] = 0.5, -- road
+        [17] = 1 / 0, -- shallow water
+        [18] = 1 / 0, -- deep water
+    },
+}
 
 -- return true if the map tile is passable
 function Cell.passable(x, y, map)
