@@ -1,15 +1,11 @@
 Todo:
-  - Radius: account for tile traversal cost
-  - Radius: create an enum mapping tiles to movement cost
   - Radius: implement firing solution
   - Movement: update "passable" (can't pass through, vs can't place on)
 
   - Animation: make cursor/camera movement smooth
   - Animation: map tiles (rivers, grass)
-  - Art: make units smaller?
   - Config: add config (debug)
   - Movement: path arrow (with different color marker for impassible)
-  - Movement: unit movement radius
   - SFX: stub
 
 Tooling:
