@@ -5,6 +5,7 @@ function Radius:update(x, y, mvmt)
     -- clear the prior radius
     self:clear()
     self:search(x, y, mvmt)
+    self.cache = nil
 end
 
 -- search the tiles which compose the radius centered on `x`, `y`
