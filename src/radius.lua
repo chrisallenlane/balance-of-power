@@ -7,21 +7,28 @@ function Radius:update(x, y, mvmt)
     self:search(x, y, mvmt)
 end
 
--- TODO: account for "reachability"
+-- search the tiles which compose the radius centered on `x`, `y`
 function Radius:search(x, y, mvmt)
+    -- if we've visited this cell before (with the `mvmt` movement points
+    -- remaining), exit early
     if self:cached(x, y, mvmt) then return end
 
-    printh("visiting: " .. x .. ", " .. y .. " (" .. mvmt .. ")")
+    -- look up the cell traversal cost
+    local cost = Cell:cost(x, y)
 
+    -- if we can't pay the traversal cost, exit early
+    if cost > mvmt then return end
+
+    -- otherwise, deduct the traversal cost
+    mvmt = mvmt - cost
+
+    -- iteratively search this cell's neighbors
     for _, cell in pairs(Radius.neighbors(x, y)) do
         -- TODO: refactor map width into function call param
         if Cell.passable(cell.x, cell.y, Map.current) then
             self:append(cell.x, cell.y)
-            -- limit recursive depth
-            if mvmt > 1 then
-                -- TODO: decrement by tile movement cost
-                Radius:search(cell.x, cell.y, mvmt - 1)
-            end
+            -- enforce the movement cost constraint by limiting recursive depth
+            if mvmt > 0 then Radius:search(cell.x, cell.y, mvmt) end
         end
     end
 end

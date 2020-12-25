@@ -1,6 +1,6 @@
 Cell = {
     -- enum of cell traversal costs
-    cost = {
+    mvmt = {
         [1] = 1, -- grass
         [49] = 1, -- sand
         [33] = 0.5, -- road
@@ -19,4 +19,10 @@ function Cell.passable(x, y, map)
     -- TODO: pass as param
     if Unit.at(x, y, Map.current.units) then return false end
     return true
+end
+
+-- return the cell traversal cost at `x`, `y`
+-- XXX: should this default to `1`, or `throw`?
+function Cell:cost(x, y)
+    return self.mvmt[mget(x, y)] or 1
 end
