@@ -50,7 +50,7 @@ function Cursor:update()
             -- unit
         elseif not unit and self.sel and
             Cell.open(self.cell.x, self.cell.y, Map.current) and
-            Radius:contains(self.cell.x, self.cell.y) then
+            Radius:contains('move', self.cell.x, self.cell.y) then
             -- move the unit
             self.sel:move(self.cell.x, self.cell.y)
             Radius:clear()

@@ -1,18 +1,18 @@
-Radius = {cells = {}, cache = {}}
+Radius = {cells = {atk = {}, move = {}}, cache = {atk = {}, move = {}}}
 
 -- draw a radius at the specified coordinates
 function Radius:update(unit, turn)
     -- clear the prior radius
     self:clear()
-    self:search(unit.cell.x, unit.cell.y, unit.stat.spd, turn)
+    self:search(unit.cell.x, unit.cell.y, unit.stat.spd, unit.stat.rng, turn)
     self.cache = nil
 end
 
 -- search the tiles which compose the radius centered on `x`, `y`
-function Radius:search(x, y, mvmt, turn)
+function Radius:search(x, y, mvmt, rng, turn)
     -- if we've visited this cell before (with the `mvmt` movement points
     -- remaining), exit early
-    if self:cached(x, y, mvmt) then return end
+    if self:cached('move', x, y, mvmt) then return end
 
     -- look up the cell traversal cost
     local cost = Cell:cost(x, y)
@@ -27,33 +27,33 @@ function Radius:search(x, y, mvmt, turn)
     for _, cell in pairs(Radius.neighbors(x, y)) do
         -- TODO: refactor map width into function call param
         if Cell.pass(cell.x, cell.y, Map.current, turn) then
-            self:append(cell.x, cell.y)
+            self:append('move', cell.x, cell.y)
             -- enforce the movement cost constraint by limiting recursive depth
             if mvmt > 0 then
-                Radius:search(cell.x, cell.y, mvmt, turn)
+                Radius:search(cell.x, cell.y, mvmt, rng, turn)
             end
         end
     end
 end
 
 -- return true if we have already visited a cell with `m` movement remaining
-function Radius:cached(x, y, m)
+function Radius:cached(key, x, y, m)
     -- return true if we've been here before
-    if self.cache[x] and self.cache[x][y] and self.cache[x][y][m] then
+    if self.cache[key][x] and self.cache[key][x][y] and self.cache[key][x][y][m] then
         return true
     end
 
     -- otherwise, note that we've *now* been here, and return false
-    if not self.cache[x] then self.cache[x] = {} end
-    if not self.cache[x][y] then self.cache[x][y] = {} end
-    if not self.cache[x][y][m] then self.cache[x][y][m] = true end
+    if not self.cache[key][x] then self.cache[key][x] = {} end
+    if not self.cache[key][x][y] then self.cache[key][x][y] = {} end
+    if not self.cache[key][x][y][m] then self.cache[key][x][y][m] = true end
     return false
 end
 
 -- append the specified coordinate pair to set of radius cells
-function Radius:append(x, y)
-    if not self.cells[x] then self.cells[x] = {} end
-    self.cells[x][y] = true
+function Radius:append(key, x, y)
+    if not self.cells[key][x] then self.cells[key][x] = {} end
+    self.cells[key][x][y] = true
 end
 
 -- return the set of cells adjacent to the specified cell
@@ -70,19 +70,19 @@ function Radius.neighbors(x, y)
 end
 
 -- return true if x,y is among the cells within the radius
-function Radius:contains(x, y)
-    return self.cells[x] and self.cells[x][y]
+function Radius:contains(key, x, y)
+    return self.cells[key][x] and self.cells[key][x][y]
 end
 
 -- reset the radius coordinates
 function Radius:clear()
-    self.cache = {}
-    self.cells = {}
+    self.cache = {atk = {}, move = {}}
+    self.cells = {atk = {}, move = {}}
 end
 
 -- draw the radius to the map
 function Radius:draw()
-    for x, cell in pairs(self.cells) do
+    for x, cell in pairs(self.cells.move) do
         for y, _ in pairs(cell) do spr(48, x * 8, y * 8) end
     end
 end
