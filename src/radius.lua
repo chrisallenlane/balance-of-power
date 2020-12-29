@@ -1,10 +1,10 @@
 Radius = {cells = {}, cache = {}}
 
 -- draw a radius at the specified coordinates
-function Radius:update(x, y, mvmt, turn)
+function Radius:update(unit, turn)
     -- clear the prior radius
     self:clear()
-    self:search(x, y, mvmt, turn)
+    self:search(unit.cell.x, unit.cell.y, unit.stat.spd, turn)
     self.cache = nil
 end
 
