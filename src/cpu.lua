@@ -14,7 +14,7 @@ function CPU.update()
     local unit = Unit.first(2, Map.current.units)
 
     -- if moving left is invalid, move right
-    if not Cell.passable(unit.cell.x + mv, unit.cell.y, Map.current) then
+    if not Cell.pass(unit.cell.x + mv, unit.cell.y, Map.current, Turn.player) then
         mv = mv * -1
     end
 

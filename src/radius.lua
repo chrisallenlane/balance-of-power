@@ -1,15 +1,15 @@
 Radius = {cells = {}, cache = {}}
 
 -- draw a radius at the specified coordinates
-function Radius:update(x, y, mvmt)
+function Radius:update(x, y, mvmt, turn)
     -- clear the prior radius
     self:clear()
-    self:search(x, y, mvmt)
+    self:search(x, y, mvmt, turn)
     self.cache = nil
 end
 
 -- search the tiles which compose the radius centered on `x`, `y`
-function Radius:search(x, y, mvmt)
+function Radius:search(x, y, mvmt, turn)
     -- if we've visited this cell before (with the `mvmt` movement points
     -- remaining), exit early
     if self:cached(x, y, mvmt) then return end
@@ -26,10 +26,12 @@ function Radius:search(x, y, mvmt)
     -- iteratively search this cell's neighbors
     for _, cell in pairs(Radius.neighbors(x, y)) do
         -- TODO: refactor map width into function call param
-        if Cell.passable(cell.x, cell.y, Map.current) then
+        if Cell.pass(cell.x, cell.y, Map.current, turn) then
             self:append(cell.x, cell.y)
             -- enforce the movement cost constraint by limiting recursive depth
-            if mvmt > 0 then Radius:search(cell.x, cell.y, mvmt) end
+            if mvmt > 0 then
+                Radius:search(cell.x, cell.y, mvmt, turn)
+            end
         end
     end
 end

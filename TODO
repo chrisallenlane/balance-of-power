@@ -1,11 +1,10 @@
 Todo:
   - Radius: implement firing solution
-  - Movement: update "passable" (can't pass through, vs can't place on)
+  - Movement: path arrow
 
   - Animation: make cursor/camera movement smooth
   - Animation: map tiles (rivers, grass)
   - Config: add config (debug)
-  - Movement: path arrow (with different color marker for impassible)
   - SFX: stub
 
 Tooling:
