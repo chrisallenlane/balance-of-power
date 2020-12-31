@@ -1,6 +1,5 @@
 Todo:
   - Attack: implement "real" attack mechanic
-  - Bug: fix enemy AI moving out-of-bounds
   - Movement: path arrow
 
   - Animation: make cursor/camera movement smooth

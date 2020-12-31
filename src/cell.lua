@@ -11,6 +11,9 @@ Cell = {
 
 -- return true if a unit may be placed on the tile
 function Cell.open(x, y, map)
+    -- return false if the specified coordinates are out-of-bounds
+    if x < 0 or x >= map.cell.w or y < 0 or y >= map.cell.h then return false end
+
     -- return false if the map tile at the specified coordinates is flagged as
     -- impassible
     if fget(mget(map.cell.x + x, map.cell.y + y), 0) then return false end
@@ -23,6 +26,9 @@ end
 
 -- return true if a unit may pass through the tile
 function Cell.pass(x, y, map, turn)
+    -- return false if the specified coordinates are out-of-bounds
+    if x < 0 or x >= map.cell.w or y < 0 or y >= map.cell.h then return false end
+
     -- return false if the map tile at the specified coordinates is flagged as
     -- impassible
     if fget(mget(map.cell.x + x, map.cell.y + y), 0) then return false end
