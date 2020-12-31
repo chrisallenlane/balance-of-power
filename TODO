@@ -1,4 +1,5 @@
 Todo:
+  - Bug: fix crash when all enemy units are defeated
   - Movement: path arrow
 
   - Animation: make cursor/camera movement smooth
