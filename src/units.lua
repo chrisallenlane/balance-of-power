@@ -33,3 +33,17 @@ function Units.draw()
         spr(unit.spr, unit.px.x, unit.px.y)
     end
 end
+
+-- Remain returns the number of units remaining for each player
+function Units.remain(units)
+    -- track the number of units remaining for each player
+    local p1, p2 = 0, 0
+
+    -- iterate over all units on the map
+    for _, unit in pairs(units) do
+        if unit.player == 1 then p1 = p1 + 1 end
+        if unit.player == 2 then p2 = p2 + 1 end
+    end
+
+    return p1, p2
+end
