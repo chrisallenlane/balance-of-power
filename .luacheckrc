@@ -32,6 +32,7 @@ globals = {
 	"cstore",
 	"cursor",
 	"del",
+	"deli",
 	"dget",
 	"dset",
 	"extcmd",
