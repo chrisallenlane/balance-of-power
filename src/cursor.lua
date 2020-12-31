@@ -38,7 +38,7 @@ function Cursor:update()
     -- move a unit
     if BtnX:btnp() then
         -- determine whether a unit is beneath the cursor
-        local unit = Unit.at(self.cell.x, self.cell.y, Map.current.units)
+        local unit, idx = Unit.at(self.cell.x, self.cell.y, Map.current.units)
 
         -- if a player unit is available beneath the cursor, select it
         if unit and unit.player == Turn.player then
@@ -67,7 +67,17 @@ function Cursor:update()
             MenuTurnEnd.vis = true
         end
 
-        -- TODO: handle selection of enemy units
+        -- Attack:
+        -- 1. if we have a friendly unit selected
+        -- 2. and the cursor is over a unit
+        -- 3. and that unit is an enemy unit
+        -- 4. and that unit is within our attack range
+        if self.sel and unit and unit.player ~= Turn.player and
+            Radius:contains('atk', unit.cell.x, unit.cell.y) then
+            unit.die(idx, Map.current.units)
+            Radius:clear()
+            Turn:turn_end()
+        end
     end
 
     -- "Z"

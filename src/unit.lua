@@ -40,11 +40,11 @@ end
 -- At returns the unit at the specified coordinates, or false if none is there
 function Unit.at(x, y, units)
     -- XXX: this runs in linear time
-    for _, unit in pairs(units) do
-        if unit.cell.x == x and unit.cell.y == y then return unit end
+    for idx, unit in pairs(units) do
+        if unit.cell.x == x and unit.cell.y == y then return unit, idx end
     end
 
-    return false
+    return false, nil
 end
 
 -- Returns the first unit on `player`'s team team
@@ -63,4 +63,9 @@ end
 function Unit:move(to_x, to_y)
     self.cell.x = to_x
     self.cell.y = to_y
+end
+
+-- Die kills a unit
+function Unit.die(idx, units)
+    deli(units, idx)
 end
