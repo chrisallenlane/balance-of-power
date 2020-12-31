@@ -22,14 +22,14 @@ function Radius:searchMove(x, y, mvmt, rng, turn)
         -- TODO: refactor map width into function call param
         if Cell.pass(cell.x, cell.y, Map.current, turn) then
             self:append('move', cell.x, cell.y)
-            -- enforce the movement and attack cost constraints by limiting
-            -- recursive depth
+            -- enforce the movement cost constraint by limiting recursive depth
             if mvmt > 0 then
                 Radius:searchMove(cell.x, cell.y, mvmt, rng, turn)
-            elseif mvmt == 0 then
-                Radius:searchAtk(cell.x, cell.y, rng)
             end
         end
+
+        -- enforce the attack cost constraint by limiting recursive depth
+        if mvmt == 0 then Radius:searchAtk(cell.x, cell.y, rng) end
     end
 end
 
