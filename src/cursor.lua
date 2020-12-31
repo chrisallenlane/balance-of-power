@@ -72,7 +72,10 @@ function Cursor:update()
 
     -- "Z"
     -- unselect a selected unit
-    if BtnZ:btnp() and self.sel then self.sel = false end
+    if BtnZ:btnp() and self.sel then
+        self.sel = false
+        Radius:clear()
+    end
 end
 
 -- render the cursor
