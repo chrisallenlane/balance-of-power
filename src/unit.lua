@@ -3,13 +3,13 @@ Unit = {
     -- player-facing unit stats
     stat = {
         -- attack
-        atk = 0,
+        atk = 3,
 
         -- range
-        rng = 0,
+        rng = 3,
 
         -- speed
-        spd = 0,
+        spd = 3,
     },
 
     -- cell position
