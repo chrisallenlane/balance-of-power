@@ -88,6 +88,14 @@ function Cursor:update()
     end
 end
 
+-- clear resets the cursor
+function Cursor:clear()
+    self.last = {
+        {x = nil, y = nil}, -- p1
+        {x = nil, y = nil}, -- p2
+    }
+end
+
 -- render the cursor
 function Cursor:draw()
     local sprite = 16
