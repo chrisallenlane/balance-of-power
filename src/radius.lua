@@ -93,12 +93,21 @@ end
 
 -- draw the radius to the map
 function Radius:draw()
-    -- draw the attack cells before the movement cells, because the latter are
-    -- a subset of the former
-    for x, cell in pairs(self.cells.atk) do
-        for y, _ in pairs(cell) do spr(50, x * 8, y * 8) end
-    end
+    -- draw the movement radius
+    -- NB: the bitshifting just multiplies by 8
     for x, cell in pairs(self.cells.move) do
-        for y, _ in pairs(cell) do spr(48, x * 8, y * 8) end
+        for y, _ in pairs(cell) do spr(48, x << 3, y << 3) end
+    end
+
+    -- draw the attack radius
+    for x, cell in pairs(self.cells.atk) do
+        for y, _ in pairs(cell) do
+            -- NB: making this check and only drawing the necessary cells is
+            -- slightly faster than drawing the movement radius on top of the
+            -- attack radius
+            if not self:contains('move', x, y) then
+                spr(50, x << 3, y << 3)
+            end
+        end
     end
 end
