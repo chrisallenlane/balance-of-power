@@ -1,54 +1,49 @@
 Radius = {cells = {atk = {}, move = {}}, cache = {atk = {}, move = {}}}
 
 -- draw a radius at the specified coordinates
-function Radius:update(unit, turn)
+function Radius:update(unit, map, turn)
     -- clear the prior radius
     self:clear()
-    self:searchMove(unit.cell.x, unit.cell.y, unit.stat.spd, unit.stat.rng, turn)
+    -- NB: we're computing the movement and attack radii separately. That's
+    -- not computationally optimial, but much simpler to understand.
+    self:move(unit.cell.x, unit.cell.y, unit.stat.spd, map, turn)
+    self:atk(unit.cell.x, unit.cell.y, unit.stat.rng, map)
     self.cache = nil
 end
 
--- search the tiles which compose the radius centered on `x`, `y`
-function Radius:searchMove(x, y, mvmt, rng, turn)
-    -- if we've visited this cell before (with the `mvmt` movement points
+-- Compute a movement radius centered on `x`, `y`
+function Radius:move(x, y, mvmt, map, turn)
+    -- if we've visited this cell before (with `mvmt` movement points
     -- remaining), exit early
     if self:cached('move', x, y, mvmt) then return end
 
-    -- deduct the traversal cost
-    mvmt = mvmt - Cell:cost(x, y)
-
     -- iteratively search this cell's neighbors
     for _, cell in pairs(Radius.neighbors(x, y)) do
-        -- TODO: refactor map width into function call param
-        if Cell.pass(cell.x, cell.y, Map.current, turn) then
+        -- determine the cost to traverse the tile
+        local cost = Cell:cost(cell.x, cell.y)
+        if mvmt >= cost and Cell.pass(cell.x, cell.y, map, turn) then
             self:append('move', cell.x, cell.y)
-            -- enforce the movement cost constraint by limiting recursive depth
-            if mvmt > 0 then
-                Radius:searchMove(cell.x, cell.y, mvmt, rng, turn)
-            end
+            Radius:move(cell.x, cell.y, mvmt - cost, map, turn)
         end
-
-        -- enforce the attack cost constraint by limiting recursive depth
-        if mvmt == 0 then Radius:searchAtk(cell.x, cell.y, rng) end
     end
 end
 
--- search the tiles which compose the radius centered on `x`, `y`
-function Radius:searchAtk(x, y, rng)
-    -- exit early if we've visited this cell before (with the `rng` attack
-    -- points remaining)
+-- Compute an attack radius centered on `x`, `y`
+function Radius:atk(x, y, rng, map)
+    -- exit early if we've visited this cell before (with `rng` range points remaining)
     if self:cached('atk', x, y, rng) then return end
 
-    -- exit early if we have exhausted our attack range
-    if rng == 0 then return end
+    -- cells within the movement radius are implicitly within the attack
+    -- radius, so we get those "for free".
+    if not self:contains('move', x, y) then rng = rng - 1 end
 
-    -- cells uniformly have a range cost of 1
-    rng = rng - 1
+    -- exit early if we have exhausted our attack radius
+    if rng == 0 then return end
 
     -- iteratively search this cell's neighbors
     for _, cell in pairs(Radius.neighbors(x, y)) do
         self:append('atk', cell.x, cell.y)
-        Radius:searchAtk(cell.x, cell.y, rng)
+        Radius:atk(cell.x, cell.y, rng, map)
     end
 end
 
