@@ -6,6 +6,9 @@ add(Map.defs, function ()
 
     cursor = {x = 28, y = 30},
 
-    units = {},
+    units = {
+      Unit:new({spr = 80, player = 1, cell = {x = 28, y = 30}}),
+      Unit:new({spr = 64, player = 2, cell = {x = 9, y = 5}}),
+    },
   }
 end)
