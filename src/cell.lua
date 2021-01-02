@@ -48,7 +48,6 @@ function Cell.pass(x, y, map, turn)
 end
 
 -- return the cell traversal cost at `x`, `y`
--- XXX: should this default to `1`, or `throw`?
-function Cell:cost(x, y)
-    return self.mvmt[mget(x, y)] or 1
+function Cell:cost(x, y, map)
+    return self.mvmt[mget(map.cell.x + x, map.cell.y + y)]
 end

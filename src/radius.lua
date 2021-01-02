@@ -20,7 +20,7 @@ function Radius:move(x, y, mvmt, map, turn)
     -- iteratively search this cell's neighbors
     for _, cell in pairs(Radius.neighbors(x, y)) do
         -- determine the cost to traverse the tile
-        local cost = Cell:cost(cell.x, cell.y)
+        local cost = Cell:cost(cell.x, cell.y, map)
         if mvmt >= cost and Cell.pass(cell.x, cell.y, map, turn) then
             self:append('move', cell.x, cell.y)
             Radius:move(cell.x, cell.y, mvmt - cost, map, turn)
@@ -72,9 +72,9 @@ function Radius.neighbors(x, y)
     local neighbors = {}
 
     -- add cells, while being mindful to stay in bounds
-    if x + 1 <= Map.current.cell.w then add(neighbors, {x = x + 1, y = y}) end
+    if x + 1 < Map.current.cell.w then add(neighbors, {x = x + 1, y = y}) end
     if x - 1 >= 0 then add(neighbors, {x = x - 1, y = y}) end
-    if y + 1 <= Map.current.cell.h then add(neighbors, {x = x, y = y + 1}) end
+    if y + 1 < Map.current.cell.h then add(neighbors, {x = x, y = y + 1}) end
     if y - 1 >= 0 then add(neighbors, {x = x, y = y - 1}) end
 
     return neighbors
