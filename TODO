@@ -1,6 +1,8 @@
 Todo:
   - Attack: implement "real" attack mechanic
   - Movement: path arrow
+  - Map: interstitials, titles, prompts
+  - Map: create `intr` method ("interstitial")
 
   - Animation: make cursor/camera movement smooth
   - Animation: map tiles (rivers, grass)

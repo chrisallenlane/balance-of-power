@@ -31,6 +31,21 @@ function Map:load(num)
                                self.current.camera.y * 8
 end
 
+-- advance to the next map
+function Map.advance()
+    if Map.num < #Map.defs then
+        Map.num = Map.num + 1
+        Map:load(Map.num)
+    else
+        Screens.load("victory")
+    end
+end
+
+-- reset the current map
+function Map.reset()
+    Map:load(Map.num)
+end
+
 -- draw the current map
 function Map:draw()
     local m = self.current

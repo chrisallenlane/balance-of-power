@@ -1,19 +1,10 @@
 function _init()
     -- implement an "advance stage" debug function
     -- TODO: remove this later
-    menuitem(1, "advance stage", function()
-        if Map.num < #Map.defs then
-            Map.num = Map.num + 1
-            Map:load(Map.num)
-        else
-            Screens.load("victory")
-        end
-    end)
+    menuitem(1, "advance stage", Map.advance)
 
     -- implement a "reset map" menu function
-    menuitem(2, "reset map", function()
-        Map:load(Map.num)
-    end)
+    menuitem(2, "reset map", Map.reset)
 
     -- load the title screen
     -- TODO: set this default; remove this call
