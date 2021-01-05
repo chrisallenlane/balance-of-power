@@ -91,6 +91,7 @@ globals = {
 	"yield",
 
 	-- bop globals
+	"AStar",
 	"BtnDown",
 	"BtnLeft",
 	"BtnRight",
@@ -111,6 +112,7 @@ globals = {
 	"MenuTurnEnd",
 	"Player",
 	"Players",
+	"Queue",
 	"Radius",
 	"Screens",
 	"Turn",
