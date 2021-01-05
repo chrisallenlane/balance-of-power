@@ -18,7 +18,7 @@ function Radius:move(x, y, mvmt, map, turn)
     if self:cached('move', x, y, mvmt) then return end
 
     -- iteratively search this cell's neighbors
-    for _, cell in pairs(Radius.neighbors(x, y)) do
+    for _, cell in pairs(Cell.neighbors(x, y)) do
         -- determine the cost to traverse the tile
         local cost = Cell.cost(cell.x, cell.y, map)
         if mvmt >= cost and Cell.pass(cell.x, cell.y, map, turn) then
@@ -41,7 +41,7 @@ function Radius:atk(x, y, rng, map)
     if rng == 0 then return end
 
     -- iteratively search this cell's neighbors
-    for _, cell in pairs(Radius.neighbors(x, y)) do
+    for _, cell in pairs(Cell.neighbors(x, y)) do
         self:append('atk', cell.x, cell.y)
         Radius:atk(cell.x, cell.y, rng, map)
     end
@@ -65,24 +65,6 @@ end
 function Radius:append(key, x, y)
     if not self.cells[key][x] then self.cells[key][x] = {} end
     self.cells[key][x][y] = true
-end
-
--- return the set of cells adjacent to the specified cell
--- TODO: move this into `Cell`
-function Radius.neighbors(x, y)
-    local neighbors = {}
-
-    -- add cells, while being mindful to stay in bounds
-    if x + 1 < Map.current.cell.w then
-        add(neighbors, Cell:new(x + 1, y, Map.current.cell.w))
-    end
-    if x - 1 >= 0 then add(neighbors, Cell:new(x - 1, y, Map.current.cell.w)) end
-    if y + 1 < Map.current.cell.h then
-        add(neighbors, Cell:new(x, y + 1, Map.current.cell.w))
-    end
-    if y - 1 >= 0 then add(neighbors, Cell:new(x, y - 1, Map.current.cell.w)) end
-
-    return neighbors
 end
 
 -- return true if x,y is among the cells within the radius

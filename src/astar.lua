@@ -36,10 +36,8 @@ function AStar:search(start, goal)
         -- break if we've reached the goal
         if current:is(goal) then break end
 
-        -- for neighbor in all(current:neighbors(self.pass)) do
-        for neighbor in all(Radius.neighbors(current.x, current.y)) do
+        for neighbor in all(Cell.neighbors(current.x, current.y)) do
             -- TODO: use the appropriate name here
-            -- local new_cost = path_cost[current.id] + Cell:cost(neighbor)
             -- TODO: refactor this
             local new_cost = path_cost[current.id] +
                                  Cell.cost(neighbor.x, neighbor.y, Map.current)
@@ -47,7 +45,6 @@ function AStar:search(start, goal)
             if (path_cost[neighbor.id] == nil) or
                 (new_cost < path_cost[neighbor.id]) then
 
-                -- printh("neighbor.id: " .. neighbor.id)
                 path_cost[neighbor.id] = new_cost
 
                 Queue.put(open, neighbor, new_cost + self.h(goal, neighbor))

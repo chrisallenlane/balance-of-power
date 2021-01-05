@@ -60,6 +60,23 @@ function Cell.cost(x, y, map)
     return costs[mget(map.cell.x + x, map.cell.y + y)]
 end
 
+-- return the set of cells adjacent to the specified cell
+function Cell.neighbors(x, y)
+    local neighbors = {}
+
+    -- add cells, while being mindful to stay in bounds
+    if x + 1 < Map.current.cell.w then
+        add(neighbors, Cell:new(x + 1, y, Map.current.cell.w))
+    end
+    if x - 1 >= 0 then add(neighbors, Cell:new(x - 1, y, Map.current.cell.w)) end
+    if y + 1 < Map.current.cell.h then
+        add(neighbors, Cell:new(x, y + 1, Map.current.cell.w))
+    end
+    if y - 1 >= 0 then add(neighbors, Cell:new(x, y - 1, Map.current.cell.w)) end
+
+    return neighbors
+end
+
 -- returns `true` if cells `a` and `b` are equal
 function Cell:is(c)
     return self.id == c.id
