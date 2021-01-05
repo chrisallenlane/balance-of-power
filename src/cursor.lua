@@ -1,5 +1,11 @@
 -- encapsulate cursor state
 Cursor = {
+    -- A* pathfinder
+    astar = AStar:new(),
+
+    -- path found by A*
+    path = {},
+
     -- current cursor cell position
     cell = {x = 0, y = 0, spr = 0},
 
@@ -35,7 +41,6 @@ function Cursor:update()
     end
 
     -- "X"
-    -- move a unit
     if BtnX:btnp() then
         -- determine whether a unit is beneath the cursor
         local unit, idx = Unit.at(self.cell.x, self.cell.y, Map.current.units)
@@ -86,6 +91,15 @@ function Cursor:update()
         self.sel = false
         Radius:clear()
     end
+
+    if self.sel and Radius:contains('move', self.cell.x, self.cell.y) then
+        self.path = self.astar:search(
+                        Cell:new(self.sel.cell.x, self.sel.cell.y,
+                                 Map.current.cell.w),
+                        Cell:new(self.cell.x, self.cell.y, Map.current.cell.w))
+    else
+        self.path = {}
+    end
 end
 
 -- clear resets the cursor
@@ -107,6 +121,9 @@ function Cursor:draw()
 
     -- increment the frame counter
     self.frame = self.frame + 1
+
+    -- draw the A* path
+    for _, cell in ipairs(self.path) do spr(34, cell.x * 8, cell.y * 8) end
 
     -- draw the sprite
     spr(sprite, self.cell.x * 8, self.cell.y * 8)
