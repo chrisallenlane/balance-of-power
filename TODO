@@ -1,8 +1,11 @@
 Todo:
+  - AStar: cache computed paths
+  - AStar: fix "offroading" bug
+  - AStar: optimizations
   - Attack: implement "real" attack mechanic
-  - Movement: path arrow
-  - Map: interstitials, titles, prompts
+  - Cursor: use "real" `Cell` objects
   - Map: create `intr` method ("interstitial")
+  - Map: interstitials, titles, prompts
 
   - Animation: make cursor/camera movement smooth
   - Animation: map tiles (rivers, grass)
