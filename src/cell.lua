@@ -1,13 +1,12 @@
-Cell = {
-    -- enum of cell traversal costs
-    mvmt = {
-        [1] = 1, -- grass
-        [49] = 1, -- sand
-        [33] = 0.5, -- road
-        [17] = 1 / 0, -- shallow water
-        [18] = 1 / 0, -- deep water
-    },
-}
+Cell = {id = nil, x = nil, y = nil, w = nil, parent = nil}
+
+-- Cell constructor
+function Cell:new(x, y, w)
+    local c = {x = x, y = y, id = (y * w) + x}
+    setmetatable(c, self)
+    self.__index = self
+    return c
+end
 
 -- return true if a unit may be placed on the tile
 function Cell.open(x, y, map)
@@ -48,6 +47,20 @@ function Cell.pass(x, y, map, turn)
 end
 
 -- return the cell traversal cost at `x`, `y`
-function Cell:cost(x, y, map)
-    return self.mvmt[mget(map.cell.x + x, map.cell.y + y)]
+function Cell.cost(x, y, map)
+    -- map cell traversal costs
+    local costs = {
+        [1] = 1, -- grass
+        [49] = 1, -- sand
+        [33] = 0.5, -- road
+        [17] = 1 / 0, -- shallow water
+        [18] = 1 / 0, -- deep water
+    }
+
+    return costs[mget(map.cell.x + x, map.cell.y + y)]
+end
+
+-- returns `true` if cells `a` and `b` are equal
+function Cell:is(c)
+    return self.id == c.id
 end
