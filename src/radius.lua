@@ -68,14 +68,19 @@ function Radius:append(key, x, y)
 end
 
 -- return the set of cells adjacent to the specified cell
+-- TODO: move this into `Cell`
 function Radius.neighbors(x, y)
     local neighbors = {}
 
     -- add cells, while being mindful to stay in bounds
-    if x + 1 < Map.current.cell.w then add(neighbors, {x = x + 1, y = y}) end
-    if x - 1 >= 0 then add(neighbors, {x = x - 1, y = y}) end
-    if y + 1 < Map.current.cell.h then add(neighbors, {x = x, y = y + 1}) end
-    if y - 1 >= 0 then add(neighbors, {x = x, y = y - 1}) end
+    if x + 1 < Map.current.cell.w then
+        add(neighbors, Cell:new(x + 1, y, Map.current.cell.w))
+    end
+    if x - 1 >= 0 then add(neighbors, Cell:new(x - 1, y, Map.current.cell.w)) end
+    if y + 1 < Map.current.cell.h then
+        add(neighbors, Cell:new(x, y + 1, Map.current.cell.w))
+    end
+    if y - 1 >= 0 then add(neighbors, Cell:new(x, y - 1, Map.current.cell.w)) end
 
     return neighbors
 end
