@@ -7,7 +7,7 @@ Cursor = {
     path = {},
 
     -- current cursor cell position
-    cell = {x = 0, y = 0, spr = 0},
+    cell = {x = 0, y = 0},
 
     -- selected unit
     sel = false,
