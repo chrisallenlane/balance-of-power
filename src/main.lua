@@ -6,8 +6,10 @@ function _init()
     -- implement a "reset map" menu function
     menuitem(2, "reset map", Map.reset)
 
+    -- load the first map
+    Map:load(1)
+
     -- load the title screen
-    -- TODO: set this default; remove this call
     Screens.load("title")
 
     -- TODO: initialize two players, one of which may be a CPU depending on

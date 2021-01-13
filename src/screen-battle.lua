@@ -5,7 +5,11 @@ function Screens.battle.update()
 
     -- TODO: handle 1-player, 2-player games
     -- TODO: load the next map, unless we're on the final map
-    if p1 == 0 then Screens.load("defeat") end
+    if p1 == 0 then
+        -- TODO: display a defeat banner
+        Screens.load("defeat")
+        return
+    end
     if p2 == 0 then
         -- load the next map until we run out of maps
         -- TODO: load "interstitial" screen
@@ -13,9 +17,12 @@ function Screens.battle.update()
         if nxt < #Map.defs then
             Map.num = nxt
             Map:load(Map.num)
+            -- TODO: display a victory banner
+            Screens.load("intr")
         else
             Screens.load("victory")
         end
+        return
     end
 
     -- If the "end turn" menu is visible, run its update loop

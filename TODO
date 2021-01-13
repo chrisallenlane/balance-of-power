@@ -4,8 +4,6 @@ Todo:
   - AStar: optimizations
   - Attack: implement "real" attack mechanic
   - Cursor: use "real" `Cell` objects
-  - Map: create `intr` method ("interstitial")
-  - Map: interstitials, titles, prompts
 
   - Animation: make cursor/camera movement smooth
   - Animation: map tiles (rivers, grass)

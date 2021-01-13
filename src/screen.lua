@@ -1,6 +1,6 @@
 Game.screen = {}
 
-Screens = {title = {}, battle = {}, defeat = {}, victory = {}}
+Screens = {title = {}, intr = {}, battle = {}, defeat = {}, victory = {}}
 
 -- loads a screen
 function Screens.load(name)

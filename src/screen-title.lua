@@ -23,9 +23,9 @@ function Screens.title.update()
         -- initialize player 2
         add(Players, Player:new({num = 2, cpu = cpu}))
 
-        -- TODO: remove this explict call
-        Map:load(1)
-        Screens.load("battle")
+        -- load the map interstitial
+        -- TODO: handle this differently in 2-player mode
+        Screens.load("intr")
     end
 end
 

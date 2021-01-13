@@ -1,5 +1,10 @@
 add(Map.defs, function ()
   return {
+    intr = {
+        head = "stage 3",
+        body = "foo bar baz",
+    },
+
     camera = {x = 16, y = 16},
 
     cell = {x = 48, y = 0, w = 32, h = 32},

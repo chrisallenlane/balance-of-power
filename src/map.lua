@@ -8,6 +8,9 @@ Map = {
 
     -- the map definitions
     defs = {},
+
+    -- interstitial
+    intr = {head = "", body = ""},
 }
 
 -- load the specified map
@@ -36,6 +39,7 @@ function Map.advance()
     if Map.num < #Map.defs then
         Map.num = Map.num + 1
         Map:load(Map.num)
+        Screens.load("intr")
     else
         Screens.load("victory")
     end

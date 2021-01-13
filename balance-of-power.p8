@@ -10,6 +10,7 @@ Game = { state = { screen = "title" } }
 #include src/screen.lua
 #include src/screen-battle.lua
 #include src/screen-title.lua
+#include src/screen-intr.lua
 #include src/screen-victory.lua
 #include src/screen-defeat.lua
 #include src/menu-screen-title.lua
