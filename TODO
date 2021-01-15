@@ -1,14 +1,19 @@
 Todo:
+  - Menu: Power Balance
+
+  - Animation: victory/loss banner
+  - Attack: implement "real" attack mechanic
+
   - AStar: cache computed paths
   - AStar: fix "offroading" bug
   - AStar: optimizations
-  - Attack: implement "real" attack mechanic
+
   - Cursor: use "real" `Cell` objects
 
+  - Animation: coroutine lab
   - Animation: make cursor/camera movement smooth
-  - Animation: map tiles (rivers, grass)
-  - Config: add config (debug)
-  - SFX: stub
+
+  - SFX: lab
 
 Tooling:
   - Implement unit-tests
