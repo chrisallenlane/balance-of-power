@@ -12,34 +12,35 @@ function MenuTurnEnd:update()
     end
 
     -- selection: "yes"
-    if btnp(5) and self.sel == 1 then
+    if btn(5) and self.sel == 1 then
         Turn:turn_end()
         self.vis = false
 
         -- selection: "no"
-    elseif btnp(4) or (btnp(5) and self.sel == 2) then
+    elseif btn(4) or (btn(5) and self.sel == 2) then
         self.vis = false
     end
 end
 
 -- draw the "end turn" menu
 function MenuTurnEnd:draw()
-    if self.vis then
-        -- offset the menu location to align with the camera
-        local padx = Camera.px.x
-        local pady = Camera.px.y
+    -- exit early if the menu is not visible
+    if not self.vis then return end
 
-        -- draw the menu
-        rectfill(42 + padx, 52 + pady, 86 + padx, 74 + pady, 0)
-        print("end turn?", 47 + padx, 57 + pady, 7)
+    -- offset the menu location to align with the camera
+    local padx = Camera.px.x
+    local pady = Camera.px.y
 
-        -- highlight the selected option
-        if self.sel == 1 then
-            print("yes", 51 + padx, 65 + pady, 10)
-            print("no", 67 + padx, 65 + pady, 6)
-        else
-            print("yes", 51 + padx, 65 + pady, 6)
-            print("no", 67 + padx, 65 + pady, 10)
-        end
+    -- draw the menu
+    rectfill(42 + padx, 52 + pady, 86 + padx, 74 + pady, 0)
+    print("end turn?", 47 + padx, 57 + pady, 7)
+
+    -- highlight the selected option
+    if self.sel == 1 then
+        print("yes", 51 + padx, 65 + pady, 10)
+        print("no", 67 + padx, 65 + pady, 6)
+    else
+        print("yes", 51 + padx, 65 + pady, 6)
+        print("no", 67 + padx, 65 + pady, 10)
     end
 end
