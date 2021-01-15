@@ -46,9 +46,16 @@ function Cursor:update()
         local unit, idx = Unit.at(self.cell.x, self.cell.y, Map.current.units)
 
         -- if a player unit is available beneath the cursor, select it
-        if unit and unit.player == Turn.player then
+        if unit and not self.sel and unit.player == Turn.player then
             self.sel = unit
             Radius:update(unit, Map.current, Turn.player)
+
+            -- if a player's unit was previously selected, and then "double
+            -- clicked", display the Balance menu
+        elseif unit and self.sel and unit.player == Turn.player and unit ==
+            self.sel then
+            MenuBalance.sel = 1
+            MenuBalance.vis = true
 
             -- if there is no unit beneath our cursor, and we have a unit
             -- selected, and the terrain beneath our cursor is passable, move the

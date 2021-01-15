@@ -3,10 +3,10 @@ Unit = {
     -- player-facing unit stats
     stat = {
         -- attack
-        atk = 3,
+        atk = 5,
 
         -- range
-        rng = 3,
+        rng = 2,
 
         -- speed
         spd = 3,

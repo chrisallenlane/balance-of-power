@@ -25,9 +25,12 @@ function Screens.battle.update()
         return
     end
 
-    -- If the "end turn" menu is visible, run its update loop
+    -- If a menu is visible, run the appropriate update loop
     if MenuTurnEnd.vis then
         MenuTurnEnd:update()
+        return
+    elseif MenuBalance.vis then
+        MenuBalance:update()
         return
     end
 
@@ -62,6 +65,7 @@ function Screens.battle.draw()
 
     Units.draw()
     MenuTurnEnd:draw()
+    MenuBalance:draw(Cursor.sel)
 
     -- move the camera
     Camera:draw()
