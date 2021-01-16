@@ -59,6 +59,6 @@ function Screens.battle.draw()
     -- move the camera
     Camera:draw()
 
-    -- display debug output
-    Debug.vars()
+    -- display debug output (if so configured)
+    if DEBUG_SHOW then Debug.vars() end
 end

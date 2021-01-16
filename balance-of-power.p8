@@ -2,6 +2,9 @@ pico-8 cartridge // http://www.pico-8.com
 version 29
 __lua__
 
+-- show/hide on-screen debugging info
+DEBUG_SHOW = true
+
 -- TODO: refactor this
 Game = { state = { screen = "title" } }
 
