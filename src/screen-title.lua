@@ -4,15 +4,15 @@ function Screens.title.update()
     local sel = menu.sel
 
     -- up
-    if BtnUp:btnp(2) and sel >= 2 then
+    if BtnUp:rep(2) and sel >= 2 then
         menu.sel = sel - 1
 
         -- down
-    elseif BtnDown:btnp(3) and sel <= 2 then
+    elseif BtnDown:rep(3) and sel <= 2 then
         menu.sel = sel + 1
 
         -- "select"
-    elseif BtnX:btnp(5) then
+    elseif BtnX:rep(5) then
         -- initialize player 1
         add(Players, Player:new({num = 1, cpu = false}))
 

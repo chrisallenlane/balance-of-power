@@ -9,7 +9,7 @@ function Input:new(i)
 end
 
 -- Implement functionality similar to `btnp`, but with a shorter spin-up time
-function Input:btnp()
+function Input:rep()
     -- if the button was not pressed, set the frame counter to `wait` minus 1.
     -- This ensures that a key press is registered when the key is initially
     -- pressed.

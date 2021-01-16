@@ -3,7 +3,7 @@ MenuBalance = {choices = {"atk", "rng", "spd"}, sel = 1}
 -- update "end turn?" menu state
 function MenuBalance:update()
     -- close the menu if "Z" is pressed
-    if BtnZ:btnp(4) then self.vis = false end
+    if BtnZ:rep(4) then self.vis = false end
 
     -- TODO: make the menu function
 end

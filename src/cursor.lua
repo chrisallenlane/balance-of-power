@@ -27,21 +27,21 @@ Cursor = {
 -- update cursor state
 function Cursor:update()
     -- left/right
-    if BtnLeft:btnp() and self.cell.x > 0 then
+    if BtnLeft:rep() and self.cell.x > 0 then
         self.cell.x = self.cell.x - 1
-    elseif BtnRight:btnp() and self.cell.x < Map.current.cell.w - 1 then
+    elseif BtnRight:rep() and self.cell.x < Map.current.cell.w - 1 then
         self.cell.x = self.cell.x + 1
     end
 
     -- up/down
-    if BtnUp:btnp() and self.cell.y > 0 then
+    if BtnUp:rep() and self.cell.y > 0 then
         self.cell.y = self.cell.y - 1
-    elseif BtnDown:btnp() and self.cell.y < Map.current.cell.h - 1 then
+    elseif BtnDown:rep() and self.cell.y < Map.current.cell.h - 1 then
         self.cell.y = self.cell.y + 1
     end
 
     -- "X"
-    if BtnX:btnp() then
+    if BtnX:rep() then
         -- determine whether a unit is beneath the cursor
         local unit, idx = Unit.at(self.cell.x, self.cell.y, Map.current.units)
 
@@ -94,7 +94,7 @@ function Cursor:update()
 
     -- "Z"
     -- unselect a selected unit
-    if BtnZ:btnp() and self.sel then
+    if BtnZ:rep() and self.sel then
         self.sel = false
         Radius:clear()
     end
