@@ -13,6 +13,9 @@ end
 
 -- Compute a movement radius centered on `x`, `y`
 function Radius:move(x, y, mvmt, map, turn)
+    -- short circuit if the unit has no `mov` points
+    if mvmt == 0 then return end
+
     -- if we've visited this cell before (with `mvmt` movement points
     -- remaining), exit early
     if self:cached('move', x, y, mvmt) then return end
@@ -30,6 +33,9 @@ end
 
 -- Compute an attack radius centered on `x`, `y`
 function Radius:atk(x, y, rng, map)
+    -- short circuit if the unit has no `mov` points
+    if rng == 0 then return end
+
     -- exit early if we've visited this cell before (with `rng` range points remaining)
     if self:cached('atk', x, y, rng) then return end
 
