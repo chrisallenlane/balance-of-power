@@ -3,7 +3,7 @@ version 29
 __lua__
 
 -- show/hide on-screen debugging info
-DEBUG_SHOW = true
+DEBUG_SHOW = false
 
 -- TODO: refactor this
 Game = { state = { screen = "title" } }
