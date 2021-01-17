@@ -1,4 +1,4 @@
-MenuBalance = {choices = {"atk", "rng", "spd"}, sel = 1}
+MenuBalance = {choices = {"atk", "rng", "mov"}, sel = 1}
 
 -- update "end turn?" menu state
 function MenuBalance:update(unit)

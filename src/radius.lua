@@ -6,7 +6,7 @@ function Radius:update(unit, map, turn)
     self:clear()
     -- NB: we're computing the movement and attack radii separately. That's
     -- not computationally optimial, but much simpler to understand.
-    self:move(unit.cell.x, unit.cell.y, unit.stat.spd, map, turn)
+    self:move(unit.cell.x, unit.cell.y, unit.stat.mov, map, turn)
     self:atk(unit.cell.x, unit.cell.y, unit.stat.rng, map)
     self.cache = nil
 end

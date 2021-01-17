@@ -9,7 +9,7 @@ Unit = {
         rng = 2,
 
         -- speed
-        spd = 3,
+        mov = 3,
     },
 
     -- total available power
