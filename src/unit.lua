@@ -1,38 +1,17 @@
 -- Unit prototype
-Unit = {
-    -- player-facing unit stats
-    stat = {
-        -- attack
-        atk = 5,
-
-        -- range
-        rng = 2,
-
-        -- speed
-        mov = 3,
-    },
-
-    -- total available power
-    pwr = 10,
-
-    -- cell position
-    cell = {x = 0, y = 0},
-
-    -- pixel position
-    px = {x = 0, y = 0},
-
-    -- player
-    player = 1,
-
-    -- sprite id
-    spr = 0,
-}
+Unit = {}
 
 -- Unit constructor
 function Unit:new(u)
     u = u or {}
     setmetatable(u, self)
     self.__index = self
+
+    -- total available power
+    u.pwr = u.pwr or 10
+
+    -- player-facing unit stats
+    u.stat = u.stat or {atk = 5, rng = 2, mov = 3}
 
     -- compute the pixel position from the cell position
     u.px = {x = u.cell.x * 8, y = u.cell.y * 8}
