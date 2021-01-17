@@ -1,4 +1,4 @@
-Radius = {cells = {atk = {}, move = {}}, cache = {atk = {}, move = {}}}
+Radius = {cells = {atk = {}, mov = {}}, cache = {atk = {}, mov = {}}}
 
 -- draw a radius at the specified coordinates
 function Radius:update(unit, map, turn)
@@ -18,14 +18,14 @@ function Radius:move(x, y, mvmt, map, turn)
 
     -- if we've visited this cell before (with `mvmt` movement points
     -- remaining), exit early
-    if self:cached('move', x, y, mvmt) then return end
+    if self:cached('mov', x, y, mvmt) then return end
 
     -- iteratively search this cell's neighbors
     for _, cell in pairs(Cell.neighbors(x, y)) do
         -- determine the cost to traverse the tile
         local cost = Cell.cost(cell.x, cell.y, map)
         if mvmt >= cost and Cell.pass(cell.x, cell.y, map, turn) then
-            self:append('move', cell.x, cell.y)
+            self:append('mov', cell.x, cell.y)
             Radius:move(cell.x, cell.y, mvmt - cost, map, turn)
         end
     end
@@ -41,7 +41,7 @@ function Radius:atk(x, y, rng, map)
 
     -- cells within the movement radius are implicitly within the attack
     -- radius, so we get those "for free".
-    if not self:contains('move', x, y) then rng = rng - 1 end
+    if not self:contains('mov', x, y) then rng = rng - 1 end
 
     -- exit early if we have exhausted our attack radius
     if rng == 0 then return end
@@ -80,15 +80,15 @@ end
 
 -- reset the radius coordinates
 function Radius:clear()
-    self.cache = {atk = {}, move = {}}
-    self.cells = {atk = {}, move = {}}
+    self.cache = {atk = {}, mov = {}}
+    self.cells = {atk = {}, mov = {}}
 end
 
 -- draw the radius to the map
 function Radius:draw()
     -- draw the movement radius
     -- NB: the bitshifting just multiplies by 8
-    for x, cell in pairs(self.cells.move) do
+    for x, cell in pairs(self.cells.mov) do
         for y, _ in pairs(cell) do spr(48, x << 3, y << 3) end
     end
 
@@ -98,7 +98,7 @@ function Radius:draw()
             -- NB: making this check and only drawing the necessary cells is
             -- slightly faster than drawing the movement radius on top of the
             -- attack radius
-            if not self:contains('move', x, y) then
+            if not self:contains('mov', x, y) then
                 spr(50, x << 3, y << 3)
             end
         end

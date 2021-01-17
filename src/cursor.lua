@@ -62,7 +62,7 @@ function Cursor:update()
             -- unit
         elseif not unit and self.sel and
             Cell.open(self.cell.x, self.cell.y, Map.current) and
-            Radius:contains('move', self.cell.x, self.cell.y) then
+            Radius:contains('mov', self.cell.x, self.cell.y) then
             -- move the unit
             self.sel:move(self.cell.x, self.cell.y)
             Radius:clear()
@@ -99,7 +99,7 @@ function Cursor:update()
         Radius:clear()
     end
 
-    if self.sel and Radius:contains('move', self.cell.x, self.cell.y) then
+    if self.sel and Radius:contains('mov', self.cell.x, self.cell.y) then
         self.path = self.astar:search(
                         Cell:new(self.sel.cell.x, self.sel.cell.y,
                                  Map.current.cell.w),
