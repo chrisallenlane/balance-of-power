@@ -12,6 +12,9 @@ Unit = {
         spd = 3,
     },
 
+    -- total available power
+    pwr = 10,
+
     -- cell position
     cell = {x = 0, y = 0},
 
