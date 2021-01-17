@@ -23,8 +23,10 @@ function MenuBalance:update(unit)
     -- adjust power levels
     if BtnLeft:rep() and unit.stat[stat] >= 1 then
         unit.stat[stat] = unit.stat[stat] - 1
+        Radius:update(unit, Map.current, Turn.player)
     elseif BtnRight:rep() and unit.stat[stat] < 5 and alloc < unit.pwr then
         unit.stat[stat] = unit.stat[stat] + 1
+        Radius:update(unit, Map.current, Turn.player)
     end
 end
 
