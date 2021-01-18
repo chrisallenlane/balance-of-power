@@ -5,6 +5,9 @@ __lua__
 -- show/hide on-screen debugging info
 DEBUG_SHOW = false
 
+-- enable/disable debugging "cheat" functions
+DEBUG_CHEAT = true
+
 -- TODO: refactor this
 Game = { state = { screen = "title" } }
 

@@ -102,6 +102,7 @@ globals = {
 	"Camera",
 	"Cell",
 	"Cursor",
+	"DEBUG_CHEAT",
 	"DEBUG_SHOW",
 	"Debug",
 	"Delay",

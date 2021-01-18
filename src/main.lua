@@ -1,7 +1,6 @@
 function _init()
     -- implement an "advance stage" debug function
-    -- TODO: remove this later
-    menuitem(1, "advance stage", Map.advance)
+    if DEBUG_CHEAT then menuitem(1, "advance stage", Map.advance) end
 
     -- implement a "reset map" menu function
     menuitem(2, "reset map", Map.reset)

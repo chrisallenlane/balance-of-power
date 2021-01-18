@@ -43,6 +43,7 @@ function Map.advance()
 end
 
 -- reset the current map
+-- TODO: implement confirmation menu
 function Map.reset()
     Map:load(Map.num)
 end
