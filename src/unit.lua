@@ -16,6 +16,9 @@ function Unit:new(u)
     -- compute the pixel position from the cell position
     u.px = {x = u.cell.x * 8, y = u.cell.y * 8}
 
+    -- track actions taken
+    u.act = {atk = false, bal = false, mov = false}
+
     return u
 end
 
@@ -45,6 +48,14 @@ end
 function Unit:move(to_x, to_y)
     self.cell.x = to_x
     self.cell.y = to_y
+    self.act.mov = true
+end
+
+-- Attack attacks a unit
+function Unit:attack(target, idx)
+    -- TODO: this is a stub
+    target.die(idx, Map.current.units)
+    self.act.atk = true
 end
 
 -- Die kills a unit

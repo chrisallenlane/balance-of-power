@@ -2,6 +2,7 @@ MenuBalance = {choices = {"atk", "rng", "mov"}, sel = 1}
 
 -- update "end turn?" menu state
 function MenuBalance:update(unit)
+    -- TODO: record the balance action in the unit instance
     -- close the menu if "Z" is pressed
     if BtnZ:once() then self.vis = false end
 

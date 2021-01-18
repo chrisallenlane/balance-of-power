@@ -86,7 +86,7 @@ function Cursor:update()
         -- 4. and that unit is within our attack range
         if self.sel and unit and unit.player ~= Turn.player and
             Radius:contains('atk', unit.cell.x, unit.cell.y) then
-            unit.die(idx, Map.current.units)
+            self.sel:attack(unit, idx)
             Radius:clear()
             Turn:turn_end()
         end
