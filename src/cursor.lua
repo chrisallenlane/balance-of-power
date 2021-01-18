@@ -53,7 +53,8 @@ function Cursor:update()
                 Radius:update(unit, Map.current, Turn.player)
 
                 -- open friendly balance menu:
-            elseif unit:friend(Turn.player) and self:selected(unit) then
+            elseif unit:friend(Turn.player) and self:selected(unit) and
+                not unit:acted() then
                 MenuBalance.sel = 1
                 MenuBalance.vis = true
 
@@ -64,17 +65,17 @@ function Cursor:update()
 
                 -- attack enemy:
             elseif unit:foe(Turn.player) and self:selected() and
+                not self.sel:attacked() and
                 Radius:contains('atk', unit.cell.x, unit.cell.y) then
                 self.sel:attack(unit, idx)
                 Radius:clear()
                 Turn:turn_end()
             end
-        end
 
         -- if no unit is beneath the cursor...
-        if not unit then
+        elseif not unit then
             -- move friendly unit:
-            if self:selected() and
+            if self:selected() and not self.sel:moved() and
                 Cell.open(self.cell.x, self.cell.y, Map.current) and
                 Radius:contains('mov', self.cell.x, self.cell.y) then
                 self.sel:move(self.cell.x, self.cell.y)
