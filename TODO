@@ -1,25 +1,21 @@
 Todo:
   - Balance: cancel/confirm
-  - Input: poll once per loop
   - Movement: allow (move and attack) or balance
   - Movement: allow only one unit to move/atk
 
   - Attack: implement "real" attack mechanic
   - Menu: targeting menu
 
-  - Balance: balance consumes a turn
-  - Balance: cancel/confirm
-  - Movement: display enemy radii
-
   - AStar: cache computed paths
   - AStar: fix "offroading" bug
   - AStar: optimizations
   - Animation: coroutine lab
   - Animation: make cursor/camera movement smooth
+  - Animation: unit explosion
   - Animation: victory/loss banner
   - Animation: weapon fire
-  - Animation: unit explosion
   - Cursor: use "real" `Cell` objects
+  - Movement: display enemy radii
   - SFX: lab
 
 Tooling:

@@ -72,7 +72,7 @@ function Cursor:update()
                 Turn:turn_end()
             end
 
-        -- if no unit is beneath the cursor...
+            -- if no unit is beneath the cursor...
         elseif not unit then
             -- move friendly unit:
             if self:selected() and not self.sel:moved() and
