@@ -4,12 +4,12 @@ Turn = {player = 1}
 -- change the player turn
 function Turn:turn_end()
     -- unselect the unit
-    Cursor.sel = false
+    Cursor.sel = nil
+
+    -- TODO: refresh the "acted" unit
 
     -- record the current player's cursor position
     Cursor.last[self.player] = {x = Cursor.cell.x, y = Cursor.cell.y}
-
-    -- TODO: "unlock" the prior player's units
 
     -- end the turn
     if self.player == 1 then
