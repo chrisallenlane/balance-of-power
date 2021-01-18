@@ -58,9 +58,30 @@ function Unit:attack(target, idx)
     self.act.atk = true
 end
 
+-- Return true if the unit has moved
+function Unit:moved()
+    return self.act.mov
+end
+
+-- Return true if the unit has attacked
+function Unit:attacked()
+    return self.act.atk
+end
+
 -- Return true if a unit can no longer be used
 function Unit:exhausted()
     return (self.act.mov and self.act.atk) or self.act.bal
+end
+
+function Unit:refresh()
+    self.act.atk = false
+    self.act.bal = false
+    self.act.mov = false
+end
+
+-- Return true if the unit has taken any action
+function Unit:acted()
+    return self.act.mov or self.act.atk or self.act.bal
 end
 
 -- Return true if the unit is a friend
