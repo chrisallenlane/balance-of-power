@@ -58,6 +58,21 @@ function Unit:attack(target, idx)
     self.act.atk = true
 end
 
+-- Return true if a unit can no longer be used
+function Unit:exhausted()
+    return (self.act.mov and self.act.atk) or self.act.bal
+end
+
+-- Return true if the unit is a friend
+function Unit:friend(player)
+    return self.player == player
+end
+
+-- Return true if the unit is an enemy
+function Unit:foe(player)
+    return self.player ~= player
+end
+
 -- Die kills a unit
 function Unit.die(idx, units)
     deli(units, idx)

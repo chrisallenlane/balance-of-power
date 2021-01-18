@@ -9,6 +9,8 @@ function Turn:turn_end()
     -- record the current player's cursor position
     Cursor.last[self.player] = {x = Cursor.cell.x, y = Cursor.cell.y}
 
+    -- TODO: "unlock" the prior player's units
+
     -- end the turn
     if self.player == 1 then
         self.player = 2

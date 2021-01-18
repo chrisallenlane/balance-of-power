@@ -45,61 +45,64 @@ function Cursor:update()
         -- determine whether a unit is beneath the cursor
         local unit, idx = Unit.at(self.cell.x, self.cell.y, Map.current.units)
 
-        -- if a player unit is available beneath the cursor, select it
-        if unit and not self.sel and unit.player == Turn.player then
-            self.sel = unit
-            Radius:update(unit, Map.current, Turn.player)
+        -- if there is a unit beneath the cursor...
+        if unit then
+            -- select friendly unit:
+            if unit:friend(Turn.player) and not self:selected(unit) then
+                self.sel = unit
+                Radius:update(unit, Map.current, Turn.player)
 
-            -- if a player's unit was previously selected, and then "double
-            -- clicked", display the Balance menu
-        elseif unit and self.sel and unit.player == Turn.player and unit ==
-            self.sel then
-            MenuBalance.sel = 1
-            MenuBalance.vis = true
+                -- open friendly balance menu:
+            elseif unit:friend(Turn.player) and self:selected(unit) then
+                MenuBalance.sel = 1
+                MenuBalance.vis = true
 
-            -- if there is no unit beneath our cursor, and we have a unit
-            -- selected, and the terrain beneath our cursor is passable, move the
-            -- unit
-        elseif not unit and self.sel and
-            Cell.open(self.cell.x, self.cell.y, Map.current) and
-            Radius:contains('mov', self.cell.x, self.cell.y) then
-            -- move the unit
-            self.sel:move(self.cell.x, self.cell.y)
-            Radius:clear()
-            Units.delay = 30
+                -- view enemy radii:
+            elseif unit:foe(Turn.player) and not self:selected() then
+                -- TODO
+                printh("TODO")
 
-            -- clear the unit selection
-            self.sel = false
-
-            -- end the player's turn
-            Turn:turn_end()
-
-        elseif not unit and not self.sel then
-            MenuTurnEnd.sel = 1
-            MenuTurnEnd.vis = true
+                -- attack enemy:
+            elseif unit:foe(Turn.player) and self:selected() and
+                Radius:contains('atk', unit.cell.x, unit.cell.y) then
+                self.sel:attack(unit, idx)
+                Radius:clear()
+                Turn:turn_end()
+            end
         end
 
-        -- Attack:
-        -- 1. if we have a friendly unit selected
-        -- 2. and the cursor is over a unit
-        -- 3. and that unit is an enemy unit
-        -- 4. and that unit is within our attack range
-        if self.sel and unit and unit.player ~= Turn.player and
-            Radius:contains('atk', unit.cell.x, unit.cell.y) then
-            self.sel:attack(unit, idx)
-            Radius:clear()
-            Turn:turn_end()
+        -- if no unit is beneath the cursor...
+        if not unit then
+            -- move friendly unit:
+            if self:selected() and
+                Cell.open(self.cell.x, self.cell.y, Map.current) and
+                Radius:contains('mov', self.cell.x, self.cell.y) then
+                self.sel:move(self.cell.x, self.cell.y)
+                Radius:clear()
+                Units.delay = 30
+
+                -- clear the unit selection
+                self.sel = false
+
+                -- end the player's turn
+                Turn:turn_end()
+
+                -- show "turn end" menu
+            elseif not self:selected() then
+                MenuTurnEnd.sel = 1
+                MenuTurnEnd.vis = true
+            end
         end
     end
 
     -- "Z"
     -- unselect a selected unit
-    if BtnZ:once() and self.sel then
+    if BtnZ:once() and self:selected() then
         self.sel = false
         Radius:clear()
     end
 
-    if self.sel and Radius:contains('mov', self.cell.x, self.cell.y) then
+    if self:selected() and Radius:contains('mov', self.cell.x, self.cell.y) then
         self.path = self.astar:search(
                         Cell:new(self.sel.cell.x, self.sel.cell.y,
                                  Map.current.cell.w),
@@ -107,6 +110,13 @@ function Cursor:update()
     else
         self.path = {}
     end
+end
+
+-- Return true if `unit` unit is selected, or true if any unit is selected
+-- otherwise
+function Cursor:selected(unit)
+    if unit then return self.sel and (self.sel == unit) end
+    return self.sel
 end
 
 -- clear resets the cursor
