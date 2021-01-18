@@ -3,10 +3,9 @@ MenuBalance = {choices = {"atk", "rng", "mov"}, sel = 1}
 -- update "end turn?" menu state
 function MenuBalance:update(unit)
     -- close the menu if "Z" is pressed
-    if BtnZ:rep() then self.vis = false end
+    if BtnZ:once() then self.vis = false end
 
     -- move the stat selector
-    -- TODO: replace `rep` with `once`
     if BtnUp:rep() and self.sel >= 2 then
         self.sel = self.sel - 1
     elseif BtnDown:rep() and self.sel <= 2 then

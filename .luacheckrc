@@ -107,6 +107,7 @@ globals = {
 	"Delay",
 	"Game",
 	"Input",
+	"Inputs",
 	"Lock",
 	"Map",
 	"MenuBalance",

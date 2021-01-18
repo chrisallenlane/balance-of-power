@@ -17,6 +17,7 @@ function _init()
 end
 
 function _update60()
+    Inputs:poll()
     Game.screen:update()
 end
 

@@ -41,7 +41,7 @@ function Cursor:update()
     end
 
     -- "X"
-    if BtnX:rep() then
+    if BtnX:once() then
         -- determine whether a unit is beneath the cursor
         local unit, idx = Unit.at(self.cell.x, self.cell.y, Map.current.units)
 
@@ -94,7 +94,7 @@ function Cursor:update()
 
     -- "Z"
     -- unselect a selected unit
-    if BtnZ:rep() and self.sel then
+    if BtnZ:once() and self.sel then
         self.sel = false
         Radius:clear()
     end

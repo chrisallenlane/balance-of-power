@@ -12,12 +12,12 @@ function MenuTurnEnd:update()
     end
 
     -- selection: "yes"
-    if btn(5) and self.sel == 1 then
+    if BtnX:once() and self.sel == 1 then
         Turn:turn_end()
         self.vis = false
 
         -- selection: "no"
-    elseif btn(4) or (btn(5) and self.sel == 2) then
+    elseif BtnZ:once() or (BtnX:once() and self.sel == 2) then
         self.vis = false
     end
 end

@@ -4,7 +4,6 @@ Todo:
 
   - Balance: balance consumes a turn
   - Balance: cancel/confirm
-  - Input: poll once per loop
   - Movement: display enemy radii
   - Movement: move, then attack
   - Movement: select new unit while radii visible

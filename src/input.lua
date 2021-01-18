@@ -10,6 +10,7 @@ function Input:new(btn)
     -- instance properties
     i.frame = 1
     i.wait = 8
+    i.pressed = {cur = false, prev = false}
 
     return i
 end
@@ -19,7 +20,7 @@ function Input:rep()
     -- if the button was not pressed, set the frame counter to `wait` minus 1.
     -- This ensures that a key press is registered when the key is initially
     -- pressed.
-    if not btn(self.btn) then
+    if not self.pressed.cur then
         self.frame = self.wait - 1
         return false
     end
@@ -34,6 +35,11 @@ function Input:rep()
     end
 
     return false
+end
+
+-- Implement functionality similar to `btnp`, but without repetition
+function Input:once()
+    return not self.pressed.prev and self.pressed.cur
 end
 
 -- Initialize globals for reading button inputs
