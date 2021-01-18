@@ -1,12 +1,15 @@
 Todo:
+  - Balance: cancel/confirm
+  - Input: poll once per loop
+  - Movement: allow (move and attack) or balance
+  - Movement: allow only one unit to move/atk
+
   - Attack: implement "real" attack mechanic
   - Menu: targeting menu
 
   - Balance: balance consumes a turn
   - Balance: cancel/confirm
   - Movement: display enemy radii
-  - Movement: move, then attack
-  - Movement: select new unit while radii visible
 
   - AStar: cache computed paths
   - AStar: fix "offroading" bug
