@@ -1,17 +1,23 @@
 Todo:
-  - Menu: Power Balance
-  - Animation: victory/loss banner
   - Attack: implement "real" attack mechanic
+  - Menu: targeting menu
+
+  - Balance: balance consumes a turn
+  - Balance: cancel/confirm
+  - Input: poll once per loop
+  - Movement: display enemy radii
+  - Movement: move, then attack
+  - Movement: select new unit while radii visible
 
   - AStar: cache computed paths
   - AStar: fix "offroading" bug
   - AStar: optimizations
-
-  - Cursor: use "real" `Cell` objects
-
   - Animation: coroutine lab
   - Animation: make cursor/camera movement smooth
-
+  - Animation: victory/loss banner
+  - Animation: weapon fire
+  - Animation: unit explosion
+  - Cursor: use "real" `Cell` objects
   - SFX: lab
 
 Tooling:

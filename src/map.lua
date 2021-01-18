@@ -8,9 +8,6 @@ Map = {
 
     -- the map definitions
     defs = {},
-
-    -- interstitial
-    intr = {head = "", body = ""},
 }
 
 -- load the specified map

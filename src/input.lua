@@ -1,10 +1,16 @@
-Input = {btn = 0, frame = 1, wait = 8}
+Input = {}
 
 -- Input constructor
-function Input:new(i)
-    i = i or {}
+function Input:new(btn)
+    local i = {btn = btn}
+
     setmetatable(i, self)
     self.__index = self
+
+    -- instance properties
+    i.frame = 1
+    i.wait = 8
+
     return i
 end
 
@@ -31,9 +37,9 @@ function Input:rep()
 end
 
 -- Initialize globals for reading button inputs
-BtnLeft = Input:new({btn = 0})
-BtnRight = Input:new({btn = 1})
-BtnUp = Input:new({btn = 2})
-BtnDown = Input:new({btn = 3})
-BtnX = Input:new({btn = 5})
-BtnZ = Input:new({btn = 4})
+BtnLeft = Input:new(0)
+BtnRight = Input:new(1)
+BtnUp = Input:new(2)
+BtnDown = Input:new(3)
+BtnX = Input:new(5)
+BtnZ = Input:new(4)
