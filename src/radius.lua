@@ -9,7 +9,8 @@ function Radius:update(unit, map, turn)
     if not unit:moved() then
         self:move(unit.cell.x, unit.cell.y, unit.stat.mov, map, turn)
     end
-    if not unit:attacked() then
+    -- if the unit has range but no attack, don't render an attack radius
+    if not unit:attacked() and unit.stat.atk > 0 then
         self:atk(unit.cell.x, unit.cell.y, unit.stat.rng, map)
     end
     self.cache = nil

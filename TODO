@@ -18,7 +18,6 @@ Todo:
   - Cursor: create toggle to "permanently" display enemy radii
   - Cursor: use "real" `Cell` objects
   - Interstitial: aesthetics
-  - Radius: handle attack power of 0
   - SFX: lab
 
 Tooling:
