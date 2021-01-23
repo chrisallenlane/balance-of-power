@@ -10,7 +10,9 @@ Cursor = {
     cell = {x = 0, y = 0},
 
     -- selected unit
+    -- TODO: this could use a refactoring
     sel = nil,
+    selidx = nil,
 
     -- record the position of the cursor when each player's turn ends
     -- TODO: move into Player?
@@ -51,6 +53,7 @@ function Cursor:update()
             if unit:friend(Turn.player) and not self:selected(unit) and
                 unit.active then
                 self.sel = unit
+                self.selidx = idx
                 Radius:update(unit, Map.current, Turn.player)
 
                 -- open friendly balance menu:
@@ -58,7 +61,6 @@ function Cursor:update()
                 not unit:acted() then
                 MenuBalance.sel = 1
                 MenuBalance.vis = true
-                -- TODO: end turn after balancing
 
                 -- view enemy radii:
             elseif unit:foe(Turn.player) and not self:selected() then
@@ -128,7 +130,7 @@ function Cursor:update()
         -- hide radii
         if Radius.vis then
             -- unselect the unit if it is ours
-            if self:selected() then self.sel = false end
+            if self:selected() then self.sel = nil end
             Radius:clear()
             -- show the "end turn" menu
         else

@@ -41,15 +41,11 @@ function MenuBalance:update(unit)
 
     -- accept the balance, close the menu, and end the turn
     if BtnX:once() then
-        unit = Unit.clone(self.unit)
+        Map.current.units[Cursor.selidx] = Unit.clone(self.unit)
         self.vis = false
         self.unit = nil
         Turn:turn_end()
     end
-
-    -- XXX: this is only being returned to prevent the linter from
-    -- complaining about `unit` being unused :/
-    return unit
 end
 
 -- draw the "power balance" menu
