@@ -39,11 +39,12 @@ function MenuBalance:update(unit)
         Radius:update(self.unit, Map.current, Turn.player)
     end
 
-    -- accept the balance and close the menu
+    -- accept the balance, close the menu, and end the turn
     if BtnX:once() then
         unit = Unit.clone(self.unit)
         self.vis = false
         self.unit = nil
+        Turn:turn_end()
     end
 
     -- XXX: this is only being returned to prevent the linter from

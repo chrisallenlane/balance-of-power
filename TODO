@@ -1,6 +1,4 @@
 Todo:
-  - Movement: allow (move and attack) or balance
-
   - Attack: attack radius doesn't account for need to move
   - Attack: implement "real" attack mechanic
   - Menu: targeting menu
