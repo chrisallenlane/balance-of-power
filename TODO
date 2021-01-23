@@ -2,7 +2,7 @@ Todo:
   - Balance: cancel/confirm
   - Movement: allow (move and attack) or balance
 
-  - Attack: attack radius is wrong after move
+  - Attack: attack radius doesn't account for need to move
   - Attack: implement "real" attack mechanic
   - Menu: targeting menu
 
@@ -17,7 +17,6 @@ Todo:
   - Animation: weapon fire
   - Cursor: create toggle to "permanently" display enemy radii
   - Cursor: use "real" `Cell` objects
-  - Interstitial: aesthetics
   - SFX: lab
 
 Tooling:

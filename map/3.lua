@@ -2,7 +2,7 @@ add(Map.defs, function ()
   return {
     intr = {
         head = "stage 3",
-        body = "foo bar baz",
+        body = "lorem ipsum dolor sit amet.",
     },
 
     camera = {x = 16, y = 16},
