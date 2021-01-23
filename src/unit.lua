@@ -14,15 +14,33 @@ function Unit:new(u)
     u.stat = u.stat or {atk = 5, rng = 2, mov = 3}
 
     -- compute the pixel position from the cell position
-    u.px = {x = u.cell.x * 8, y = u.cell.y * 8}
+    u.px = u.px or {x = u.cell.x * 8, y = u.cell.y * 8}
 
     -- track actions taken
-    u.act = {atk = false, mov = false}
+    u.act = u.act or {atk = false, mov = false}
 
     -- is the unit active (ie, not exhausted)
     u.active = true
 
     return u
+end
+
+-- Returns a clone (deep copy) of a unit
+function Unit.clone(u)
+    -- create a deep copy of `u`'s properties
+    local clone = {
+        spr = u.spr,
+        player = u.player,
+        cell = {x = u.cell.x, y = u.cell.y},
+        pwr = u.pwr,
+        stat = {atk = u.stat.atk, mov = u.stat.mov, rng = u.stat.rng},
+        px = {x = u.px.x, y = u.px.y},
+        act = {atk = u.act.atk, mov = u.act.mov},
+        active = u.active,
+    }
+
+    -- initialize and return a cloned unit
+    return Unit:new(clone)
 end
 
 -- At returns the unit at the specified coordinates, or false if none is there

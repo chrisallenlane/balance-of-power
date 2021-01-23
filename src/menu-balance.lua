@@ -2,9 +2,14 @@ MenuBalance = {choices = {"atk", "rng", "mov"}, sel = 1}
 
 -- update "end turn?" menu state
 function MenuBalance:update(unit)
-    -- TODO: record the balance action in the unit instance
     -- close the menu if "Z" is pressed
-    if BtnZ:once() then self.vis = false end
+    if BtnZ:once() then
+        self.vis = false
+        return
+    end
+
+    -- clone the unit
+    local tmpunit = Unit:clone(unit)
 
     -- move the stat selector
     if BtnUp:rep() and self.sel >= 2 then
@@ -15,18 +20,22 @@ function MenuBalance:update(unit)
 
     -- determine how much power has been allocated
     local alloc = 0
-    for _, stat in pairs(self.choices) do alloc = alloc + unit.stat[stat] end
+    for _, stat in pairs(self.choices) do alloc = alloc + tmpunit.stat[stat] end
 
     -- get the selected stat
     local stat = self.choices[self.sel]
 
     -- adjust power levels
-    if BtnLeft:rep() and unit.stat[stat] >= 1 then
-        unit.stat[stat] = unit.stat[stat] - 1
-        Radius:update(unit, Map.current, Turn.player)
-    elseif BtnRight:rep() and unit.stat[stat] < 5 and alloc < unit.pwr then
-        unit.stat[stat] = unit.stat[stat] + 1
-        Radius:update(unit, Map.current, Turn.player)
+    if BtnLeft:rep() and tmpunit.stat[stat] >= 1 then
+        tmpunit.stat[stat] = tmpunit.stat[stat] - 1
+        Radius:update(tmpunit, Map.current, Turn.player)
+    elseif BtnRight:rep() and tmpunit.stat[stat] < 5 and alloc < tmpunit.pwr then
+        tmpunit.stat[stat] = tmpunit.stat[stat] + 1
+        Radius:update(tmpunit, Map.current, Turn.player)
+    end
+
+    if BtnX:once() then
+        unit = tmpunit
     end
 end
 
