@@ -115,6 +115,11 @@ function Cursor:update()
                 else
                     Radius:update(self.sel, Map.current, Turn.player)
                 end
+
+                -- show the "end turn" menu
+            elseif not self:selected() then
+                MenuTurnEnd.sel = 1
+                MenuTurnEnd.vis = true
             end
         end
     end
