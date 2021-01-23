@@ -38,9 +38,6 @@ end
 
 -- Compute an attack radius centered on `x`, `y`
 function Radius:atk(x, y, rng, map)
-    -- short circuit if the unit has no `mov` points
-    if rng == 0 then return end
-
     -- exit early if we've visited this cell before (with `rng` range points remaining)
     if self:cached('atk', x, y, rng) then return end
 
