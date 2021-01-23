@@ -119,6 +119,7 @@ globals = {
 	"Queue",
 	"Radius",
 	"Screens",
+	"String",
 	"Turn",
 	"Unit",
 	"Units",

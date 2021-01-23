@@ -32,7 +32,7 @@ end
 -- draw the title screen
 function Screens.title.draw()
     rectfill(0, 0, 127, 127, 12)
-    print("balance of power", 39, 30, 1)
+    String.centerX("balance of power", 30, 1)
 
     local menu = MenuScreenTitle
     local y = 50

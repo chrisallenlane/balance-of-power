@@ -12,6 +12,7 @@ DEBUG_CHEAT = true
 Game = { state = { screen = "title" } }
 
 -- externaize non-media assets
+#include src/string.lua
 #include src/radius.lua
 #include src/screen.lua
 #include src/screen-battle.lua
