@@ -70,7 +70,6 @@ function Cursor:update()
                 Radius:update(unit, Map.current, enemy)
 
                 -- attack enemy:
-                -- TODO: handle attack power of 0
             elseif unit:foe(Turn.player) and self:selected() and
                 not self.sel:attacked() and self.sel.active and
                 Radius:contains('atk', unit.cell.x, unit.cell.y) then
