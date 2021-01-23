@@ -11,6 +11,8 @@ function Radius:update(unit, map, turn)
     end
     -- if the unit has range but no attack, don't render an attack radius
     if not unit:attacked() and unit.stat.atk > 0 then
+        -- don't "pay for" the cell where the unit is placed
+        self:append('mov', unit.cell.x, unit.cell.y)
         self:atk(unit.cell.x, unit.cell.y, unit.stat.rng, map)
     end
     self.cache = nil
