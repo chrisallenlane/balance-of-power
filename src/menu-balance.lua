@@ -1,15 +1,18 @@
-MenuBalance = {choices = {"atk", "rng", "mov"}, sel = 1}
+MenuBalance = {choices = {"atk", "rng", "mov"}, sel = 1, unit = nil}
 
 -- update "end turn?" menu state
 function MenuBalance:update(unit)
-    -- close the menu if "Z" is pressed
+    -- cancel the balance and close the menu
     if BtnZ:once() then
         self.vis = false
+        self.unit = nil
+        Radius:update(unit, Map.current, Turn.player)
         return
     end
 
-    -- clone the unit
-    local tmpunit = Unit:clone(unit)
+    -- Clone the unit. This is necessary in order to make it possible to
+    -- cancel the balance.
+    if not self.unit then self.unit = Unit.clone(unit) end
 
     -- move the stat selector
     if BtnUp:rep() and self.sel >= 2 then
@@ -20,29 +23,38 @@ function MenuBalance:update(unit)
 
     -- determine how much power has been allocated
     local alloc = 0
-    for _, stat in pairs(self.choices) do alloc = alloc + tmpunit.stat[stat] end
+    for _, stat in pairs(self.choices) do
+        alloc = alloc + self.unit.stat[stat]
+    end
 
     -- get the selected stat
     local stat = self.choices[self.sel]
 
     -- adjust power levels
-    if BtnLeft:rep() and tmpunit.stat[stat] >= 1 then
-        tmpunit.stat[stat] = tmpunit.stat[stat] - 1
-        Radius:update(tmpunit, Map.current, Turn.player)
-    elseif BtnRight:rep() and tmpunit.stat[stat] < 5 and alloc < tmpunit.pwr then
-        tmpunit.stat[stat] = tmpunit.stat[stat] + 1
-        Radius:update(tmpunit, Map.current, Turn.player)
+    if BtnLeft:rep() and self.unit.stat[stat] >= 1 then
+        self.unit.stat[stat] = self.unit.stat[stat] - 1
+        Radius:update(self.unit, Map.current, Turn.player)
+    elseif BtnRight:rep() and self.unit.stat[stat] < 5 and alloc < self.unit.pwr then
+        self.unit.stat[stat] = self.unit.stat[stat] + 1
+        Radius:update(self.unit, Map.current, Turn.player)
     end
 
+    -- accept the balance and close the menu
     if BtnX:once() then
-        unit = tmpunit
+        unit = Unit.clone(self.unit)
+        self.vis = false
+        self.unit = nil
     end
+
+    -- XXX: this is only being returned to prevent the linter from
+    -- complaining about `unit` being unused :/
+    return unit
 end
 
 -- draw the "power balance" menu
-function MenuBalance:draw(unit)
+function MenuBalance:draw()
     -- exit early if the menu is not visible
-    if not self.vis then return end
+    if not self.vis or not self.unit then return end
 
     -- padding to align the menu location with the camera
     local camMarginX = Camera.px.x
@@ -71,7 +83,7 @@ function MenuBalance:draw(unit)
     -- draw the menu text
     for _, stat in pairs(self.choices) do
         -- read the unit's stat power level
-        local power = unit.stat[stat]
+        local power = self.unit.stat[stat]
 
         -- add the power to the sum
         alloc = alloc + power
@@ -105,6 +117,6 @@ function MenuBalance:draw(unit)
     end
 
     -- draw the remaining power
-    print("rem:" .. unit.pwr - alloc, camMarginX + menuMarginX + menuPad,
+    print("rem:" .. self.unit.pwr - alloc, camMarginX + menuMarginX + menuPad,
           camMarginY + menuMarginY + menuPad + rowPadY, 6)
 end

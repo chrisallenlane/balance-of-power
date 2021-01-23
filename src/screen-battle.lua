@@ -54,7 +54,7 @@ function Screens.battle.draw()
 
     Units.draw()
     MenuTurnEnd:draw()
-    MenuBalance:draw(Cursor.sel)
+    MenuBalance:draw()
 
     -- move the camera
     Camera:draw()
