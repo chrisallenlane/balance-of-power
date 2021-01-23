@@ -2,6 +2,7 @@ Radius = {
     center = {x = nil, y = nil},
     cells = {atk = {}, mov = {}},
     cache = {atk = {}, mov = {}},
+    vis = false,
 }
 
 -- draw a radius at the specified coordinates
@@ -24,7 +25,12 @@ function Radius:update(unit, map, turn)
         self:append('mov', unit.cell.x, unit.cell.y)
         self:atk(self.center.x, self.center.y, unit.stat.rng, map)
     end
+
+    -- clear the radius cache
     self.cache = nil
+
+    -- annotate that the radius is visible
+    self.vis = true
 end
 
 -- Compute a movement radius centered on `x`, `y`
@@ -102,6 +108,7 @@ end
 function Radius:clear()
     self.cache = {atk = {}, mov = {}}
     self.cells = {atk = {}, mov = {}}
+    self.vis = false
 end
 
 -- draw the radius to the map
@@ -127,9 +134,4 @@ function Radius:draw()
             end
         end
     end
-end
-
--- return true if a radius is visible
-function Radius:visible()
-    return #self.cells.atk > 0 or #self.cells.mov > 0
 end

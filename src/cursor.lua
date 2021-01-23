@@ -126,11 +126,11 @@ function Cursor:update()
     -- "Z"
     if BtnZ:once() then
         -- hide radii
-        if Radius:visible() then
+        if Radius.vis then
             -- unselect the unit if it is ours
             if self:selected() then self.sel = false end
             Radius:clear()
-            -- show "turn end" menu
+            -- show the "end turn" menu
         else
             MenuTurnEnd.sel = 1
             MenuTurnEnd.vis = true
