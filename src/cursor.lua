@@ -40,11 +40,11 @@ function Cursor:update()
         self.cell.y = self.cell.y + 1
     end
 
+    -- determine whether a unit is beneath the cursor
+    local unit, idx = Unit.at(self.cell.x, self.cell.y, Map.current.units)
+
     -- "X"
     if BtnX:once() then
-        -- determine whether a unit is beneath the cursor
-        local unit, idx = Unit.at(self.cell.x, self.cell.y, Map.current.units)
-
         -- if there is a unit beneath the cursor...
         if unit then
             -- select friendly unit:
@@ -62,8 +62,12 @@ function Cursor:update()
 
                 -- view enemy radii:
             elseif unit:foe(Turn.player) and not self:selected() then
-                -- TODO
-                printh("TODO")
+                -- get the enemy player number
+                local enemy = 2
+                if Turn.player == 2 then enemy = 1 end
+
+                -- draw the radii for the enemy player
+                Radius:update(unit, Map.current, enemy)
 
                 -- attack enemy:
                 -- TODO: handle attack power of 0
@@ -125,9 +129,10 @@ function Cursor:update()
     end
 
     -- "Z"
-    -- unselect a selected unit
-    if BtnZ:once() and self:selected() then
-        self.sel = false
+    -- hide radii
+    if BtnZ:once() then
+        -- unselect the unit if it is ours
+        if self:selected() then self.sel = false end
         Radius:clear()
     end
 

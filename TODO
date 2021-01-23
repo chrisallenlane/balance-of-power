@@ -16,7 +16,7 @@ Todo:
   - Animation: victory/loss banner
   - Animation: weapon fire
   - Cursor: use "real" `Cell` objects
-  - Movement: display enemy radii
+  - Cursor: create toggle to "permanently" display enemy radii
   - Radius: handle attack power of 0
   - SFX: lab
 
