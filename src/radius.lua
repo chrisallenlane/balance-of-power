@@ -1,19 +1,28 @@
-Radius = {cells = {atk = {}, mov = {}}, cache = {atk = {}, mov = {}}}
+Radius = {
+    center = {x = nil, y = nil},
+    cells = {atk = {}, mov = {}},
+    cache = {atk = {}, mov = {}},
+}
 
 -- draw a radius at the specified coordinates
 function Radius:update(unit, map, turn)
     -- clear the prior radius
     self:clear()
+
+    -- annotate the center of the radii
+    self.center.x = unit.cell.x
+    self.center.y = unit.cell.y
+
     -- NB: we're computing the movement and attack radii separately. That's
     -- not computationally optimial, but much simpler to understand.
     if not unit:moved() then
-        self:move(unit.cell.x, unit.cell.y, unit.stat.mov, map, turn)
+        self:move(self.center.x, self.center.y, unit.stat.mov, map, turn)
     end
     -- if the unit has range but no attack, don't render an attack radius
     if not unit:attacked() and unit.stat.atk > 0 then
         -- don't "pay for" the cell where the unit is placed
         self:append('mov', unit.cell.x, unit.cell.y)
-        self:atk(unit.cell.x, unit.cell.y, unit.stat.rng, map)
+        self:atk(self.center.x, self.center.y, unit.stat.rng, map)
     end
     self.cache = nil
 end
@@ -71,10 +80,17 @@ function Radius:cached(key, x, y, m)
     return false
 end
 
--- append the specified coordinate pair to set of radius cells
+-- append a cell to the radius
 function Radius:append(key, x, y)
     if not self.cells[key][x] then self.cells[key][x] = {} end
     self.cells[key][x][y] = true
+end
+
+-- remove a cell from the radius
+function Radius:remove(key, x, y)
+    if self.cells[key] and self.cells[key][x] and self.cells[key][x][y] then
+        self.cells[key][x][y] = nil
+    end
 end
 
 -- return true if x,y is among the cells within the radius
@@ -90,6 +106,10 @@ end
 
 -- draw the radius to the map
 function Radius:draw()
+    -- don't draw an indicator at the center of the radii
+    self:remove('mov', self.center.x, self.center.y)
+    self:remove('atk', self.center.x, self.center.y)
+
     -- draw the movement radius
     -- NB: the bitshifting just multiplies by 8
     for x, cell in pairs(self.cells.mov) do
