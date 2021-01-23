@@ -15,8 +15,9 @@ Todo:
   - Animation: unit explosion
   - Animation: victory/loss banner
   - Animation: weapon fire
-  - Cursor: use "real" `Cell` objects
   - Cursor: create toggle to "permanently" display enemy radii
+  - Cursor: use "real" `Cell` objects
+  - Interstitial: aesthetics
   - Radius: handle attack power of 0
   - SFX: lab
 

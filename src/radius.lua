@@ -108,3 +108,8 @@ function Radius:draw()
         end
     end
 end
+
+-- return true if a radius is visible
+function Radius:visible()
+    return #self.cells.atk > 0 or #self.cells.mov > 0
+end

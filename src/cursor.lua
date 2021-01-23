@@ -10,7 +10,7 @@ Cursor = {
     cell = {x = 0, y = 0},
 
     -- selected unit
-    sel = false,
+    sel = nil,
 
     -- record the position of the cursor when each player's turn ends
     -- TODO: move into Player?
@@ -84,8 +84,6 @@ function Cursor:update()
 
                 -- end the player's turn if the unit is exhausted
                 if self.sel:exhausted() then
-                    self.sel = false
-                    Radius:clear()
                     Turn:turn_end()
                     -- otherwise, show the movement radius
                 else
@@ -112,30 +110,30 @@ function Cursor:update()
 
                 -- end the player's turn if the unit is exhausted
                 if self.sel:exhausted() then
-                    self.sel = false
-                    Radius:clear()
                     Turn:turn_end()
                     -- otherwise, show the attack radius
                 else
                     Radius:update(self.sel, Map.current, Turn.player)
                 end
-
-                -- show "turn end" menu
-            elseif not self:selected() then
-                MenuTurnEnd.sel = 1
-                MenuTurnEnd.vis = true
             end
         end
     end
 
     -- "Z"
-    -- hide radii
     if BtnZ:once() then
-        -- unselect the unit if it is ours
-        if self:selected() then self.sel = false end
-        Radius:clear()
+        -- hide radii
+        if Radius:visible() then
+            -- unselect the unit if it is ours
+            if self:selected() then self.sel = false end
+            Radius:clear()
+            -- show "turn end" menu
+        else
+            MenuTurnEnd.sel = 1
+            MenuTurnEnd.vis = true
+        end
     end
 
+    -- draw an AStar trail showing the unit movement path
     if self:selected() and Radius:contains('mov', self.cell.x, self.cell.y) then
         self.path = self.astar:search(
                         Cell:new(self.sel.cell.x, self.sel.cell.y,

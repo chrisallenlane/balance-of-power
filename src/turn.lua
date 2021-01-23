@@ -6,6 +6,9 @@ function Turn:turn_end()
     -- unselect the unit
     Cursor.sel = nil
 
+    -- hide radii
+    Radius:clear()
+
     -- record the current player's cursor position
     Cursor.last[self.player] = {x = Cursor.cell.x, y = Cursor.cell.y}
 
