@@ -30,7 +30,10 @@ end
 -- draw the units
 function Units.draw()
     for _, unit in pairs(Map.current.units) do
-        spr(unit.spr, unit.px.x, unit.px.y)
+        -- XXX: assume that unit.spr+1 is the inactive sprite
+        local sprite = unit.spr
+        if not unit.active then sprite = sprite + 1 end
+        spr(sprite, unit.px.x, unit.px.y)
     end
 end
 
@@ -46,4 +49,16 @@ function Units.remain(units)
     end
 
     return p1, p2
+end
+
+-- deactivate all units
+function Units.deactivate(units, player)
+    for _, unit in pairs(units) do
+        if unit.player == player then unit:deactivate() end
+    end
+end
+
+-- refresh all units
+function Units.refresh(units)
+    for _, unit in pairs(units) do unit:refresh() end
 end

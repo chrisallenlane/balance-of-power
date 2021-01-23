@@ -17,7 +17,10 @@ function Unit:new(u)
     u.px = {x = u.cell.x * 8, y = u.cell.y * 8}
 
     -- track actions taken
-    u.act = {atk = false, bal = false, mov = false}
+    u.act = {atk = false, mov = false}
+
+    -- is the unit active (ie, not exhausted)
+    u.active = true
 
     return u
 end
@@ -70,18 +73,28 @@ end
 
 -- Return true if a unit can no longer be used
 function Unit:exhausted()
-    return (self.act.mov and self.act.atk) or self.act.bal
+    return self.act.mov and self.act.atk
 end
 
 function Unit:refresh()
+    self.active = true
     self.act.atk = false
-    self.act.bal = false
     self.act.mov = false
 end
 
 -- Return true if the unit has taken any action
 function Unit:acted()
-    return self.act.mov or self.act.atk or self.act.bal
+    return self.act.mov or self.act.atk
+end
+
+-- Activate the unit
+function Unit:activate()
+    self.active = true
+end
+
+-- Deactivate the unit
+function Unit:deactivate()
+    self.active = false
 end
 
 -- Return true if the unit is a friend

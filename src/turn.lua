@@ -6,8 +6,6 @@ function Turn:turn_end()
     -- unselect the unit
     Cursor.sel = nil
 
-    -- TODO: refresh the "acted" unit
-
     -- record the current player's cursor position
     Cursor.last[self.player] = {x = Cursor.cell.x, y = Cursor.cell.y}
 
@@ -17,6 +15,9 @@ function Turn:turn_end()
     else
         self.player = 1
     end
+
+    -- refresh all units
+    Units.refresh(Map.current.units)
 
     -- TODO: refactor into Cursor save/load or something?
     -- load the next player's cursor

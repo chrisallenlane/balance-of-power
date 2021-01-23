@@ -48,7 +48,8 @@ function Cursor:update()
         -- if there is a unit beneath the cursor...
         if unit then
             -- select friendly unit:
-            if unit:friend(Turn.player) and not self:selected(unit) then
+            if unit:friend(Turn.player) and not self:selected(unit) and
+                unit.active then
                 self.sel = unit
                 Radius:update(unit, Map.current, Turn.player)
 
@@ -57,6 +58,7 @@ function Cursor:update()
                 not unit:acted() then
                 MenuBalance.sel = 1
                 MenuBalance.vis = true
+                -- TODO: end turn after balancing
 
                 -- view enemy radii:
             elseif unit:foe(Turn.player) and not self:selected() then
@@ -64,29 +66,55 @@ function Cursor:update()
                 printh("TODO")
 
                 -- attack enemy:
+                -- TODO: handle attack power of 0
             elseif unit:foe(Turn.player) and self:selected() and
-                not self.sel:attacked() and
+                not self.sel:attacked() and self.sel.active and
                 Radius:contains('atk', unit.cell.x, unit.cell.y) then
+
+                -- attack the enemy unit
                 self.sel:attack(unit, idx)
-                Radius:clear()
-                Turn:turn_end()
+
+                -- deactivate all *other* units belonging to the player
+                Units.deactivate(Map.current.units, Turn.player)
+                self.sel:activate()
+
+                -- end the player's turn if the unit is exhausted
+                if self.sel:exhausted() then
+                    self.sel = false
+                    Radius:clear()
+                    Turn:turn_end()
+                    -- otherwise, show the movement radius
+                else
+                    Radius:update(self.sel, Map.current, Turn.player)
+                end
             end
 
             -- if no unit is beneath the cursor...
         elseif not unit then
             -- move friendly unit:
-            if self:selected() and not self.sel:moved() and
+            if self:selected() and self.sel.active and not self.sel:moved() and
                 Cell.open(self.cell.x, self.cell.y, Map.current) and
                 Radius:contains('mov', self.cell.x, self.cell.y) then
+
+                -- move the unit
                 self.sel:move(self.cell.x, self.cell.y)
-                Radius:clear()
+
+                -- deactivate all *other* units belonging to the player
+                Units.deactivate(Map.current.units, Turn.player)
+                self.sel:activate()
+
+                -- reset the animation delay
                 Units.delay = 30
 
-                -- clear the unit selection
-                self.sel = false
-
-                -- end the player's turn
-                Turn:turn_end()
+                -- end the player's turn if the unit is exhausted
+                if self.sel:exhausted() then
+                    self.sel = false
+                    Radius:clear()
+                    Turn:turn_end()
+                    -- otherwise, show the attack radius
+                else
+                    Radius:update(self.sel, Map.current, Turn.player)
+                end
 
                 -- show "turn end" menu
             elseif not self:selected() then
