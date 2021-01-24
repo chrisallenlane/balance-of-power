@@ -1,5 +1,4 @@
 Priority:
-  - Attack: feat: implement "real" attack mechanic
   - Attack: bug: attack radius doesn't account for need to move
 
 Backlog:

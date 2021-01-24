@@ -73,10 +73,37 @@ function Unit:move(to_x, to_y)
 end
 
 -- Attack attacks a unit
-function Unit:attack(target, idx)
-    -- TODO: this is a stub
-    target.die(idx, Map.current.units)
+function Unit:attack(target, stat, atk, idx, overflow)
+    -- record that the unit has attacked
     self.act.atk = true
+
+    -- damage the target
+    -- if this is overflow damage, don't substract from pwr
+    if not overflow then
+        target.pwr = target.pwr - atk
+
+        -- kill the unit if its pwr reaches 0
+        if target.pwr <= 0 then
+            target.die(idx, Map.current.units)
+            return
+        end
+    end
+
+    -- damage the targeted system
+    target.stat[stat] = target.stat[stat] - atk
+
+    -- overflow damage if necessary
+    if target.stat[stat] < 0 then
+        -- compute the overflow damage
+        local dmg = target.stat[stat] * -1
+
+        -- zero the disabled system
+        target.stat[stat] = 0
+
+        -- recursively damage the next system
+        local sys = target:functional()
+        self:attack(target, sys, dmg, idx, true)
+    end
 end
 
 -- Return true if the unit has moved
@@ -94,6 +121,7 @@ function Unit:exhausted()
     return self.act.mov and self.act.atk
 end
 
+-- Refresh the unit
 function Unit:refresh()
     self.active = true
     self.act.atk = false
@@ -123,6 +151,13 @@ end
 -- Return true if the unit is an enemy
 function Unit:foe(player)
     return self.player ~= player
+end
+
+-- Return the first functional unit system
+function Unit:functional()
+    for _, stat in ipairs({'atk', 'rng', 'mov'}) do
+        if self.stat[stat] >= 1 then return stat end
+    end
 end
 
 -- Die kills a unit

@@ -1,5 +1,6 @@
 MenuTarget = {choices = {"atk", "rng", "mov"}, sel = 1, idx = nil, unit = nil}
 
+-- TODO: disallow targeting a system with 0 power
 -- update "end turn?" menu state
 function MenuTarget:update()
     -- cancel the balance and close the menu
@@ -23,7 +24,8 @@ function MenuTarget:update()
         self.vis = false
 
         -- attack the enemy unit
-        Cursor.sel:attack(self.unit, self.idx)
+        Cursor.sel:attack(self.unit, self.choices[self.sel],
+                          Cursor.sel.stat.atk, self.idx)
 
         -- deactivate all *other* units belonging to the player
         Units.deactivate(Map.current.units, Turn.player)
