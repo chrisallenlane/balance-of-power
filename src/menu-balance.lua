@@ -1,5 +1,18 @@
 MenuBalance = {choices = {"atk", "rng", "mov"}, sel = 1, unit = nil}
 
+-- open the balance menu
+function MenuBalance:open(unit, idx)
+    -- reset the menu selection
+    self.sel = 1
+
+    -- show the menu
+    self.vis = true
+
+    -- bind params
+    self.unit = Unit.clone(unit)
+    self.idx = idx
+end
+
 -- update "end turn?" menu state
 function MenuBalance:update()
     -- cancel the balance and close the menu
@@ -9,10 +22,6 @@ function MenuBalance:update()
         Radius:update(Cursor.sel, Map.current, Turn.player)
         return
     end
-
-    -- Clone the unit. This is necessary in order to make it possible to
-    -- cancel the balance.
-    if not self.unit then self.unit = Unit.clone(Cursor.sel) end
 
     -- move the stat selector
     if BtnUp:rep() and self.sel >= 2 then
@@ -41,7 +50,7 @@ function MenuBalance:update()
 
     -- accept the balance, close the menu, and end the turn
     if BtnX:once() then
-        Map.current.units[Cursor.selidx] = Unit.clone(self.unit)
+        Map.current.units[self.idx] = Unit.clone(self.unit)
         self.vis = false
         self.unit = nil
         Turn:turn_end()

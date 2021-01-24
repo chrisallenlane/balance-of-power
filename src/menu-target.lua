@@ -1,5 +1,18 @@
 MenuTarget = {choices = {"atk", "rng", "mov"}, sel = 1, idx = nil, unit = nil}
 
+-- open the target menu
+function MenuTarget:open(unit, idx)
+    -- reset the menu selection
+    self.sel = 1
+
+    -- show the menu
+    self.vis = true
+
+    -- bind params
+    self.unit = unit
+    self.idx = idx
+end
+
 -- TODO: disallow targeting a system with 0 power
 -- update "end turn?" menu state
 function MenuTarget:update()

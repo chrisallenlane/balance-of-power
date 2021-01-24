@@ -12,7 +12,6 @@ Cursor = {
     -- selected unit
     -- TODO: this could use a refactoring
     sel = nil,
-    selidx = nil,
 
     -- record the position of the cursor when each player's turn ends
     -- TODO: move into Player?
@@ -53,14 +52,12 @@ function Cursor:update()
             if unit:friend(Turn.player) and not self:selected(unit) and
                 unit.active then
                 self.sel = unit
-                self.selidx = idx
                 Radius:update(unit, Map.current, Turn.player)
 
                 -- open friendly balance menu:
             elseif unit:friend(Turn.player) and self:selected(unit) and
                 not unit:acted() then
-                MenuBalance.sel = 1
-                MenuBalance.vis = true
+                MenuBalance:open(self.sel, idx)
 
                 -- view enemy radii:
             elseif unit:foe(Turn.player) and not self:selected() then
@@ -75,12 +72,7 @@ function Cursor:update()
             elseif unit:foe(Turn.player) and self:selected() and
                 not self.sel:attacked() and self.sel.active and
                 Radius:contains('atk', unit.cell.x, unit.cell.y) then
-
-                -- display the targeting menu
-                MenuTarget.sel = 1
-                MenuTarget.vis = true
-                MenuTarget.unit = unit
-                MenuTarget.idx = idx
+                MenuTarget:open(unit, idx)
             end
 
             -- if no unit is beneath the cursor...
@@ -110,8 +102,7 @@ function Cursor:update()
 
                 -- show the "end turn" menu
             elseif not self:selected() then
-                MenuTurnEnd.sel = 1
-                MenuTurnEnd.vis = true
+                MenuTurnEnd:open()
             end
         end
     end

@@ -1,5 +1,11 @@
 MenuTurnEnd = {choices = {"yes", "no"}, sel = 1, vis = false}
 
+-- open the target menu
+function MenuTurnEnd:open()
+    self.sel = 1
+    self.vis = true
+end
+
 -- update "end turn?" menu state
 function MenuTurnEnd:update()
     -- right
