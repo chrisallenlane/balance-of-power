@@ -1,16 +1,5 @@
 -- update the battle screen
 function Screens.battle.update()
-    -- determine if the map has been cleared
-    -- TODO: handle 2-player games
-    local clear, victor = Map:clear()
-    if clear and victor == 1 then
-        Map.advance()
-        return
-    elseif clear and victor == 2 then
-        Screens.load("defeat")
-        return
-    end
-
     -- If a menu is visible, run the appropriate update loop
     if MenuTurnEnd.vis then
         MenuTurnEnd:update()
@@ -20,6 +9,17 @@ function Screens.battle.update()
         return
     elseif MenuTarget.vis then
         MenuTarget:update()
+        return
+    end
+
+    -- determine if the map has been cleared
+    -- TODO: handle 2-player games
+    local clear, victor = Map:clear()
+    if clear and victor == 1 then
+        Map.advance()
+        return
+    elseif clear and victor == 2 then
+        Screens.load("defeat")
         return
     end
 
