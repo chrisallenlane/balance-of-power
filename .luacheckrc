@@ -113,6 +113,7 @@ globals = {
 	"Map",
 	"MenuBalance",
 	"MenuScreenTitle",
+	"MenuTarget",
 	"MenuTurnEnd",
 	"Player",
 	"Players",

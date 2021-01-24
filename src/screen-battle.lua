@@ -21,6 +21,9 @@ function Screens.battle.update()
     elseif MenuBalance.vis then
         MenuBalance:update(Cursor.sel)
         return
+    elseif MenuTarget.vis then
+        MenuTarget:update()
+        return
     end
 
     -- do not run player/CPU update loops if a lock is engaged
@@ -55,6 +58,7 @@ function Screens.battle.draw()
     Units.draw()
     MenuTurnEnd:draw()
     MenuBalance:draw()
+    MenuTarget:draw()
 
     -- move the camera
     Camera:draw()

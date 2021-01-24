@@ -76,20 +76,11 @@ function Cursor:update()
                 not self.sel:attacked() and self.sel.active and
                 Radius:contains('atk', unit.cell.x, unit.cell.y) then
 
-                -- attack the enemy unit
-                self.sel:attack(unit, idx)
-
-                -- deactivate all *other* units belonging to the player
-                Units.deactivate(Map.current.units, Turn.player)
-                self.sel:activate()
-
-                -- end the player's turn if the unit is exhausted
-                if self.sel:exhausted() then
-                    Turn:turn_end()
-                    -- otherwise, show the movement radius
-                else
-                    Radius:update(self.sel, Map.current, Turn.player)
-                end
+                -- display the targeting menu
+                MenuTarget.sel = 1
+                MenuTarget.vis = true
+                MenuTarget.unit = unit
+                MenuTarget.idx = idx
             end
 
             -- if no unit is beneath the cursor...
