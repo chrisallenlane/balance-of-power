@@ -46,11 +46,8 @@ function Screens.battle.draw()
     -- draw the movement radius
     Radius:draw()
 
-    -- always draw the cursor for player one
-    -- only draw the cursor for player 2 when fighting a human enemy
-    if Turn.player == 1 or (Turn.player == 2 and not Players[2].cpu) then
-        Cursor:draw()
-    end
+    -- draw the cursor if the player is a human
+    if Turn:human(Players) then Cursor:draw() end
 
     Units.draw()
     MenuTurnEnd:draw()
