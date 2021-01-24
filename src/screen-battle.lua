@@ -16,7 +16,7 @@ function Screens.battle.update()
         MenuTurnEnd:update()
         return
     elseif MenuBalance.vis then
-        MenuBalance:update(Cursor.sel)
+        MenuBalance:update()
         return
     elseif MenuTarget.vis then
         MenuTarget:update()

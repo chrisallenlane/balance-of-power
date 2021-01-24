@@ -1,18 +1,18 @@
 MenuBalance = {choices = {"atk", "rng", "mov"}, sel = 1, unit = nil}
 
 -- update "end turn?" menu state
-function MenuBalance:update(unit)
+function MenuBalance:update()
     -- cancel the balance and close the menu
     if BtnZ:once() then
         self.vis = false
         self.unit = nil
-        Radius:update(unit, Map.current, Turn.player)
+        Radius:update(Cursor.sel, Map.current, Turn.player)
         return
     end
 
     -- Clone the unit. This is necessary in order to make it possible to
     -- cancel the balance.
-    if not self.unit then self.unit = Unit.clone(unit) end
+    if not self.unit then self.unit = Unit.clone(Cursor.sel) end
 
     -- move the stat selector
     if BtnUp:rep() and self.sel >= 2 then
