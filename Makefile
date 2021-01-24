@@ -1,4 +1,4 @@
-.DEFAULT_GOAL := check
+.DEFAULT_GOAL := fast
 
 makefile := $(realpath $(lastword $(MAKEFILE_LIST)))
 
@@ -26,6 +26,10 @@ docker_image := bop
 .PHONY: setup
 setup:
 	$(DOCKER) build -t $(docker_image) -f ./Dockerfile .
+
+## fast: format and lint
+.PHONY: fast
+fast: | fmt lint
 
 ## check: format, lint, and test
 .PHONY: check
