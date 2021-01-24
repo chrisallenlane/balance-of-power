@@ -1,26 +1,26 @@
-Todo:
-  - Attack: attack radius doesn't account for need to move
-  - Attack: implement "real" attack mechanic
-  - Menu: targeting menu
+Priority:
+  - Menu: feat: targeting menu
+    - Attack: feat: implement "real" attack mechanic
+  - Attack: bug: attack radius doesn't account for need to move
 
-  - AStar: cache computed paths
-  - AStar: fix "offroading" bug
-  - AStar: optimizations
-  - Animation: Bug: first enemy movement does not pause sometimes
-  - Animation: coroutine lab
-  - Animation: make cursor/camera movement smooth
-  - Animation: unit explosion
-  - Animation: victory/loss banner
-  - Animation: weapon fire
-  - Art: title, victory, defeat screens
-  - Cursor: create toggle to "permanently" display enemy radii
-  - Cursor: use "real" `Cell` objects
+Backlog:
+  - AStar: bug: fix "off-roading" bug
+  - AStar: perf: cache computed paths
+  - AStar: perf: optimizations
+  - Animation: bug: first enemy movement does not always animate
+  - Animation: feat: make cursor/camera movement smooth
+  - Animation: feat: unit explosion
+  - Animation: feat: victory/loss banner
+  - Animation: feat: weapon fire
+  - Animation: lab: coroutine lab
+  - Art: feat: title, victory, defeat screens
+  - Camera: bug: screen tear on stage transistion
+  - Cursor: bug: does not always return to player unit
+  - Cursor: feat: create toggle to "permanently" display enemy radii
+  - Cursor: refactor: use "real" `Cell` objects
+  - Docs: add a license
+  - Docs: update the README
   - SFX: lab
-
-Tooling:
-  - Implement unit-tests
-  - Implement benchmarking harness
-
-Etc:
-  - Add a LICENSE
-  - Update the README
+  - Tooling: feat: Implement benchmarking harness
+  - Tooling: feat: Implement coverage report
+  - Tooling: feat: Implement unit-tests
