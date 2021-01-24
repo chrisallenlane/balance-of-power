@@ -48,6 +48,25 @@ function Map.reset()
     Map:load(Map.num)
 end
 
+-- return true if the map has been cleared
+function Map:clear()
+    -- get the number of units remaining for each player
+    local p1, p2 = Units.remain(self.current.units)
+
+    -- player 1 is victorious
+    if p2 == 0 then
+        return true, 1
+
+        -- player 2 is victorious
+    elseif p1 == 0 then
+        return true, 2
+
+        -- the match is ungoing
+    else
+        return false, nil
+    end
+end
+
 -- draw the current map
 function Map:draw()
     local m = self.current

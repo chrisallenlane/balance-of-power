@@ -1,16 +1,13 @@
 -- update the battle screen
 function Screens.battle.update()
-    -- determine if the match has been concluded
-    local p1, p2 = Units.remain(Map.current.units)
-
-    -- TODO: handle 1-player, 2-player games
-    if p1 == 0 then
-        -- TODO: display a defeat banner
-        Screens.load("defeat")
-        return
-    end
-    if p2 == 0 then
+    -- determine if the map has been cleared
+    -- TODO: handle 2-player games
+    local clear, victor = Map:clear()
+    if clear and victor == 1 then
         Map.advance()
+        return
+    elseif clear and victor == 2 then
+        Screens.load("defeat")
         return
     end
 
