@@ -28,7 +28,7 @@ function Screens.battle.update()
 
     -- do not run player/CPU update loops if a lock is engaged
     if Camera.ready and Units.ready then
-        if Turn.player == 1 or (Turn.player == 2 and not Players[2].cpu) then
+        if Turn:human(Players) then
             Cursor:update()
         else
             CPU.update()

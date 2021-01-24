@@ -37,3 +37,8 @@ function Turn:turn_end()
     Camera:focus(Cursor.cell.x, Cursor.cell.y, Map.current.cell.w,
                  Map.current.cell.h)
 end
+
+-- return true if the current player is a human
+function Turn:human(players)
+    return not players[self.player].cpu
+end
