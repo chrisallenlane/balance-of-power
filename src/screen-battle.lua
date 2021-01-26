@@ -1,39 +1,5 @@
 -- update the battle screen
 function Screens.battle.update()
-    -- If a menu is visible, run the appropriate update loop
-    if MenuTurnEnd.vis then
-        MenuTurnEnd:update()
-        return
-    elseif MenuBalance.vis then
-        MenuBalance:update()
-        return
-    elseif MenuTarget.vis then
-        MenuTarget:update()
-        -- accept the balance, close the menu, and end the turn
-        if BtnX:once() then
-            -- hide this menu
-            MenuTarget.vis = false
-
-            -- attack the enemy unit
-            Cursor.sel:attack(MenuTarget.unit,
-                              MenuTarget.choices[MenuTarget.sel],
-                              Cursor.sel.stat.atk, MenuTarget.idx)
-
-            -- deactivate all *other* units belonging to the player
-            Units.deactivate(Map.current.units, Turn.player)
-            Cursor.sel:activate()
-
-            -- end the player's turn if the unit is exhausted
-            if Cursor.sel:exhausted() then
-                Turn:turn_end()
-                -- otherwise, show the movement radius
-            else
-                Radius:update(Cursor.sel, Map.current, Turn.player)
-            end
-        end
-        return
-    end
-
     -- determine if the map has been cleared
     -- TODO: handle 2-player games
     local clear, victor = Map:clear()
@@ -48,6 +14,40 @@ function Screens.battle.update()
     -- do not run player/CPU update loops if a lock is engaged
     if Camera.ready and Units.ready then
         if Turn:human(Players) then
+            -- If a menu is visible, run the appropriate update loop
+            if MenuTurnEnd.vis then
+                MenuTurnEnd:update()
+                return
+            elseif MenuBalance.vis then
+                MenuBalance:update()
+                return
+            elseif MenuTarget.vis then
+                MenuTarget:update()
+                -- accept the balance, close the menu, and end the turn
+                if BtnX:once() then
+                    -- hide this menu
+                    MenuTarget.vis = false
+
+                    -- attack the enemy unit
+                    Cursor.sel:attack(MenuTarget.unit,
+                                      MenuTarget.choices[MenuTarget.sel],
+                                      Cursor.sel.stat.atk, MenuTarget.idx)
+
+                    -- deactivate all *other* units belonging to the player
+                    Units.deactivate(Map.current.units, Turn.player)
+                    Cursor.sel:activate()
+
+                    -- end the player's turn if the unit is exhausted
+                    if Cursor.sel:exhausted() then
+                        Turn:turn_end()
+                        -- otherwise, show the movement radius
+                    else
+                        Radius:update(Cursor.sel, Map.current, Turn.player)
+                    end
+                end
+                return
+            end
+
             -- update the cursor position
             Cursor:update()
 
