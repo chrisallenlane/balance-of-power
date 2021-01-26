@@ -70,6 +70,12 @@ function Screens.battle.update()
                         not unit:acted() then
                         MenuBalance:open(Cursor.sel, idx)
 
+                        -- open the "turn end" menu if the unit has already
+                        -- taken an action
+                    elseif unit:friend(Turn.player) and Cursor:selected(unit) and
+                        unit:acted() then
+                        MenuTurnEnd:open()
+
                         -- view enemy radii:
                     elseif unit:foe(Turn.player) and not Cursor:selected() then
                         -- get the enemy player number
