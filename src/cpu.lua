@@ -1,7 +1,7 @@
-CPU = {delay = 0}
+CPU = {battle = {}, delay = 0}
 
 -- NB: this is a stub
-function CPU.update()
+function CPU.battle.update()
     -- pause in place for a moment before the CPU moves
     if CPU.delay > 0 then
         CPU.delay = CPU.delay - 1
