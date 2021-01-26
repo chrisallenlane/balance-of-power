@@ -116,8 +116,7 @@ function Cursor:update()
             Radius:clear()
             -- show the "end turn" menu
         else
-            MenuTurnEnd.sel = 1
-            MenuTurnEnd.vis = true
+            MenuTurnEnd:open()
         end
     end
 
