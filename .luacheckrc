@@ -120,6 +120,7 @@ globals = {
 	"Players",
 	"Queue",
 	"Radius",
+	"SFX",
 	"Screens",
 	"String",
 	"Turn",

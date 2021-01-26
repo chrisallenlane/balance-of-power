@@ -41,9 +41,11 @@ function MenuBalance:update()
 
     -- adjust power levels
     if BtnLeft:rep() and self.unit.stat[stat] >= 1 then
+        SFX:play('power-down')
         self.unit.stat[stat] = self.unit.stat[stat] - 1
         Radius:update(self.unit, Map.current, Turn.player)
     elseif BtnRight:rep() and self.unit.stat[stat] < 5 and alloc < self.unit.pwr then
+        SFX:play('power-up')
         self.unit.stat[stat] = self.unit.stat[stat] + 1
         Radius:update(self.unit, Map.current, Turn.player)
     end
