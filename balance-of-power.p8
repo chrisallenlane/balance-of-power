@@ -11,7 +11,7 @@ DEBUG_CHEAT = true
 -- TODO: refactor this
 Game = { state = { screen = "title" } }
 
--- externaize non-media assets
+-- externalize non-media assets
 #include src/string.lua
 #include src/radius.lua
 #include src/screen.lua
