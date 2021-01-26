@@ -38,7 +38,7 @@ function Screens.battle.update()
                     Cursor.sel:activate()
 
                     -- end the player's turn if the unit is exhausted
-                    if Cursor.sel:exhausted() then
+                    if Cursor.sel:moved() or Cursor.sel.stat.mov == 0 then
                         Turn:turn_end()
                         -- otherwise, show the movement radius
                     else
@@ -107,7 +107,8 @@ function Screens.battle.update()
                         Units.delay = 30
 
                         -- end the player's turn if the unit is exhausted
-                        if Cursor.sel:exhausted() then
+                        if Cursor.sel:attacked() or Cursor.sel.stat.atk == 0 or
+                            Cursor.sel.stat.rng == 0 then
                             Turn:turn_end()
                             -- otherwise, show the attack radius
                         else

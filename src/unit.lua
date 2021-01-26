@@ -116,11 +116,6 @@ function Unit:attacked()
     return self.act.atk
 end
 
--- Return true if a unit can no longer be used
-function Unit:exhausted()
-    return self.act.mov and self.act.atk
-end
-
 -- Refresh the unit
 function Unit:refresh()
     self.active = true
