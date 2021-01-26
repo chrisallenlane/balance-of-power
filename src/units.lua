@@ -1,5 +1,6 @@
 Units = {ready = true, delay = 0}
 
+-- XXX TODO: this is very inefficient
 -- update unit coordinates
 function Units.update()
     -- assume that units are ready
@@ -30,7 +31,7 @@ end
 -- draw the units
 function Units.draw()
     for _, unit in pairs(Map.current.units) do
-        -- XXX: assume that unit.spr+1 is the inactive sprite
+        -- NB: assume that unit.spr+1 is the inactive sprite
         local sprite = unit.spr
         if not unit.active then sprite = sprite + 1 end
         spr(sprite, unit.px.x, unit.px.y)

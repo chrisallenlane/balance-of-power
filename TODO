@@ -18,7 +18,15 @@ Backlog:
   - Cursor: refactor: use "real" `Cell` objects
   - Docs: add a license
   - Docs: update the README
-  - SFX: lab
   - Tooling: feat: Implement benchmarking harness
   - Tooling: feat: Implement coverage report
   - Tooling: feat: Implement unit-tests
+
+----
+SFX:
+  - cursor move
+  - menu cancel/confirm
+  - power add/remove
+  - turn end
+  - unit explode
+  - unit move
