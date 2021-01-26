@@ -12,7 +12,7 @@ function Screens.title.update()
         menu.sel = sel + 1
 
         -- "select"
-    elseif BtnX:once() then
+    elseif BtnYes:once() then
         -- initialize player 1
         add(Players, Player:new({num = 1, cpu = false}))
 

@@ -11,7 +11,7 @@ function Human.battle.update()
     elseif MenuTarget.vis then
         MenuTarget:update()
         -- accept the balance, close the menu, and end the turn
-        if BtnX:once() then
+        if BtnYes:once() then
             -- hide this menu
             MenuTarget.vis = false
 
@@ -42,7 +42,7 @@ function Human.battle.update()
     local unit, idx = Unit.at(Cursor.cell.x, Cursor.cell.y, Map.current.units)
 
     -- "X"
-    if BtnX:once() then
+    if BtnYes:once() then
         -- if there is a unit beneath the cursor...
         if unit then
             -- select friendly unit:
@@ -113,7 +113,7 @@ function Human.battle.update()
     end
 
     -- "Z"
-    if BtnZ:once() then
+    if BtnNo:once() then
         -- hide radii
         if Radius.vis then
             -- unselect the unit if it is ours

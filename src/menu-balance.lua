@@ -16,7 +16,7 @@ end
 -- update "end turn?" menu state
 function MenuBalance:update()
     -- cancel the balance and close the menu
-    if BtnZ:once() then
+    if BtnNo:once() then
         self.vis = false
         self.unit = nil
         Radius:update(Cursor.sel, Map.current, Turn.player)
@@ -49,7 +49,7 @@ function MenuBalance:update()
     end
 
     -- accept the balance, close the menu, and end the turn
-    if BtnX:once() then
+    if BtnYes:once() then
         Map.current.units[self.idx] = Unit.clone(self.unit)
         self.vis = false
         self.unit = nil

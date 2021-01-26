@@ -1,4 +1,4 @@
-Inputs = {BtnLeft, BtnRight, BtnUp, BtnDown, BtnX, BtnZ}
+Inputs = {BtnLeft, BtnRight, BtnUp, BtnDown, BtnYes, BtnNo}
 
 -- Poll the inputs. This runs once per update loop.
 function Inputs:poll()

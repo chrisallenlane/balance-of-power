@@ -17,7 +17,7 @@ end
 -- update "end turn?" menu state
 function MenuTarget:update()
     -- cancel the balance and close the menu
-    if BtnZ:once() then
+    if BtnNo:once() then
         self.vis = false
         self.unit = nil
         self.idx = nil
