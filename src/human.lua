@@ -128,12 +128,10 @@ function Human.battle.update()
     -- draw an AStar trail showing the unit movement path
     if Cursor:selected() and
         Radius:contains('mov', Cursor.cell.x, Cursor.cell.y) then
-        Cursor.path = Cursor.astar:search(
-                          Cell:new(Cursor.sel.cell.x, Cursor.sel.cell.y,
-                                   Map.current.cell.w), Cell:new(Cursor.cell.x,
-                                                                 Cursor.cell.y,
-                                                                 Map.current
-                                                                     .cell.w))
+        local src = Cell:new(Cursor.sel.cell.x, Cursor.sel.cell.y,
+                             Map.current.cell.w)
+        local dst = Cell:new(Cursor.cell.x, Cursor.cell.y, Map.current.cell.w)
+        Cursor.path = Cursor.astar:search(src, dst)
     else
         Cursor.path = {}
     end
