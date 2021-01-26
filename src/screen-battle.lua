@@ -1,8 +1,5 @@
 -- update the battle screen
 function Screens.battle.update()
-    -- TODO: try to move all input handling to this level?
-    -- TODO: handle this some other way?
-    -- TODO: how to "return" from these? Callbacks?
     -- If a menu is visible, run the appropriate update loop
     if MenuTurnEnd.vis then
         MenuTurnEnd:update()
@@ -12,6 +9,28 @@ function Screens.battle.update()
         return
     elseif MenuTarget.vis then
         MenuTarget:update()
+        -- accept the balance, close the menu, and end the turn
+        if BtnX:once() then
+            -- hide this menu
+            MenuTarget.vis = false
+
+            -- attack the enemy unit
+            Cursor.sel:attack(MenuTarget.unit,
+                              MenuTarget.choices[MenuTarget.sel],
+                              Cursor.sel.stat.atk, MenuTarget.idx)
+
+            -- deactivate all *other* units belonging to the player
+            Units.deactivate(Map.current.units, Turn.player)
+            Cursor.sel:activate()
+
+            -- end the player's turn if the unit is exhausted
+            if Cursor.sel:exhausted() then
+                Turn:turn_end()
+                -- otherwise, show the movement radius
+            else
+                Radius:update(Cursor.sel, Map.current, Turn.player)
+            end
+        end
         return
     end
 
@@ -29,6 +48,7 @@ function Screens.battle.update()
     -- do not run player/CPU update loops if a lock is engaged
     if Camera.ready and Units.ready then
         if Turn:human(Players) then
+            -- update the cursor position
             Cursor:update()
 
             -- determine whether a unit is beneath the cursor

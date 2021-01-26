@@ -30,28 +30,6 @@ function MenuTarget:update()
     elseif BtnDown:rep() and self.sel <= 2 then
         self.sel = self.sel + 1
     end
-
-    -- accept the balance, close the menu, and end the turn
-    if BtnX:once() then
-        -- hide this menu
-        self.vis = false
-
-        -- attack the enemy unit
-        Cursor.sel:attack(self.unit, self.choices[self.sel],
-                          Cursor.sel.stat.atk, self.idx)
-
-        -- deactivate all *other* units belonging to the player
-        Units.deactivate(Map.current.units, Turn.player)
-        Cursor.sel:activate()
-
-        -- end the player's turn if the unit is exhausted
-        if Cursor.sel:exhausted() then
-            Turn:turn_end()
-            -- otherwise, show the movement radius
-        else
-            Radius:update(Cursor.sel, Map.current, Turn.player)
-        end
-    end
 end
 
 -- draw the "power balance" menu
