@@ -1,22 +1,22 @@
 Priority:
-  - Attack: bug: attack radius doesn't account for need to move
+  - Info: refactor to make info bar possible
+  - Bug: Menu (balance): check to see if stats have changed before ending turn
 
 Backlog:
   - AStar: bug: fix "off-roading" bug
-  - AStar: perf: cache computed paths
   - AStar: perf: optimizations
-  - Animation: bug: first enemy movement does not always animate
   - Animation: feat: make cursor/camera movement smooth
   - Animation: feat: unit explosion
   - Animation: feat: victory/loss banner
   - Animation: feat: weapon fire
-  - Animation: lab: coroutine lab
   - Art: feat: title, victory, defeat screens
-  - Cursor: bug: does not always return to player unit
+  - Attack: bug: attack radius doesn't account for need to move
+  - Cursor: bug: cursor does not move in 2-player games after turn end
   - Cursor: feat: create toggle to "permanently" display enemy radii
   - Cursor: refactor: use "real" `Cell` objects
   - Docs: add a license
   - Docs: update the README
+  - Screen (battle): 2-player games exhibit incorrect behavior when 2p wins
   - Tooling: feat: Implement benchmarking harness
   - Tooling: feat: Implement coverage report
   - Tooling: feat: Implement unit-tests
