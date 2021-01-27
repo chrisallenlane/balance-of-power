@@ -41,51 +41,64 @@ function Human.battle.update()
     -- determine whether a unit is beneath the cursor
     local unit, idx = Unit.at(Cursor.cell.x, Cursor.cell.y, Map.current.units)
 
-    -- "X"
-    if BtnYes:once() then
-        -- if there is a unit beneath the cursor...
-        if unit then
-            -- select friendly unit:
-            if unit:friend(Turn.player) and not Cursor:selected(unit) and
-                unit.active then
+    -- if there is a unit beneath the cursor...
+    if unit then
+        -- select friendly unit:
+        if unit:friend(Turn.player) and not Cursor:selected(unit) and
+            unit.active then
+            Info:set("select", "")
+
+            if BtnYes:once() then
                 Cursor.sel = unit
                 Radius:update(unit, Map.current, Turn.player)
+            end
 
-                -- open friendly balance menu:
-            elseif unit:friend(Turn.player) and Cursor:selected(unit) and
-                not unit:acted() then
-                MenuBalance:open(Cursor.sel, idx)
+            -- open friendly balance menu:
+        elseif unit:friend(Turn.player) and Cursor:selected(unit) and
+            not unit:acted() then
+            Info:set("balance", "unselect")
 
-                -- open the "turn end" menu if the unit has already
-                -- taken an action
-            elseif unit:friend(Turn.player) and Cursor:selected(unit) and
-                unit:acted() then
-                MenuTurnEnd:open()
+            if BtnYes:once() then MenuBalance:open(Cursor.sel, idx) end
 
-                -- view enemy radii:
-            elseif unit:foe(Turn.player) and not Cursor:selected() then
+            -- open the "turn end" menu if the unit has already
+            -- taken an action
+        elseif unit:friend(Turn.player) and Cursor:selected(unit) and
+            unit:acted() then
+            Info:set("end turn", "unselect")
+
+            if BtnYes:once() then MenuTurnEnd:open() end
+
+            -- view enemy radii:
+        elseif unit:foe(Turn.player) and not Cursor:selected() then
+            Info:set("view radii", "")
+
+            if BtnYes:once() then
                 -- get the enemy player number
                 local enemy = 2
                 if Turn.player == 2 then enemy = 1 end
 
                 -- draw the radii for the enemy player
                 Radius:update(unit, Map.current, enemy)
-
-                -- attack enemy:
-            elseif unit:foe(Turn.player) and Cursor:selected() and
-                not Cursor.sel:attacked() and Cursor.sel.active and
-                Radius:contains('atk', unit.cell.x, unit.cell.y) then
-                MenuTarget:open(unit, idx)
             end
 
-            -- if no unit is beneath the cursor...
-        elseif not unit then
-            -- move friendly unit:
-            if Cursor:selected() and Cursor.sel.active and
-                not Cursor.sel:moved() and
-                Cell.open(Cursor.cell.x, Cursor.cell.y, Map.current) and
-                Radius:contains('mov', Cursor.cell.x, Cursor.cell.y) then
+            -- attack enemy:
+        elseif unit:foe(Turn.player) and Cursor:selected() and
+            not Cursor.sel:attacked() and Cursor.sel.active and
+            Radius:contains('atk', unit.cell.x, unit.cell.y) then
+            Info:set("attack", "unselect")
 
+            if BtnYes:once() then MenuTarget:open(unit, idx) end
+        end
+
+        -- if no unit is beneath the cursor...
+    elseif not unit then
+        -- move friendly unit:
+        if Cursor:selected() and Cursor.sel.active and not Cursor.sel:moved() and
+            Cell.open(Cursor.cell.x, Cursor.cell.y, Map.current) and
+            Radius:contains('mov', Cursor.cell.x, Cursor.cell.y) then
+            Info:set("move", "unselect")
+
+            if BtnYes:once() then
                 -- move the unit
                 Cursor.sel:move(Cursor.cell.x, Cursor.cell.y)
 
@@ -104,11 +117,12 @@ function Human.battle.update()
                 else
                     Radius:update(Cursor.sel, Map.current, Turn.player)
                 end
-
-                -- show the "end turn" menu
-            elseif not Cursor:selected() then
-                MenuTurnEnd:open()
             end
+
+            -- show the "end turn" menu
+        elseif not Cursor:selected() then
+            Info:set("end turn", "end turn")
+            if BtnYes:once() then MenuTurnEnd:open() end
         end
     end
 

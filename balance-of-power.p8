@@ -24,6 +24,7 @@ Game = { state = { screen = "title" } }
 #include src/menu-balance.lua
 #include src/menu-target.lua
 #include src/menu-turn-end.lua
+#include src/info.lua
 #include src/player.lua
 #include src/human.lua
 #include src/cpu.lua

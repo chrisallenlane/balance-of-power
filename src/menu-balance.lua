@@ -15,6 +15,8 @@ end
 
 -- update "end turn?" menu state
 function MenuBalance:update()
+    Info:set("confirm", "cancel")
+
     -- cancel the balance and close the menu
     if BtnNo:once() then
         self.vis = false

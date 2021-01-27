@@ -16,6 +16,8 @@ end
 -- TODO: disallow targeting a system with 0 power
 -- update "end turn?" menu state
 function MenuTarget:update()
+    Info:set("target", "cancel")
+
     -- cancel the balance and close the menu
     if BtnNo:once() then
         self.vis = false

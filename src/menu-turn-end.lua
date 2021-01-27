@@ -8,6 +8,8 @@ end
 
 -- update "end turn?" menu state
 function MenuTurnEnd:update()
+    Info:set("confirm", "cancel")
+
     -- right
     if self.sel == 1 and btnp(1) then
         self.sel = 2

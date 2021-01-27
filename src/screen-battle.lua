@@ -45,6 +45,7 @@ function Screens.battle.draw()
     MenuTurnEnd:draw()
     MenuBalance:draw()
     MenuTarget:draw()
+    Info:draw()
 
     -- display debug output (if so configured)
     if DEBUG_SHOW then Debug.vars() end
