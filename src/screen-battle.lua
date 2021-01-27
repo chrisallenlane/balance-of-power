@@ -1,5 +1,8 @@
 -- update the battle screen
 function Screens.battle.update()
+    -- only move the camera if units have finished moving
+    if Units.ready then Camera:update() end
+
     -- determine if the map has been cleared
     -- TODO: handle 2-player games
     local clear, victor = Map:clear()
@@ -21,14 +24,15 @@ function Screens.battle.update()
     end
 
     Units:update()
-
-    -- only move the camera if units have finished moving
-    if Units.ready then Camera:update() end
 end
 
 -- draw the battle screen
 function Screens.battle.draw()
     cls()
+
+    -- move the camera
+    Camera:draw()
+
     Map:draw()
 
     -- draw the movement radius
@@ -41,9 +45,6 @@ function Screens.battle.draw()
     MenuTurnEnd:draw()
     MenuBalance:draw()
     MenuTarget:draw()
-
-    -- move the camera
-    Camera:draw()
 
     -- display debug output (if so configured)
     if DEBUG_SHOW then Debug.vars() end

@@ -5,7 +5,7 @@ add(Map.defs, function ()
         body = "lorem ipsum dolor sit amet.",
     },
 
-    camera = {x = 0, y = 15},
+    camera = {x = 0, y = 16},
 
     cell = {x = 32, y = 0, w = 16, h = 32},
 

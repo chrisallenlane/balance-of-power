@@ -12,7 +12,6 @@ Backlog:
   - Animation: feat: weapon fire
   - Animation: lab: coroutine lab
   - Art: feat: title, victory, defeat screens
-  - Camera: bug: screen tear on stage transistion
   - Cursor: bug: does not always return to player unit
   - Cursor: feat: create toggle to "permanently" display enemy radii
   - Cursor: refactor: use "real" `Cell` objects
