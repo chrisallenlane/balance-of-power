@@ -16,8 +16,6 @@ end
 
 -- update "end turn?" menu state
 function MenuBalance:update()
-    Info:set("confirm", "cancel", self.unit)
-
     -- cancel the balance and close the menu
     if BtnNo:once() then
         self.vis = false
@@ -54,16 +52,22 @@ function MenuBalance:update()
     end
 
     -- accept the balance, close the menu, and end the turn
-    if BtnYes:once() then
-        -- update the unit and end the turn if and only if the unit stats have
-        -- been modified
-        if self:changed() then
+    -- update the unit and end the turn if and only if the unit stats have
+    -- been modified
+    if self:changed() then
+        Info:set("confirm", "cancel", self.unit)
+        if BtnYes:once() then
             Map.current.units[self.idx] = Unit.clone(self.unit)
             Turn:turn_end()
+            self.vis = false
+            self.unit = nil
         end
-
-        self.vis = false
-        self.unit = nil
+    else
+        Info:set("cancel", "cancel", self.unit)
+        if BtnYes:once() then
+            self.vis = false
+            self.unit = nil
+        end
     end
 end
 

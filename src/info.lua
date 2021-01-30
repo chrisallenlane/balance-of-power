@@ -25,19 +25,18 @@ function Info:draw()
         print("/", camX + 12, camY + 120, 7)
         print("\151", camX + 16, camY + 120, 5)
         print(self.yes, camX + 25, camY + 120, 7)
-        return
-    end
+    else
+        -- confirm
+        if self.yes ~= "" then
+            print("\142", camX + 4, camY + 120, 5)
+            print(self.yes, camX + 13, camY + 120, 7)
+        end
 
-    -- confirm
-    if self.yes ~= "" then
-        print("\142", camX + 4, camY + 120, 5)
-        print(self.yes, camX + 13, camY + 120, 7)
-    end
-
-    -- cancel
-    if self.no ~= "" then
-        print("\151", camX + 17 + (#self.yes * 4), camY + 120, 5)
-        print(self.no, camX + 26 + (#self.yes * 4), camY + 120, 7)
+        -- cancel
+        if self.no ~= "" then
+            print("\151", camX + 17 + (#self.yes * 4), camY + 120, 5)
+            print(self.no, camX + 26 + (#self.yes * 4), camY + 120, 7)
+        end
     end
 
     -- output the unit hud if applicable

@@ -1,5 +1,4 @@
 Priority:
-  - Bug: Menu (balance): check to see if stats have changed before ending turn
 
 Backlog:
   - AStar: bug: fix "off-roading" bug
