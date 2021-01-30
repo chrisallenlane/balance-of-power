@@ -10,6 +10,7 @@ function MenuBalance:open(unit, idx)
 
     -- bind params
     self.unit = Unit.clone(unit)
+    self.orig = Unit.clone(unit)
     self.idx = idx
 end
 
@@ -54,11 +55,22 @@ function MenuBalance:update()
 
     -- accept the balance, close the menu, and end the turn
     if BtnYes:once() then
-        Map.current.units[self.idx] = Unit.clone(self.unit)
+        -- update the unit and end the turn if and only if the unit stats have
+        -- been modified
+        if self:changed() then
+            Map.current.units[self.idx] = Unit.clone(self.unit)
+            Turn:turn_end()
+        end
+
         self.vis = false
         self.unit = nil
-        Turn:turn_end()
     end
+end
+
+function MenuBalance:changed()
+    return
+        not (self.unit.stat.atk == self.orig.stat.atk and self.unit.stat.rng ==
+            self.orig.stat.rng and self.unit.stat.mov == self.orig.stat.mov)
 end
 
 -- draw the "power balance" menu
