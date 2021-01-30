@@ -46,7 +46,7 @@ function Human.battle.update()
         -- select friendly unit:
         if unit:friend(Turn.player) and not Cursor:selected(unit) and
             unit.active then
-            Info:set("select", "")
+            Info:set("select", "", unit)
 
             if BtnYes:once() then
                 Cursor.sel = unit
@@ -56,7 +56,7 @@ function Human.battle.update()
             -- open friendly balance menu:
         elseif unit:friend(Turn.player) and Cursor:selected(unit) and
             not unit:acted() then
-            Info:set("balance", "unselect")
+            Info:set("balance", "unselect", unit)
 
             if BtnYes:once() then MenuBalance:open(Cursor.sel, idx) end
 
@@ -64,13 +64,13 @@ function Human.battle.update()
             -- taken an action
         elseif unit:friend(Turn.player) and Cursor:selected(unit) and
             unit:acted() then
-            Info:set("end turn", "unselect")
+            Info:set("end turn", "unselect", unit)
 
             if BtnYes:once() then MenuTurnEnd:open() end
 
             -- view enemy radii:
         elseif unit:foe(Turn.player) and not Cursor:selected() then
-            Info:set("view radii", "")
+            Info:set("view radii", "", unit)
 
             if BtnYes:once() then
                 -- get the enemy player number
@@ -85,7 +85,7 @@ function Human.battle.update()
         elseif unit:foe(Turn.player) and Cursor:selected() and
             not Cursor.sel:attacked() and Cursor.sel.active and
             Radius:contains('atk', unit.cell.x, unit.cell.y) then
-            Info:set("attack", "unselect")
+            Info:set("attack", "unselect", unit)
 
             if BtnYes:once() then MenuTarget:open(unit, idx) end
         end

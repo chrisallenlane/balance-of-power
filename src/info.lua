@@ -1,9 +1,10 @@
-Info = {yes = "", no = ""}
+Info = {yes = "", no = "", unit = nil}
 
 -- Set info values
-function Info:set(yes, no)
+function Info:set(yes, no, unit)
     self.yes = yes
     self.no = no
+    self.unit = unit
 end
 
 -- Draw the info box
@@ -38,4 +39,33 @@ function Info:draw()
         print("\151", camX + 17 + (#self.yes * 4), camY + 120, 5)
         print(self.no, camX + 26 + (#self.yes * 4), camY + 120, 7)
     end
+
+    -- output the unit hud if applicable
+    if self.unit then
+        -- atk
+        print("a", camX + 99, camY + 120, 7)
+        print(self.unit.stat.atk, camX + 103, camY + 120,
+              self.colorize(self.unit.stat.atk))
+
+        -- mov
+        print("m", camX + 117, camY + 120, 7)
+        print(self.unit.stat.mov, camX + 121, camY + 120,
+              self.colorize(self.unit.stat.mov))
+
+        -- rng
+        print("r", camX + 108, camY + 120, 7)
+        print(self.unit.stat.rng, camX + 112, camY + 120,
+              self.colorize(self.unit.stat.rng))
+    end
+end
+
+-- Return a color value based on a stat value
+function Info.colorize(val)
+    if val == 5 then
+        return 11 -- green
+    elseif val >= 3 then
+        return 10 -- yellow
+    end
+
+    return 8
 end

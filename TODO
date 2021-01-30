@@ -1,10 +1,10 @@
 Priority:
-  - Info: refactor to make info bar possible
   - Bug: Menu (balance): check to see if stats have changed before ending turn
 
 Backlog:
   - AStar: bug: fix "off-roading" bug
   - AStar: perf: optimizations
+  - All: refactor into `state` object?
   - Animation: feat: make cursor/camera movement smooth
   - Animation: feat: unit explosion
   - Animation: feat: victory/loss banner
@@ -14,8 +14,10 @@ Backlog:
   - Cursor: bug: cursor does not move in 2-player games after turn end
   - Cursor: feat: create toggle to "permanently" display enemy radii
   - Cursor: refactor: use "real" `Cell` objects
+  - Cursor: return to player unit after attack
   - Docs: add a license
   - Docs: update the README
+  - Info: hide info bar when cursor occludes
   - Screen (battle): 2-player games exhibit incorrect behavior when 2p wins
   - Tooling: feat: Implement benchmarking harness
   - Tooling: feat: Implement coverage report
