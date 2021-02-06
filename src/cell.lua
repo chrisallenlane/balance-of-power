@@ -19,7 +19,7 @@ function Cell.open(x, y, map)
 
     -- return false if a unit is at the specified coordinates
     -- TODO: pass as param
-    if Unit.at(x, y, Map.current.units) then return false end
+    if Units.at(x, y, Map.current.units) then return false end
     return true
 end
 
@@ -34,7 +34,7 @@ function Cell.pass(x, y, map, turn)
 
     -- TODO: pass as param
     -- check for a unit at the specified coordinates
-    local unit = Unit.at(x, y, Map.current.units)
+    local unit = Units.at(x, y, Map.current.units)
 
     -- if no unit is found, return true
     if not unit then return true end

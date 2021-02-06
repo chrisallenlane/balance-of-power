@@ -43,28 +43,6 @@ function Unit.clone(u)
     return Unit:new(clone)
 end
 
--- At returns the unit at the specified coordinates, or false if none is there
-function Unit.at(x, y, units)
-    -- XXX: this runs in linear time
-    for idx, unit in pairs(units) do
-        if unit.cell.x == x and unit.cell.y == y then return unit, idx end
-    end
-
-    return false, nil
-end
-
--- Returns the first unit on `player`'s team team
-function Unit.first(player, units)
-    -- XXX: this runs in linear time
-    for _, unit in pairs(units) do
-        if unit.player == player then return unit end
-    end
-
-    -- NB: we realistically should never end up here
-    -- TODO: throw exception if we somehow do
-    return false
-end
-
 -- Move moves a unit
 function Unit:move(to_x, to_y)
     self.cell.x = to_x

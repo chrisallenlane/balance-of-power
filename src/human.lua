@@ -39,7 +39,7 @@ function Human.battle.update()
     Cursor:update()
 
     -- determine whether a unit is beneath the cursor
-    local unit, idx = Unit.at(Cursor.cell.x, Cursor.cell.y, Map.current.units)
+    local unit, idx = Units.at(Cursor.cell.x, Cursor.cell.y, Map.current.units)
 
     -- if there is a unit beneath the cursor...
     if unit then

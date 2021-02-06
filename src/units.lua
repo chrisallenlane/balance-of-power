@@ -28,6 +28,28 @@ function Units.update()
     end
 end
 
+-- At returns the unit at the specified coordinates, or false if none is there
+function Units.at(x, y, units)
+    -- XXX: this runs in linear time
+    for idx, unit in pairs(units) do
+        if unit.cell.x == x and unit.cell.y == y then return unit, idx end
+    end
+
+    return false, nil
+end
+
+-- Returns the first unit on `player`'s team team
+function Units.first(player, units)
+    -- XXX: this runs in linear time
+    for _, unit in pairs(units) do
+        if unit.player == player then return unit end
+    end
+
+    -- NB: we realistically should never end up here
+    -- TODO: throw exception if we somehow do
+    return false
+end
+
 -- draw the units
 function Units.draw()
     for _, unit in pairs(Map.current.units) do

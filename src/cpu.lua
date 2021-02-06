@@ -13,7 +13,7 @@ function CPU.battle.update()
     local mv = -1
 
     -- select the first enemy unit
-    local unit = Unit.first(2, Map.current.units)
+    local unit = Units.first(2, Map.current.units)
 
     -- if moving left is invalid, move right
     if not Cell.pass(unit.cell.x + mv, unit.cell.y, Map.current, Turn.player) then
