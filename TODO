@@ -1,4 +1,8 @@
 Priority:
+  - Animation: feat: victory/loss banner
+  - Animation: unit movement
+
+  - Screen (battle): 2-player games exhibit incorrect behavior when 2p wins
 
 Backlog:
   - AStar: bug: fix "off-roading" bug
@@ -6,18 +10,21 @@ Backlog:
   - All: refactor into `state` object?
   - Animation: feat: make cursor/camera movement smooth
   - Animation: feat: unit explosion
-  - Animation: feat: victory/loss banner
   - Animation: feat: weapon fire
   - Art: feat: title, victory, defeat screens
   - Attack: bug: attack radius doesn't account for need to move
-  - Cursor: bug: cursor does not move in 2-player games after turn end
+  - Attack: counterattacking
+  - Attack: line-of-fire obstructions
+  - Base: implement bases?
+  - CPU: implement 1-player enemy AI
   - Cursor: feat: create toggle to "permanently" display enemy radii
   - Cursor: refactor: use "real" `Cell` objects
-  - Cursor: return to player unit after attack
+  - Dialogue?
   - Docs: add a license
   - Docs: update the README
   - Info: hide info bar when cursor occludes
-  - Screen (battle): 2-player games exhibit incorrect behavior when 2p wins
+  - Info: show/hide bar animation
+  - Resource: implement map resources?
   - Tooling: feat: Implement benchmarking harness
   - Tooling: feat: Implement coverage report
   - Tooling: feat: Implement unit-tests
@@ -30,3 +37,14 @@ SFX:
   - turn end
   - unit explode
   - unit move
+
+----
+Animations:
+  - bar show/hide(lock: nothing)
+  - improve cursor (lock: nothing)
+  - screen transistion? (lock: camera, cursor)
+  - unit damage (lock: camera, cursor)
+  - unit explode (lock: camera, cursor)
+  - unit move (lock: camera, cursor)
+  - victory/loss banner (lock: camera, cursor)
+  - weapon fire (lock: camera, cursor)
