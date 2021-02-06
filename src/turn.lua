@@ -3,14 +3,21 @@ Turn = {player = 1}
 -- TODO: move this into player?
 -- change the player turn
 function Turn:turn_end()
+    -- record the current player's cursor position
+    if Cursor.sel then
+        Cursor.last[self.player] = {
+            x = Cursor.sel.cell.x,
+            y = Cursor.sel.cell.y,
+        }
+    else
+        Cursor.last[self.player] = {x = Cursor.cell.x, y = Cursor.cell.y}
+    end
+
     -- unselect the unit
     Cursor.sel = nil
 
     -- hide radii
     Radius:clear()
-
-    -- record the current player's cursor position
-    Cursor.last[self.player] = {x = Cursor.cell.x, y = Cursor.cell.y}
 
     -- end the turn
     if self.player == 1 then
