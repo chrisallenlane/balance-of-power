@@ -1,0 +1,7 @@
+include = {
+   "src",
+   "src%/.+$",
+}
+
+reportfile = "./coverage/luacov.report.out"
+statsfile  = "./coverage/luacov.stats.out"

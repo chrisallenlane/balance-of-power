@@ -1,21 +1,35 @@
-local luaunit = require('../vendor/luaunit')
 require("../src/unit")
 
-function testUnitNew()
-    -- initialize a unit
-    local u = Unit:new({spr = 1, player = 2, cell = {x = 3, y = 4}})
+describe("unit", function()
+    it("should should correctly initialize", function()
+        -- initialize a unit
+        local u = Unit:new({spr = 1, player = 2, cell = {x = 3, y = 4}})
 
-    -- assert that the unit initialized with the expected values
-    luaunit.assertEquals(u.spr, 1)
-    luaunit.assertEquals(u.player, 2)
-    luaunit.assertEquals(u.cell.x, 3)
-    luaunit.assertEquals(u.cell.y, 4)
-    luaunit.assertEquals(u.px.x, 24)
-    luaunit.assertEquals(u.px.y, 32)
-end
+        -- declare the expected values
+        local expect = {
+			act = {
+				atk = false,
+				mov = false,
+			},
+			active = true,
+			cell = {
+				x = 3,
+				y = 4,
+			},
+			player = 2,
+			pwr = 10,
+			px = {
+				x = 24,
+				y = 32,
+			},
+			spr = 1,
+			stat = {
+				atk = 5,
+				mov = 3,
+				rng = 2,
+			},
+		}
 
-function testUnitMove()
-
-end
-
-os.exit(luaunit.LuaUnit.run())
+        assert.are.same(u, expect)
+    end)
+end)

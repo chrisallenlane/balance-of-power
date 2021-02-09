@@ -2,12 +2,19 @@
 
 makefile := $(realpath $(lastword $(MAKEFILE_LIST)))
 
-# file paths
+# cart paths
 CARTS_PATH := ~/.lexaloffle/pico-8/carts
 CART_PICO  := $(CARTS_PATH)/balance-of-power
 CART_LOCAL := $(shell pwd)
 
+# coverage paths
+COVER_DIR    := ./coverage
+COVER_REPORT := $(COVER_DIR)/index.html
+REPORT_FILE  := $(COVER_DIR)/luacov.report.out
+STATS_FILE   := $(COVER_DIR)/luacov.stats.out
+
 # executable paths
+BROWSER  := sensible-browser
 CAT      := cat
 COLUMN   := column
 DOCKER   := docker
@@ -15,6 +22,7 @@ GREP     := grep
 LUA      := lua5.2
 LUACHECK := luacheck
 LUAFMT   := lua-format
+MKDIR    := mkdir -p
 SCC      := /root/go/bin/scc
 SED      := sed
 SORT     := sort
@@ -35,11 +43,22 @@ fast: | fmt lint
 .PHONY: check
 check: | fmt lint test
 
+# create the coverage directory
+$(COVER_DIR):
+	@$(MKDIR) $(COVER_DIR)
+
 ## test: run unit-tests
 .PHONY: test
-test:
+test: clean $(COVER_DIR) 
 	@$(DOCKER) run -v $(realpath .):/app $(docker_image) \
-		bash -c 'for f in ./test/*; do echo $$f; $(LUA) $$f; done'
+		bash -c 'busted --coverage test/*'
+
+## cover: generate a test coverage report
+.PHONY: cover
+cover: test
+	@$(DOCKER) run -v $(realpath .):/app $(docker_image) \
+		bash -c 'luacov -r lcov && genhtml $(REPORT_FILE) -o $(COVER_DIR)' && \
+		$(BROWSER) $(COVER_REPORT)
 
 ## lint: lint files
 .PHONY: lint
@@ -58,6 +77,11 @@ fmt:
 sloc:
 	$(DOCKER) run -v $(realpath .):/app $(docker_image) \
 		$(SCC) --exclude-dir=vendor --count-as p8:lua
+
+## clean: remove coverage files
+.PHONY: clean
+clean:
+	@rm -f $(REPORT_FILE) $(STATS_FILE)
 
 ## distclean: remove the docker container
 .PHONY: distclean

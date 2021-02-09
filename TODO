@@ -26,8 +26,6 @@ Backlog:
   - Info: show/hide bar animation
   - Resource: implement map resources?
   - Tooling: feat: Implement benchmarking harness
-  - Tooling: feat: Implement coverage report
-  - Tooling: feat: Implement unit-tests
 
 ----
 SFX:
