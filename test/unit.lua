@@ -7,28 +7,15 @@ describe("unit", function()
 
         -- declare the expected values
         local expect = {
-			act = {
-				atk = false,
-				mov = false,
-			},
-			active = true,
-			cell = {
-				x = 3,
-				y = 4,
-			},
-			player = 2,
-			pwr = 10,
-			px = {
-				x = 24,
-				y = 32,
-			},
-			spr = 1,
-			stat = {
-				atk = 5,
-				mov = 3,
-				rng = 2,
-			},
-		}
+            act = {atk = false, mov = false},
+            active = true,
+            cell = {x = 3, y = 4},
+            player = 2,
+            pwr = 10,
+            px = {x = 24, y = 32},
+            spr = 1,
+            stat = {atk = 5, mov = 3, rng = 2},
+        }
 
         assert.are.same(u, expect)
     end)
