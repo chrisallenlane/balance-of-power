@@ -1,6 +1,9 @@
 Priority:
   - Animation: feat: victory/loss banner
-  - Animation: unit movement
+  - Animation: unit movement - follow AStar path
+
+  - Docs: add a license
+  - Docs: update the README
 
   - Screen (battle): 2-player games exhibit incorrect behavior when 2p wins
 
@@ -8,7 +11,6 @@ Backlog:
   - AStar: bug: fix "off-roading" bug
   - AStar: perf: optimizations
   - All: refactor into `state` object?
-  - Animation: feat: make cursor/camera movement smooth
   - Animation: feat: unit explosion
   - Animation: feat: weapon fire
   - Art: feat: title, victory, defeat screens
@@ -20,8 +22,6 @@ Backlog:
   - Cursor: feat: create toggle to "permanently" display enemy radii
   - Cursor: refactor: use "real" `Cell` objects
   - Dialogue?
-  - Docs: add a license
-  - Docs: update the README
   - Info: hide info bar when cursor occludes
   - Info: show/hide bar animation
   - Resource: implement map resources?
