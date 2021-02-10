@@ -15,7 +15,7 @@ add(Map.defs, function ()
       Unit:new({spr = 80, player = 1, cell = {x = 1, y = 1}}),
       Unit:new({spr = 80, player = 1, cell = {x = 2, y = 2}}),
       Unit:new({spr = 80, player = 1, cell = {x = 3, y = 3}}),
-      Unit:new({spr = 64, player = 2, cell = {x = 10, y = 7}}),
+      Unit:new({spr = 64, player = 2, cell = {x = 28, y = 7}}),
     },
   }
 end)
