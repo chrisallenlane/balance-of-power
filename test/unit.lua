@@ -58,19 +58,14 @@ describe("unit", function()
             -- initialize a unit
             local u = Unit:new({spr = 1, player = 2, cell = {x = 3, y = 4}})
 
+            -- assert that the unit has not moved
+            assert.equal(u:moved(), false)
+
             -- manually move the unit
             u.act.mov = true
 
             -- assert that the unit has moved
             assert.equal(u:moved(), true)
-        end)
-
-        it("should report whether the unit has not moved", function()
-            -- initialize a unit
-            local u = Unit:new({spr = 1, player = 2, cell = {x = 3, y = 4}})
-
-            -- assert that the unit has not moved
-            assert.equal(u:moved(), false)
         end)
     end)
 
@@ -142,83 +137,6 @@ describe("unit", function()
             u.act.atk = true
             u.act.mov = true
             assert.equal(u:acted(), true)
-        end)
-    end)
-
-    describe("attacked", function()
-        it("should report whether a unit has attacked", function()
-            -- initialize a unit
-            local u = Unit:new({spr = 1, player = 2, cell = {x = 3, y = 4}})
-
-            -- assert that the negative case is reported correctly
-            assert.equal(u:attacked(), false)
-
-            -- manually attack
-            u.act.atk = true
-            assert.equal(u:attacked(), true)
-        end)
-    end)
-
-    describe("moved", function()
-        it("should report whether a unit has moved", function()
-            -- initialize a unit
-            local u = Unit:new({spr = 1, player = 2, cell = {x = 3, y = 4}})
-
-            -- assert that the negative case is reported correctly
-            assert.equal(u:moved(), false)
-
-            -- manually attack
-            u.act.mov = true
-            assert.equal(u:moved(), true)
-        end)
-    end)
-
-    describe("activate", function()
-        it("should activate a unit", function()
-            -- initialize a unit
-            local u = Unit:new({spr = 1, player = 2, cell = {x = 3, y = 4}})
-
-            -- activate the unit
-            u:activate()
-
-            -- assert that the negative case is reported correctly
-            assert.equal(u.active, true)
-        end)
-    end)
-
-    describe("deactivate", function()
-        it("should deactivate a unit", function()
-            -- initialize (and activate) a unit
-            local u = Unit:new({spr = 1, player = 2, cell = {x = 3, y = 4}})
-            u.active = true
-
-            -- deactivate the unit
-            u:deactivate()
-
-            -- assert that the negative case is reported correctly
-            assert.equal(u.active, false)
-        end)
-    end)
-
-    describe("friend", function()
-        it("should identify friendly units", function()
-            -- initialize two units
-            local u1 = Unit:new({spr = 1, player = 1, cell = {x = 3, y = 4}})
-            local u2 = Unit:new({spr = 1, player = 2, cell = {x = 3, y = 4}})
-
-            -- test the friend cases
-            assert.equal(u1:friend(1), true)
-            assert.equal(u2:friend(2), true)
-        end)
-
-        it("should identify hostile units", function()
-            -- initialize two units
-            local u1 = Unit:new({spr = 1, player = 1, cell = {x = 3, y = 4}})
-            local u2 = Unit:new({spr = 1, player = 2, cell = {x = 3, y = 4}})
-
-            -- test the foe cases
-            assert.equal(u1:friend(2), false)
-            assert.equal(u2:friend(1), false)
         end)
     end)
 end)
