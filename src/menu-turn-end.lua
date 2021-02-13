@@ -21,7 +21,7 @@ function MenuTurnEnd:update()
 
     -- selection: "yes"
     if BtnYes:once() and self.sel == 1 then
-        Turn:turn_end()
+        Player:turn_end()
         self.vis = false
 
         -- selection: "no"

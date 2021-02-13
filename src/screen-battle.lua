@@ -16,7 +16,7 @@ function Screens.battle.update()
 
     -- do not run player/CPU update loops if a lock is engaged
     if Camera.ready and Units.ready then
-        if Turn:human(Players) then
+        if Player:human(Players) then
             Human.battle.update()
         else
             CPU.battle.update()
@@ -39,7 +39,7 @@ function Screens.battle.draw()
     Radius:draw()
 
     -- draw the cursor if the player is a human
-    if Turn:human(Players) then Cursor:draw() end
+    if Player:human(Players) then Cursor:draw() end
 
     Units.draw()
     MenuTurnEnd:draw()

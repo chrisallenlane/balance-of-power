@@ -26,15 +26,15 @@ function Human.battle.update()
             end
 
             -- deactivate all *other* units belonging to the player
-            Units.deactivate(Map.current.units, Turn.player)
+            Units.deactivate(Map.current.units, Player.player)
             Cursor.sel:activate()
 
             -- end the player's turn if the unit is exhausted
             if Cursor.sel:moved() or Cursor.sel.stat.mov == 0 then
-                Turn:turn_end()
+                Player:turn_end()
                 -- otherwise, show the movement radius
             else
-                Radius:update(Cursor.sel, Map.current, Turn.player)
+                Radius:update(Cursor.sel, Map.current, Player.player)
             end
         end
         return
@@ -49,17 +49,17 @@ function Human.battle.update()
     -- if there is a unit beneath the cursor...
     if unit then
         -- select friendly unit:
-        if unit:friend(Turn.player) and not Cursor:selected(unit) and
+        if unit:friend(Player.player) and not Cursor:selected(unit) and
             unit.active then
             Info:set("select", "", unit)
 
             if BtnYes:once() then
                 Cursor.sel = unit
-                Radius:update(unit, Map.current, Turn.player)
+                Radius:update(unit, Map.current, Player.player)
             end
 
             -- open friendly balance menu:
-        elseif unit:friend(Turn.player) and Cursor:selected(unit) and
+        elseif unit:friend(Player.player) and Cursor:selected(unit) and
             not unit:acted() then
             Info:set("balance", "unselect", unit)
 
@@ -67,27 +67,27 @@ function Human.battle.update()
 
             -- open the "turn end" menu if the unit has already
             -- taken an action
-        elseif unit:friend(Turn.player) and Cursor:selected(unit) and
+        elseif unit:friend(Player.player) and Cursor:selected(unit) and
             unit:acted() then
             Info:set("end turn", "unselect", unit)
 
             if BtnYes:once() then MenuTurnEnd:open() end
 
             -- view enemy radii:
-        elseif unit:foe(Turn.player) and not Cursor:selected() then
+        elseif unit:foe(Player.player) and not Cursor:selected() then
             Info:set("view radii", "", unit)
 
             if BtnYes:once() then
                 -- get the enemy player number
                 local enemy = 2
-                if Turn.player == 2 then enemy = 1 end
+                if Player.player == 2 then enemy = 1 end
 
                 -- draw the radii for the enemy player
                 Radius:update(unit, Map.current, enemy)
             end
 
             -- attack enemy:
-        elseif unit:foe(Turn.player) and Cursor:selected() and
+        elseif unit:foe(Player.player) and Cursor:selected() and
             not Cursor.sel:attacked() and Cursor.sel.active and
             Radius:contains('atk', unit.cell.x, unit.cell.y) then
             Info:set("attack", "unselect", unit)
@@ -108,7 +108,7 @@ function Human.battle.update()
                 Cursor.sel:move(Cursor.cell.x, Cursor.cell.y)
 
                 -- deactivate all *other* units belonging to the player
-                Units.deactivate(Map.current.units, Turn.player)
+                Units.deactivate(Map.current.units, Player.player)
                 Cursor.sel:activate()
 
                 -- reset the animation delay
@@ -117,10 +117,10 @@ function Human.battle.update()
                 -- end the player's turn if the unit is exhausted
                 if Cursor.sel:attacked() or Cursor.sel.stat.atk == 0 or
                     Cursor.sel.stat.rng == 0 then
-                    Turn:turn_end()
+                    Player:turn_end()
                     -- otherwise, show the attack radius
                 else
-                    Radius:update(Cursor.sel, Map.current, Turn.player)
+                    Radius:update(Cursor.sel, Map.current, Player.player)
                 end
             end
 

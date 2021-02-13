@@ -20,7 +20,7 @@ function MenuBalance:update()
     if BtnNo:once() then
         self.vis = false
         self.unit = nil
-        Radius:update(Cursor.sel, Map.current, Turn.player)
+        Radius:update(Cursor.sel, Map.current, Player.player)
         return
     end
 
@@ -44,11 +44,11 @@ function MenuBalance:update()
     if BtnLeft:rep() and self.unit.stat[stat] >= 1 then
         SFX:play('power-down')
         self.unit.stat[stat] = self.unit.stat[stat] - 1
-        Radius:update(self.unit, Map.current, Turn.player)
+        Radius:update(self.unit, Map.current, Player.player)
     elseif BtnRight:rep() and self.unit.stat[stat] < 5 and alloc < self.unit.pwr then
         SFX:play('power-up')
         self.unit.stat[stat] = self.unit.stat[stat] + 1
-        Radius:update(self.unit, Map.current, Turn.player)
+        Radius:update(self.unit, Map.current, Player.player)
     end
 
     -- accept the balance, close the menu, and end the turn
@@ -58,7 +58,7 @@ function MenuBalance:update()
         Info:set("confirm", "cancel", self.unit)
         if BtnYes:once() then
             Map.current.units[self.idx] = Unit.clone(self.unit)
-            Turn:turn_end()
+            Player:turn_end()
             self.vis = false
             self.unit = nil
         end

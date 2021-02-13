@@ -34,7 +34,6 @@ Game = { state = { screen = "title" } }
 #include src/cell.lua
 #include src/queue.lua
 #include src/astar.lua
-#include src/turn.lua
 #include src/camera.lua
 #include src/unit.lua
 #include src/units.lua

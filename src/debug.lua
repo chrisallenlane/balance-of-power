@@ -6,13 +6,13 @@ function Debug.vars()
 
     -- indicate whether the tile is passable
     local pass = "n"
-    if Cell.pass(Cursor.cell.x, Cursor.cell.y, Map.current, Turn.player) then
+    if Cell.pass(Cursor.cell.x, Cursor.cell.y, Map.current, Player.player) then
         pass = "y"
     end
 
     -- compose debugging messages
     local msgs = {
-        "turn: " .. Turn.player,
+        "turn: " .. Player.player,
         "cur:  " .. Cursor.cell.x .. ", " .. Cursor.cell.y,
         "sel:  " .. sel,
         "cam:  " .. Camera.cell.x .. ", " .. Camera.cell.y,

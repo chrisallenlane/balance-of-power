@@ -16,7 +16,7 @@ function CPU.battle.update()
     local unit = Units.first(2, Map.current.units)
 
     -- if moving left is invalid, move right
-    if not Cell.pass(unit.cell.x + mv, unit.cell.y, Map.current, Turn.player) then
+    if not Cell.pass(unit.cell.x + mv, unit.cell.y, Map.current, Player.player) then
         mv = mv * -1
     end
 
@@ -28,5 +28,5 @@ function CPU.battle.update()
     Units.delay = 30
 
     -- end the CPU turn
-    Turn:turn_end()
+    Player:turn_end()
 end
