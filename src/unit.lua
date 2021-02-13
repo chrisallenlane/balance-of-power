@@ -51,7 +51,7 @@ function Unit:move(to_x, to_y)
 end
 
 -- Attack attacks a unit
-function Unit:attack(target, stat, atk, idx, overflow)
+function Unit:attack(target, stat, atk, overflow)
     -- record that the unit has attacked
     self.act.atk = true
 
@@ -61,10 +61,7 @@ function Unit:attack(target, stat, atk, idx, overflow)
         target.pwr = target.pwr - atk
 
         -- kill the unit if its pwr reaches 0
-        if target.pwr <= 0 then
-            target.die(idx, Map.current.units)
-            return
-        end
+        if target.pwr <= 0 then return true end
     end
 
     -- damage the targeted system
@@ -80,8 +77,10 @@ function Unit:attack(target, stat, atk, idx, overflow)
 
         -- recursively damage the next system
         local sys = target:functional()
-        self:attack(target, sys, dmg, idx, true)
+        self:attack(target, sys, dmg, true)
     end
+
+    return false
 end
 
 -- Return true if the unit has moved
@@ -131,9 +130,4 @@ function Unit:functional()
     for _, stat in ipairs({'atk', 'rng', 'mov'}) do
         if self.stat[stat] >= 1 then return stat end
     end
-end
-
--- Die kills a unit
-function Unit.die(idx, units)
-    deli(units, idx)
 end

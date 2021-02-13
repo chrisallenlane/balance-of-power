@@ -85,3 +85,8 @@ end
 function Units.refresh(units)
     for _, unit in pairs(units) do unit:refresh() end
 end
+
+-- Die kills a unit
+function Units.die(idx, units)
+    deli(units, idx)
+end

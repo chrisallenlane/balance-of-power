@@ -16,9 +16,14 @@ function Human.battle.update()
             MenuTarget.vis = false
 
             -- attack the enemy unit
-            Cursor.sel:attack(MenuTarget.unit,
-                              MenuTarget.choices[MenuTarget.sel],
-                              Cursor.sel.stat.atk, MenuTarget.idx)
+            local killed = Cursor.sel:attack(MenuTarget.unit,
+                                             MenuTarget.choices[MenuTarget.sel],
+                                             Cursor.sel.stat.atk)
+
+            -- delete the enemy unit if it has been destroyed
+            if killed then
+                Units.die(MenuTarget.idx, Map.current.units)
+            end
 
             -- deactivate all *other* units belonging to the player
             Units.deactivate(Map.current.units, Turn.player)
