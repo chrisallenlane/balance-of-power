@@ -35,7 +35,7 @@ function Units.at(x, y, units)
         if unit.cell.x == x and unit.cell.y == y then return unit, idx end
     end
 
-    return false, nil
+    return nil, nil
 end
 
 -- Returns the first unit on `player`'s team team
