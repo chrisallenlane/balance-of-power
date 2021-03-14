@@ -92,6 +92,7 @@ globals = {
 
 	-- bop globals
 	"AStar",
+	"Banner",
 	"BtnDown",
 	"BtnLeft",
 	"BtnNo",
