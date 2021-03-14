@@ -1,7 +1,13 @@
 -- update the battle screen
 function Screens.battle.update()
     -- only move the camera if units have finished moving
-    if Units.ready then Camera:update() end
+    if Units.ready then
+        if Units.delay > 0 then
+            Units.delay = Units.delay - 1
+        else
+            Camera:update(Cursor, Map.current)
+        end
+    end
 
     -- determine if the map has been cleared
     -- TODO: handle 2-player games

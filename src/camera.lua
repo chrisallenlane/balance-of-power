@@ -2,34 +2,22 @@
 Camera = {ready = false, cell = {x = 0, y = 0}, px = {x = 0, y = 0}}
 
 -- update camera state
-function Camera:update()
-    -- TODO: get rid of this
-    self.ready = false
-
-    -- TODO: externalize this
-    -- prevent the camera from moving immediately if a unit has just moved
-    if Units.delay > 0 then
-        Units.delay = Units.delay - 1
-        return
-    end
-
+function Camera:update(cur, map)
     -- assume that the camera is ready
+    -- TODO: refactor away self.ready
     self.ready = true
 
     -- track camera position as cell coordinates, and compare those coordinates
     -- to the cursor and screen position.
-    local cur = Cursor
-
-    -- TODO: do we even need to track the camera's cell coordinates?
     -- right/left
-    if cur.cell.x - self.cell.x > 11 and self.cell.x < Map.current.cell.w - 16 then
+    if cur.cell.x - self.cell.x > 11 and self.cell.x < map.cell.w - 16 then
         self.cell.x = self.cell.x + 1
     elseif self.cell.x > 0 and cur.cell.x - self.cell.x < 4 then
         self.cell.x = self.cell.x - 1
     end
 
     -- down/up
-    if cur.cell.y - self.cell.y > 11 and self.cell.y < Map.current.cell.h - 16 then
+    if cur.cell.y - self.cell.y > 11 and self.cell.y < map.cell.h - 16 then
         self.cell.y = self.cell.y + 1
     elseif self.cell.y > 0 and cur.cell.y - self.cell.y < 4 then
         self.cell.y = self.cell.y - 1
