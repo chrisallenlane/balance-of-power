@@ -150,7 +150,7 @@ function Human.battle.update()
         local src = Cell:new(Cursor.sel.cell.x, Cursor.sel.cell.y,
                              Map.current.cell.w)
         local dst = Cell:new(Cursor.cell.x, Cursor.cell.y, Map.current.cell.w)
-        Cursor.path = Cursor.astar:search(src, dst)
+        Cursor.path = Cursor.astar:search(src, dst, Map.current)
     else
         Cursor.path = {}
     end

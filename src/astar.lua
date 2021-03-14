@@ -21,11 +21,12 @@ function AStar:new(a)
     return a
 end
 
-function AStar:search(start, goal)
+function AStar:search(start, goal, map)
     local open, closed, current = {}, {}, {}
     local path_cost = {[start.id] = 0}
 
     -- begin searching from the `start` cell
+    -- TODO: `Queue` should not be a singleton!
     Queue.put(open, start, 0)
 
     -- explore unexplored cells
@@ -36,11 +37,11 @@ function AStar:search(start, goal)
         -- break if we've reached the goal
         if current:is(goal) then break end
 
-        for neighbor in all(Cell.neighbors(current.x, current.y, Map.current)) do
+        for neighbor in all(Cell.neighbors(current.x, current.y, map)) do
             -- TODO: use the appropriate name here
             -- TODO: refactor this
             local new_cost = path_cost[current.id] +
-                                 Cell.cost(neighbor.x, neighbor.y, Map.current)
+                                 Cell.cost(neighbor.x, neighbor.y, map)
 
             if (path_cost[neighbor.id] == nil) or
                 (new_cost < path_cost[neighbor.id]) then
