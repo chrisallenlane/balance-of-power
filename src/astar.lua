@@ -36,7 +36,7 @@ function AStar:search(start, goal)
         -- break if we've reached the goal
         if current:is(goal) then break end
 
-        for neighbor in all(Cell.neighbors(current.x, current.y)) do
+        for neighbor in all(Cell.neighbors(current.x, current.y, Map.current)) do
             -- TODO: use the appropriate name here
             -- TODO: refactor this
             local new_cost = path_cost[current.id] +
