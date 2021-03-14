@@ -29,7 +29,9 @@ function Screens.battle.update()
         end
     end
 
-    Units:update()
+    -- TODO: replace with state var?
+    -- Map.current.units = Units:update(Map.current.units)
+    Units:update(Map.current.units)
 end
 
 -- draw the battle screen
@@ -47,7 +49,7 @@ function Screens.battle.draw()
     -- draw the cursor if the player is a human
     if Player:human(Players) then Cursor:draw() end
 
-    Units.draw()
+    Units.draw(Map.current.units)
     MenuTurnEnd:draw()
     MenuBalance:draw()
     MenuTarget:draw()

@@ -51,8 +51,8 @@ function Units.first(player, units)
 end
 
 -- draw the units
-function Units.draw()
-    for _, unit in pairs(Map.current.units) do
+function Units.draw(units)
+    for _, unit in pairs(units) do
         -- NB: assume that unit.spr+1 is the inactive sprite
         local sprite = unit.spr
         if not unit.active then sprite = sprite + 1 end
