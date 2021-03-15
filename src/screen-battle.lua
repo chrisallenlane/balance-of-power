@@ -50,7 +50,7 @@ function Screens.battle.update(inputs)
                     end
 
                     -- deactivate all *other* units belonging to the player
-                    Units.deactivate(Map.current.units, Player.player)
+                    Units.deactivate(Map.current.units, Player.num)
                     Cursor.sel:activate()
 
                     -- end the player's turn if the unit is exhausted
@@ -58,7 +58,7 @@ function Screens.battle.update(inputs)
                         Player:turn_end()
                         -- otherwise, show the movement radius
                     else
-                        Radius:update(Cursor.sel, Map.current, Player.player)
+                        Radius:update(Cursor.sel, Map.current, Player.num)
                     end
                 end
                 return

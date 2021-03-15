@@ -20,7 +20,7 @@ function Map:load(num)
     Cursor:clear()
 
     -- make it player 1's turn
-    Player.player = 1
+    Player.num = 1
 
     -- reset the cursor position
     Cursor.cell.x, Cursor.cell.y = self.current.cursor.x, self.current.cursor.y

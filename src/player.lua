@@ -1,4 +1,4 @@
-Player = {battle = {}, player = 1}
+Player = {battle = {}, num = 1}
 Players = {}
 
 -- define the constructor
@@ -22,17 +22,16 @@ function Player.battle.update(inputs)
     -- if there is a unit beneath the cursor...
     if unit then
         -- select friendly unit:
-        if unit:friend(Player.player) and not Cursor:selected(unit) and
-            unit.active then
+        if unit:friend(Player.num) and not Cursor:selected(unit) and unit.active then
             Info:set("select", "", unit)
 
             if yes:once() then
                 Cursor.sel = unit
-                Radius:update(unit, Map.current, Player.player)
+                Radius:update(unit, Map.current, Player.num)
             end
 
             -- open friendly balance menu:
-        elseif unit:friend(Player.player) and Cursor:selected(unit) and
+        elseif unit:friend(Player.num) and Cursor:selected(unit) and
             not unit:acted() then
             Info:set("balance", "unselect", unit)
 
@@ -40,27 +39,27 @@ function Player.battle.update(inputs)
 
             -- open the "turn end" menu if the unit has already
             -- taken an action
-        elseif unit:friend(Player.player) and Cursor:selected(unit) and
+        elseif unit:friend(Player.num) and Cursor:selected(unit) and
             unit:acted() then
             Info:set("end turn", "unselect", unit)
 
             if yes:once() then MenuTurnEnd:open() end
 
             -- view enemy radii:
-        elseif unit:foe(Player.player) and not Cursor:selected() then
+        elseif unit:foe(Player.num) and not Cursor:selected() then
             Info:set("view radii", "", unit)
 
             if yes:once() then
                 -- get the enemy player number
                 local enemy = 2
-                if Player.player == 2 then enemy = 1 end
+                if Player.num == 2 then enemy = 1 end
 
                 -- draw the radii for the enemy player
                 Radius:update(unit, Map.current, enemy)
             end
 
             -- attack enemy:
-        elseif unit:foe(Player.player) and Cursor:selected() and
+        elseif unit:foe(Player.num) and Cursor:selected() and
             not Cursor.sel:attacked() and Cursor.sel.active and
             Radius:contains('atk', unit.cell.x, unit.cell.y) then
             Info:set("attack", "unselect", unit)
@@ -81,7 +80,7 @@ function Player.battle.update(inputs)
                 Cursor.sel:move(Cursor.cell.x, Cursor.cell.y)
 
                 -- deactivate all *other* units belonging to the player
-                Units.deactivate(Map.current.units, Player.player)
+                Units.deactivate(Map.current.units, Player.num)
                 Cursor.sel:activate()
 
                 -- reset the animation delay
@@ -93,7 +92,7 @@ function Player.battle.update(inputs)
                     Player:turn_end()
                     -- otherwise, show the attack radius
                 else
-                    Radius:update(Cursor.sel, Map.current, Player.player)
+                    Radius:update(Cursor.sel, Map.current, Player.num)
                 end
             end
 
@@ -131,7 +130,7 @@ end
 
 -- return true if the current player is a human
 function Player:human(players)
-    return not players[self.player].cpu
+    return not players[self.num].cpu
 end
 
 -- TODO: move this into player?
@@ -139,12 +138,9 @@ end
 function Player:turn_end()
     -- record the current player's cursor position
     if Cursor.sel then
-        Cursor.last[self.player] = {
-            x = Cursor.sel.cell.x,
-            y = Cursor.sel.cell.y,
-        }
+        Cursor.last[self.num] = {x = Cursor.sel.cell.x, y = Cursor.sel.cell.y}
     else
-        Cursor.last[self.player] = {x = Cursor.cell.x, y = Cursor.cell.y}
+        Cursor.last[self.num] = {x = Cursor.cell.x, y = Cursor.cell.y}
     end
 
     -- unselect the unit
@@ -154,10 +150,10 @@ function Player:turn_end()
     Radius:clear()
 
     -- end the turn
-    if self.player == 1 then
-        self.player = 2
+    if self.num == 1 then
+        self.num = 2
     else
-        self.player = 1
+        self.num = 1
     end
 
     -- refresh all units
@@ -165,13 +161,13 @@ function Player:turn_end()
 
     -- TODO: refactor into Cursor save/load or something?
     -- load the next player's cursor
-    if Cursor.last[self.player].x == nil or Cursor.last[self.player].y == nil then
-        local unit = Units.first(self.player, Map.current.units)
+    if Cursor.last[self.num].x == nil or Cursor.last[self.num].y == nil then
+        local unit = Units.first(self.num, Map.current.units)
         Cursor.cell.x = unit.cell.x
         Cursor.cell.y = unit.cell.y
     else
-        Cursor.cell.x = Cursor.last[self.player].x
-        Cursor.cell.y = Cursor.last[self.player].y
+        Cursor.cell.x = Cursor.last[self.num].x
+        Cursor.cell.y = Cursor.last[self.num].y
     end
 
     -- center the screen on the specified coordinates
