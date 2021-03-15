@@ -23,7 +23,7 @@ function Screens.battle.update(inputs)
     -- do not run player/CPU update loops if a lock is engaged
     if Camera.ready and Units.ready then
         if Player:human(Players) then
-            Human.battle.update(inputs)
+            Player.battle.update(inputs)
         else
             CPU.battle.update()
         end
