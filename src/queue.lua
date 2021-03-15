@@ -1,5 +1,13 @@
 Queue = {}
 
+-- Queue constructor
+function Queue:new()
+    local q = {}
+    setmetatable(q, self)
+    self.__index = self
+    return q
+end
+
 -- pop an element from a table
 function Queue.pop(t)
     local top = t[#t]

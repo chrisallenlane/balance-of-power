@@ -11,6 +11,9 @@ function AStar:new(a)
     setmetatable(a, self)
     self.__index = self
 
+    -- initialize a queue
+    a.queue = Queue:new()
+
     -- manhattan distance on a square grid
     if not a.h then
         a.h = function(start, goal)
@@ -26,13 +29,12 @@ function AStar:search(start, goal, map)
     local path_cost = {[start.id] = 0}
 
     -- begin searching from the `start` cell
-    -- TODO: `Queue` should not be a singleton!
-    Queue.put(open, start, 0)
+    self.queue.put(open, start, 0)
 
     -- explore unexplored cells
     while (open) do
         -- select a cell to explore
-        current = Queue.pop(open)
+        current = self.queue.pop(open)
 
         -- break if we've reached the goal
         if current:is(goal) then break end
@@ -48,7 +50,8 @@ function AStar:search(start, goal, map)
 
                 path_cost[neighbor.id] = new_cost
 
-                Queue.put(open, neighbor, new_cost + self.h(goal, neighbor))
+                self.queue
+                    .put(open, neighbor, new_cost + self.h(goal, neighbor))
                 neighbor.parent = current
 
                 if not neighbor:is(start) and not neighbor:is(goal) then
@@ -68,7 +71,7 @@ function AStar:search(start, goal, map)
     -- reverse the paths, so they're arranged `start` => `end` rather than
     -- `end` => `start`
     -- TODO: work from goal to start to elimate the need for this
-    Queue.reverse(path)
+    self.queue.reverse(path)
 
     -- return the `winning` path and the searched cells
     return path, closed
