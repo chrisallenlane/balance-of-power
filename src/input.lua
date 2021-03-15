@@ -41,11 +41,3 @@ end
 function Input:once()
     return not self.pressed.prev and self.pressed.cur
 end
-
--- Initialize globals for reading button inputs
-BtnLeft = Input:new(0)
-BtnRight = Input:new(1)
-BtnUp = Input:new(2)
-BtnDown = Input:new(3)
-BtnYes = Input:new(5)
-BtnNo = Input:new(4)

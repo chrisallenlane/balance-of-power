@@ -1,5 +1,5 @@
 function Screens.intr.update()
-    if BtnYes:once() then Screens.load("battle") end
+    if Inputs.yes:once() then Screens.load("battle") end
 end
 
 function Screens.intr.draw()

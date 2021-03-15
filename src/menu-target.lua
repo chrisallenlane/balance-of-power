@@ -19,7 +19,7 @@ function MenuTarget:update()
     Info:set("target", "cancel", self.unit)
 
     -- cancel the balance and close the menu
-    if BtnNo:once() then
+    if Inputs.no:once() then
         self.vis = false
         self.unit = nil
         self.idx = nil
@@ -27,9 +27,9 @@ function MenuTarget:update()
     end
 
     -- move the stat selector
-    if BtnUp:rep() and self.sel >= 2 then
+    if Inputs.up:rep() and self.sel >= 2 then
         self.sel = self.sel - 1
-    elseif BtnDown:rep() and self.sel <= 2 then
+    elseif Inputs.down:rep() and self.sel <= 2 then
         self.sel = self.sel + 1
     end
 end

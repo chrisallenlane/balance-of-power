@@ -28,16 +28,16 @@ Cursor = {
 -- update cursor state
 function Cursor:update(map)
     -- left/right
-    if BtnLeft:rep() and self.cell.x > 0 then
+    if Inputs.left:rep() and self.cell.x > 0 then
         self.cell.x = self.cell.x - 1
-    elseif BtnRight:rep() and self.cell.x < map.cell.w - 1 then
+    elseif Inputs.right:rep() and self.cell.x < map.cell.w - 1 then
         self.cell.x = self.cell.x + 1
     end
 
     -- up/down
-    if BtnUp:rep() and self.cell.y > 0 then
+    if Inputs.up:rep() and self.cell.y > 0 then
         self.cell.y = self.cell.y - 1
-    elseif BtnDown:rep() and self.cell.y < map.cell.h - 1 then
+    elseif Inputs.down:rep() and self.cell.y < map.cell.h - 1 then
         self.cell.y = self.cell.y + 1
     end
 end

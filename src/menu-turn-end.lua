@@ -20,12 +20,12 @@ function MenuTurnEnd:update()
     end
 
     -- selection: "yes"
-    if BtnYes:once() and self.sel == 1 then
+    if Inputs.yes:once() and self.sel == 1 then
         Player:turn_end()
         self.vis = false
 
         -- selection: "no"
-    elseif BtnNo:once() or (BtnYes:once() and self.sel == 2) then
+    elseif Inputs.no:once() or (Inputs.yes:once() and self.sel == 2) then
         self.vis = false
     end
 end

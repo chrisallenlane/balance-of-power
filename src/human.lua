@@ -1,6 +1,10 @@
 Human = {battle = {}}
 
 function Human.battle.update()
+    -- for brevity
+    local yes = Inputs.yes
+    local no = Inputs.no
+
     -- If a menu is visible, run the appropriate update loop
     if MenuTurnEnd.vis then
         MenuTurnEnd:update()
@@ -10,8 +14,9 @@ function Human.battle.update()
         return
     elseif MenuTarget.vis then
         MenuTarget:update()
+
         -- accept the balance, close the menu, and end the turn
-        if BtnYes:once() then
+        if yes:once() then
             -- hide this menu
             MenuTarget.vis = false
 
@@ -53,7 +58,7 @@ function Human.battle.update()
             unit.active then
             Info:set("select", "", unit)
 
-            if BtnYes:once() then
+            if yes:once() then
                 Cursor.sel = unit
                 Radius:update(unit, Map.current, Player.player)
             end
@@ -63,7 +68,7 @@ function Human.battle.update()
             not unit:acted() then
             Info:set("balance", "unselect", unit)
 
-            if BtnYes:once() then MenuBalance:open(Cursor.sel, idx) end
+            if yes:once() then MenuBalance:open(Cursor.sel, idx) end
 
             -- open the "turn end" menu if the unit has already
             -- taken an action
@@ -71,13 +76,13 @@ function Human.battle.update()
             unit:acted() then
             Info:set("end turn", "unselect", unit)
 
-            if BtnYes:once() then MenuTurnEnd:open() end
+            if yes:once() then MenuTurnEnd:open() end
 
             -- view enemy radii:
         elseif unit:foe(Player.player) and not Cursor:selected() then
             Info:set("view radii", "", unit)
 
-            if BtnYes:once() then
+            if yes:once() then
                 -- get the enemy player number
                 local enemy = 2
                 if Player.player == 2 then enemy = 1 end
@@ -92,7 +97,7 @@ function Human.battle.update()
             Radius:contains('atk', unit.cell.x, unit.cell.y) then
             Info:set("attack", "unselect", unit)
 
-            if BtnYes:once() then MenuTarget:open(unit, idx) end
+            if yes:once() then MenuTarget:open(unit, idx) end
         end
 
         -- if no unit is beneath the cursor...
@@ -103,7 +108,7 @@ function Human.battle.update()
             Radius:contains('mov', Cursor.cell.x, Cursor.cell.y) then
             Info:set("move", "unselect")
 
-            if BtnYes:once() then
+            if yes:once() then
                 -- move the unit
                 Cursor.sel:move(Cursor.cell.x, Cursor.cell.y)
 
@@ -127,12 +132,12 @@ function Human.battle.update()
             -- show the "end turn" menu
         elseif not Cursor:selected() then
             Info:set("end turn", "end turn")
-            if BtnYes:once() then MenuTurnEnd:open() end
+            if yes:once() then MenuTurnEnd:open() end
         end
     end
 
     -- "Z"
-    if BtnNo:once() then
+    if no:once() then
         -- hide radii
         if Radius.vis then
             -- unselect the unit if it is ours
