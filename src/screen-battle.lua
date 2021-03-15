@@ -23,6 +23,47 @@ function Screens.battle.update(inputs)
     -- do not run player/CPU update loops if a lock is engaged
     if Camera.ready and Units.ready then
         if Player:human(Players) then
+            -- TODO: refactor this
+            -- If a menu is visible, run the appropriate update loop
+            if MenuTurnEnd.vis then
+                MenuTurnEnd:update(inputs)
+                return
+            elseif MenuBalance.vis then
+                MenuBalance:update(inputs)
+                return
+            elseif MenuTarget.vis then
+                MenuTarget:update(inputs)
+
+                -- accept the balance, close the menu, and end the turn
+                if inputs.yes:once() then
+                    -- hide this menu
+                    MenuTarget.vis = false
+
+                    -- attack the enemy unit
+                    local killed = Cursor.sel:attack(MenuTarget.unit,
+                                                     MenuTarget.choices[MenuTarget.sel],
+                                                     Cursor.sel.stat.atk)
+
+                    -- delete the enemy unit if it has been destroyed
+                    if killed then
+                        Units.die(MenuTarget.idx, Map.current.units)
+                    end
+
+                    -- deactivate all *other* units belonging to the player
+                    Units.deactivate(Map.current.units, Player.player)
+                    Cursor.sel:activate()
+
+                    -- end the player's turn if the unit is exhausted
+                    if Cursor.sel:moved() or Cursor.sel.stat.mov == 0 then
+                        Player:turn_end()
+                        -- otherwise, show the movement radius
+                    else
+                        Radius:update(Cursor.sel, Map.current, Player.player)
+                    end
+                end
+                return
+            end
+
             Player.battle.update(inputs)
         else
             CPU.battle.update()
