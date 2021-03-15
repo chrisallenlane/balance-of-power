@@ -1,18 +1,18 @@
 -- update the title screen
-function Screens.title.update()
+function Screens.title.update(inputs)
     local menu = MenuScreenTitle
     local sel = menu.sel
 
     -- up
-    if Inputs.up:once() and sel >= 2 then
+    if inputs.up:once() and sel >= 2 then
         menu.sel = sel - 1
 
         -- down
-    elseif Inputs.down:once() and sel <= 2 then
+    elseif inputs.down:once() and sel <= 2 then
         menu.sel = sel + 1
 
         -- "select"
-    elseif Inputs.yes:once() then
+    elseif inputs.yes:once() then
         -- initialize player 1
         add(Players, Player:new({num = 1, cpu = false}))
 

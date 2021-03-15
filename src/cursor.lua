@@ -26,18 +26,18 @@ Cursor = {
 }
 
 -- update cursor state
-function Cursor:update(map)
+function Cursor:update(map, inputs)
     -- left/right
-    if Inputs.left:rep() and self.cell.x > 0 then
+    if inputs.left:rep() and self.cell.x > 0 then
         self.cell.x = self.cell.x - 1
-    elseif Inputs.right:rep() and self.cell.x < map.cell.w - 1 then
+    elseif inputs.right:rep() and self.cell.x < map.cell.w - 1 then
         self.cell.x = self.cell.x + 1
     end
 
     -- up/down
-    if Inputs.up:rep() and self.cell.y > 0 then
+    if inputs.up:rep() and self.cell.y > 0 then
         self.cell.y = self.cell.y - 1
-    elseif Inputs.down:rep() and self.cell.y < map.cell.h - 1 then
+    elseif inputs.down:rep() and self.cell.y < map.cell.h - 1 then
         self.cell.y = self.cell.y + 1
     end
 end

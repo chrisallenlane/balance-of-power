@@ -15,9 +15,9 @@ function MenuBalance:open(unit, idx)
 end
 
 -- update "end turn?" menu state
-function MenuBalance:update()
+function MenuBalance:update(inputs)
     -- cancel the balance and close the menu
-    if Inputs.no:once() then
+    if inputs.no:once() then
         self.vis = false
         self.unit = nil
         Radius:update(Cursor.sel, Map.current, Player.player)
@@ -25,9 +25,9 @@ function MenuBalance:update()
     end
 
     -- move the stat selector
-    if Inputs.up:rep() and self.sel >= 2 then
+    if inputs.up:rep() and self.sel >= 2 then
         self.sel = self.sel - 1
-    elseif Inputs.down:rep() and self.sel <= 2 then
+    elseif inputs.down:rep() and self.sel <= 2 then
         self.sel = self.sel + 1
     end
 
@@ -41,11 +41,11 @@ function MenuBalance:update()
     local stat = self.choices[self.sel]
 
     -- adjust power levels
-    if Inputs.left:rep() and self.unit.stat[stat] >= 1 then
+    if inputs.left:rep() and self.unit.stat[stat] >= 1 then
         SFX:play('power-down')
         self.unit.stat[stat] = self.unit.stat[stat] - 1
         Radius:update(self.unit, Map.current, Player.player)
-    elseif Inputs.right:rep() and self.unit.stat[stat] < 5 and alloc <
+    elseif inputs.right:rep() and self.unit.stat[stat] < 5 and alloc <
         self.unit.pwr then
         SFX:play('power-up')
         self.unit.stat[stat] = self.unit.stat[stat] + 1
@@ -57,7 +57,7 @@ function MenuBalance:update()
     -- been modified
     if self:changed() then
         Info:set("confirm", "cancel", self.unit)
-        if Inputs.yes:once() then
+        if inputs.yes:once() then
             Map.current.units[self.idx] = Unit.clone(self.unit)
             Player:turn_end()
             self.vis = false
@@ -65,7 +65,7 @@ function MenuBalance:update()
         end
     else
         Info:set("cancel", "cancel", self.unit)
-        if Inputs.yes:once() then
+        if inputs.yes:once() then
             self.vis = false
             self.unit = nil
         end

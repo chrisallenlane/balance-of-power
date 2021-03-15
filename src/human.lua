@@ -1,19 +1,19 @@
 Human = {battle = {}}
 
-function Human.battle.update()
+function Human.battle.update(inputs)
     -- for brevity
-    local yes = Inputs.yes
-    local no = Inputs.no
+    local yes = inputs.yes
+    local no = inputs.no
 
     -- If a menu is visible, run the appropriate update loop
     if MenuTurnEnd.vis then
-        MenuTurnEnd:update()
+        MenuTurnEnd:update(inputs)
         return
     elseif MenuBalance.vis then
-        MenuBalance:update()
+        MenuBalance:update(inputs)
         return
     elseif MenuTarget.vis then
-        MenuTarget:update()
+        MenuTarget:update(inputs)
 
         -- accept the balance, close the menu, and end the turn
         if yes:once() then
@@ -46,7 +46,7 @@ function Human.battle.update()
     end
 
     -- update the cursor position
-    Cursor:update(Map.current)
+    Cursor:update(Map.current, inputs)
 
     -- determine whether a unit is beneath the cursor
     local unit, idx = Units.at(Cursor.cell.x, Cursor.cell.y, Map.current.units)

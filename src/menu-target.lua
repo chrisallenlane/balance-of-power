@@ -15,11 +15,11 @@ end
 
 -- TODO: disallow targeting a system with 0 power
 -- update "end turn?" menu state
-function MenuTarget:update()
+function MenuTarget:update(inputs)
     Info:set("target", "cancel", self.unit)
 
     -- cancel the balance and close the menu
-    if Inputs.no:once() then
+    if inputs.no:once() then
         self.vis = false
         self.unit = nil
         self.idx = nil
@@ -27,9 +27,9 @@ function MenuTarget:update()
     end
 
     -- move the stat selector
-    if Inputs.up:rep() and self.sel >= 2 then
+    if inputs.up:rep() and self.sel >= 2 then
         self.sel = self.sel - 1
-    elseif Inputs.down:rep() and self.sel <= 2 then
+    elseif inputs.down:rep() and self.sel <= 2 then
         self.sel = self.sel + 1
     end
 end

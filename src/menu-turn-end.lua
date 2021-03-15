@@ -7,7 +7,7 @@ function MenuTurnEnd:open()
 end
 
 -- update "end turn?" menu state
-function MenuTurnEnd:update()
+function MenuTurnEnd:update(inputs)
     Info:set("confirm", "cancel")
 
     -- right
@@ -20,12 +20,12 @@ function MenuTurnEnd:update()
     end
 
     -- selection: "yes"
-    if Inputs.yes:once() and self.sel == 1 then
+    if inputs.yes:once() and self.sel == 1 then
         Player:turn_end()
         self.vis = false
 
         -- selection: "no"
-    elseif Inputs.no:once() or (Inputs.yes:once() and self.sel == 2) then
+    elseif inputs.no:once() or (inputs.yes:once() and self.sel == 2) then
         self.vis = false
     end
 end

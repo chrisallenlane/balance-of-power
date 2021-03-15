@@ -1,5 +1,5 @@
 -- update the battle screen
-function Screens.battle.update()
+function Screens.battle.update(inputs)
     -- only move the camera if units have finished moving
     if Units.ready then
         if Units.delay > 0 then
@@ -23,7 +23,7 @@ function Screens.battle.update()
     -- do not run player/CPU update loops if a lock is engaged
     if Camera.ready and Units.ready then
         if Player:human(Players) then
-            Human.battle.update()
+            Human.battle.update(inputs)
         else
             CPU.battle.update()
         end
