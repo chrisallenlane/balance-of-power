@@ -1,4 +1,9 @@
 function _init()
+    -- initialize players
+    -- NB: P2 will be flagged as a CPU in the title screen if appropriate
+    add(Players, Player:new({num = 1, cpu = false}))
+    add(Players, Player:new({num = 1, cpu = false}))
+
     -- implement an "advance stage" debug function
     if DEBUG_CHEAT then menuitem(1, "advance stage", Map.advance) end
 
@@ -10,9 +15,6 @@ function _init()
 
     -- load the title screen
     Screens.load("title")
-
-    -- TODO: initialize two players, one of which may be a CPU depending on
-    -- the title screen selection
 end
 
 function _update60()

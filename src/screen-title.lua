@@ -13,15 +13,8 @@ function Screens.title.update(inputs)
 
         -- "select"
     elseif inputs.yes:once() then
-        -- initialize player 1
-        add(Players, Player:new({num = 1, cpu = false}))
-
-        -- if a 1-player game is selected, create a CPU opponent
-        local cpu = false
-        if menu.sel == 1 then cpu = true end
-
-        -- initialize player 2
-        add(Players, Player:new({num = 2, cpu = cpu}))
+        -- flag P2 as a CPU if a 1-player game is selected
+        if menu.sel == 1 then Players[2].cpu = true end
 
         -- load the map interstitial
         -- TODO: handle this differently in 2-player mode
