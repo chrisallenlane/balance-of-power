@@ -1,5 +1,5 @@
 function Screens.intr.update(inputs)
-    if inputs.yes:once() then Screens.load("battle") end
+    if inputs.yes:once() then Game.screen = Screens.battle end
 end
 
 function Screens.intr.draw()

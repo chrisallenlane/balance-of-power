@@ -8,8 +8,7 @@ DEBUG_SHOW = false
 -- enable/disable debugging "cheat" functions
 DEBUG_CHEAT = true
 
--- TODO: refactor this
-Game = { state = { screen = "title" } }
+Game = {}
 
 -- externalize non-media assets
 #include src/string.lua

@@ -36,9 +36,9 @@ function Map.advance()
     if Map.num < #Map.defs then
         Map.num = Map.num + 1
         Map:load(Map.num)
-        Screens.load("intr")
+        Game.screen = Screens.intr
     else
-        Screens.load("victory")
+        Game.screen = Screens.victory
     end
 end
 

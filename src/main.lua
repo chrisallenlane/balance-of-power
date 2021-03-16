@@ -14,7 +14,7 @@ function _init()
     Map:load(1)
 
     -- load the title screen
-    Screens.load("title")
+    Game.screen = Screens.title
 end
 
 function _update60()

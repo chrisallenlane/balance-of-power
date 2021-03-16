@@ -16,7 +16,7 @@ function Screens.battle.update(inputs)
         Map.advance()
         return
     elseif clear and victor == 2 then
-        Screens.load("defeat")
+        Game.screen = Screens.defeat
         return
     end
 

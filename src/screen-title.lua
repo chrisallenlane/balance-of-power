@@ -18,7 +18,7 @@ function Screens.title.update(inputs)
 
         -- load the map interstitial
         -- TODO: handle this differently in 2-player mode
-        Screens.load("intr")
+        Game.screen = Screens.intr
     end
 end
 
