@@ -58,6 +58,11 @@ function Cursor:clear()
     }
 end
 
+-- immediately move the cursor to the specified cell coordinates
+function Cursor:warp(x, y)
+    self.cell.x, self.cell.y = x, y
+end
+
 -- render the cursor
 function Cursor:draw()
     local sprite = 16

@@ -23,12 +23,10 @@ function Map:load(num)
     Player.num = 1
 
     -- reset the cursor position
-    Cursor.cell.x, Cursor.cell.y = self.current.cursor.x, self.current.cursor.y
+    Cursor:warp(self.current.cursor.x, self.current.cursor.y)
 
     -- reset the camera position
-    Camera.cell.x, Camera.cell.y = self.current.camera.x, self.current.camera.y
-    Camera.px.x, Camera.px.y = self.current.camera.x * 8,
-                               self.current.camera.y * 8
+    Camera:warp(self.current.camera.x, self.current.camera.y)
 end
 
 -- advance to the next map

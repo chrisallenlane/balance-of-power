@@ -42,11 +42,6 @@ function Camera:update(cur, map)
     end
 end
 
--- move the game camera
-function Camera:draw()
-    camera(self.px.x, self.px.y)
-end
-
 -- move the camera to the specified grid position
 function Camera:focus(x, y, w, h)
     -- Apply offsets to center on the specified coordinates. (An offset of 8
@@ -73,4 +68,15 @@ function Camera:focus(x, y, w, h)
 
     -- update the camera position
     self.cell.x, self.cell.y = x, y
+end
+
+-- immediately move the camera to the specified cell coordinates
+function Camera:warp(x, y)
+    self.cell.x, self.cell.y = x, y
+    self.px.x, self.px.y = x * 8, y * 8
+end
+
+-- move the game camera
+function Camera:draw()
+    camera(self.px.x, self.px.y)
 end
