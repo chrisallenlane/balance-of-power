@@ -124,6 +124,7 @@ globals = {
 	"Radius",
 	"SFX",
 	"Screens",
+	"State",
 	"String",
 	"Turn",
 	"Unit",

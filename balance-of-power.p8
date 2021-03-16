@@ -11,6 +11,7 @@ DEBUG_CHEAT = true
 Game = {}
 
 -- externalize non-media assets
+#include src/state.lua
 #include src/string.lua
 #include src/radius.lua
 #include src/screen.lua

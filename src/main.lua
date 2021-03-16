@@ -14,14 +14,14 @@ function _init()
     Map:load(1)
 
     -- load the title screen
-    Game.screen = Screens.title
+    State.screen = Screens.title
 end
 
 function _update60()
     Inputs:poll(Player.num)
-    Game.screen.update(Inputs)
+    State.screen.update(Inputs)
 end
 
 function _draw()
-    Game.screen:draw()
+    State.screen:draw()
 end
