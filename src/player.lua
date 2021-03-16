@@ -1,5 +1,4 @@
 Player = {battle = {}, num = 1}
-Players = {}
 
 -- define the constructor
 function Player:new(p)

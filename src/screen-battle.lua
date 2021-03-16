@@ -22,7 +22,7 @@ function Screens.battle.update(inputs)
 
     -- do not run player/CPU update loops if a lock is engaged
     if Camera.ready and Units.ready then
-        if Player:human(Players) then
+        if Player:human(State.players) then
             -- TODO: refactor this
             -- If a menu is visible, run the appropriate update loop
             if MenuTurnEnd.vis then
@@ -88,7 +88,7 @@ function Screens.battle.draw()
     Radius:draw()
 
     -- draw the cursor if the player is a human
-    if Player:human(Players) then Cursor:draw() end
+    if Player:human(State.players) then Cursor:draw() end
 
     Units.draw(Map.current.units)
     MenuTurnEnd:draw()

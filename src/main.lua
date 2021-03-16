@@ -1,9 +1,4 @@
 function _init()
-    -- initialize players
-    -- NB: P2 will be flagged as a CPU in the title screen if appropriate
-    add(Players, Player:new({num = 1, cpu = false}))
-    add(Players, Player:new({num = 1, cpu = false}))
-
     -- implement an "advance stage" debug function
     if DEBUG_CHEAT then menuitem(1, "advance stage", Map.advance) end
 
@@ -14,6 +9,7 @@ function _init()
     Map:load(1)
 
     -- load the title screen
+    -- TODO: move to state initialization
     State.screen = Screens.title
 end
 

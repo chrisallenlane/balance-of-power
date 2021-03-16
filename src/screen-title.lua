@@ -14,7 +14,7 @@ function Screens.title.update(inputs)
         -- "select"
     elseif inputs.yes:once() then
         -- flag P2 as a CPU if a 1-player game is selected
-        if menu.sel == 1 then Players[2].cpu = true end
+        if menu.sel == 1 then State.players[2].cpu = true end
 
         -- load the map interstitial
         -- TODO: handle this differently in 2-player mode
