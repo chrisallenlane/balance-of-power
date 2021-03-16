@@ -7,10 +7,6 @@ function _init()
 
     -- load the first map
     Map:load(1)
-
-    -- load the title screen
-    -- TODO: move to state initialization
-    State.screen = Screens.title
 end
 
 function _update60()

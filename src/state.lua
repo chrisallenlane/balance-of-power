@@ -10,7 +10,7 @@ State = {
     camera = {},
 
     -- the current screen
-    screen = {},
+    screen = Screens.title,
 
     -- the current map
     map = {},

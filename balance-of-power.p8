@@ -11,21 +11,21 @@ DEBUG_CHEAT = true
 Game = {}
 
 -- externalize non-media assets
-#include src/state.lua
 #include src/string.lua
 #include src/radius.lua
+#include src/player.lua
 #include src/screen.lua
 #include src/screen-battle.lua
 #include src/screen-title.lua
 #include src/screen-intr.lua
 #include src/screen-victory.lua
 #include src/screen-defeat.lua
+#include src/state.lua
 #include src/menu-screen-title.lua
 #include src/menu-balance.lua
 #include src/menu-target.lua
 #include src/menu-turn-end.lua
 #include src/info.lua
-#include src/player.lua
 #include src/cpu.lua
 #include src/sfx.lua
 #include src/input.lua
