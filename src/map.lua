@@ -26,7 +26,7 @@ function Map:load(num)
     Cursor:warp(self.current.cursor.x, self.current.cursor.y)
 
     -- reset the camera position
-    Camera:warp(self.current.camera.x, self.current.camera.y)
+    State.camera:warp(self.current.camera.x, self.current.camera.y)
 end
 
 -- advance to the next map

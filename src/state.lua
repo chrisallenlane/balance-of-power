@@ -7,7 +7,7 @@ State = {
     },
 
     -- the game camera
-    camera = {},
+    camera = Camera:new(),
 
     -- the current screen
     screen = Screens.title,

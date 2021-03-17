@@ -84,8 +84,8 @@ function MenuBalance:draw()
     if not self.vis or not self.unit then return end
 
     -- padding to align the menu location with the camera
-    local camMarginX = Camera.px.x
-    local camMarginY = Camera.px.y
+    local camMarginX = State.camera.px.x
+    local camMarginY = State.camera.px.y
 
     -- the menu dimensions
     local menuWidth = 62

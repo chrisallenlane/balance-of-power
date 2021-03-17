@@ -5,7 +5,7 @@ function Screens.battle.update(inputs)
         if Units.delay > 0 then
             Units.delay = Units.delay - 1
         else
-            Camera:update(Cursor, Map.current)
+            State.camera:update(Cursor, Map.current)
         end
     end
 
@@ -21,7 +21,7 @@ function Screens.battle.update(inputs)
     end
 
     -- do not run player/CPU update loops if a lock is engaged
-    if Camera.ready and Units.ready then
+    if State.camera.ready and Units.ready then
         if Player:human(State.players) then
             -- TODO: refactor this
             -- If a menu is visible, run the appropriate update loop
@@ -80,7 +80,7 @@ function Screens.battle.draw()
     cls()
 
     -- move the camera
-    Camera:draw()
+    State.camera:draw()
 
     Map:draw()
 

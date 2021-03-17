@@ -1,5 +1,12 @@
 -- encapsulate camera state
-Camera = {ready = false, cell = {x = 0, y = 0}, px = {x = 0, y = 0}}
+Camera = {}
+
+function Camera:new()
+    local c = {ready = false, cell = {x = 0, y = 0}, px = {x = 0, y = 0}}
+    setmetatable(c, self)
+    self.__index = self
+    return c
+end
 
 -- update camera state
 function Camera:update(cur, map)

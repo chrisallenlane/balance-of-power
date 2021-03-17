@@ -20,6 +20,7 @@ Game = {}
 #include src/screen-intr.lua
 #include src/screen-victory.lua
 #include src/screen-defeat.lua
+#include src/camera.lua
 #include src/state.lua
 #include src/menu-screen-title.lua
 #include src/menu-balance.lua

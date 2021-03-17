@@ -170,6 +170,6 @@ function Player:turn_end()
     end
 
     -- center the screen on the specified coordinates
-    Camera:focus(Cursor.cell.x, Cursor.cell.y, Map.current.cell.w,
-                 Map.current.cell.h, 4)
+    State.camera:focus(Cursor.cell.x, Cursor.cell.y, Map.current.cell.w,
+                       Map.current.cell.h, 4)
 end
