@@ -17,13 +17,13 @@ function Map:load(num)
     self.current = self.defs[num]()
 
     -- reset the cursor
-    Cursor:clear()
+    State.cursor:clear()
 
     -- make it player 1's turn
     Player.num = 1
 
     -- reset the cursor position
-    Cursor:warp(self.current.cursor.x, self.current.cursor.y)
+    State.cursor:warp(self.current.cursor.x, self.current.cursor.y)
 
     -- reset the camera position
     State.camera:warp(self.current.camera.x, self.current.camera.y)

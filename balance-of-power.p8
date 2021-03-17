@@ -21,6 +21,9 @@ Game = {}
 #include src/screen-victory.lua
 #include src/screen-defeat.lua
 #include src/camera.lua
+#include src/queue.lua
+#include src/astar.lua
+#include src/cursor.lua
 #include src/state.lua
 #include src/menu-screen-title.lua
 #include src/menu-balance.lua
@@ -32,12 +35,9 @@ Game = {}
 #include src/input.lua
 #include src/inputs.lua
 #include src/cell.lua
-#include src/queue.lua
-#include src/astar.lua
 #include src/camera.lua
 #include src/unit.lua
 #include src/units.lua
-#include src/cursor.lua
 #include src/map.lua
 #include map/1.lua
 #include map/2.lua

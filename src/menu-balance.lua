@@ -20,7 +20,7 @@ function MenuBalance:update(inputs)
     if inputs.no:once() then
         self.vis = false
         self.unit = nil
-        Radius:update(Cursor.sel, Map.current, Player.num)
+        Radius:update(State.cursor.sel, Map.current, Player.num)
         return
     end
 

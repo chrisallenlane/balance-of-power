@@ -14,4 +14,8 @@ State = {
 
     -- the current map
     map = {},
+
+    -- the game cursor
+    -- TODO: deprecate this
+    cursor = Cursor,
 }

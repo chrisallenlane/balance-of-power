@@ -2,18 +2,19 @@ Debug = {}
 function Debug.vars()
     -- compose "selection" information
     local sel = "na"
-    if Cursor.sel then sel = Cursor.sel.cell.x .. ", " .. Cursor.sel.cell.y end
+    if State.cursor.sel then
+        sel = State.cursor.sel.cell.x .. ", " .. State.cursor.sel.cell.y
+    end
 
     -- indicate whether the tile is passable
     local pass = "n"
-    if Cell.pass(Cursor.cell.x, Cursor.cell.y, Map.current, Player.num) then
-        pass = "y"
-    end
+    if Cell.pass(State.cursor.cell.x, State.cursor.cell.y, Map.current,
+                 Player.num) then pass = "y" end
 
     -- compose debugging messages
     local msgs = {
         "turn: " .. Player.num,
-        "cur:  " .. Cursor.cell.x .. ", " .. Cursor.cell.y,
+        "cur:  " .. State.cursor.cell.x .. ", " .. State.cursor.cell.y,
         "sel:  " .. sel,
         "cam:  " .. State.camera.cell.x .. ", " .. State.camera.cell.y,
         "pass: " .. pass,
