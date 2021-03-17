@@ -1,22 +1,22 @@
 Debug = {}
-function Debug.vars()
+function Debug.vars(state)
     -- compose "selection" information
     local sel = "na"
-    if State.cursor.sel then
-        sel = State.cursor.sel.cell.x .. ", " .. State.cursor.sel.cell.y
+    if state.cursor.sel then
+        sel = state.cursor.sel.cell.x .. ", " .. state.cursor.sel.cell.y
     end
 
     -- indicate whether the tile is passable
     local pass = "n"
-    if Cell.pass(State.cursor.cell.x, State.cursor.cell.y, Map.current,
+    if Cell.pass(state.cursor.cell.x, state.cursor.cell.y, Map.current,
                  Player.num) then pass = "y" end
 
     -- compose debugging messages
     local msgs = {
         "turn: " .. Player.num,
-        "cur:  " .. State.cursor.cell.x .. ", " .. State.cursor.cell.y,
+        "cur:  " .. state.cursor.cell.x .. ", " .. state.cursor.cell.y,
         "sel:  " .. sel,
-        "cam:  " .. State.camera.cell.x .. ", " .. State.camera.cell.y,
+        "cam:  " .. state.camera.cell.x .. ", " .. state.camera.cell.y,
         "pass: " .. pass,
         "mem:  " .. stat(0) .. " kb",
         "cpu:  " .. stat(1),
@@ -24,6 +24,6 @@ function Debug.vars()
 
     -- iterate over and print each debug message
     for i, msg in pairs(msgs) do
-        print(msg, 4 + State.camera.px.x, (4 + 8 * i) + State.camera.px.y, 7)
+        print(msg, 4 + state.camera.px.x, (4 + 8 * i) + state.camera.px.y, 7)
     end
 end

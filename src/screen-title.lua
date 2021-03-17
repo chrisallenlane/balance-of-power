@@ -1,5 +1,5 @@
 -- update the title screen
-function Screens.title.update(inputs)
+function Screens.title.update(state, inputs)
     local menu = MenuScreenTitle
     local sel = menu.sel
 
@@ -14,11 +14,11 @@ function Screens.title.update(inputs)
         -- "select"
     elseif inputs.yes:once() then
         -- flag P2 as a CPU if a 1-player game is selected
-        if menu.sel == 1 then State.players[2].cpu = true end
+        if menu.sel == 1 then state.players[2].cpu = true end
 
         -- load the map interstitial
         -- TODO: handle this differently in 2-player mode
-        State.screen = Screens.intr
+        state.screen = Screens.intr
     end
 end
 

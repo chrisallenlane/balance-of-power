@@ -11,29 +11,30 @@ Map = {
 }
 
 -- load the specified map
-function Map:load(num)
+function Map:load(num, state)
     -- load the specified map
     self.num = num
     self.current = self.defs[num]()
 
     -- reset the cursor
-    State.cursor:clear()
+    state.cursor:clear()
 
     -- make it player 1's turn
     Player.num = 1
 
     -- reset the cursor position
-    State.cursor:warp(self.current.cursor.x, self.current.cursor.y)
+    state.cursor:warp(self.current.cursor.x, self.current.cursor.y)
 
     -- reset the camera position
-    State.camera:warp(self.current.camera.x, self.current.camera.y)
+    state.camera:warp(self.current.camera.x, self.current.camera.y)
 end
 
 -- advance to the next map
+-- TODO: remove global `State`
 function Map.advance()
     if Map.num < #Map.defs then
         Map.num = Map.num + 1
-        Map:load(Map.num)
+        Map:load(Map.num, State)
         State.screen = Screens.intr
     else
         State.screen = Screens.victory
@@ -42,8 +43,9 @@ end
 
 -- reset the current map
 -- TODO: implement confirmation menu
+-- TODO: remove global `State`
 function Map.reset()
-    Map:load(Map.num)
+    Map:load(Map.num, State)
 end
 
 -- return true if the map has been cleared

@@ -1,7 +1,7 @@
 CPU = {battle = {}, delay = 0}
 
 -- NB: this is a stub
-function CPU.battle.update()
+function CPU.battle.update(state)
     Info:set("", "")
 
     -- pause in place for a moment before the CPU moves
@@ -28,5 +28,5 @@ function CPU.battle.update()
     Units.delay = 30
 
     -- end the CPU turn
-    Player:turn_end()
+    Player:turn_end(state)
 end

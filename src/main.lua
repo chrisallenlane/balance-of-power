@@ -6,14 +6,14 @@ function _init()
     menuitem(2, "reset map", Map.reset)
 
     -- load the first map
-    Map:load(1)
+    Map:load(1, State)
 end
 
 function _update60()
     Inputs:poll(Player.num)
-    State.screen.update(Inputs)
+    State.screen.update(State, Inputs)
 end
 
 function _draw()
-    State.screen:draw()
+    State.screen.draw(State)
 end

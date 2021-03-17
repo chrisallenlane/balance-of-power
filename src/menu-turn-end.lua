@@ -7,7 +7,7 @@ function MenuTurnEnd:open()
 end
 
 -- update "end turn?" menu state
-function MenuTurnEnd:update(inputs)
+function MenuTurnEnd:update(state, inputs)
     Info:set("confirm", "cancel")
 
     -- right
@@ -21,7 +21,7 @@ function MenuTurnEnd:update(inputs)
 
     -- selection: "yes"
     if inputs.yes:once() and self.sel == 1 then
-        Player:turn_end()
+        Player:turn_end(state)
         self.vis = false
 
         -- selection: "no"
@@ -31,13 +31,13 @@ function MenuTurnEnd:update(inputs)
 end
 
 -- draw the "end turn" menu
-function MenuTurnEnd:draw()
+function MenuTurnEnd:draw(state)
     -- exit early if the menu is not visible
     if not self.vis then return end
 
     -- offset the menu location to align with the camera
-    local padx = State.camera.px.x
-    local pady = State.camera.px.y
+    local padx = state.camera.px.x
+    local pady = state.camera.px.y
 
     -- draw the menu
     rectfill(42 + padx, 52 + pady, 86 + padx, 74 + pady, 0)

@@ -1,11 +1,11 @@
 -- update the battle screen
-function Screens.battle.update(inputs)
+function Screens.battle.update(state, inputs)
     -- only move the camera if units have finished moving
     if Units.ready then
         if Units.delay > 0 then
             Units.delay = Units.delay - 1
         else
-            State.camera:update(State.cursor, Map.current)
+            state.camera:update(state.cursor, Map.current)
         end
     end
 
@@ -13,26 +13,26 @@ function Screens.battle.update(inputs)
     -- TODO: handle 2-player games
     local clear, victor = Map:clear()
     if clear and victor == 1 then
-        Map.advance()
+        Map.advance(state)
         return
     elseif clear and victor == 2 then
-        State.screen = Screens.defeat
+        state.screen = Screens.defeat
         return
     end
 
     -- do not run player/CPU update loops if a lock is engaged
-    if State.camera.ready and Units.ready then
-        if Player:human(State.players) then
+    if state.camera.ready and Units.ready then
+        if Player:human(state.players) then
             -- TODO: refactor this
             -- If a menu is visible, run the appropriate update loop
             if MenuTurnEnd.vis then
-                MenuTurnEnd:update(inputs)
+                MenuTurnEnd:update(state, inputs)
                 return
             elseif MenuBalance.vis then
-                MenuBalance:update(inputs)
+                MenuBalance:update(state, inputs)
                 return
             elseif MenuTarget.vis then
-                MenuTarget:update(inputs)
+                MenuTarget:update(state, inputs)
 
                 -- accept the balance, close the menu, and end the turn
                 if inputs.yes:once() then
@@ -40,9 +40,9 @@ function Screens.battle.update(inputs)
                     MenuTarget.vis = false
 
                     -- attack the enemy unit
-                    local killed = State.cursor.sel:attack(MenuTarget.unit,
+                    local killed = state.cursor.sel:attack(MenuTarget.unit,
                                                            MenuTarget.choices[MenuTarget.sel],
-                                                           State.cursor.sel.stat
+                                                           state.cursor.sel.stat
                                                                .atk)
 
                     -- delete the enemy unit if it has been destroyed
@@ -52,23 +52,24 @@ function Screens.battle.update(inputs)
 
                     -- deactivate all *other* units belonging to the player
                     Units.deactivate(Map.current.units, Player.num)
-                    State.cursor.sel:activate()
+                    state.cursor.sel:activate()
 
                     -- end the player's turn if the unit is exhausted
-                    if State.cursor.sel:moved() or State.cursor.sel.stat.mov ==
+                    if state.cursor.sel:moved() or state.cursor.sel.stat.mov ==
                         0 then
-                        Player:turn_end()
+                        Player:turn_end(state)
                         -- otherwise, show the movement radius
                     else
-                        Radius:update(State.cursor.sel, Map.current, Player.num)
+                        Radius:update(state.cursor.sel, Map.current, Player.num)
                     end
                 end
                 return
             end
 
-            Player.battle.update(inputs)
+            -- state = Player.battle.update(state, inputs)
+            Player.battle.update(state, inputs)
         else
-            CPU.battle.update()
+            CPU.battle.update(state)
         end
     end
 
@@ -78,11 +79,11 @@ function Screens.battle.update(inputs)
 end
 
 -- draw the battle screen
-function Screens.battle.draw()
+function Screens.battle.draw(state)
     cls()
 
     -- move the camera
-    State.camera:draw()
+    state.camera:draw()
 
     Map:draw()
 
@@ -90,14 +91,14 @@ function Screens.battle.draw()
     Radius:draw()
 
     -- draw the cursor if the player is a human
-    if Player:human(State.players) then State.cursor:draw() end
+    if Player:human(state.players) then state.cursor:draw() end
 
     Units.draw(Map.current.units)
-    MenuTurnEnd:draw()
-    MenuBalance:draw()
-    MenuTarget:draw()
-    Info:draw()
+    MenuTurnEnd:draw(state)
+    MenuBalance:draw(state)
+    MenuTarget:draw(state)
+    Info:draw(state)
 
     -- display debug output (if so configured)
-    if DEBUG_SHOW then Debug.vars() end
+    if DEBUG_SHOW then Debug.vars(state) end
 end

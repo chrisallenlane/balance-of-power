@@ -15,7 +15,7 @@ end
 
 -- TODO: disallow targeting a system with 0 power
 -- update "end turn?" menu state
-function MenuTarget:update(inputs)
+function MenuTarget:update(_, inputs)
     Info:set("target", "cancel", self.unit)
 
     -- cancel the balance and close the menu
@@ -35,13 +35,13 @@ function MenuTarget:update(inputs)
 end
 
 -- draw the "power balance" menu
-function MenuTarget:draw()
+function MenuTarget:draw(state)
     -- exit early if the menu is not visible
     if not self.vis or not self.unit then return end
 
     -- padding to align the menu location with the camera
-    local camMarginX = State.camera.px.x
-    local camMarginY = State.camera.px.y
+    local camMarginX = state.camera.px.x
+    local camMarginY = state.camera.px.y
 
     -- the menu dimensions
     local menuWidth = 62

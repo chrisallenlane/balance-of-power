@@ -15,12 +15,12 @@ function MenuBalance:open(unit, idx)
 end
 
 -- update "end turn?" menu state
-function MenuBalance:update(inputs)
+function MenuBalance:update(state, inputs)
     -- cancel the balance and close the menu
     if inputs.no:once() then
         self.vis = false
         self.unit = nil
-        Radius:update(State.cursor.sel, Map.current, Player.num)
+        Radius:update(state.cursor.sel, Map.current, Player.num)
         return
     end
 
@@ -59,7 +59,7 @@ function MenuBalance:update(inputs)
         Info:set("confirm", "cancel", self.unit)
         if inputs.yes:once() then
             Map.current.units[self.idx] = Unit.clone(self.unit)
-            Player:turn_end()
+            Player:turn_end(state)
             self.vis = false
             self.unit = nil
         end
@@ -79,13 +79,13 @@ function MenuBalance:changed()
 end
 
 -- draw the "power balance" menu
-function MenuBalance:draw()
+function MenuBalance:draw(state)
     -- exit early if the menu is not visible
     if not self.vis or not self.unit then return end
 
     -- padding to align the menu location with the camera
-    local camMarginX = State.camera.px.x
-    local camMarginY = State.camera.px.y
+    local camMarginX = state.camera.px.x
+    local camMarginY = state.camera.px.y
 
     -- the menu dimensions
     local menuWidth = 62

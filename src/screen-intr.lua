@@ -1,5 +1,5 @@
-function Screens.intr.update(inputs)
-    if inputs.yes:once() then State.screen = Screens.battle end
+function Screens.intr.update(state, inputs)
+    if inputs.yes:once() then state.screen = Screens.battle end
 end
 
 function Screens.intr.draw()

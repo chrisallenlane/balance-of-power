@@ -8,13 +8,13 @@ function Info:set(yes, no, unit)
 end
 
 -- Draw the info box
-function Info:draw()
+function Info:draw(state)
     -- short circuit if there is no info to display
     if self.yes == "" and self.no == "" then return end
 
     -- padding to align the menu location with the camera
-    local camX = State.camera.px.x
-    local camY = State.camera.px.y
+    local camX = state.camera.px.x
+    local camY = state.camera.px.y
 
     -- draw the menu background
     rectfill(camX, camY + 117, camX + 128, camY + 128, 0)

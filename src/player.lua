@@ -7,49 +7,49 @@ function Player:new(p)
     return p
 end
 
-function Player.battle.update(inputs)
+function Player.battle.update(state, inputs)
     -- for brevity
     local yes = inputs.yes
     local no = inputs.no
 
     -- update the cursor position
-    State.cursor:update(Map.current, inputs)
+    state.cursor:update(Map.current, inputs)
 
     -- determine whether a unit is beneath the cursor
-    local unit, idx = Units.at(State.cursor.cell.x, State.cursor.cell.y,
+    local unit, idx = Units.at(state.cursor.cell.x, state.cursor.cell.y,
                                Map.current.units)
 
     -- if there is a unit beneath the cursor...
     if unit then
         -- select friendly unit:
-        if unit:friend(Player.num) and not State.cursor:selected(unit) and
+        if unit:friend(Player.num) and not state.cursor:selected(unit) and
             unit.active then
             Info:set("select", "", unit)
 
             if yes:once() then
-                State.cursor.sel = unit
+                state.cursor.sel = unit
                 Radius:update(unit, Map.current, Player.num)
             end
 
             -- open friendly balance menu:
-        elseif unit:friend(Player.num) and State.cursor:selected(unit) and
+        elseif unit:friend(Player.num) and state.cursor:selected(unit) and
             not unit:acted() then
             Info:set("balance", "unselect", unit)
 
             if yes:once() then
-                MenuBalance:open(State.cursor.sel, idx)
+                MenuBalance:open(state.cursor.sel, idx)
             end
 
             -- open the "turn end" menu if the unit has already
             -- taken an action
-        elseif unit:friend(Player.num) and State.cursor:selected(unit) and
+        elseif unit:friend(Player.num) and state.cursor:selected(unit) and
             unit:acted() then
             Info:set("end turn", "unselect", unit)
 
             if yes:once() then MenuTurnEnd:open() end
 
             -- view enemy radii:
-        elseif unit:foe(Player.num) and not State.cursor:selected() then
+        elseif unit:foe(Player.num) and not state.cursor:selected() then
             Info:set("view radii", "", unit)
 
             if yes:once() then
@@ -62,8 +62,8 @@ function Player.battle.update(inputs)
             end
 
             -- attack enemy:
-        elseif unit:foe(Player.num) and State.cursor:selected() and
-            not State.cursor.sel:attacked() and State.cursor.sel.active and
+        elseif unit:foe(Player.num) and state.cursor:selected() and
+            not state.cursor.sel:attacked() and state.cursor.sel.active and
             Radius:contains('atk', unit.cell.x, unit.cell.y) then
             Info:set("attack", "unselect", unit)
 
@@ -73,35 +73,35 @@ function Player.battle.update(inputs)
         -- if no unit is beneath the cursor...
     elseif not unit then
         -- move friendly unit:
-        if State.cursor:selected() and State.cursor.sel.active and
-            not State.cursor.sel:moved() and
-            Cell.open(State.cursor.cell.x, State.cursor.cell.y, Map.current) and
-            Radius:contains('mov', State.cursor.cell.x, State.cursor.cell.y) then
+        if state.cursor:selected() and state.cursor.sel.active and
+            not state.cursor.sel:moved() and
+            Cell.open(state.cursor.cell.x, state.cursor.cell.y, Map.current) and
+            Radius:contains('mov', state.cursor.cell.x, state.cursor.cell.y) then
             Info:set("move", "unselect")
 
             if yes:once() then
                 -- move the unit
-                State.cursor.sel:move(State.cursor.cell.x, State.cursor.cell.y)
+                state.cursor.sel:move(state.cursor.cell.x, state.cursor.cell.y)
 
                 -- deactivate all *other* units belonging to the player
                 Units.deactivate(Map.current.units, Player.num)
-                State.cursor.sel:activate()
+                state.cursor.sel:activate()
 
                 -- reset the animation delay
                 Units.delay = 30
 
                 -- end the player's turn if the unit is exhausted
-                if State.cursor.sel:attacked() or State.cursor.sel.stat.atk == 0 or
-                    State.cursor.sel.stat.rng == 0 then
-                    Player:turn_end()
+                if state.cursor.sel:attacked() or state.cursor.sel.stat.atk == 0 or
+                    state.cursor.sel.stat.rng == 0 then
+                    Player:turn_end(state)
                     -- otherwise, show the attack radius
                 else
-                    Radius:update(State.cursor.sel, Map.current, Player.num)
+                    Radius:update(state.cursor.sel, Map.current, Player.num)
                 end
             end
 
             -- show the "end turn" menu
-        elseif not State.cursor:selected() then
+        elseif not state.cursor:selected() then
             Info:set("end turn", "end turn")
             if yes:once() then MenuTurnEnd:open() end
         end
@@ -112,7 +112,7 @@ function Player.battle.update(inputs)
         -- hide radii
         if Radius.vis then
             -- unselect the unit if it is ours
-            if State.cursor:selected() then State.cursor.sel = nil end
+            if state.cursor:selected() then state.cursor.sel = nil end
             Radius:clear()
             -- show the "end turn" menu
         else
@@ -121,15 +121,15 @@ function Player.battle.update(inputs)
     end
 
     -- draw an AStar trail showing the unit movement path
-    if State.cursor:selected() and
-        Radius:contains('mov', State.cursor.cell.x, State.cursor.cell.y) then
-        local src = Cell:new(State.cursor.sel.cell.x, State.cursor.sel.cell.y,
+    if state.cursor:selected() and
+        Radius:contains('mov', state.cursor.cell.x, state.cursor.cell.y) then
+        local src = Cell:new(state.cursor.sel.cell.x, state.cursor.sel.cell.y,
                              Map.current.cell.w)
-        local dst = Cell:new(State.cursor.cell.x, State.cursor.cell.y,
+        local dst = Cell:new(state.cursor.cell.x, state.cursor.cell.y,
                              Map.current.cell.w)
-        State.cursor.path = State.cursor.astar:search(src, dst, Map.current)
+        state.cursor.path = state.cursor.astar:search(src, dst, Map.current)
     else
-        State.cursor.path = {}
+        state.cursor.path = {}
     end
 end
 
@@ -140,22 +140,22 @@ end
 
 -- TODO: move this into player?
 -- change the player turn
-function Player:turn_end()
+function Player:turn_end(state)
     -- record the current player's cursor position
-    if State.cursor.sel then
-        State.cursor.last[self.num] = {
-            x = State.cursor.sel.cell.x,
-            y = State.cursor.sel.cell.y,
+    if state.cursor.sel then
+        state.cursor.last[self.num] = {
+            x = state.cursor.sel.cell.x,
+            y = state.cursor.sel.cell.y,
         }
     else
-        State.cursor.last[self.num] = {
-            x = State.cursor.cell.x,
-            y = State.cursor.cell.y,
+        state.cursor.last[self.num] = {
+            x = state.cursor.cell.x,
+            y = state.cursor.cell.y,
         }
     end
 
     -- unselect the unit
-    State.cursor.sel = nil
+    state.cursor.sel = nil
 
     -- hide radii
     Radius:clear()
@@ -172,17 +172,17 @@ function Player:turn_end()
 
     -- TODO: refactor into Cursor save/load or something?
     -- load the next player's cursor
-    if State.cursor.last[self.num].x == nil or State.cursor.last[self.num].y ==
+    if state.cursor.last[self.num].x == nil or state.cursor.last[self.num].y ==
         nil then
         local unit = Units.first(self.num, Map.current.units)
-        State.cursor.cell.x = unit.cell.x
-        State.cursor.cell.y = unit.cell.y
+        state.cursor.cell.x = unit.cell.x
+        state.cursor.cell.y = unit.cell.y
     else
-        State.cursor.cell.x = State.cursor.last[self.num].x
-        State.cursor.cell.y = State.cursor.last[self.num].y
+        state.cursor.cell.x = state.cursor.last[self.num].x
+        state.cursor.cell.y = state.cursor.last[self.num].y
     end
 
     -- center the screen on the specified coordinates
-    State.camera:focus(State.cursor.cell.x, State.cursor.cell.y,
+    state.camera:focus(state.cursor.cell.x, state.cursor.cell.y,
                        Map.current.cell.w, Map.current.cell.h, 4)
 end
