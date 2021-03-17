@@ -5,16 +5,14 @@ Map = {
 
     -- the current map instance
     current = {},
-
-    -- the map definitions
-    defs = {},
 }
 
 -- load the specified map
+-- TODO: pass in `Maps`
 function Map:load(num, state)
     -- load the specified map
     self.num = num
-    self.current = self.defs[num]()
+    self.current = Maps[num]()
 
     -- reset the cursor
     state.cursor:clear()
@@ -31,8 +29,9 @@ end
 
 -- advance to the next map
 -- TODO: remove global `State`
+-- TODO: pass in `Maps`
 function Map.advance()
-    if Map.num < #Map.defs then
+    if Map.num < #Maps then
         Map.num = Map.num + 1
         Map:load(Map.num, State)
         State.screen = Screens.intr

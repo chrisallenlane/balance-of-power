@@ -1,4 +1,4 @@
-add(Map.defs, function ()
+add(Maps, function ()
   return {
     intr = {
         head = "stage 2",

@@ -114,6 +114,7 @@ globals = {
 	"Inputs",
 	"Lock",
 	"Map",
+	"Maps",
 	"MenuBalance",
 	"MenuScreenTitle",
 	"MenuTarget",
