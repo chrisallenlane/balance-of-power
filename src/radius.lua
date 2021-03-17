@@ -43,7 +43,7 @@ function Radius:move(x, y, mvmt, map, turn)
     if self:cached('mov', x, y, mvmt) then return end
 
     -- iteratively search this cell's neighbors
-    for _, cell in pairs(Cell.neighbors(x, y, State.map)) do
+    for _, cell in pairs(Cell.neighbors(x, y, map)) do
         -- determine the cost to traverse the tile
         local cost = Cell.cost(cell.x, cell.y, map)
         if mvmt >= cost and Cell.pass(cell.x, cell.y, map, turn) then
@@ -66,7 +66,7 @@ function Radius:atk(x, y, rng, map)
     if rng == 0 then return end
 
     -- iteratively search this cell's neighbors
-    for _, cell in pairs(Cell.neighbors(x, y, State.map)) do
+    for _, cell in pairs(Cell.neighbors(x, y, map)) do
         self:append('atk', cell.x, cell.y)
         Radius:atk(cell.x, cell.y, rng, map)
     end
