@@ -1,30 +1,25 @@
--- initialize the map table
-Map = {
-    -- the number of the current map
-    num = 1,
-
-    -- the current map instance
-    current = {},
-}
+Map = {num = 1}
 
 -- load the specified map
 -- TODO: pass in `Maps`
 function Map:load(num, state)
     -- load the specified map
+    -- TODO: remove this?
     self.num = num
-    self.current = Maps[num]()
+    state.map = Maps[num]()
 
     -- reset the cursor
     state.cursor:clear()
 
     -- make it player 1's turn
+    -- TODO: do something with this
     Player.num = 1
 
     -- reset the cursor position
-    state.cursor:warp(self.current.cursor.x, self.current.cursor.y)
+    state.cursor:warp(state.map.cursor.x, state.map.cursor.y)
 
     -- reset the camera position
-    state.camera:warp(self.current.camera.x, self.current.camera.y)
+    state.camera:warp(state.map.camera.x, state.map.camera.y)
 end
 
 -- advance to the next map
@@ -48,9 +43,9 @@ function Map.reset()
 end
 
 -- return true if the map has been cleared
-function Map:clear()
+function Map.clear(state)
     -- get the number of units remaining for each player
-    local p1, p2 = Units.remain(self.current.units)
+    local p1, p2 = Units.remain(state.map.units)
 
     -- player 1 is victorious
     if p2 == 0 then
@@ -67,7 +62,7 @@ function Map:clear()
 end
 
 -- draw the current map
-function Map:draw()
-    local m = self.current
+function Map.draw(state)
+    local m = state.map
     map(m.cell.x, m.cell.y, 0, 0, m.cell.w, m.cell.h)
 end

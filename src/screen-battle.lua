@@ -5,13 +5,13 @@ function Screens.battle.update(state, inputs)
         if Units.delay > 0 then
             Units.delay = Units.delay - 1
         else
-            state.camera:update(state.cursor, Map.current)
+            state.camera:update(state.cursor, state.map)
         end
     end
 
     -- determine if the map has been cleared
     -- TODO: handle 2-player games
-    local clear, victor = Map:clear()
+    local clear, victor = Map.clear(state)
     if clear and victor == 1 then
         Map.advance(state)
         return
@@ -47,11 +47,11 @@ function Screens.battle.update(state, inputs)
 
                     -- delete the enemy unit if it has been destroyed
                     if killed then
-                        Units.die(MenuTarget.idx, Map.current.units)
+                        Units.die(MenuTarget.idx, state.map.units)
                     end
 
                     -- deactivate all *other* units belonging to the player
-                    Units.deactivate(Map.current.units, Player.num)
+                    Units.deactivate(state.map.units, Player.num)
                     state.cursor.sel:activate()
 
                     -- end the player's turn if the unit is exhausted
@@ -60,7 +60,7 @@ function Screens.battle.update(state, inputs)
                         Player:turn_end(state)
                         -- otherwise, show the movement radius
                     else
-                        Radius:update(state.cursor.sel, Map.current, Player.num)
+                        Radius:update(state.cursor.sel, state.map, Player.num)
                     end
                 end
                 return
@@ -73,9 +73,7 @@ function Screens.battle.update(state, inputs)
         end
     end
 
-    -- TODO: replace with state var?
-    -- Map.current.units = Units:update(Map.current.units)
-    Units:update(Map.current.units)
+    Units.update(state)
 end
 
 -- draw the battle screen
@@ -85,7 +83,7 @@ function Screens.battle.draw(state)
     -- move the camera
     state.camera:draw()
 
-    Map:draw()
+    Map.draw(state)
 
     -- draw the movement radius
     Radius:draw()
@@ -93,7 +91,7 @@ function Screens.battle.draw(state)
     -- draw the cursor if the player is a human
     if Player:human(state.players) then state.cursor:draw() end
 
-    Units.draw(Map.current.units)
+    Units.draw(state)
     MenuTurnEnd:draw(state)
     MenuBalance:draw(state)
     MenuTarget:draw(state)

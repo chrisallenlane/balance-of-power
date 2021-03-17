@@ -2,12 +2,13 @@ Units = {ready = true, delay = 0}
 
 -- XXX TODO: this is very inefficient
 -- update unit coordinates
-function Units.update()
+function Units.update(state)
     -- assume that units are ready
     Units.ready = true
 
+    -- TODO: use local state
     -- if a unit is in-motion, lock the cursor
-    for _, unit in pairs(Map.current.units) do
+    for _, unit in pairs(state.map.units) do
         -- x
         if unit.px.x < unit.cell.x * 8 then
             unit.px.x = unit.px.x + 4
@@ -51,8 +52,8 @@ function Units.first(player, units)
 end
 
 -- draw the units
-function Units.draw(units)
-    for _, unit in pairs(units) do
+function Units.draw(state)
+    for _, unit in pairs(state.map.units) do
         -- NB: assume that unit.spr+1 is the inactive sprite
         local sprite = unit.spr
         if not unit.active then sprite = sprite + 1 end
