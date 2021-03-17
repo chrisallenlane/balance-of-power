@@ -14,7 +14,7 @@ Game = {}
 #include src/string.lua
 #include src/radius.lua
 #include src/player.lua
-#include src/screen.lua
+#include src/screens.lua
 #include src/screen-battle.lua
 #include src/screen-title.lua
 #include src/screen-intr.lua
