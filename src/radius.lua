@@ -6,7 +6,7 @@ Radius = {
 }
 
 -- draw a radius at the specified coordinates
-function Radius:update(unit, map, turn)
+function Radius:update(unit, stage, turn)
     -- clear the prior radius
     self:clear()
 
@@ -17,13 +17,13 @@ function Radius:update(unit, map, turn)
     -- NB: we're computing the movement and attack radii separately. That's
     -- not computationally optimial, but much simpler to understand.
     if not unit:moved() then
-        self:move(self.center.x, self.center.y, unit.stat.mov, map, turn)
+        self:move(self.center.x, self.center.y, unit.stat.mov, stage, turn)
     end
     -- if the unit has range but no attack, don't render an attack radius
     if not unit:attacked() and unit.stat.atk > 0 then
         -- don't "pay for" the cell where the unit is placed
         self:append('mov', unit.cell.x, unit.cell.y)
-        self:atk(self.center.x, self.center.y, unit.stat.rng, map)
+        self:atk(self.center.x, self.center.y, unit.stat.rng, stage)
     end
 
     -- clear the radius cache
@@ -34,7 +34,7 @@ function Radius:update(unit, map, turn)
 end
 
 -- Compute a movement radius centered on `x`, `y`
-function Radius:move(x, y, mvmt, map, turn)
+function Radius:move(x, y, mvmt, stage, turn)
     -- short circuit if the unit has no `mov` points
     if mvmt == 0 then return end
 
@@ -43,18 +43,18 @@ function Radius:move(x, y, mvmt, map, turn)
     if self:cached('mov', x, y, mvmt) then return end
 
     -- iteratively search this cell's neighbors
-    for _, cell in pairs(Cell.neighbors(x, y, map)) do
+    for _, cell in pairs(Cell.neighbors(x, y, stage)) do
         -- determine the cost to traverse the tile
-        local cost = Cell.cost(cell.x, cell.y, map)
-        if mvmt >= cost and Cell.pass(cell.x, cell.y, map, turn) then
+        local cost = Cell.cost(cell.x, cell.y, stage)
+        if mvmt >= cost and Cell.pass(cell.x, cell.y, stage, turn) then
             self:append('mov', cell.x, cell.y)
-            Radius:move(cell.x, cell.y, mvmt - cost, map, turn)
+            Radius:move(cell.x, cell.y, mvmt - cost, stage, turn)
         end
     end
 end
 
 -- Compute an attack radius centered on `x`, `y`
-function Radius:atk(x, y, rng, map)
+function Radius:atk(x, y, rng, stage)
     -- exit early if we've visited this cell before (with `rng` range points remaining)
     if self:cached('atk', x, y, rng) then return end
 
@@ -66,9 +66,9 @@ function Radius:atk(x, y, rng, map)
     if rng == 0 then return end
 
     -- iteratively search this cell's neighbors
-    for _, cell in pairs(Cell.neighbors(x, y, map)) do
+    for _, cell in pairs(Cell.neighbors(x, y, stage)) do
         self:append('atk', cell.x, cell.y)
-        Radius:atk(cell.x, cell.y, rng, map)
+        Radius:atk(cell.x, cell.y, rng, stage)
     end
 end
 
@@ -111,7 +111,7 @@ function Radius:clear()
     self.vis = false
 end
 
--- draw the radius to the map
+-- draw the radius to the stage
 function Radius:draw()
     -- don't draw an indicator at the center of the radii
     self:remove('mov', self.center.x, self.center.y)

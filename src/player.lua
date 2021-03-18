@@ -13,11 +13,11 @@ function Player.battle.update(state, inputs)
     local no = inputs.no
 
     -- update the cursor position
-    state.cursor:update(state.map, inputs)
+    state.cursor:update(state.stage, inputs)
 
     -- determine whether a unit is beneath the cursor
     local unit, idx = Units.at(state.cursor.cell.x, state.cursor.cell.y,
-                               state.map.units)
+                               state.stage.units)
 
     -- if there is a unit beneath the cursor...
     if unit then
@@ -28,7 +28,7 @@ function Player.battle.update(state, inputs)
 
             if yes:once() then
                 state.cursor.sel = unit
-                Radius:update(unit, state.map, Player.num)
+                Radius:update(unit, state.stage, Player.num)
             end
 
             -- open friendly balance menu:
@@ -58,7 +58,7 @@ function Player.battle.update(state, inputs)
                 if Player.num == 2 then enemy = 1 end
 
                 -- draw the radii for the enemy player
-                Radius:update(unit, state.map, enemy)
+                Radius:update(unit, state.stage, enemy)
             end
 
             -- attack enemy:
@@ -75,7 +75,7 @@ function Player.battle.update(state, inputs)
         -- move friendly unit:
         if state.cursor:selected() and state.cursor.sel.active and
             not state.cursor.sel:moved() and
-            Cell.open(state.cursor.cell.x, state.cursor.cell.y, state.map) and
+            Cell.open(state.cursor.cell.x, state.cursor.cell.y, state.stage) and
             Radius:contains('mov', state.cursor.cell.x, state.cursor.cell.y) then
             Info:set("move", "unselect")
 
@@ -84,7 +84,7 @@ function Player.battle.update(state, inputs)
                 state.cursor.sel:move(state.cursor.cell.x, state.cursor.cell.y)
 
                 -- deactivate all *other* units belonging to the player
-                Units.deactivate(state.map.units, Player.num)
+                Units.deactivate(state.stage.units, Player.num)
                 state.cursor.sel:activate()
 
                 -- reset the animation delay
@@ -96,7 +96,7 @@ function Player.battle.update(state, inputs)
                     Player:turn_end(state)
                     -- otherwise, show the attack radius
                 else
-                    Radius:update(state.cursor.sel, state.map, Player.num)
+                    Radius:update(state.cursor.sel, state.stage, Player.num)
                 end
             end
 
@@ -124,10 +124,10 @@ function Player.battle.update(state, inputs)
     if state.cursor:selected() and
         Radius:contains('mov', state.cursor.cell.x, state.cursor.cell.y) then
         local src = Cell:new(state.cursor.sel.cell.x, state.cursor.sel.cell.y,
-                             state.map.cell.w)
+                             state.stage.cell.w)
         local dst = Cell:new(state.cursor.cell.x, state.cursor.cell.y,
-                             state.map.cell.w)
-        state.cursor.path = state.cursor.astar:search(src, dst, state.map)
+                             state.stage.cell.w)
+        state.cursor.path = state.cursor.astar:search(src, dst, state.stage)
     else
         state.cursor.path = {}
     end
@@ -168,13 +168,13 @@ function Player:turn_end(state)
     end
 
     -- refresh all units
-    Units.refresh(state.map.units)
+    Units.refresh(state.stage.units)
 
     -- TODO: refactor into Cursor save/load or something?
     -- load the next player's cursor
     if state.cursor.last[self.num].x == nil or state.cursor.last[self.num].y ==
         nil then
-        local unit = Units.first(self.num, state.map.units)
+        local unit = Units.first(self.num, state.stage.units)
         state.cursor.cell.x = unit.cell.x
         state.cursor.cell.y = unit.cell.y
     else
@@ -184,5 +184,5 @@ function Player:turn_end(state)
 
     -- center the screen on the specified coordinates
     state.camera:focus(state.cursor.cell.x, state.cursor.cell.y,
-                       state.map.cell.w, state.map.cell.h, 4)
+                       state.stage.cell.w, state.stage.cell.h, 4)
 end

@@ -1,4 +1,4 @@
-add(Maps, function ()
+add(Stages, function ()
   return {
     intr = {
         head = "stage 3",

@@ -8,9 +8,8 @@ function Debug.vars(state)
 
     -- indicate whether the tile is passable
     local pass = "n"
-    if Cell.pass(state.cursor.cell.x, state.cursor.cell.y, state.map, Player.num) then
-        pass = "y"
-    end
+    if Cell.pass(state.cursor.cell.x, state.cursor.cell.y, state.stage,
+                 Player.num) then pass = "y" end
 
     -- compose debugging messages
     local msgs = {

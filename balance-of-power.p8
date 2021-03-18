@@ -39,11 +39,11 @@ Game = {}
 #include src/camera.lua
 #include src/unit.lua
 #include src/units.lua
-#include src/map.lua
-#include src/maps.lua
-#include map/1.lua
-#include map/2.lua
-#include map/3.lua
+#include src/stage.lua
+#include src/stages.lua
+#include stage/1.lua
+#include stage/2.lua
+#include stage/3.lua
 #include src/debug.lua
 #include src/main.lua
 

@@ -1,12 +1,12 @@
 function _init()
     -- implement an "advance stage" debug function
-    if DEBUG_CHEAT then menuitem(1, "advance stage", Map.advance) end
+    if DEBUG_CHEAT then menuitem(1, "advance stage", Stage.advance) end
 
-    -- implement a "reset map" menu function
-    menuitem(2, "reset map", Map.reset)
+    -- implement a "reset stage" menu function
+    menuitem(2, "reset stage", Stage.reset)
 
-    -- load the first map
-    Map:load(1, State)
+    -- load the first stage
+    Stage:load(1, State)
 end
 
 function _update60()

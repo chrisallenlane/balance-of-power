@@ -5,15 +5,15 @@ function Screens.battle.update(state, inputs)
         if Units.delay > 0 then
             Units.delay = Units.delay - 1
         else
-            state.camera:update(state.cursor, state.map)
+            state.camera:update(state.cursor, state.stage)
         end
     end
 
-    -- determine if the map has been cleared
+    -- determine if the stage has been cleared
     -- TODO: handle 2-player games
-    local clear, victor = Map.clear(state)
+    local clear, victor = Stage.clear(state)
     if clear and victor == 1 then
-        Map.advance(state)
+        Stage.advance(state)
         return
     elseif clear and victor == 2 then
         state.screen = Screens.defeat
@@ -46,7 +46,7 @@ function Screens.battle.draw(state)
     -- move the camera
     state.camera:draw()
 
-    Map.draw(state)
+    Stage.draw(state)
 
     -- draw the movement radius
     Radius:draw()

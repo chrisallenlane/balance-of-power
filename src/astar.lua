@@ -24,7 +24,7 @@ function AStar:new(a)
     return a
 end
 
-function AStar:search(start, goal, map)
+function AStar:search(start, goal, stage)
     local open, closed, current = {}, {}, {}
     local path_cost = {[start.id] = 0}
 
@@ -39,11 +39,11 @@ function AStar:search(start, goal, map)
         -- break if we've reached the goal
         if current:is(goal) then break end
 
-        for neighbor in all(Cell.neighbors(current.x, current.y, map)) do
+        for neighbor in all(Cell.neighbors(current.x, current.y, stage)) do
             -- TODO: use the appropriate name here
             -- TODO: refactor this
             local new_cost = path_cost[current.id] +
-                                 Cell.cost(neighbor.x, neighbor.y, map)
+                                 Cell.cost(neighbor.x, neighbor.y, stage)
 
             if (path_cost[neighbor.id] == nil) or
                 (new_cost < path_cost[neighbor.id]) then

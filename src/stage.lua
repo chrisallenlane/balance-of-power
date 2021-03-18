@@ -1,12 +1,12 @@
-Map = {num = 1}
+Stage = {num = 1}
 
--- load the specified map
--- TODO: pass in `Maps`
-function Map:load(num, state)
-    -- load the specified map
+-- load the specified stage
+-- TODO: pass in `Stages`
+function Stage:load(num, state)
+    -- load the specified stage
     -- TODO: remove this?
     self.num = num
-    state.map = Maps[num]()
+    state.stage = Stages[num]()
 
     -- reset the cursor
     state.cursor:clear()
@@ -16,36 +16,36 @@ function Map:load(num, state)
     Player.num = 1
 
     -- reset the cursor position
-    state.cursor:warp(state.map.cursor.x, state.map.cursor.y)
+    state.cursor:warp(state.stage.cursor.x, state.stage.cursor.y)
 
     -- reset the camera position
-    state.camera:warp(state.map.camera.x, state.map.camera.y)
+    state.camera:warp(state.stage.camera.x, state.stage.camera.y)
 end
 
--- advance to the next map
+-- advance to the next stage
 -- TODO: remove global `State`
--- TODO: pass in `Maps`
-function Map.advance()
-    if Map.num < #Maps then
-        Map.num = Map.num + 1
-        Map:load(Map.num, State)
+-- TODO: pass in `Stages`
+function Stage.advance()
+    if Stage.num < #Stages then
+        Stage.num = Stage.num + 1
+        Stage:load(Stage.num, State)
         State.screen = Screens.intr
     else
         State.screen = Screens.victory
     end
 end
 
--- reset the current map
+-- reset the current stage
 -- TODO: implement confirmation menu
 -- TODO: remove global `State`
-function Map.reset()
-    Map:load(Map.num, State)
+function Stage.reset()
+    Stage:load(Stage.num, State)
 end
 
--- return true if the map has been cleared
-function Map.clear(state)
+-- return true if the stage has been cleared
+function Stage.clear(state)
     -- get the number of units remaining for each player
-    local p1, p2 = Units.remain(state.map.units)
+    local p1, p2 = Units.remain(state.stage.units)
 
     -- player 1 is victorious
     if p2 == 0 then
@@ -61,8 +61,8 @@ function Map.clear(state)
     end
 end
 
--- draw the current map
-function Map.draw(state)
-    local m = state.map
+-- draw the current stage
+function Stage.draw(state)
+    local m = state.stage
     map(m.cell.x, m.cell.y, 0, 0, m.cell.w, m.cell.h)
 end

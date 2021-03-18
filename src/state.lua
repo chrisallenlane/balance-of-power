@@ -15,8 +15,8 @@ State = {
     -- the current menu
     menu = nil,
 
-    -- the current map
-    map = {},
+    -- the current stage
+    stage = {},
 
     -- the game cursor
     -- TODO: deprecate this

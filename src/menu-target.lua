@@ -44,10 +44,10 @@ function Menus.Target:update(state, inputs)
                                                state.cursor.sel.stat.atk)
 
         -- delete the enemy unit if it has been destroyed
-        if killed then Units.die(self.idx, state.map.units) end
+        if killed then Units.die(self.idx, state.stage.units) end
 
         -- deactivate all *other* units belonging to the player
-        Units.deactivate(state.map.units, Player.num)
+        Units.deactivate(state.stage.units, Player.num)
         state.cursor.sel:activate()
 
         -- end the player's turn if the unit is exhausted
@@ -55,7 +55,7 @@ function Menus.Target:update(state, inputs)
             Player:turn_end(state)
             -- otherwise, show the movement radius
         else
-            Radius:update(state.cursor.sel, state.map, Player.num)
+            Radius:update(state.cursor.sel, state.stage, Player.num)
         end
     end
 end

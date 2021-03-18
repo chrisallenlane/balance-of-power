@@ -8,7 +8,7 @@ function Units.update(state)
 
     -- TODO: use local state
     -- if a unit is in-motion, lock the cursor
-    for _, unit in pairs(state.map.units) do
+    for _, unit in pairs(state.stage.units) do
         -- x
         if unit.px.x < unit.cell.x * 8 then
             unit.px.x = unit.px.x + 4
@@ -53,7 +53,7 @@ end
 
 -- draw the units
 function Units.draw(state)
-    for _, unit in pairs(state.map.units) do
+    for _, unit in pairs(state.stage.units) do
         -- NB: assume that unit.spr+1 is the inactive sprite
         local sprite = unit.spr
         if not unit.active then sprite = sprite + 1 end
@@ -66,7 +66,7 @@ function Units.remain(units)
     -- track the number of units remaining for each player
     local p1, p2 = 0, 0
 
-    -- iterate over all units on the map
+    -- iterate over all units on the stage
     for _, unit in pairs(units) do
         if unit.player == 1 then p1 = p1 + 1 end
         if unit.player == 2 then p2 = p2 + 1 end

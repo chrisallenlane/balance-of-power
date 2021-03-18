@@ -20,7 +20,7 @@ function Menus.Balance:update(state, inputs)
     if inputs.no:once() then
         state.menu = nil
         self.unit = nil
-        Radius:update(state.cursor.sel, state.map, Player.num)
+        Radius:update(state.cursor.sel, state.stage, Player.num)
         return
     end
 
@@ -44,12 +44,12 @@ function Menus.Balance:update(state, inputs)
     if inputs.left:rep() and self.unit.stat[stat] >= 1 then
         SFX:play('power-down')
         self.unit.stat[stat] = self.unit.stat[stat] - 1
-        Radius:update(self.unit, state.map, Player.num)
+        Radius:update(self.unit, state.stage, Player.num)
     elseif inputs.right:rep() and self.unit.stat[stat] < 5 and alloc <
         self.unit.pwr then
         SFX:play('power-up')
         self.unit.stat[stat] = self.unit.stat[stat] + 1
-        Radius:update(self.unit, state.map, Player.num)
+        Radius:update(self.unit, state.stage, Player.num)
     end
 
     -- accept the balance, close the menu, and end the turn
@@ -58,7 +58,7 @@ function Menus.Balance:update(state, inputs)
     if self:changed() then
         Info:set("confirm", "cancel", self.unit)
         if inputs.yes:once() then
-            state.map.units[self.idx] = Unit.clone(self.unit)
+            state.stage.units[self.idx] = Unit.clone(self.unit)
             Player:turn_end(state)
             state.menu = nil
             self.unit = nil

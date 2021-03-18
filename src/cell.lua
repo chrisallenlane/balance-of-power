@@ -9,28 +9,30 @@ function Cell:new(x, y, w)
 end
 
 -- return true if a unit may be placed on the tile
-function Cell.open(x, y, map)
+function Cell.open(x, y, stage)
     -- return false if the specified coordinates are out-of-bounds
-    if x < 0 or x >= map.cell.w or y < 0 or y >= map.cell.h then return false end
+    if x < 0 or x >= stage.cell.w or y < 0 or y >= stage.cell.h then
+        return false
+    end
 
-    -- return false if the map tile at the specified coordinates is flagged as
+    -- return false if the stage tile at the specified coordinates is flagged as
     -- impassible
-    if fget(mget(map.cell.x + x, map.cell.y + y), 0) then return false end
+    if fget(mget(stage.cell.x + x, stage.cell.y + y), 0) then return false end
 
     -- return false if a unit is at the specified coordinates
     -- TODO: pass as param
-    if Units.at(x, y, map.units) then return false end
+    if Units.at(x, y, stage.units) then return false end
     return true
 end
 
 -- return true if a unit may pass through the tile
-function Cell.pass(x, y, map, turn)
+function Cell.pass(x, y, stage, turn)
     -- if the cell is not open, it's also not passable
-    if not Cell.open(x, y, map) then return false end
+    if not Cell.open(x, y, stage) then return false end
 
     -- check for a unit at the specified coordinates
     -- TODO: de-duplicate with `self.open`, possibly via a state var
-    local unit = Units.at(x, y, map.units)
+    local unit = Units.at(x, y, stage.units)
 
     -- if no unit is found, return true
     if not unit then return true end
@@ -43,8 +45,8 @@ function Cell.pass(x, y, map, turn)
 end
 
 -- return the cell traversal cost at `x`, `y`
-function Cell.cost(x, y, map)
-    -- map cell traversal costs
+function Cell.cost(x, y, stage)
+    -- stage cell traversal costs
     local costs = {
         [1] = 1, -- grass
         [49] = 1, -- sand
@@ -53,18 +55,22 @@ function Cell.cost(x, y, map)
         [18] = 1 / 0, -- deep water
     }
 
-    return costs[mget(map.cell.x + x, map.cell.y + y)]
+    return costs[mget(stage.cell.x + x, stage.cell.y + y)]
 end
 
 -- return the set of cells adjacent to the specified cell
-function Cell.neighbors(x, y, map)
+function Cell.neighbors(x, y, stage)
     local neighbors = {}
 
     -- add cells, while being mindful to stay in bounds
-    if x + 1 < map.cell.w then add(neighbors, Cell:new(x + 1, y, map.cell.w)) end
-    if x - 1 >= 0 then add(neighbors, Cell:new(x - 1, y, map.cell.w)) end
-    if y + 1 < map.cell.h then add(neighbors, Cell:new(x, y + 1, map.cell.w)) end
-    if y - 1 >= 0 then add(neighbors, Cell:new(x, y - 1, map.cell.w)) end
+    if x + 1 < stage.cell.w then
+        add(neighbors, Cell:new(x + 1, y, stage.cell.w))
+    end
+    if x - 1 >= 0 then add(neighbors, Cell:new(x - 1, y, stage.cell.w)) end
+    if y + 1 < stage.cell.h then
+        add(neighbors, Cell:new(x, y + 1, stage.cell.w))
+    end
+    if y - 1 >= 0 then add(neighbors, Cell:new(x, y - 1, stage.cell.w)) end
 
     return neighbors
 end

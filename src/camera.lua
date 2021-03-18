@@ -9,7 +9,7 @@ function Camera:new()
 end
 
 -- update camera state
-function Camera:update(cur, map)
+function Camera:update(cur, stage)
     -- assume that the camera is ready
     -- TODO: refactor away self.ready
     self.ready = true
@@ -17,14 +17,14 @@ function Camera:update(cur, map)
     -- track camera position as cell coordinates, and compare those coordinates
     -- to the cursor and screen position.
     -- right/left
-    if cur.cell.x - self.cell.x > 11 and self.cell.x < map.cell.w - 16 then
+    if cur.cell.x - self.cell.x > 11 and self.cell.x < stage.cell.w - 16 then
         self.cell.x = self.cell.x + 1
     elseif self.cell.x > 0 and cur.cell.x - self.cell.x < 4 then
         self.cell.x = self.cell.x - 1
     end
 
     -- down/up
-    if cur.cell.y - self.cell.y > 11 and self.cell.y < map.cell.h - 16 then
+    if cur.cell.y - self.cell.y > 11 and self.cell.y < stage.cell.h - 16 then
         self.cell.y = self.cell.y + 1
     elseif self.cell.y > 0 and cur.cell.y - self.cell.y < 4 then
         self.cell.y = self.cell.y - 1
