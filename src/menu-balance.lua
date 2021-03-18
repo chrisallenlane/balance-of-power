@@ -20,7 +20,7 @@ function Menus.Balance:update(state, inputs)
     if inputs.no:once() then
         state.menu = nil
         self.unit = nil
-        Radius:update(state.cursor.sel, state.stage, state.player.num)
+        Radius:update(state.player.cursor.sel, state.stage, state.player.num)
         return
     end
 

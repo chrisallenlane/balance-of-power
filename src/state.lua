@@ -24,5 +24,5 @@ State = {
 
     -- the game cursor
     -- TODO: deprecate this
-    cursor = Cursor,
+    --cursor = Cursor:new(),
 }

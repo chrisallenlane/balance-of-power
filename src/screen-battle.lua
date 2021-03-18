@@ -5,7 +5,7 @@ function Screens.battle.update(state, inputs)
         if Units.delay > 0 then
             Units.delay = Units.delay - 1
         else
-            state.camera:update(state.cursor, state.stage)
+            state.camera:update(state.player.cursor, state.stage)
         end
     end
 
@@ -51,7 +51,7 @@ function Screens.battle.draw(state)
     Radius:draw()
 
     -- draw the cursor if the player is a human
-    if state.player:human(state.players) then state.cursor:draw() end
+    if state.player:human(state.players) then state.player.cursor:draw() end
 
     Units.draw(state)
 

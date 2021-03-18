@@ -8,14 +8,14 @@ function Stage:load(num, state)
     self.num = num
     state.stage = Stages[num]()
 
-    -- reset the cursor
-    state.cursor:clear()
-
     -- make it player 1's turn
     state.player = state.players[1]
 
+    -- reset the cursor
+    state.player.cursor:clear()
+
     -- reset the cursor position
-    state.cursor:warp(state.stage.cursor.x, state.stage.cursor.y)
+    state.player.cursor:warp(state.stage.cursor.x, state.stage.cursor.y)
 
     -- reset the camera position
     state.camera:warp(state.stage.camera.x, state.stage.camera.y)

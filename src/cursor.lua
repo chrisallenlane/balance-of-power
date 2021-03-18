@@ -1,29 +1,36 @@
--- encapsulate cursor state
-Cursor = {
-    -- A* pathfinder
-    astar = AStar:new(),
+Cursor = {}
 
-    -- path found by A*
-    path = {},
+function Cursor:new()
+    local c = {
+        -- A* pathfinder
+        astar = AStar:new(),
 
-    -- current cursor cell position
-    cell = {x = 0, y = 0},
+        -- path found by A*
+        path = {},
 
-    -- selected unit
-    -- TODO: this could use a refactoring
-    sel = nil,
+        -- current cursor cell position
+        cell = {x = 0, y = 0},
 
-    -- record the position of the cursor when each player's turn ends
-    -- TODO: move into Player?
-    -- TODO: can probably refactor into single table
-    last = {
-        {x = nil, y = nil}, -- p1
-        {x = nil, y = nil}, -- p2
-    },
+        -- selected unit
+        -- TODO: this could use a refactoring
+        sel = nil,
 
-    -- frame counter used for animations
-    frame = 0,
-}
+        -- record the position of the cursor when each player's turn ends
+        -- TODO: move into Player?
+        -- TODO: can probably refactor into single table
+        last = {
+            {x = nil, y = nil}, -- p1
+            {x = nil, y = nil}, -- p2
+        },
+
+        -- frame counter used for animations
+        frame = 0,
+    }
+
+    setmetatable(c, self)
+    self.__index = self
+    return c
+end
 
 -- update cursor state
 function Cursor:update(stage, inputs)
