@@ -1,12 +1,12 @@
 Menus.Balance = {choices = {"atk", "rng", "mov"}, sel = 1, unit = nil}
 
 -- open the balance menu
-function Menus.Balance:open(unit, idx)
+function Menus.Balance:open(unit, idx, state)
     -- reset the menu selection
     self.sel = 1
 
     -- show the menu
-    self.vis = true
+    state.menu = self
 
     -- bind params
     self.unit = Unit.clone(unit)
@@ -18,7 +18,7 @@ end
 function Menus.Balance:update(state, inputs)
     -- cancel the balance and close the menu
     if inputs.no:once() then
-        self.vis = false
+        state.menu = nil
         self.unit = nil
         Radius:update(state.cursor.sel, state.map, Player.num)
         return
@@ -60,13 +60,13 @@ function Menus.Balance:update(state, inputs)
         if inputs.yes:once() then
             state.map.units[self.idx] = Unit.clone(self.unit)
             Player:turn_end(state)
-            self.vis = false
+            state.menu = nil
             self.unit = nil
         end
     else
         Info:set("cancel", "cancel", self.unit)
         if inputs.yes:once() then
-            self.vis = false
+            state.menu = nil
             self.unit = nil
         end
     end
@@ -80,9 +80,6 @@ end
 
 -- draw the "power balance" menu
 function Menus.Balance:draw(state)
-    -- exit early if the menu is not visible
-    if not self.vis or not self.unit then return end
-
     -- padding to align the menu location with the camera
     local camMarginX = state.camera.px.x
     local camMarginY = state.camera.px.y

@@ -1,12 +1,12 @@
 Menus.Target = {choices = {"atk", "rng", "mov"}, sel = 1, idx = nil, unit = nil}
 
 -- open the target menu
-function Menus.Target:open(unit, idx)
+function Menus.Target:open(unit, idx, state)
     -- reset the menu selection
     self.sel = 1
 
     -- show the menu
-    self.vis = true
+    state.menu = self
 
     -- bind params
     self.unit = unit
@@ -15,12 +15,12 @@ end
 
 -- TODO: disallow targeting a system with 0 power
 -- update "end turn?" menu state
-function Menus.Target:update(_, inputs)
+function Menus.Target:update(state, inputs)
     Info:set("target", "cancel", self.unit)
 
     -- cancel the balance and close the menu
     if inputs.no:once() then
-        self.vis = false
+        state.menu = nil
         self.unit = nil
         self.idx = nil
         return
@@ -32,13 +32,36 @@ function Menus.Target:update(_, inputs)
     elseif inputs.down:rep() and self.sel <= 2 then
         self.sel = self.sel + 1
     end
+
+    -- accept the balance, close the menu, and end the turn
+    if inputs.yes:once() then
+        -- hide this menu
+        state.menu = nil
+
+        -- attack the enemy unit
+        local killed = state.cursor.sel:attack(self.unit,
+                                               self.choices[self.sel],
+                                               state.cursor.sel.stat.atk)
+
+        -- delete the enemy unit if it has been destroyed
+        if killed then Units.die(self.idx, state.map.units) end
+
+        -- deactivate all *other* units belonging to the player
+        Units.deactivate(state.map.units, Player.num)
+        state.cursor.sel:activate()
+
+        -- end the player's turn if the unit is exhausted
+        if state.cursor.sel:moved() or state.cursor.sel.stat.mov == 0 then
+            Player:turn_end(state)
+            -- otherwise, show the movement radius
+        else
+            Radius:update(state.cursor.sel, state.map, Player.num)
+        end
+    end
 end
 
 -- draw the "power balance" menu
 function Menus.Target:draw(state)
-    -- exit early if the menu is not visible
-    if not self.vis or not self.unit then return end
-
     -- padding to align the menu location with the camera
     local camMarginX = state.camera.px.x
     local camMarginY = state.camera.px.y

@@ -37,7 +37,7 @@ function Player.battle.update(state, inputs)
             Info:set("balance", "unselect", unit)
 
             if yes:once() then
-                Menus.Balance:open(state.cursor.sel, idx)
+                Menus.Balance:open(state.cursor.sel, idx, state)
             end
 
             -- open the "turn end" menu if the unit has already
@@ -46,7 +46,7 @@ function Player.battle.update(state, inputs)
             unit:acted() then
             Info:set("end turn", "unselect", unit)
 
-            if yes:once() then Menus.TurnEnd:open() end
+            if yes:once() then Menus.TurnEnd:open(state) end
 
             -- view enemy radii:
         elseif unit:foe(Player.num) and not state.cursor:selected() then
@@ -67,7 +67,7 @@ function Player.battle.update(state, inputs)
             Radius:contains('atk', unit.cell.x, unit.cell.y) then
             Info:set("attack", "unselect", unit)
 
-            if yes:once() then Menus.Target:open(unit, idx) end
+            if yes:once() then Menus.Target:open(unit, idx, state) end
         end
 
         -- if no unit is beneath the cursor...
@@ -103,7 +103,7 @@ function Player.battle.update(state, inputs)
             -- show the "end turn" menu
         elseif not state.cursor:selected() then
             Info:set("end turn", "end turn")
-            if yes:once() then Menus.TurnEnd:open() end
+            if yes:once() then Menus.TurnEnd:open(state) end
         end
     end
 
@@ -116,7 +116,7 @@ function Player.battle.update(state, inputs)
             Radius:clear()
             -- show the "end turn" menu
         else
-            Menus.TurnEnd:open()
+            Menus.TurnEnd:open(state)
         end
     end
 

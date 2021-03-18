@@ -23,47 +23,9 @@ function Screens.battle.update(state, inputs)
     -- do not run player/CPU update loops if a lock is engaged
     if state.camera.ready and Units.ready then
         if Player:human(state.players) then
-            -- TODO: refactor this
-            -- If a menu is visible, run the appropriate update loop
-            if Menus.TurnEnd.vis then
-                Menus.TurnEnd:update(state, inputs)
-                return
-            elseif Menus.Balance.vis then
-                Menus.Balance:update(state, inputs)
-                return
-            elseif Menus.Target.vis then
-                Menus.Target:update(state, inputs)
-
-                -- accept the balance, close the menu, and end the turn
-                if inputs.yes:once() then
-                    -- hide this menu
-                    Menus.Target.vis = false
-
-                    -- attack the enemy unit
-                    local killed = state.cursor.sel:attack(Menus.Target.unit,
-                                                           Menus.Target.choices[Menus.Target
-                                                               .sel],
-                                                           state.cursor.sel.stat
-                                                               .atk)
-
-                    -- delete the enemy unit if it has been destroyed
-                    if killed then
-                        Units.die(Menus.Target.idx, state.map.units)
-                    end
-
-                    -- deactivate all *other* units belonging to the player
-                    Units.deactivate(state.map.units, Player.num)
-                    state.cursor.sel:activate()
-
-                    -- end the player's turn if the unit is exhausted
-                    if state.cursor.sel:moved() or state.cursor.sel.stat.mov ==
-                        0 then
-                        Player:turn_end(state)
-                        -- otherwise, show the movement radius
-                    else
-                        Radius:update(state.cursor.sel, state.map, Player.num)
-                    end
-                end
+            -- update the menu if it is visible
+            if state.menu then
+                state.menu:update(state, inputs)
                 return
             end
 
@@ -93,9 +55,9 @@ function Screens.battle.draw(state)
     if Player:human(state.players) then state.cursor:draw() end
 
     Units.draw(state)
-    Menus.TurnEnd:draw(state)
-    Menus.Balance:draw(state)
-    Menus.Target:draw(state)
+
+    if state.menu then state.menu:draw(state) end
+
     Info:draw(state)
 
     -- display debug output (if so configured)

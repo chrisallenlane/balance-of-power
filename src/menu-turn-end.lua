@@ -1,9 +1,9 @@
 Menus.TurnEnd = {choices = {"yes", "no"}, sel = 1, vis = false}
 
 -- open the target menu
-function Menus.TurnEnd:open()
+function Menus.TurnEnd:open(state)
     self.sel = 1
-    self.vis = true
+    state.menu = self
 end
 
 -- update "end turn?" menu state
@@ -22,19 +22,16 @@ function Menus.TurnEnd:update(state, inputs)
     -- selection: "yes"
     if inputs.yes:once() and self.sel == 1 then
         Player:turn_end(state)
-        self.vis = false
+        state.menu = nil
 
         -- selection: "no"
     elseif inputs.no:once() or (inputs.yes:once() and self.sel == 2) then
-        self.vis = false
+        state.menu = nil
     end
 end
 
 -- draw the "end turn" menu
 function Menus.TurnEnd:draw(state)
-    -- exit early if the menu is not visible
-    if not self.vis then return end
-
     -- offset the menu location to align with the camera
     local padx = state.camera.px.x
     local pady = state.camera.px.y
