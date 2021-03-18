@@ -15,28 +15,30 @@ function Player.battle.update(state, inputs)
     -- for brevity
     local yes = inputs.yes
     local no = inputs.no
-    local cur = state.player.cursor
+
+    local player = state.player
+    local stage = state.stage
+    local cur = player.cursor
 
     -- update the cursor position
-    cur:update(state.stage, inputs)
+    cur:update(stage, inputs)
 
     -- determine whether a unit is beneath the cursor
-    local unit, idx = Units.at(cur.cell.x, cur.cell.y, state.stage.units)
+    local unit, idx = Units.at(cur.cell.x, cur.cell.y, stage.units)
 
     -- if there is a unit beneath the cursor...
     if unit then
         -- select friendly unit:
-        if unit:friend(state.player.num) and not cur:selected(unit) and
-            unit.active then
+        if unit:friend(player.num) and not cur:selected(unit) and unit.active then
             Info:set("select", "", unit)
 
             if yes:once() then
                 cur.sel = unit
-                Radius:update(unit, state.stage, state.player.num)
+                Radius:update(unit, stage, player.num)
             end
 
             -- open friendly balance menu:
-        elseif unit:friend(state.player.num) and cur:selected(unit) and
+        elseif unit:friend(player.num) and cur:selected(unit) and
             not unit:acted() then
             Info:set("balance", "unselect", unit)
 
@@ -46,27 +48,26 @@ function Player.battle.update(state, inputs)
 
             -- open the "turn end" menu if the unit has already
             -- taken an action
-        elseif unit:friend(state.player.num) and cur:selected(unit) and
-            unit:acted() then
+        elseif unit:friend(player.num) and cur:selected(unit) and unit:acted() then
             Info:set("end turn", "unselect", unit)
 
             if yes:once() then Menus.TurnEnd:open(state) end
 
             -- view enemy radii:
-        elseif unit:foe(state.player.num) and not cur:selected() then
+        elseif unit:foe(player.num) and not cur:selected() then
             Info:set("view radii", "", unit)
 
             if yes:once() then
                 -- get the enemy player number
                 local enemy = 2
-                if state.player.num == 2 then enemy = 1 end
+                if player.num == 2 then enemy = 1 end
 
                 -- draw the radii for the enemy player
-                Radius:update(unit, state.stage, enemy)
+                Radius:update(unit, stage, enemy)
             end
 
             -- attack enemy:
-        elseif unit:foe(state.player.num) and cur:selected() and
+        elseif unit:foe(player.num) and cur:selected() and
             not cur.sel:attacked() and cur.sel.active and
             Radius:contains('atk', unit.cell.x, unit.cell.y) then
             Info:set("attack", "unselect", unit)
@@ -78,7 +79,7 @@ function Player.battle.update(state, inputs)
     elseif not unit then
         -- move friendly unit:
         if cur:selected() and cur.sel.active and not cur.sel:moved() and
-            Cell.open(cur.cell.x, cur.cell.y, state.stage) and
+            Cell.open(cur.cell.x, cur.cell.y, stage) and
             Radius:contains('mov', cur.cell.x, cur.cell.y) then
             Info:set("move", "unselect")
 
@@ -87,7 +88,7 @@ function Player.battle.update(state, inputs)
                 cur.sel:move(cur.cell.x, cur.cell.y)
 
                 -- deactivate all *other* units belonging to the player
-                Units.deactivate(state.stage.units, state.player.num)
+                Units.deactivate(stage.units, player.num)
                 cur.sel:activate()
 
                 -- reset the animation delay
@@ -96,10 +97,10 @@ function Player.battle.update(state, inputs)
                 -- end the player's turn if the unit is exhausted
                 if cur.sel:attacked() or cur.sel.stat.atk == 0 or
                     cur.sel.stat.rng == 0 then
-                    state.player:turn_end(state)
+                    player:turn_end(state)
                     -- otherwise, show the attack radius
                 else
-                    Radius:update(cur.sel, state.stage, state.player.num)
+                    Radius:update(cur.sel, stage, player.num)
                 end
             end
 
@@ -125,9 +126,9 @@ function Player.battle.update(state, inputs)
 
     -- draw an AStar trail showing the unit movement path
     if cur:selected() and Radius:contains('mov', cur.cell.x, cur.cell.y) then
-        local src = Cell:new(cur.sel.cell.x, cur.sel.cell.y, state.stage.cell.w)
-        local dst = Cell:new(cur.cell.x, cur.cell.y, state.stage.cell.w)
-        cur.path = cur.astar:search(src, dst, state.stage)
+        local src = Cell:new(cur.sel.cell.x, cur.sel.cell.y, stage.cell.w)
+        local dst = Cell:new(cur.cell.x, cur.cell.y, stage.cell.w)
+        cur.path = cur.astar:search(src, dst, stage)
     else
         cur.path = {}
     end
@@ -141,6 +142,7 @@ end
 -- change the player turn
 function Player:turn_end(state)
     local cur = state.player.cursor
+    local stage = state.stage
 
     -- unselect the unit
     cur.sel = nil
@@ -150,7 +152,7 @@ function Player:turn_end(state)
     Radius:clear()
 
     -- refresh all units
-    Units.refresh(state.stage.units)
+    Units.refresh(stage.units)
 
     -- end the turn
     if self.num == 1 then
@@ -160,6 +162,5 @@ function Player:turn_end(state)
     end
 
     -- center the screen on the specified coordinates
-    state.camera:focus(cur.cell.x, cur.cell.y, state.stage.cell.w,
-                       state.stage.cell.h, 4)
+    state.camera:focus(cur.cell.x, cur.cell.y, stage.cell.w, stage.cell.h, 4)
 end
