@@ -8,8 +8,6 @@ DEBUG_SHOW = false
 -- enable/disable debugging "cheat" functions
 DEBUG_CHEAT = true
 
-Game = {}
-
 -- externalize non-media assets
 #include src/string.lua
 #include src/radius.lua
