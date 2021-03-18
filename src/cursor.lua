@@ -15,14 +15,6 @@ function Cursor:new()
         -- TODO: this could use a refactoring
         sel = nil,
 
-        -- record the position of the cursor when each player's turn ends
-        -- TODO: move into Player?
-        -- TODO: can probably refactor into single table
-        last = {
-            {x = nil, y = nil}, -- p1
-            {x = nil, y = nil}, -- p2
-        },
-
         -- frame counter used for animations
         frame = 0,
     }
@@ -55,14 +47,6 @@ end
 function Cursor:selected(unit)
     if unit then return self.sel and (self.sel == unit) end
     return self.sel
-end
-
--- clear resets the cursor
-function Cursor:clear()
-    self.last = {
-        {x = nil, y = nil}, -- p1
-        {x = nil, y = nil}, -- p2
-    }
 end
 
 -- immediately move the cursor to the specified cell coordinates

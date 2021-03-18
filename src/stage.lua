@@ -12,10 +12,15 @@ function Stage:load(num, state)
     state.player = state.players[1]
 
     -- reset the cursor
-    state.player.cursor:clear()
+    local p1u = Units.first(1, state.stage.units)
+    local p2u = Units.first(2, state.stage.units)
+    state.players[1].cursor.cell.x = p1u.cell.x
+    state.players[1].cursor.cell.y = p1u.cell.y
+    state.players[2].cursor.cell.x = p2u.cell.x
+    state.players[2].cursor.cell.y = p2u.cell.y
 
     -- reset the cursor position
-    state.player.cursor:warp(state.stage.cursor.x, state.stage.cursor.y)
+    state.player.cursor:warp(p1u.cell.x, p1u.cell.y)
 
     -- reset the camera position
     state.camera:warp(state.stage.camera.x, state.stage.camera.y)

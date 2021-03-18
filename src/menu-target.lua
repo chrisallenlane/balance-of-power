@@ -40,8 +40,9 @@ function Menus.Target:update(state, inputs)
 
         -- attack the enemy unit
         local killed = state.player.cursor.sel:attack(self.unit,
-                                               self.choices[self.sel],
-                                               state.player.cursor.sel.stat.atk)
+                                                      self.choices[self.sel],
+                                                      state.player.cursor.sel
+                                                          .stat.atk)
 
         -- delete the enemy unit if it has been destroyed
         if killed then Units.die(self.idx, state.stage.units) end
@@ -51,7 +52,8 @@ function Menus.Target:update(state, inputs)
         state.player.cursor.sel:activate()
 
         -- end the player's turn if the unit is exhausted
-        if state.player.cursor.sel:moved() or state.player.cursor.sel.stat.mov == 0 then
+        if state.player.cursor.sel:moved() or state.player.cursor.sel.stat.mov ==
+            0 then
             state.player:turn_end(state)
             -- otherwise, show the movement radius
         else

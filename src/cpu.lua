@@ -21,6 +21,9 @@ function CPU.battle.update(state)
 
     -- move the unit and end the turn
     unit:move(unit.cell.x + mv, unit.cell.y)
+    -- KLUDGE
+    state.player.cursor.cell.x = unit.cell.x + mv
+    state.player.cursor.cell.y = unit.cell.y
 
     -- reset delays
     CPU.delay = 30

@@ -21,8 +21,4 @@ State = {
 
     -- the current stage
     stage = {},
-
-    -- the game cursor
-    -- TODO: deprecate this
-    --cursor = Cursor:new(),
 }
