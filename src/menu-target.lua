@@ -47,15 +47,15 @@ function Menus.Target:update(state, inputs)
         if killed then Units.die(self.idx, state.stage.units) end
 
         -- deactivate all *other* units belonging to the player
-        Units.deactivate(state.stage.units, Player.num)
+        Units.deactivate(state.stage.units, state.player.num)
         state.cursor.sel:activate()
 
         -- end the player's turn if the unit is exhausted
         if state.cursor.sel:moved() or state.cursor.sel.stat.mov == 0 then
-            Player:turn_end(state)
+            state.player:turn_end(state)
             -- otherwise, show the movement radius
         else
-            Radius:update(state.cursor.sel, state.stage, Player.num)
+            Radius:update(state.cursor.sel, state.stage, state.player.num)
         end
     end
 end

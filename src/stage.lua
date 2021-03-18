@@ -12,8 +12,7 @@ function Stage:load(num, state)
     state.cursor:clear()
 
     -- make it player 1's turn
-    -- TODO: do something with this
-    Player.num = 1
+    state.player = state.players[1]
 
     -- reset the cursor position
     state.cursor:warp(state.stage.cursor.x, state.stage.cursor.y)

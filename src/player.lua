@@ -1,4 +1,4 @@
-Player = {battle = {}, num = 1}
+Player = {battle = {}}
 
 -- define the constructor
 function Player:new(p)
@@ -22,17 +22,17 @@ function Player.battle.update(state, inputs)
     -- if there is a unit beneath the cursor...
     if unit then
         -- select friendly unit:
-        if unit:friend(Player.num) and not state.cursor:selected(unit) and
+        if unit:friend(state.player.num) and not state.cursor:selected(unit) and
             unit.active then
             Info:set("select", "", unit)
 
             if yes:once() then
                 state.cursor.sel = unit
-                Radius:update(unit, state.stage, Player.num)
+                Radius:update(unit, state.stage, state.player.num)
             end
 
             -- open friendly balance menu:
-        elseif unit:friend(Player.num) and state.cursor:selected(unit) and
+        elseif unit:friend(state.player.num) and state.cursor:selected(unit) and
             not unit:acted() then
             Info:set("balance", "unselect", unit)
 
@@ -42,27 +42,27 @@ function Player.battle.update(state, inputs)
 
             -- open the "turn end" menu if the unit has already
             -- taken an action
-        elseif unit:friend(Player.num) and state.cursor:selected(unit) and
+        elseif unit:friend(state.player.num) and state.cursor:selected(unit) and
             unit:acted() then
             Info:set("end turn", "unselect", unit)
 
             if yes:once() then Menus.TurnEnd:open(state) end
 
             -- view enemy radii:
-        elseif unit:foe(Player.num) and not state.cursor:selected() then
+        elseif unit:foe(state.player.num) and not state.cursor:selected() then
             Info:set("view radii", "", unit)
 
             if yes:once() then
                 -- get the enemy player number
                 local enemy = 2
-                if Player.num == 2 then enemy = 1 end
+                if state.player.num == 2 then enemy = 1 end
 
                 -- draw the radii for the enemy player
                 Radius:update(unit, state.stage, enemy)
             end
 
             -- attack enemy:
-        elseif unit:foe(Player.num) and state.cursor:selected() and
+        elseif unit:foe(state.player.num) and state.cursor:selected() and
             not state.cursor.sel:attacked() and state.cursor.sel.active and
             Radius:contains('atk', unit.cell.x, unit.cell.y) then
             Info:set("attack", "unselect", unit)
@@ -84,7 +84,7 @@ function Player.battle.update(state, inputs)
                 state.cursor.sel:move(state.cursor.cell.x, state.cursor.cell.y)
 
                 -- deactivate all *other* units belonging to the player
-                Units.deactivate(state.stage.units, Player.num)
+                Units.deactivate(state.stage.units, state.player.num)
                 state.cursor.sel:activate()
 
                 -- reset the animation delay
@@ -93,10 +93,11 @@ function Player.battle.update(state, inputs)
                 -- end the player's turn if the unit is exhausted
                 if state.cursor.sel:attacked() or state.cursor.sel.stat.atk == 0 or
                     state.cursor.sel.stat.rng == 0 then
-                    Player:turn_end(state)
+                    state.player:turn_end(state)
                     -- otherwise, show the attack radius
                 else
-                    Radius:update(state.cursor.sel, state.stage, Player.num)
+                    Radius:update(state.cursor.sel, state.stage,
+                                  state.player.num)
                 end
             end
 
@@ -138,7 +139,6 @@ function Player:human(players)
     return not players[self.num].cpu
 end
 
--- TODO: move this into player?
 -- change the player turn
 function Player:turn_end(state)
     -- record the current player's cursor position
@@ -160,26 +160,29 @@ function Player:turn_end(state)
     -- hide radii
     Radius:clear()
 
-    -- end the turn
-    if self.num == 1 then
-        self.num = 2
-    else
-        self.num = 1
-    end
-
     -- refresh all units
     Units.refresh(state.stage.units)
 
+    -- end the turn
+    -- XXX: this is bad
+    local enemy
+    if self.num == 1 then
+        enemy = 2
+        state.player = state.players[2]
+    else
+        enemy = 1
+        state.player = state.players[1]
+    end
+
     -- TODO: refactor into Cursor save/load or something?
     -- load the next player's cursor
-    if state.cursor.last[self.num].x == nil or state.cursor.last[self.num].y ==
-        nil then
-        local unit = Units.first(self.num, state.stage.units)
+    if state.cursor.last[enemy].x == nil or state.cursor.last[enemy].y == nil then
+        local unit = Units.first(enemy, state.stage.units)
         state.cursor.cell.x = unit.cell.x
         state.cursor.cell.y = unit.cell.y
     else
-        state.cursor.cell.x = state.cursor.last[self.num].x
-        state.cursor.cell.y = state.cursor.last[self.num].y
+        state.cursor.cell.x = state.cursor.last[enemy].x
+        state.cursor.cell.y = state.cursor.last[enemy].y
     end
 
     -- center the screen on the specified coordinates

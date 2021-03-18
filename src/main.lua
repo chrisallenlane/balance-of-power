@@ -10,7 +10,7 @@ function _init()
 end
 
 function _update60()
-    Inputs:poll(Player.num)
+    Inputs:poll(State.player.num)
     State.screen.update(State, Inputs)
 end
 

@@ -1,5 +1,9 @@
 -- track game state
 State = {
+    -- the player whose turn is now
+    player = {},
+
+    -- both players
     -- NB: P2 will be flagged as a CPU in the title screen if appropriate
     players = {
         Player:new({num = 1, cpu = false}),
