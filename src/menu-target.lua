@@ -1,7 +1,7 @@
-MenuTarget = {choices = {"atk", "rng", "mov"}, sel = 1, idx = nil, unit = nil}
+Menus.Target = {choices = {"atk", "rng", "mov"}, sel = 1, idx = nil, unit = nil}
 
 -- open the target menu
-function MenuTarget:open(unit, idx)
+function Menus.Target:open(unit, idx)
     -- reset the menu selection
     self.sel = 1
 
@@ -15,7 +15,7 @@ end
 
 -- TODO: disallow targeting a system with 0 power
 -- update "end turn?" menu state
-function MenuTarget:update(_, inputs)
+function Menus.Target:update(_, inputs)
     Info:set("target", "cancel", self.unit)
 
     -- cancel the balance and close the menu
@@ -35,7 +35,7 @@ function MenuTarget:update(_, inputs)
 end
 
 -- draw the "power balance" menu
-function MenuTarget:draw(state)
+function Menus.Target:draw(state)
     -- exit early if the menu is not visible
     if not self.vis or not self.unit then return end
 

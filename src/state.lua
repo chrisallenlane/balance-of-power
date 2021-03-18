@@ -12,6 +12,9 @@ State = {
     -- the current screen
     screen = Screens.title,
 
+    -- the current menu
+    menu = nil,
+
     -- the current map
     map = {},
 

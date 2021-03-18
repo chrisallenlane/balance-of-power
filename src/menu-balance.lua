@@ -1,7 +1,7 @@
-MenuBalance = {choices = {"atk", "rng", "mov"}, sel = 1, unit = nil}
+Menus.Balance = {choices = {"atk", "rng", "mov"}, sel = 1, unit = nil}
 
 -- open the balance menu
-function MenuBalance:open(unit, idx)
+function Menus.Balance:open(unit, idx)
     -- reset the menu selection
     self.sel = 1
 
@@ -15,7 +15,7 @@ function MenuBalance:open(unit, idx)
 end
 
 -- update "end turn?" menu state
-function MenuBalance:update(state, inputs)
+function Menus.Balance:update(state, inputs)
     -- cancel the balance and close the menu
     if inputs.no:once() then
         self.vis = false
@@ -72,14 +72,14 @@ function MenuBalance:update(state, inputs)
     end
 end
 
-function MenuBalance:changed()
+function Menus.Balance:changed()
     return
         not (self.unit.stat.atk == self.orig.stat.atk and self.unit.stat.rng ==
             self.orig.stat.rng and self.unit.stat.mov == self.orig.stat.mov)
 end
 
 -- draw the "power balance" menu
-function MenuBalance:draw(state)
+function Menus.Balance:draw(state)
     -- exit early if the menu is not visible
     if not self.vis or not self.unit then return end
 

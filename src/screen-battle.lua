@@ -25,29 +25,30 @@ function Screens.battle.update(state, inputs)
         if Player:human(state.players) then
             -- TODO: refactor this
             -- If a menu is visible, run the appropriate update loop
-            if MenuTurnEnd.vis then
-                MenuTurnEnd:update(state, inputs)
+            if Menus.TurnEnd.vis then
+                Menus.TurnEnd:update(state, inputs)
                 return
-            elseif MenuBalance.vis then
-                MenuBalance:update(state, inputs)
+            elseif Menus.Balance.vis then
+                Menus.Balance:update(state, inputs)
                 return
-            elseif MenuTarget.vis then
-                MenuTarget:update(state, inputs)
+            elseif Menus.Target.vis then
+                Menus.Target:update(state, inputs)
 
                 -- accept the balance, close the menu, and end the turn
                 if inputs.yes:once() then
                     -- hide this menu
-                    MenuTarget.vis = false
+                    Menus.Target.vis = false
 
                     -- attack the enemy unit
-                    local killed = state.cursor.sel:attack(MenuTarget.unit,
-                                                           MenuTarget.choices[MenuTarget.sel],
+                    local killed = state.cursor.sel:attack(Menus.Target.unit,
+                                                           Menus.Target.choices[Menus.Target
+                                                               .sel],
                                                            state.cursor.sel.stat
                                                                .atk)
 
                     -- delete the enemy unit if it has been destroyed
                     if killed then
-                        Units.die(MenuTarget.idx, state.map.units)
+                        Units.die(Menus.Target.idx, state.map.units)
                     end
 
                     -- deactivate all *other* units belonging to the player
@@ -92,9 +93,9 @@ function Screens.battle.draw(state)
     if Player:human(state.players) then state.cursor:draw() end
 
     Units.draw(state)
-    MenuTurnEnd:draw(state)
-    MenuBalance:draw(state)
-    MenuTarget:draw(state)
+    Menus.TurnEnd:draw(state)
+    Menus.Balance:draw(state)
+    Menus.Target:draw(state)
     Info:draw(state)
 
     -- display debug output (if so configured)

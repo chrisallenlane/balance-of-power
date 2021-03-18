@@ -1,13 +1,13 @@
-MenuTurnEnd = {choices = {"yes", "no"}, sel = 1, vis = false}
+Menus.TurnEnd = {choices = {"yes", "no"}, sel = 1, vis = false}
 
 -- open the target menu
-function MenuTurnEnd:open()
+function Menus.TurnEnd:open()
     self.sel = 1
     self.vis = true
 end
 
 -- update "end turn?" menu state
-function MenuTurnEnd:update(state, inputs)
+function Menus.TurnEnd:update(state, inputs)
     Info:set("confirm", "cancel")
 
     -- right
@@ -31,7 +31,7 @@ function MenuTurnEnd:update(state, inputs)
 end
 
 -- draw the "end turn" menu
-function MenuTurnEnd:draw(state)
+function Menus.TurnEnd:draw(state)
     -- exit early if the menu is not visible
     if not self.vis then return end
 

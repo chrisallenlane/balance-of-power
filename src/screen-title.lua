@@ -1,6 +1,6 @@
 -- update the title screen
 function Screens.title.update(state, inputs)
-    local menu = MenuScreenTitle
+    local menu = Menus.Title
     local sel = menu.sel
 
     -- up
@@ -27,7 +27,7 @@ function Screens.title.draw()
     rectfill(0, 0, 127, 127, 12)
     String.centerX("balance of power", 30, 1)
 
-    local menu = MenuScreenTitle
+    local menu = Menus.Title
     local y = 50
 
     for i, choice in ipairs(menu.choices) do

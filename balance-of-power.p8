@@ -25,7 +25,8 @@ Game = {}
 #include src/astar.lua
 #include src/cursor.lua
 #include src/state.lua
-#include src/menu-screen-title.lua
+#include src/menus.lua
+#include src/menu-title.lua
 #include src/menu-balance.lua
 #include src/menu-target.lua
 #include src/menu-turn-end.lua
