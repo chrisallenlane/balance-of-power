@@ -21,4 +21,7 @@ State = {
 
     -- the current stage
     stage = {},
+
+    -- TODO: deprecate this
+    radius = Radius:new(),
 }

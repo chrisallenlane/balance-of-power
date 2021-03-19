@@ -1,9 +1,18 @@
-Radius = {
-    center = {x = nil, y = nil},
-    cells = {atk = {}, mov = {}},
-    cache = {atk = {}, mov = {}},
-    vis = false,
-}
+Radius = {}
+
+function Radius:new()
+    local r = {
+        center = {x = nil, y = nil},
+        cells = {atk = {}, mov = {}},
+        cache = {atk = {}, mov = {}},
+        vis = false,
+    }
+
+    setmetatable(r, self)
+    self.__index = self
+
+    return r
+end
 
 -- draw a radius at the specified coordinates
 function Radius:update(unit, stage, turn)
@@ -26,9 +35,6 @@ function Radius:update(unit, stage, turn)
         self:atk(self.center.x, self.center.y, unit.stat.rng, stage)
     end
 
-    -- clear the radius cache
-    self.cache = nil
-
     -- annotate that the radius is visible
     self.vis = true
 end
@@ -48,7 +54,7 @@ function Radius:move(x, y, mvmt, stage, turn)
         local cost = Cell.cost(cell.x, cell.y, stage)
         if mvmt >= cost and Cell.pass(cell.x, cell.y, stage, turn) then
             self:append('mov', cell.x, cell.y)
-            Radius:move(cell.x, cell.y, mvmt - cost, stage, turn)
+            self:move(cell.x, cell.y, mvmt - cost, stage, turn)
         end
     end
 end
@@ -68,7 +74,7 @@ function Radius:atk(x, y, rng, stage)
     -- iteratively search this cell's neighbors
     for _, cell in pairs(Cell.neighbors(x, y, stage)) do
         self:append('atk', cell.x, cell.y)
-        Radius:atk(cell.x, cell.y, rng, stage)
+        self:atk(cell.x, cell.y, rng, stage)
     end
 end
 
@@ -116,6 +122,8 @@ function Radius:draw()
     -- don't draw an indicator at the center of the radii
     self:remove('mov', self.center.x, self.center.y)
     self:remove('atk', self.center.x, self.center.y)
+
+    if not self.vis then return end
 
     -- draw the movement radius
     -- NB: the bitshifting just multiplies by 8

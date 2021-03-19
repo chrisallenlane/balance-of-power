@@ -48,7 +48,7 @@ function Screens.battle.draw(state)
     Stage.draw(state)
 
     -- draw the movement radius
-    Radius:draw()
+    state.radius:draw()
 
     -- draw the cursor if the player is a human
     if state.player:human(state.players) then state.player.cursor:draw() end

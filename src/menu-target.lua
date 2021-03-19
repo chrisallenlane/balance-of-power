@@ -57,7 +57,8 @@ function Menus.Target:update(state, inputs)
             state.player:turn_end(state)
             -- otherwise, show the movement radius
         else
-            Radius:update(state.player.cursor.sel, state.stage, state.player.num)
+            state.radius:update(state.player.cursor.sel, state.stage,
+                                state.player.num)
         end
     end
 end
