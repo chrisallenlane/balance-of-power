@@ -5,7 +5,7 @@ function Screens.battle.update(state, inputs)
         if Units.delay > 0 then
             Units.delay = Units.delay - 1
         else
-            state.camera:update(state.player.cursor, state.stage)
+            state.camera:update(state)
         end
     end
 

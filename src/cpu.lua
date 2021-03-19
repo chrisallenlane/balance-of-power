@@ -4,6 +4,8 @@ CPU = {battle = {}, delay = 0}
 function CPU.battle.update(state)
     Info:set("", "")
 
+    local player = state.player
+
     -- pause in place for a moment before the CPU moves
     if CPU.delay > 0 then
         CPU.delay = CPU.delay - 1
@@ -16,19 +18,20 @@ function CPU.battle.update(state)
     local unit = Units.first(2, state.stage.units)
 
     -- if moving left is invalid, move right
-    if not Cell.pass(unit.cell.x + mv, unit.cell.y, state.stage,
-                     state.player.num) then mv = mv * -1 end
+    if not Cell.pass(unit.cell.x + mv, unit.cell.y, state.stage, player.num) then
+        mv = mv * -1
+    end
 
     -- move the unit and end the turn
     unit:move(unit.cell.x + mv, unit.cell.y)
     -- KLUDGE
-    state.player.cursor.cell.x = unit.cell.x + mv
-    state.player.cursor.cell.y = unit.cell.y
+    player.cursor.cell.x = unit.cell.x + mv
+    player.cursor.cell.y = unit.cell.y
 
     -- reset delays
     CPU.delay = 30
     Units.delay = 30
 
     -- end the CPU turn
-    state.player:turn_end(state)
+    player:turn_end(state)
 end

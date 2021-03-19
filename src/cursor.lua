@@ -26,18 +26,21 @@ end
 
 -- update cursor state
 function Cursor:update(stage, inputs)
+    -- for brevity
+    local cell = self.cell
+
     -- left/right
-    if inputs.left:rep() and self.cell.x > 0 then
-        self.cell.x = self.cell.x - 1
-    elseif inputs.right:rep() and self.cell.x < stage.cell.w - 1 then
-        self.cell.x = self.cell.x + 1
+    if inputs.left:rep() and cell.x > 0 then
+        cell.x = cell.x - 1
+    elseif inputs.right:rep() and cell.x < stage.cell.w - 1 then
+        cell.x = cell.x + 1
     end
 
     -- up/down
-    if inputs.up:rep() and self.cell.y > 0 then
-        self.cell.y = self.cell.y - 1
-    elseif inputs.down:rep() and self.cell.y < stage.cell.h - 1 then
-        self.cell.y = self.cell.y + 1
+    if inputs.up:rep() and cell.y > 0 then
+        cell.y = cell.y - 1
+    elseif inputs.down:rep() and cell.y < stage.cell.h - 1 then
+        cell.y = cell.y + 1
     end
 end
 

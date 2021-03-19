@@ -141,8 +141,7 @@ end
 
 -- change the player turn
 function Player:turn_end(state)
-    local cur = state.player.cursor
-    local stage = state.stage
+    local cur, stage = state.player.cursor, state.stage
 
     -- unselect the unit
     cur.sel = nil
