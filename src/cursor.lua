@@ -11,9 +11,9 @@ function Cursor:new()
         -- current cursor cell position
         cell = {x = 0, y = 0},
 
-        -- selected unit
-        -- TODO: this could use a refactoring
-        sel = nil,
+        -- the currently selected unit
+        -- TODO: remove the `unit` wrapper if I never add additional properties
+        unit = {sel = nil},
 
         -- frame counter used for animations
         frame = 0,
@@ -48,8 +48,8 @@ end
 -- Return true if `unit` unit is selected, or true if any unit is selected
 -- otherwise
 function Cursor:selected(unit)
-    if unit then return self.sel and (self.sel == unit) end
-    return self.sel
+    if unit then return self.unit.sel and (self.unit.sel == unit) end
+    return self.unit.sel
 end
 
 -- immediately move the cursor to the specified cell coordinates

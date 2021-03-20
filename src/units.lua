@@ -6,7 +6,6 @@ function Units.update(state)
     -- assume that units are ready
     Units.ready = true
 
-    -- TODO: use local state
     -- if a unit is in-motion, lock the cursor
     for _, unit in pairs(state.stage.units) do
         -- x

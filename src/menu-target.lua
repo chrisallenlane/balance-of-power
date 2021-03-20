@@ -45,22 +45,23 @@ function Menus.Target:update(state, inputs)
         state.menu = nil
 
         -- attack the enemy unit
-        local killed = cursor.sel:attack(self.unit, self.choices[self.sel],
-                                         cursor.sel.stat.atk)
+        local killed = cursor.unit.sel:attack(self.unit, self.choices[self.sel],
+                                              cursor.unit.sel.stat.atk)
 
         -- delete the enemy unit if it has been destroyed
         if killed then Units.die(self.idx, units) end
 
         -- deactivate all *other* units belonging to the player
         Units.deactivate(units, player.num)
-        cursor.sel:activate()
+        cursor.unit.sel:activate()
 
         -- end the player's turn if the unit is exhausted
-        if cursor.sel:moved() or cursor.sel.stat.mov == 0 then
+        if cursor.unit.sel:moved() or cursor.unit.sel.stat.mov == 0 then
             player:turn_end(state)
             -- otherwise, show the movement radius
         else
-            state.radius:update(cursor.sel, stage, player.num)
+            -- XXX: is this correct?
+            cursor.unit.sel.radius:update(cursor.unit.sel, stage, player.num)
         end
     end
 end

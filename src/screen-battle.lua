@@ -48,18 +48,22 @@ function Screens.battle.draw(state)
     -- move the camera
     state.camera:draw()
 
+    -- draw the stage
     Stage.draw(state)
 
-    -- draw the movement radius
-    state.radius:draw()
+    -- TODO: move this elsewhere
+    for _, unit in pairs(state.stage.units) do unit.radius:draw() end
 
-    -- draw the cursor if the player is a human
+    -- draw the cursor (if the player is a human)
     if state.player:human(state.players) then state.player.cursor:draw() end
 
+    -- draw units and their radii
     Units.draw(state)
 
+    -- draw menus
     if state.menu then state.menu:draw(state) end
 
+    -- draw the info bar
     Info:draw(state)
 
     -- display debug output (if so configured)

@@ -119,11 +119,11 @@ end
 
 -- draw the radius to the stage
 function Radius:draw()
+    if not self.vis then return end
+
     -- don't draw an indicator at the center of the radii
     self:remove('mov', self.center.x, self.center.y)
     self:remove('atk', self.center.x, self.center.y)
-
-    if not self.vis then return end
 
     -- draw the movement radius
     -- NB: the bitshifting just multiplies by 8

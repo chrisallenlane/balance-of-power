@@ -22,6 +22,9 @@ function Unit:new(u)
     -- is the unit active (ie, not exhausted)
     u.active = true
 
+    -- cache the radii
+    u.radius = Radius:new()
+
     return u
 end
 
@@ -37,6 +40,8 @@ function Unit.clone(u)
         px = {x = u.px.x, y = u.px.y},
         act = {atk = u.act.atk, mov = u.act.mov},
         active = u.active,
+        -- TODO XXX: this is a shallow copy - though it seems to work?
+        radius = u.radius,
     }
 
     -- initialize and return a cloned unit
