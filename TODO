@@ -10,7 +10,6 @@ Priority:
 Backlog:
   - AStar: bug: fix "off-roading" bug
   - AStar: perf: optimizations
-  - All: refactor into `state` object?
   - Animation: feat: unit explosion
   - Animation: feat: weapon fire
   - Art: feat: title, victory, defeat screens
