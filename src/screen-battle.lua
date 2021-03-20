@@ -28,7 +28,10 @@ function Screens.battle.update(state, inputs)
                 state.menu:update(state, inputs)
                 return
             end
+            -- update the cursor state
+            state.player.cursor:update(state.stage, inputs)
 
+            -- update the battle state
             Player.battle.update(state, inputs)
         else
             CPU.battle.update(state)

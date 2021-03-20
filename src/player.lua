@@ -20,9 +20,6 @@ function Player.battle.update(state, inputs)
     local stage = state.stage
     local cur = player.cursor
 
-    -- update the cursor position
-    cur:update(stage, inputs)
-
     -- determine whether a unit is beneath the cursor
     local unit, idx = Units.at(cur.cell.x, cur.cell.y, stage.units)
 
