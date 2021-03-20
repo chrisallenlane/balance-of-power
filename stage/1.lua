@@ -1,5 +1,7 @@
 add(Stages, function ()
   return {
+    num = 1,
+
     intr = {
         head = "stage 1",
         body = "lorem ipsum dolor sit amet.",

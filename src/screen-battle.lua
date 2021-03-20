@@ -13,7 +13,7 @@ function Screens.battle.update(state, inputs)
     -- TODO: handle 2-player games
     local clear, victor = Stage.clear(state)
     if clear and victor == 1 then
-        Stage.advance(state)
+        state.stage:advance(Stages, Screens, state)
         return
     elseif clear and victor == 2 then
         state.screen = Screens.defeat

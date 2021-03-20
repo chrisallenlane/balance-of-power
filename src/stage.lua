@@ -1,49 +1,46 @@
-Stage = {num = 1}
+Stage = {}
+
+function Stage:new(stage)
+    -- return a function that initializes the stage
+    setmetatable(stage, self)
+    self.__index = self
+    return stage
+end
 
 -- load the specified stage
--- TODO: pass in `Stages`
-function Stage:load(num, state)
+function Stage.load(num, stages, state)
     -- load the specified stage
-    -- TODO: remove this?
-    self.num = num
-    state.stage = Stages[num]()
+    -- NB: this indirection is necessary in order to facilitate the "reset map"
+    -- function. Each stage must be initialized atop a new literal object in
+    -- order to create a truly "new" stage (ie, one that is not a shallow
+    -- copy).
+    state.stage = Stage:new(stages[num]())
 
     -- make it player 1's turn
     state.player = state.players[1]
 
-    -- reset the cursor
-    local p1u = Units.first(1, state.stage.units)
-    local p2u = Units.first(2, state.stage.units)
-    state.players[1].cursor.cell.x = p1u.cell.x
-    state.players[1].cursor.cell.y = p1u.cell.y
-    state.players[2].cursor.cell.x = p2u.cell.x
-    state.players[2].cursor.cell.y = p2u.cell.y
-
-    -- reset the cursor position
-    state.player.cursor:warp(p1u.cell.x, p1u.cell.y)
+    -- set each player's cursor to rest on their first unit
+    -- NB: we're iterating backwards so the cursor ends up focused on player
+    -- 1's first unit
+    for i = 2, 1, -1 do
+        local units = Units.first(i, state.stage.units)
+        local x, y = units.cell.x, units.cell.y
+        state.players[i].cursor.cell = {x = x, y = y}
+        state.player.cursor:warp(x, y)
+    end
 
     -- reset the camera position
     state.camera:warp(state.stage.camera.x, state.stage.camera.y)
 end
 
 -- advance to the next stage
--- TODO: remove global `State`
--- TODO: pass in `Stages`
-function Stage.advance()
-    if Stage.num < #Stages then
-        Stage.num = Stage.num + 1
-        Stage:load(Stage.num, State)
-        State.screen = Screens.intr
+function Stage:advance(stages, screens, state)
+    if self.num < #stages then
+        Stage.load(self.num + 1, stages, state)
+        state.screen = screens.intr
     else
-        State.screen = Screens.victory
+        state.screen = screens.victory
     end
-end
-
--- reset the current stage
--- TODO: implement confirmation menu
--- TODO: remove global `State`
-function Stage.reset()
-    Stage:load(Stage.num, State)
 end
 
 -- return true if the stage has been cleared
@@ -67,6 +64,6 @@ end
 
 -- draw the current stage
 function Stage.draw(state)
-    local m = state.stage
-    map(m.cell.x, m.cell.y, 0, 0, m.cell.w, m.cell.h)
+    local s = state.stage
+    map(s.cell.x, s.cell.y, 0, 0, s.cell.w, s.cell.h)
 end
