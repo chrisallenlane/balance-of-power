@@ -46,16 +46,28 @@ end
 
 -- return the cell traversal cost at `x`, `y`
 function Cell.cost(x, y, stage)
+    -- assume a traversal cost of 1
+    local cost = 1
+
+    -- create an "infinity" value
+    local inf = 1 / 0
+
+    -- determine if the tile has a "special" traversal cost
     -- stage cell traversal costs
     local costs = {
-        [1] = 1, -- grass
-        [49] = 1, -- sand
-        [33] = 0.5, -- road
-        [17] = 1 / 0, -- shallow water
-        [18] = 1 / 0, -- deep water
+        [16] = 0.5, -- road
+        [73] = 0.5, -- road (curve)
+        [74] = 0.5, -- road (curve)
+        [89] = 0.5, -- road (curve)
+        [90] = 0.5, -- road (curve)
+        [80] = inf, -- shallow water
+        [96] = inf, -- deep water
     }
+    local special = costs[mget(stage.cell.x + x, stage.cell.y + y)]
 
-    return costs[mget(stage.cell.x + x, stage.cell.y + y)]
+    -- if it does, return the special
+    if special then cost = special end
+    return cost
 end
 
 -- return the set of cells adjacent to the specified cell
