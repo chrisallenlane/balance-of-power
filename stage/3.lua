@@ -12,8 +12,8 @@ add(Stages, function ()
     cell = {x = 48, y = 0, w = 32, h = 32},
 
     units = {
-      Unit:new({spr = 1, player = 1, cell = {x = 28, y = 29}}),
-      Unit:new({spr = 3, player = 2, cell = {x = 9, y = 5}}),
+      Unit:new({player = 1, cell = {x = 28, y = 29}}),
+      Unit:new({player = 2, cell = {x = 9, y = 5}}),
     },
   }
 end)
