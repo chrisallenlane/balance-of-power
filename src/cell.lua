@@ -55,13 +55,33 @@ function Cell.cost(x, y, stage)
     -- determine if the tile has a "special" traversal cost
     -- stage cell traversal costs
     local costs = {
-        [16] = 0.5, -- road
-        [73] = 0.5, -- road (curve)
-        [74] = 0.5, -- road (curve)
-        [89] = 0.5, -- road (curve)
-        [90] = 0.5, -- road (curve)
-        [80] = inf, -- shallow water
-        [96] = inf, -- deep water
+        -- road/bridge
+        [71] = 0.5,
+        [72] = 0.5,
+        [73] = 0.5,
+        [74] = 0.5,
+        [75] = 0.5,
+        [87] = 0.5,
+        [88] = 0.5,
+        [89] = 0.5,
+        [90] = 0.5,
+        [91] = 0.5,
+        [103] = 0.5,
+        [104] = 0.5,
+        [105] = 0.5,
+        [119] = 0.5,
+        [120] = 0.5,
+        [121] = 0.5,
+
+        -- shore
+        [101] = inf,
+        [102] = inf,
+        [117] = inf,
+        [118] = inf,
+
+        -- water
+        [96] = inf,
+        [112] = inf,
     }
     local special = costs[mget(stage.cell.x + x, stage.cell.y + y)]
 
