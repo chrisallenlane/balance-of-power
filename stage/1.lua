@@ -12,10 +12,15 @@ add(Stages, function ()
     cell = {x = 0, y = 0, w = 32, h = 16},
 
     units = {
+      Unit:new({player = 1, cell = {x = 3, y = 2}}),
       Unit:new({player = 1, cell = {x = 1, y = 1}}),
-      Unit:new({player = 1, cell = {x = 2, y = 2}}),
-      Unit:new({player = 1, cell = {x = 3, y = 3}}),
-      Unit:new({player = 2, cell = {x = 28, y = 7}}),
+      Unit:new({player = 1, cell = {x = 1, y = 3}}),
+
+      Unit:new({player = 2, cell = {x = 16, y = 3}}),
+      Unit:new({player = 2, cell = {x = 18, y = 3}}),
+      Unit:new({player = 2, cell = {x = 20, y = 3}}),
+      Unit:new({player = 2, cell = {x = 22, y = 3}}),
+      Unit:new({player = 2, cell = {x = 24, y = 3}}),
     },
   }
 end)
