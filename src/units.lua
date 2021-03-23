@@ -53,6 +53,7 @@ end
 -- draw the units
 function Units.draw(state)
     for _, unit in pairs(state.stage.units) do
+        pal()
         -- use palette swapping to reduce the number of sprites required
         -- player 1, inactive
         if unit.player == 1 and not unit.active then
