@@ -53,11 +53,26 @@ end
 -- draw the units
 function Units.draw(state)
     for _, unit in pairs(state.stage.units) do
-        -- NB: assume that unit.spr+1 is the inactive sprite
-        local sprite = unit.spr
-        if not unit.active then sprite = sprite + 1 end
-        spr(sprite, unit.px.x, unit.px.y)
+        -- use palette swapping to reduce the number of sprites required
+        -- player 1, inactive
+        if unit.player == 1 and not unit.active then
+            pal(12, 13)
+
+            -- player 2, active
+        elseif unit.player == 2 and unit.active then
+            pal(12, 8)
+            pal(1, 2)
+
+            -- player 2, inactive
+        elseif unit.player == 2 and not unit.active then
+            pal(12, 2)
+            pal(1, 5)
+        end
+
+        spr(1, unit.px.x, unit.px.y)
     end
+
+    pal()
 end
 
 -- Remain returns the number of units remaining for each player

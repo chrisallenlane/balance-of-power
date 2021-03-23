@@ -7,10 +7,6 @@ function Unit:new(u)
     setmetatable(u, self)
     self.__index = self
 
-    -- assign the appropriate sprite
-    u.spr = 1
-    if u.player == 2 then u.spr = 3 end
-
     -- total available power
     u.pwr = u.pwr or 10
 
