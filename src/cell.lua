@@ -8,12 +8,20 @@ function Cell:new(x, y, w)
     return c
 end
 
--- return true if a unit may be placed on the tile
-function Cell.open(x, y, stage)
+-- returns true if the specified cell is out-of-bounds
+function Cell.oob(x, y, stage)
     -- return false if the specified coordinates are out-of-bounds
     if x < 0 or x >= stage.cell.w or y < 0 or y >= stage.cell.h then
-        return false
+        return true
     end
+
+    return false
+end
+
+-- return true if a unit may be placed on the tile
+function Cell.open(x, y, stage)
+    -- if the cell is out-of-bounds, it's not open
+    if Cell.oob(x, y, stage) then return false end
 
     -- return false if a unit is at the specified coordinates
     if Units.at(x, y, stage.units) then return false end
@@ -22,8 +30,8 @@ end
 
 -- return true if a unit may pass through the tile
 function Cell.pass(x, y, stage, turn)
-    -- if the cell is not open, it's also not passable
-    if not Cell.open(x, y, stage) then return false end
+    -- if the cell is out-of-bounds, it's not passable
+    if Cell.oob(x, y, stage) then return false end
 
     -- check for a unit at the specified coordinates
     -- TODO: de-duplicate with `self.open`, possibly via a state var
