@@ -15,12 +15,7 @@ function Cell.open(x, y, stage)
         return false
     end
 
-    -- return false if the stage tile at the specified coordinates is flagged as
-    -- impassible
-    if fget(mget(stage.cell.x + x, stage.cell.y + y), 0) then return false end
-
     -- return false if a unit is at the specified coordinates
-    -- TODO: pass as param
     if Units.at(x, y, stage.units) then return false end
     return true
 end
