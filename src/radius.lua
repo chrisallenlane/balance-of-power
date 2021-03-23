@@ -128,18 +128,20 @@ function Radius:draw()
     -- draw the movement radius
     -- NB: the bitshifting just multiplies by 8
     for x, cell in pairs(self.cells.mov) do
-        for y, _ in pairs(cell) do spr(5, x << 3, y << 3) end
+        for y, _ in pairs(cell) do spr(2, x << 3, y << 3) end
     end
 
     -- draw the attack radius
     for x, cell in pairs(self.cells.atk) do
+        pal(1, 8)
         for y, _ in pairs(cell) do
             -- NB: making this check and only drawing the necessary cells is
             -- slightly faster than drawing the movement radius on top of the
             -- attack radius
             if not self:contains('mov', x, y) then
-                spr(6, x << 3, y << 3)
+                spr(2, x << 3, y << 3)
             end
         end
+        pal()
     end
 end
