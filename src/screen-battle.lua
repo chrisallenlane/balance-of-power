@@ -74,7 +74,9 @@ function Screens.battle.draw(state)
     Stage.draw(state)
 
     -- TODO: move this elsewhere
-    for _, unit in pairs(state.stage.units) do unit.radius:draw() end
+    for _, unit in pairs(state.stage.units) do
+        unit.radius:draw(unit.player == state.player.num)
+    end
 
     -- draw the cursor (if the player is a human)
     if state.player:human(state.players) then state.player.cursor:draw() end

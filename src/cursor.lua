@@ -59,9 +59,9 @@ end
 
 -- render the cursor
 function Cursor:draw()
-    local sprite = 3
+    local sprite = 4
     if self.frame < 30 then
-        sprite = 4
+        sprite = 5
     elseif self.frame > 60 then
         self.frame = 0
     end
@@ -70,7 +70,7 @@ function Cursor:draw()
     self.frame = self.frame + 1
 
     -- draw the A* path
-    for _, cell in ipairs(self.path) do spr(5, cell.x * 8, cell.y * 8) end
+    for _, cell in ipairs(self.path) do spr(6, cell.x * 8, cell.y * 8) end
 
     -- draw the sprite
     spr(sprite, self.cell.x * 8, self.cell.y * 8)

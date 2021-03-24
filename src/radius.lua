@@ -117,9 +117,18 @@ function Radius:clear()
     self.vis = false
 end
 
+-- KLUDGE
+function Radius.clearAll(units)
+    for _, unit in pairs(units) do unit.radius.vis = false end
+end
+
 -- draw the radius to the stage
-function Radius:draw()
+function Radius:draw(friend)
     if not self.vis then return end
+
+    -- choose the sprite to render
+    local sprite = 2
+    if not friend then sprite = 3 end
 
     -- don't draw an indicator at the center of the radii
     self:remove('mov', self.center.x, self.center.y)
@@ -128,18 +137,20 @@ function Radius:draw()
     -- draw the movement radius
     -- NB: the bitshifting just multiplies by 8
     for x, cell in pairs(self.cells.mov) do
-        for y, _ in pairs(cell) do spr(2, x << 3, y << 3) end
+        for y, _ in pairs(cell) do spr(sprite, x << 3, y << 3) end
     end
 
     -- draw the attack radius
     for x, cell in pairs(self.cells.atk) do
+        -- NB: the palette swapping accomplishes nothing when rendering a
+        -- foe's danger radius, but that's fine.
         pal(1, 8)
         for y, _ in pairs(cell) do
             -- NB: making this check and only drawing the necessary cells is
             -- slightly faster than drawing the movement radius on top of the
             -- attack radius
             if not self:contains('mov', x, y) then
-                spr(2, x << 3, y << 3)
+                spr(sprite, x << 3, y << 3)
             end
         end
         pal()

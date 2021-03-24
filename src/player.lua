@@ -31,6 +31,13 @@ function Player.battle.update(state, inputs)
 
             if yes:once() then
                 cur.unit.sel = unit
+                -- hide all other friendly unit radii
+                for _, u in pairs(state.stage.units) do
+                    if u.player == player.num then
+                        u.radius.vis = false
+                    end
+                end
+
                 unit.radius:update(unit, stage, player.num)
             end
 
@@ -50,8 +57,9 @@ function Player.battle.update(state, inputs)
 
             if yes:once() then Menus.TurnEnd:open(state) end
 
-            -- view enemy radii:
-        elseif unit:foe(player.num) and not cur:selected() then
+            -- show enemy radii:
+        elseif unit:foe(player.num) and not cur:selected() and unit.radius.vis ==
+            false then
             Info:set("view radii", "", unit)
 
             if yes:once() then
@@ -62,6 +70,13 @@ function Player.battle.update(state, inputs)
                 -- draw the radii for the enemy player
                 unit.radius:update(unit, stage, enemy)
             end
+
+            -- hide enemy radii:
+        elseif unit:foe(player.num) and not cur:selected() and unit.radius.vis ==
+            true then
+            Info:set("hide radii", "", unit)
+
+            if yes:once() then unit.radius.vis = false end
 
             -- attack enemy:
         elseif unit:foe(player.num) and cur:selected() and
@@ -143,7 +158,7 @@ function Player:turn_end(state)
     local cur, stage = state.player.cursor, state.stage
 
     -- hide radii
-    if cur.unit.sel then cur.unit.sel.radius.vis = false end
+    Radius.clearAll(state.stage.units)
 
     -- unselect the unit
     cur.unit.sel = nil
