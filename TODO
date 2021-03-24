@@ -5,8 +5,6 @@ Priority:
   - Docs: add a license
   - Docs: update the README
 
-  - Screen (battle): 2-player games exhibit incorrect behavior when 2p wins
-
 Backlog:
   - AStar: bug: fix "off-roading" bug
   - AStar: perf: optimizations

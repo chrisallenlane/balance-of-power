@@ -10,14 +10,36 @@ function Screens.battle.update(state, inputs)
     end
 
     -- determine if the stage has been cleared
-    -- TODO: handle 2-player games
     local clear, victor = Stage.clear(state)
-    if clear and victor == 1 then
-        state.stage:advance(Stages, Screens, state)
-        return
-    elseif clear and victor == 2 then
-        state.screen = Screens.defeat
-        return
+
+    -- handle 1-player games
+    if state.players[2].cpu then
+        if clear and victor == 1 then
+            -- TODO: display "victory" banner
+            state.stage:advance(Stages, Screens, state)
+            return
+        elseif clear and victor == 2 then
+            -- TODO: display "defeat" banner
+            state.screen = Screens.defeat
+            return
+        end
+
+        -- handle 2-player games
+    else
+        if clear then
+            if victor == 1 then
+                -- TODO: display "player 1 wins" banner
+                printh("TODO")
+            else
+                -- TODO: display "player 2 wins" banner
+                printh("TODO")
+            end
+
+            -- return to title screen
+            -- TODO: return to map select screen?
+            state.screen = Screens.title
+            return
+        end
     end
 
     -- do not run player/CPU update loops if a lock is engaged
