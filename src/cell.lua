@@ -57,6 +57,7 @@ function Cell.cost(x, y, stage)
 
     -- determine if the tile has a "special" traversal cost
     -- stage cell traversal costs
+    -- XXX: this consumes too many "tokens", should be refactored
     local costs = {
         -- road/bridge
         [71] = 0.5,
@@ -75,6 +76,28 @@ function Cell.cost(x, y, stage)
         [119] = 0.5,
         [120] = 0.5,
         [121] = 0.5,
+
+        -- forest
+        [76] = 1.5,
+        [77] = 1.5,
+        [78] = 1.5,
+        [79] = 1.5,
+        [92] = 1.5,
+        [93] = 1.5,
+        [94] = 1.5,
+        [95] = 1.5,
+        [106] = 1.5,
+        [107] = 1.5,
+        [108] = 1.5,
+        [109] = 1.5,
+        [110] = 1.5,
+        [111] = 1.5,
+        [122] = 1.5,
+        [123] = 1.5,
+        [124] = 1.5,
+        [125] = 1.5,
+        [126] = 1.5,
+        [127] = 1.5,
 
         -- shore
         [101] = inf,
