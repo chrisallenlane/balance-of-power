@@ -11,6 +11,9 @@ function _init()
         Stage.load(State.stage.num, Stages, State)
     end)
 
+    -- build an in-memory table of cell traversal costs
+    Cell.costs = Cell.init()
+
     -- load the first stage
     Stage.load(1, Stages, State)
 end

@@ -1,4 +1,78 @@
-Cell = {id = nil, x = nil, y = nil, w = nil, parent = nil}
+Cell = {id = nil, x = nil, y = nil, w = nil, parent = nil, costs = {}}
+
+-- Build a map of [tile number] => [traversal cost]
+-- NB: we're doing this rather than hard-coding a map simply to reduce the
+-- number of "tokens" required.
+function Cell.init()
+    -- create an infinity value
+    local inf = 1 / 0
+
+    -- road tiles
+    local road = {
+        71,
+        72,
+        73,
+        74,
+        75,
+        87,
+        88,
+        89,
+        90,
+        91,
+        103,
+        104,
+        105,
+        119,
+        120,
+        121,
+    }
+
+    -- forest tiles
+    local forest = {
+        76,
+        77,
+        78,
+        79,
+        92,
+        93,
+        94,
+        95,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+    }
+
+    -- (impassible) shore tiles
+    local shore = {101, 102, 117, 118}
+
+    -- water tiles
+    local water = {96, 112}
+
+    -- aggregate tiles to process
+    local costs = {
+        {tiles = road, cost = 0.5},
+        {tiles = forest, cost = 1.5},
+        {tiles = shore, cost = inf},
+        {tiles = water, cost = inf},
+    }
+
+    -- build a map of [tile number] => [traversal cost]
+    local map = {}
+    for _, set in pairs(costs) do
+        for _, tile in pairs(set.tiles) do map[tile] = set.cost end
+    end
+
+    return map
+end
 
 -- Cell constructor
 function Cell:new(x, y, w)
@@ -52,64 +126,9 @@ function Cell.cost(x, y, stage)
     -- assume a traversal cost of 1
     local cost = 1
 
-    -- create an "infinity" value
-    local inf = 1 / 0
-
     -- determine if the tile has a "special" traversal cost
     -- stage cell traversal costs
-    -- XXX: this consumes too many "tokens", should be refactored
-    local costs = {
-        -- road/bridge
-        [71] = 0.5,
-        [72] = 0.5,
-        [73] = 0.5,
-        [74] = 0.5,
-        [75] = 0.5,
-        [87] = 0.5,
-        [88] = 0.5,
-        [89] = 0.5,
-        [90] = 0.5,
-        [91] = 0.5,
-        [103] = 0.5,
-        [104] = 0.5,
-        [105] = 0.5,
-        [119] = 0.5,
-        [120] = 0.5,
-        [121] = 0.5,
-
-        -- forest
-        [76] = 1.5,
-        [77] = 1.5,
-        [78] = 1.5,
-        [79] = 1.5,
-        [92] = 1.5,
-        [93] = 1.5,
-        [94] = 1.5,
-        [95] = 1.5,
-        [106] = 1.5,
-        [107] = 1.5,
-        [108] = 1.5,
-        [109] = 1.5,
-        [110] = 1.5,
-        [111] = 1.5,
-        [122] = 1.5,
-        [123] = 1.5,
-        [124] = 1.5,
-        [125] = 1.5,
-        [126] = 1.5,
-        [127] = 1.5,
-
-        -- shore
-        [101] = inf,
-        [102] = inf,
-        [117] = inf,
-        [118] = inf,
-
-        -- water
-        [96] = inf,
-        [112] = inf,
-    }
-    local special = costs[mget(stage.cell.x + x, stage.cell.y + y)]
+    local special = Cell.costs[mget(stage.cell.x + x, stage.cell.y + y)]
 
     -- if it does, return the special
     if special then cost = special end
