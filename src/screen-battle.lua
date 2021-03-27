@@ -16,28 +16,28 @@ function Screens.battle.update(state, inputs)
     -- determine if the stage has been cleared
     local clear, victor = Stage.clear(state)
 
-    -- handle 1-player games
-    -- TODO: move `clear` to the topmost `if`
-    if state.players[2].cpu then
-        if clear and victor == 1 then
-            Radius.clearAll(state.stage.units)
-            Banner:show(1, "victory")
-            Anim:enqueue(Delay.anim(300))
-            Anim:enqueue(function()
-                Banner:hide()
-                state.stage:advance(Stages, Screens, state)
-                return true
-            end)
-            return
-        elseif clear and victor == 2 then
-            -- TODO: display "defeat" banner
-            state.screen = Screens.defeat
-            return
-        end
+    -- handle stage clears
+    if clear then
+        -- handle 1-player games
+        if state.players[2].cpu then
+            if victor == 1 then
+                Radius.clearAll(state.stage.units)
+                Banner:show(1, "victory")
+                Anim:enqueue(Delay.anim(300))
+                Anim:enqueue(function()
+                    Banner:hide()
+                    state.stage:advance(Stages, Screens, state)
+                    return true
+                end)
+                return
+            else
+                -- TODO: display "defeat" banner
+                state.screen = Screens.defeat
+                return
+            end
 
-        -- handle 2-player games
-    else
-        if clear then
+            -- handle 2-player games
+        else
             if victor == 1 then
                 -- TODO: display "player 1 wins" banner
                 printh("TODO")
