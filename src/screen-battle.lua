@@ -18,10 +18,12 @@ function Screens.battle.update(state, inputs)
 
     -- handle stage clears
     if clear then
+        Radius.clearAll(state.stage.units)
+        Anim:enqueue(Delay.anim(120))
+
         -- handle 1-player games
         if state.players[2].cpu then
             if victor == 1 then
-                Radius.clearAll(state.stage.units)
                 Banner:show(1, "victory")
                 Anim:enqueue(Delay.anim(300))
                 Anim:enqueue(function()
@@ -29,28 +31,31 @@ function Screens.battle.update(state, inputs)
                     state.stage:advance(Stages, Screens, state)
                     return true
                 end)
-                return
             else
-                -- TODO: display "defeat" banner
-                state.screen = Screens.defeat
-                return
+                Banner:show(2, "defeat")
+                Anim:enqueue(Delay.anim(300))
+                Anim:enqueue(function()
+                    Banner:hide()
+                    state.screen = Screens.defeat
+                    return true
+                end)
             end
 
             -- handle 2-player games
         else
-            if victor == 1 then
-                -- TODO: display "player 1 wins" banner
-                printh("TODO")
-            else
-                -- TODO: display "player 2 wins" banner
-                printh("TODO")
-            end
+            -- display the winning player's banner
+            Banner:show(victor, "player " .. victor .. " victory")
 
-            -- return to title screen
-            -- TODO: return to map select screen?
-            state.screen = Screens.title
-            return
+            -- delay, then go to the title screen (or where?)
+            Anim:enqueue(Delay.anim(300))
+            Anim:enqueue(function()
+                Banner:hide()
+                state.screen = Screens.title
+                return true
+            end)
         end
+
+        return
     end
 
     -- do not run player/CPU update loops if a lock is engaged
