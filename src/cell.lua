@@ -9,10 +9,10 @@ function Cell.init()
 
     -- enumerate tile costs (in a token-efficient way)
     local costs = {
-        -- road
+        -- road/city
         {
             tiles = split(
-                "71,72,73,74,75,87,88,89,90,91,103,104,105,119,120,121"),
+                "71,72,73,74,75,87,88,89,90,91,103,104,105,112,119,120,121"),
             cost = 0.5,
         },
         -- forest
@@ -28,7 +28,7 @@ function Cell.init()
             cost = 2,
         },
         -- impassible (shore/water)
-        {tiles = split("96,101,102,112,117,118"), cost = inf},
+        {tiles = split("96,101,102,117,118"), cost = inf},
     }
 
     -- build a map of [tile number] => [traversal cost]
