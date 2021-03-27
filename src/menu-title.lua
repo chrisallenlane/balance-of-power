@@ -1,4 +1,4 @@
-Menus.Title = {choices = {"1 player", "2 player", "skirmish"}, sel = 1}
+Menus.Title = {choices = {"1 player", "2 player"}, sel = 1}
 
 function Menus.Title:update(state, inputs)
     -- up
@@ -6,7 +6,7 @@ function Menus.Title:update(state, inputs)
         self.sel = self.sel - 1
 
         -- down
-    elseif inputs.down:once() and self.sel <= 2 then
+    elseif inputs.down:once() and self.sel <= 1 then
         self.sel = self.sel + 1
 
         -- "select"
@@ -15,7 +15,6 @@ function Menus.Title:update(state, inputs)
         if self.sel == 1 then state.players[2].cpu = true end
 
         -- load the stage interstitial
-        -- TODO: handle this differently in 2-player mode
         state.screen = Screens.intr
     end
 end
