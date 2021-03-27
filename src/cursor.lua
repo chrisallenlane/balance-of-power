@@ -2,12 +2,6 @@ Cursor = {}
 
 function Cursor:new()
     local c = {
-        -- A* pathfinder
-        astar = AStar:new(),
-
-        -- path found by A*
-        path = {},
-
         -- current cursor cell position
         cell = {x = 0, y = 0},
 

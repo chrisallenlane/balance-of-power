@@ -19,8 +19,6 @@ DEBUG_CHEAT = true
 #include src/screen-victory.lua
 #include src/screen-defeat.lua
 #include src/camera.lua
-#include src/queue.lua
-#include src/astar.lua
 #include src/cursor.lua
 #include src/state.lua
 #include src/menus.lua

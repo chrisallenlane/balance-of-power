@@ -1,4 +1,4 @@
-Cell = {id = nil, x = nil, y = nil, w = nil, parent = nil, costs = {}}
+Cell = {id = nil, x = nil, y = nil, w = nil, costs = {}}
 
 -- Build a map of [tile number] => [traversal cost]
 -- NB: we're doing this rather than hard-coding a map simply to reduce the

@@ -1,13 +1,10 @@
 Priority:
   - Animation: feat: victory/loss banner
-  - Animation: unit movement - follow AStar path
 
   - Docs: add a license
   - Docs: update the README
 
 Backlog:
-  - AStar: bug: fix "off-roading" bug
-  - AStar: perf: optimizations
   - Animation: feat: unit explosion
   - Animation: feat: weapon fire
   - Art: feat: title, victory, defeat screens

@@ -135,17 +135,6 @@ function Player.battle.update(state, inputs)
             Menus.TurnEnd:open(state)
         end
     end
-
-    -- draw an AStar trail showing the unit movement path
-    if cur:selected() and
-        cur.unit.sel.radius:contains('mov', cur.cell.x, cur.cell.y) then
-        local src = Cell:new(cur.unit.sel.cell.x, cur.unit.sel.cell.y,
-                             stage.cell.w)
-        local dst = Cell:new(cur.cell.x, cur.cell.y, stage.cell.w)
-        cur.path = cur.astar:search(src, dst, stage)
-    else
-        cur.path = {}
-    end
 end
 
 -- return true if the current player is a human
