@@ -1,6 +1,10 @@
 -- update the battle screen
 function Screens.battle.update(state, inputs)
+    -- return early if an animation is playing
+    if Anim:play() then return end
+
     -- only move the camera if units have finished moving
+    -- TODO: get rid of this
     if Units.ready then
         if Units.delay > 0 then
             Units.delay = Units.delay - 1
