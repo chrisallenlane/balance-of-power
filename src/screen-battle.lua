@@ -20,13 +20,13 @@ function Screens.battle.update(state, inputs)
     if clear then
         state.player.cursor.vis = false
         Radius.clearAll(state.stage.units)
-        Seq:enqueue(Delay.anim(120))
+        Seq:enqueue(Anim.delay(120))
 
         -- handle 1-player games
         if state.players[2].cpu then
             if victor == 1 then
                 Banner:show(1, "victory")
-                Seq:enqueue(Delay.anim(300))
+                Seq:enqueue(Anim.delay(300))
                 Seq:enqueue(function()
                     Banner:hide()
                     state.stage:advance(Stages, Screens, state)
@@ -34,7 +34,7 @@ function Screens.battle.update(state, inputs)
                 end)
             else
                 Banner:show(2, "defeat")
-                Seq:enqueue(Delay.anim(300))
+                Seq:enqueue(Anim.delay(300))
                 Seq:enqueue(function()
                     Banner:hide()
                     state.screen = Screens.defeat
@@ -48,7 +48,7 @@ function Screens.battle.update(state, inputs)
             Banner:show(victor, "player " .. victor .. " victory")
 
             -- delay, then go to the title screen (or where?)
-            Seq:enqueue(Delay.anim(300))
+            Seq:enqueue(Anim.delay(300))
             Seq:enqueue(function()
                 Banner:hide()
                 state.screen = Screens.title

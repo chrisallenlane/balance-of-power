@@ -1,7 +1,8 @@
 -- initialize the class metatable
-Delay = {}
+Anim = {}
 
-function Delay.anim(frames)
+-- delay `delay` frames
+function Anim.delay(frames)
     local d = {frames = frames}
     return function()
         d.frames = d.frames - 1
