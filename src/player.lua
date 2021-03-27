@@ -98,22 +98,26 @@ function Player.battle.update(state, inputs)
             if yes:once() then
                 -- move the unit
                 cur.unit.sel:move(cur.cell.x, cur.cell.y)
+                cur.unit.sel.radius.vis = false
 
                 -- deactivate all *other* units belonging to the player
                 Units.deactivate(stage.units, player.num)
                 cur.unit.sel:activate()
 
-                -- reset the animation delay
-                Units.delay = 30
-
-                -- end the player's turn if the unit is exhausted
-                if cur.unit.sel:attacked() or cur.unit.sel.stat.atk == 0 or
-                    cur.unit.sel.stat.rng == 0 then
-                    player:turn_end(state)
-                    -- otherwise, show the attack radius
-                else
-                    cur.unit.sel.radius:update(cur.unit.sel, stage, player.num)
-                end
+                -- enqueue animations
+                Seq:enqueue(Anim.trans(cur.unit.sel, cur.cell.x, cur.cell.y))
+                Seq:enqueue(function()
+                    -- end the player's turn if the unit is exhausted
+                    if cur.unit.sel:attacked() or cur.unit.sel.stat.atk == 0 or
+                        cur.unit.sel.stat.rng == 0 then
+                        player:turn_end(state)
+                        -- otherwise, show the attack radius
+                    else
+                        cur.unit.sel.radius:update(cur.unit.sel, stage,
+                                                   player.num)
+                    end
+                    return true
+                end)
             end
 
             -- show the "end turn" menu
@@ -163,5 +167,10 @@ function Player:turn_end(state)
     end
 
     -- center the screen on the specified coordinates
-    state.camera:focus(cur.cell.x, cur.cell.y, stage.cell.w, stage.cell.h, 4)
+    state.camera:focus(state.player.cursor.cell.x, state.player.cursor.cell.y,
+                       state)
+
+    Seq:enqueue(Anim.delay(30))
+    Seq:enqueue(Anim.trans(state.camera, state.camera.cell.x,
+                           state.camera.cell.y))
 end

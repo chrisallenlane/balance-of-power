@@ -14,7 +14,7 @@ function Unit:new(u)
     u.stat = u.stat or {atk = 5, rng = 2, mov = 3}
 
     -- compute the pixel position from the cell position
-    u.px = u.px or {x = u.cell.x * 8, y = u.cell.y * 8}
+    u.px = {x = u.cell.x * 8, y = u.cell.y * 8}
 
     -- track actions taken
     u.act = u.act or {atk = false, mov = false}

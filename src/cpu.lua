@@ -22,15 +22,17 @@ function CPU.battle.update(state)
         mv = mv * -1
     end
 
+    local newx, newy = unit.cell.x + mv, unit.cell.y
+
     -- move the unit and end the turn
-    unit:move(unit.cell.x + mv, unit.cell.y)
+    unit:move(newx, newy)
+
+    Seq:enqueue(Anim.delay(30))
+    Seq:enqueue(Anim.trans(unit, newx, newy))
+
     -- KLUDGE
     player.cursor.cell.x = unit.cell.x + mv
     player.cursor.cell.y = unit.cell.y
-
-    -- reset delays
-    CPU.delay = 30
-    Units.delay = 30
 
     -- end the CPU turn
     player:turn_end(state)

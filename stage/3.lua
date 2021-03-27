@@ -7,6 +7,11 @@ add(Stages, function ()
         body = "lorem ipsum dolor sit amet.",
     },
 
+    -- palette swaps
+    swap = {
+        {12, 1},
+    },
+
     camera = {x = 16, y = 16},
 
     cell = {x = 48, y = 0, w = 32, h = 32},

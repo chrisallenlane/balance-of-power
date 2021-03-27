@@ -10,6 +10,7 @@ add(Stages, function ()
     -- palette swaps
     swap = {
         {3, 15},
+        {11, 15},
     },
 
     camera = {x = 0, y = 16},

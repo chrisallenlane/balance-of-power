@@ -2,7 +2,7 @@
 Camera = {}
 
 function Camera:new()
-    local c = {ready = false, cell = {x = 0, y = 0}, px = {x = 0, y = 0}}
+    local c = {cell = {x = 0, y = 0}, px = {x = 0, y = 0}}
     setmetatable(c, self)
     self.__index = self
     return c
@@ -10,10 +10,6 @@ end
 
 -- update camera state
 function Camera:update(state)
-    -- assume that the camera is ready
-    -- TODO: refactor away self.ready
-    self.ready = true
-
     local cursor, stage = state.player.cursor, state.stage
 
     -- track camera position as cell coordinates, and compare those coordinates
@@ -36,23 +32,22 @@ function Camera:update(state)
     -- scrolling look smoother.
     if self.px.x < self.cell.x * 8 then
         self.px.x = self.px.x + 4
-        self.ready = false
     elseif self.px.x > self.cell.x * 8 then
         self.px.x = self.px.x - 4
-        self.ready = false
     end
 
     if self.px.y < self.cell.y * 8 then
         self.px.y = self.px.y + 4
-        self.ready = false
     elseif self.px.y > self.cell.y * 8 then
         self.px.y = self.px.y - 4
-        self.ready = false
     end
 end
 
--- move the camera to the specified grid position
-function Camera:focus(x, y, w, h)
+-- focus the camera on the specified grid position
+-- TODO: parameterize wiggle?
+function Camera:focus(x, y, state)
+    local w, h = state.stage.cell.w, state.stage.cell.h
+
     -- Apply offsets to center on the specified coordinates. (An offset of 8
     -- is being applied because the screen is 16 cells wide.)
     x, y = x - 8, y - 8

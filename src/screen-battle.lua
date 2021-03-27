@@ -3,15 +3,7 @@ function Screens.battle.update(state, inputs)
     -- return early if an animation is playing
     if Seq:play() then return end
 
-    -- only move the camera if units have finished moving
-    -- TODO: get rid of this
-    if Units.ready then
-        if Units.delay > 0 then
-            Units.delay = Units.delay - 1
-        else
-            state.camera:update(state)
-        end
-    end
+    state.camera:update(state)
 
     -- determine if the stage has been cleared
     local clear, victor = Stage.clear(state)
@@ -59,25 +51,23 @@ function Screens.battle.update(state, inputs)
         return
     end
 
-    -- do not run player/CPU update loops if a lock is engaged
-    if state.camera.ready and Units.ready then
-        if state.player:human(state.players) then
-            -- update the menu if it is visible
-            if state.menu then
-                state.menu:update(state, inputs)
-                return
-            end
-            -- update the cursor state
-            state.player.cursor:update(state.stage, inputs)
-
-            -- update the battle state
-            Player.battle.update(state, inputs)
-        else
-            CPU.battle.update(state)
+    -- run the command loop
+    if state.player:human(state.players) then
+        -- update the menu if it is visible
+        if state.menu then
+            state.menu:update(state, inputs)
+            return
         end
+        -- update the cursor state
+        state.player.cursor:update(state.stage, inputs)
+
+        -- update the battle state
+        Player.battle.update(state, inputs)
+    else
+        CPU.battle.update(state)
     end
 
-    Units.update(state)
+    -- Units.update(state)
 end
 
 -- draw the battle screen
@@ -98,7 +88,7 @@ function Screens.battle.draw(state)
     -- draw the cursor (if the player is a human)
     if state.player:human(state.players) then state.player.cursor:draw() end
 
-    -- draw units and their radii
+    -- draw units
     Units.draw(state)
 
     -- draw menus
