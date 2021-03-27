@@ -122,6 +122,7 @@ globals = {
 	"Radius",
 	"SFX",
 	"Screens",
+	"Seq",
 	"Stage",
 	"Stages",
 	"State",

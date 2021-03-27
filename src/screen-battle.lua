@@ -1,7 +1,7 @@
 -- update the battle screen
 function Screens.battle.update(state, inputs)
     -- return early if an animation is playing
-    if Anim:play() then return end
+    if Seq:play() then return end
 
     -- only move the camera if units have finished moving
     -- TODO: get rid of this
@@ -20,22 +20,22 @@ function Screens.battle.update(state, inputs)
     if clear then
         state.player.cursor.vis = false
         Radius.clearAll(state.stage.units)
-        Anim:enqueue(Delay.anim(120))
+        Seq:enqueue(Delay.anim(120))
 
         -- handle 1-player games
         if state.players[2].cpu then
             if victor == 1 then
                 Banner:show(1, "victory")
-                Anim:enqueue(Delay.anim(300))
-                Anim:enqueue(function()
+                Seq:enqueue(Delay.anim(300))
+                Seq:enqueue(function()
                     Banner:hide()
                     state.stage:advance(Stages, Screens, state)
                     return true
                 end)
             else
                 Banner:show(2, "defeat")
-                Anim:enqueue(Delay.anim(300))
-                Anim:enqueue(function()
+                Seq:enqueue(Delay.anim(300))
+                Seq:enqueue(function()
                     Banner:hide()
                     state.screen = Screens.defeat
                     return true
@@ -48,8 +48,8 @@ function Screens.battle.update(state, inputs)
             Banner:show(victor, "player " .. victor .. " victory")
 
             -- delay, then go to the title screen (or where?)
-            Anim:enqueue(Delay.anim(300))
-            Anim:enqueue(function()
+            Seq:enqueue(Delay.anim(300))
+            Seq:enqueue(function()
                 Banner:hide()
                 state.screen = Screens.title
                 return true
