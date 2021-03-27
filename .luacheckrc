@@ -74,6 +74,7 @@ globals = {
 	"shl",
 	"shr",
 	"sin",
+	"split",
 	"spr",
 	"sqrt",
 	"srand",

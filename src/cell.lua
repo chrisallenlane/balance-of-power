@@ -7,62 +7,22 @@ function Cell.init()
     -- create an infinity value
     local inf = 1 / 0
 
-    -- road tiles
-    local road = {
-        71,
-        72,
-        73,
-        74,
-        75,
-        87,
-        88,
-        89,
-        90,
-        91,
-        103,
-        104,
-        105,
-        119,
-        120,
-        121,
-    }
-
-    -- forest tiles
-    local forest = {
-        76,
-        77,
-        78,
-        79,
-        92,
-        93,
-        94,
-        95,
-        106,
-        107,
-        108,
-        109,
-        110,
-        111,
-        122,
-        123,
-        124,
-        125,
-        126,
-        127,
-    }
-
-    -- (impassible) shore tiles
-    local shore = {101, 102, 117, 118}
-
-    -- water tiles
-    local water = {96, 112}
-
-    -- aggregate tiles to process
+    -- enumerate tile costs (in a token-efficient way)
     local costs = {
-        {tiles = road, cost = 0.5},
-        {tiles = forest, cost = 1.5},
-        {tiles = shore, cost = inf},
-        {tiles = water, cost = inf},
+        -- road
+        {
+            tiles = split(
+                "71,72,73,74,75,87,88,89,90,91,103,104,105,119,120,121"),
+            cost = 0.5,
+        },
+        -- forest
+        {
+            tiles = split(
+                "76,77,78,79,92,93,94,95,106,107,108,109,110,111,122,123,124,125,126,127"),
+            cost = 1.5,
+        },
+        -- impassible (shore/water)
+        {tiles = split("96,101,102,112,117,118"), cost = inf},
     }
 
     -- build a map of [tile number] => [traversal cost]
