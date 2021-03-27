@@ -9,6 +9,9 @@ function Cursor:new()
         -- TODO: remove the `unit` wrapper if I never add additional properties
         unit = {sel = nil},
 
+        -- is the cursor visible?
+        vis = true,
+
         -- frame counter used for animations
         frame = 0,
     }
@@ -53,6 +56,10 @@ end
 
 -- render the cursor
 function Cursor:draw()
+    -- end early if the cursor is not visible
+    if not self.vis then return end
+
+    -- choose the appropriate sprite
     local sprite = 4
     if self.frame < 30 then
         sprite = 5

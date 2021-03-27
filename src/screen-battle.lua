@@ -18,6 +18,7 @@ function Screens.battle.update(state, inputs)
 
     -- handle stage clears
     if clear then
+        state.player.cursor.vis = false
         Radius.clearAll(state.stage.units)
         Anim:enqueue(Delay.anim(120))
 
