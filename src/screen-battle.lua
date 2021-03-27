@@ -17,10 +17,17 @@ function Screens.battle.update(state, inputs)
     local clear, victor = Stage.clear(state)
 
     -- handle 1-player games
+    -- TODO: move `clear` to the topmost `if`
     if state.players[2].cpu then
         if clear and victor == 1 then
-            -- TODO: display "victory" banner
-            state.stage:advance(Stages, Screens, state)
+            Radius.clearAll(state.stage.units)
+            Banner:show(1, "victory")
+            Anim:enqueue(Delay.anim(300))
+            Anim:enqueue(function()
+                Banner:hide()
+                state.stage:advance(Stages, Screens, state)
+                return true
+            end)
             return
         elseif clear and victor == 2 then
             -- TODO: display "defeat" banner
@@ -93,6 +100,9 @@ function Screens.battle.draw(state)
 
     -- draw the info bar
     Info:draw(state)
+
+    -- draw the victory/loss banner
+    Banner:draw(state)
 
     -- display debug output (if so configured)
     if DEBUG_SHOW then Debug.vars(state) end

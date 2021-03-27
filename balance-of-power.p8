@@ -20,8 +20,10 @@ Menus, Stages = {}, {}
 
 -- load assets (order independent)
 #include src/anim.lua
+#include src/banner.lua
 #include src/cell.lua
 #include src/cpu.lua
+#include src/delay.lua
 #include src/info.lua
 #include src/input.lua
 #include src/inputs.lua
