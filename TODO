@@ -10,15 +10,13 @@ Backlog:
   - Art: feat: title, victory, defeat screens
   - Attack: bug: attack radius doesn't account for need to move
   - Attack: counterattacking
-  - Attack: line-of-fire obstructions
-  - Base: implement bases?
   - CPU: implement 1-player enemy AI
+  - Camera: smooth movement
   - Cursor: feat: create toggle to "permanently" display enemy radii
-  - Cursor: refactor: use "real" `Cell` objects
   - Dialogue?
   - Info: hide info bar when cursor occludes
   - Info: show/hide bar animation
-  - Resource: implement map resources?
+  - Radius: refactor: use "real" `Cell` objects
   - Tooling: feat: Implement benchmarking harness
 
 ----
@@ -29,14 +27,3 @@ SFX:
   - turn end
   - unit explode
   - unit move
-
-----
-Animations:
-  - bar show/hide(lock: nothing)
-  - improve cursor (lock: nothing)
-  - screen transistion? (lock: camera, cursor)
-  - unit damage (lock: camera, cursor)
-  - unit explode (lock: camera, cursor)
-  - unit move (lock: camera, cursor)
-  - victory/loss banner (lock: camera, cursor)
-  - weapon fire (lock: camera, cursor)
