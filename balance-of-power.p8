@@ -8,38 +8,44 @@ DEBUG_SHOW = false
 -- enable/disable debugging "cheat" functions
 DEBUG_CHEAT = true
 
--- externalize non-media assets
-#include src/string.lua
-#include src/radius.lua
-#include src/player.lua
-#include src/screens.lua
-#include src/screen-battle.lua
-#include src/screen-title.lua
-#include src/screen-intr.lua
-#include src/screen-victory.lua
-#include src/screen-defeat.lua
+-- initialize globals
+Menus, Stages = {}, {}
+
+-- build the `State` object (order dependent)
 #include src/camera.lua
 #include src/cursor.lua
+#include src/player.lua
+#include src/screens.lua
 #include src/state.lua
-#include src/menus.lua
-#include src/menu-title.lua
-#include src/menu-balance.lua
-#include src/menu-target.lua
-#include src/menu-turn-end.lua
-#include src/info.lua
+
+-- load assets (order independent)
+#include src/cell.lua
 #include src/cpu.lua
-#include src/sfx.lua
+#include src/info.lua
 #include src/input.lua
 #include src/inputs.lua
-#include src/cell.lua
-#include src/camera.lua
+#include src/menu-balance.lua
+#include src/menu-target.lua
+#include src/menu-title.lua
+#include src/menu-turn-end.lua
+#include src/radius.lua
+#include src/screen-battle.lua
+#include src/screen-defeat.lua
+#include src/screen-intr.lua
+#include src/screen-title.lua
+#include src/screen-victory.lua
+#include src/sfx.lua
+#include src/stage.lua
+#include src/string.lua
 #include src/unit.lua
 #include src/units.lua
-#include src/stage.lua
-#include src/stages.lua
+
+-- load stages
 #include stage/1.lua
 #include stage/2.lua
 #include stage/3.lua
+
+-- load main
 #include src/debug.lua
 #include src/main.lua
 
