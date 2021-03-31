@@ -1,3 +1,4 @@
+require("../src/radius")
 require("../src/unit")
 
 describe("unit", function()
@@ -16,6 +17,7 @@ describe("unit", function()
                 pwr = 10,
                 px = {x = 24, y = 32},
                 spr = 1,
+                radius = Radius:new(),
                 stat = {atk = 5, mov = 3, rng = 2},
             }
 

@@ -135,9 +135,8 @@ function Radius:draw(friend)
     self:remove('atk', self.center.x, self.center.y)
 
     -- draw the movement radius
-    -- NB: the bitshifting just multiplies by 8
     for x, cell in pairs(self.cells.mov) do
-        for y, _ in pairs(cell) do spr(sprite, x << 3, y << 3) end
+        for y, _ in pairs(cell) do spr(sprite, x * 8, y * 8) end
     end
 
     -- draw the attack radius
@@ -150,7 +149,7 @@ function Radius:draw(friend)
             -- slightly faster than drawing the movement radius on top of the
             -- attack radius
             if not self:contains('mov', x, y) then
-                spr(sprite, x << 3, y << 3)
+                spr(sprite, x * 8, y * 8)
             end
         end
         pal()

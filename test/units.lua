@@ -1,3 +1,4 @@
+require("../src/radius")
 require("../src/unit")
 require("../src/units")
 
