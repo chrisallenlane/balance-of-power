@@ -8,7 +8,6 @@ Backlog:
   - Animation: feat: unit explosion
   - Animation: feat: weapon fire
   - Art: feat: title, victory, defeat screens
-  - Attack: bug: attack radius doesn't account for need to move
   - Attack: counterattacking
   - CPU: implement 1-player enemy AI
   - Camera: smooth movement

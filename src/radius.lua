@@ -3,8 +3,8 @@ Radius = {}
 function Radius:new()
     local r = {
         center = {x = nil, y = nil},
-        cells = {atk = {}, mov = {}},
-        cache = {atk = {}, mov = {}},
+        cells = {atk = {}, dng = {}, mov = {}},
+        cache = {atk = {}, dng = {}, mov = {}},
         vis = false,
     }
 
@@ -32,6 +32,7 @@ function Radius:update(unit, stage, turn)
     if not unit:attacked() and unit.stat.atk > 0 then
         -- don't "pay for" the cell where the unit is placed
         self:append('mov', unit.cell.x, unit.cell.y)
+        self:dng(self.center.x, self.center.y, unit.stat.rng, stage)
         self:atk(self.center.x, self.center.y, unit.stat.rng, stage)
     end
 
@@ -64,6 +65,24 @@ function Radius:atk(x, y, rng, stage)
     -- exit early if we've visited this cell before (with `rng` range points remaining)
     if self:cached('atk', x, y, rng) then return end
 
+    -- pay the range cost
+    rng = rng - 1
+
+    -- exit early if we have exhausted our attack radius
+    if rng < 0 then return end
+
+    -- iteratively search this cell's neighbors
+    for _, cell in pairs(Cell.neighbors(x, y, stage)) do
+        self:append('atk', cell.x, cell.y)
+        self:atk(cell.x, cell.y, rng, stage)
+    end
+end
+
+-- Compute a danger radius centered on `x`, `y`
+function Radius:dng(x, y, rng, stage)
+    -- exit early if we've visited this cell before (with `rng` range points remaining)
+    if self:cached('dng', x, y, rng) then return end
+
     -- cells within the movement radius are implicitly within the attack
     -- radius, so we get those "for free".
     if not self:contains('mov', x, y) then rng = rng - 1 end
@@ -73,8 +92,8 @@ function Radius:atk(x, y, rng, stage)
 
     -- iteratively search this cell's neighbors
     for _, cell in pairs(Cell.neighbors(x, y, stage)) do
-        self:append('atk', cell.x, cell.y)
-        self:atk(cell.x, cell.y, rng, stage)
+        self:append('dng', cell.x, cell.y)
+        self:dng(cell.x, cell.y, rng, stage)
     end
 end
 
@@ -112,8 +131,8 @@ end
 
 -- reset the radius coordinates
 function Radius:clear()
-    self.cache = {atk = {}, mov = {}}
-    self.cells = {atk = {}, mov = {}}
+    self.cache = {atk = {}, dng = {}, mov = {}}
+    self.cells = {atk = {}, dng = {}, mov = {}}
     self.vis = false
 end
 
@@ -132,7 +151,7 @@ function Radius:draw(friend)
 
     -- don't draw an indicator at the center of the radii
     self:remove('mov', self.center.x, self.center.y)
-    self:remove('atk', self.center.x, self.center.y)
+    self:remove('dng', self.center.x, self.center.y)
 
     -- draw the movement radius
     for x, cell in pairs(self.cells.mov) do
@@ -140,7 +159,7 @@ function Radius:draw(friend)
     end
 
     -- draw the attack radius
-    for x, cell in pairs(self.cells.atk) do
+    for x, cell in pairs(self.cells.dng) do
         -- NB: the palette swapping accomplishes nothing when rendering a
         -- foe's danger radius, but that's fine.
         pal(1, 8)
