@@ -20,8 +20,7 @@ function Radius:update(unit, stage, turn)
     self:clear()
 
     -- annotate the center of the radii
-    self.center.x = unit.cell.x
-    self.center.y = unit.cell.y
+    self.center.x, self.center.y = unit.cell.x, unit.cell.y
 
     -- NB: we're computing the movement and attack radii separately. That's
     -- not computationally optimial, but much simpler to understand.
@@ -148,11 +147,6 @@ function Radius:draw(friend)
     -- choose the sprite to render
     local sprite = 2
     if not friend then sprite = 3 end
-
-    -- don't draw an indicator at the center of the radii
-    self:remove('atk', self.center.x, self.center.y)
-    self:remove('dng', self.center.x, self.center.y)
-    self:remove('mov', self.center.x, self.center.y)
 
     -- draw the movement radius
     for x, cell in pairs(self.cells.mov) do

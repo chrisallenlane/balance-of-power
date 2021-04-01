@@ -8,9 +8,7 @@ function Input:new(btn)
     self.__index = self
 
     -- instance properties
-    i.frame = 1
-    i.wait = 8
-    i.pressed = {cur = false, prev = false}
+    i.frame, i.wait, i.pressed = 1, 8, {cur = false, prev = false}
 
     return i
 end

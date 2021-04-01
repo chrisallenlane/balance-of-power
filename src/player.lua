@@ -12,13 +12,9 @@ function Player:new(p)
 end
 
 function Player.battle.update(state, inputs)
-    -- for brevity
-    local yes = inputs.yes
-    local no = inputs.no
-
-    local player = state.player
-    local stage = state.stage
-    local cur = player.cursor
+    -- reclaim tokens
+    local yes, no = inputs.yes, inputs.no
+    local cur, player, stage = state.player.cursor, state.player, state.stage
 
     -- determine whether a unit is beneath the cursor
     local unit, idx = Units.at(cur.cell.x, cur.cell.y, stage.units)

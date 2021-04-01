@@ -9,8 +9,7 @@ function Menus.Target:open(unit, idx, state)
     state.menu = self
 
     -- bind params
-    self.unit = unit
-    self.idx = idx
+    self.idx, self.unit = idx, unit
 end
 
 -- TODO: disallow targeting a system with 0 power
@@ -18,17 +17,13 @@ end
 function Menus.Target:update(state, inputs)
     Info:set("target", "cancel", self.unit)
 
-    -- for brevity
-    local player = state.player
-    local cursor = player.cursor
-    local stage = state.stage
-    local units = stage.units
+    -- reclaim tokens
+    local player, stage = state.player, state.stage
+    local sel, units = player.cursor.unit.sel, stage.units
 
     -- cancel the balance and close the menu
     if inputs.no:once() then
-        state.menu = nil
-        self.unit = nil
-        self.idx = nil
+        self.idx, self.unit, state.menu = nil, nil, nil
         return
     end
 
@@ -45,23 +40,23 @@ function Menus.Target:update(state, inputs)
         state.menu = nil
 
         -- attack the enemy unit
-        local killed = cursor.unit.sel:attack(self.unit, self.choices[self.sel],
-                                              cursor.unit.sel.stat.atk)
+        local killed = sel:attack(self.unit, self.choices[self.sel],
+                                  sel.stat.atk)
 
         -- delete the enemy unit if it has been destroyed
         if killed then Units.die(self.idx, units) end
 
         -- deactivate all *other* units belonging to the player
         Units.deactivate(units, player.num)
-        cursor.unit.sel:activate()
+        sel:activate()
 
         -- end the player's turn if the unit is exhausted
-        if cursor.unit.sel:moved() or cursor.unit.sel.stat.mov == 0 then
+        if sel:moved() or sel.stat.mov == 0 then
             player:turn_end(state)
             -- otherwise, show the movement radius
         else
             -- XXX: is this correct?
-            cursor.unit.sel.radius:update(cursor.unit.sel, stage, player.num)
+            sel.radius:update(sel, stage, player.num)
         end
     end
 end
@@ -69,12 +64,10 @@ end
 -- draw the "power balance" menu
 function Menus.Target:draw(state)
     -- padding to align the menu location with the camera
-    local camMarginX = state.camera.px.x
-    local camMarginY = state.camera.px.y
+    local camMarginX, camMarginY = state.camera.px.x, state.camera.px.y
 
     -- the menu dimensions
-    local menuWidth = 62
-    local menuHeight = 28
+    local menuWidth, menuHeight = 62, 28
 
     -- padding applied inside the camera box
     local menuMarginX = (128 - menuWidth) / 2

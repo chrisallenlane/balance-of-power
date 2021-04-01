@@ -9,9 +9,7 @@ function Menus.Balance:open(unit, idx, state)
     state.menu = self
 
     -- bind params
-    self.unit = Unit.clone(unit)
-    self.orig = Unit.clone(unit)
-    self.idx = idx
+    self.orig, self.unit, self.idx = Unit.clone(unit), Unit.clone(unit), idx
 end
 
 -- update balance menu state
@@ -26,9 +24,7 @@ function Menus.Balance:update(state, inputs)
     -- cancel the balance and close the menu
     if inputs.no:once() then
         state.stage.units[self.idx] = self.orig
-        state.menu = nil
-        self.unit = nil
-        self.orig = nil
+        state.menu, self.unit, self.orig = nil, nil, nil
         return
     end
 
@@ -65,38 +61,32 @@ function Menus.Balance:update(state, inputs)
         if inputs.yes:once() then
             stage.units[self.idx] = Unit.clone(unit)
             player:turn_end(state)
-            state.menu = nil
-            self.unit = nil
+            self.unit, state.menu = nil, nil
         end
     else
         Info:set("cancel", "cancel", unit)
-        if inputs.yes:once() then
-            state.menu = nil
-            self.unit = nil
-        end
+        if inputs.yes:once() then self.unit, state.menu = nil, nil end
     end
 end
 
 function Menus.Balance:changed()
-    return
-        not (self.unit.stat.atk == self.orig.stat.atk and self.unit.stat.rng ==
-            self.orig.stat.rng and self.unit.stat.mov == self.orig.stat.mov)
+    local unit, orig = self.unit.stat, self.orig.stat
+
+    return not (unit.atk == orig.atk and unit.rng == orig.rng and unit.mov ==
+               orig.mov)
 end
 
 -- draw the "power balance" menu
 function Menus.Balance:draw(state)
     -- padding to align the menu location with the camera
-    local camMarginX = state.camera.px.x
-    local camMarginY = state.camera.px.y
+    local camMarginX, camMarginY = state.camera.px.x, state.camera.px.y
 
     -- the menu dimensions
-    local menuWidth = 62
-    local menuHeight = 36
+    local menuWidth, menuHeight, menuPad = 62, 36, 4
 
     -- padding applied inside the camera box
     local menuMarginX = (128 - menuWidth) / 2
     local menuMarginY = (128 - menuHeight) / 2
-    local menuPad = 4
 
     -- padding applied between rows
     local rowPadY = 0

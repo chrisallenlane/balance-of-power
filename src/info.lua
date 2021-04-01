@@ -2,9 +2,7 @@ Info = {yes = "", no = "", unit = nil}
 
 -- Set info values
 function Info:set(yes, no, unit)
-    self.yes = yes
-    self.no = no
-    self.unit = unit
+    self.yes, self.no, self.unit = yes, no, unit
 end
 
 -- Draw the info box
@@ -15,29 +13,31 @@ function Info:draw(state)
     if yes == "" and no == "" then return end
 
     -- padding to align the menu location with the camera
-    local camX = state.camera.px.x
-    local camY = state.camera.px.y
+    local camX, camY = state.camera.px.x, state.camera.px.y
+
+    -- text position
+    local textY = camY + 120
 
     -- draw the menu background
     rectfill(camX, camY + 117, camX + 128, camY + 128, 0)
 
     -- if both buttons do the same thing, combine them
     if yes ~= "" and yes == no then
-        print("\142", camX + 4, camY + 120, 5)
-        print("/", camX + 12, camY + 120, 7)
-        print("\151", camX + 16, camY + 120, 5)
-        print(yes, camX + 25, camY + 120, 7)
+        print("\142", camX + 4, textY, 5)
+        print("/", camX + 12, textY, 7)
+        print("\151", camX + 16, textY, 5)
+        print(yes, camX + 25, textY, 7)
     else
         -- confirm
         if yes ~= "" then
-            print("\142", camX + 4, camY + 120, 5)
-            print(yes, camX + 13, camY + 120, 7)
+            print("\142", camX + 4, textY, 5)
+            print(yes, camX + 13, textY, 7)
         end
 
         -- cancel
         if no ~= "" then
-            print("\151", camX + 17 + (#yes * 4), camY + 120, 5)
-            print(no, camX + 26 + (#yes * 4), camY + 120, 7)
+            print("\151", camX + 17 + (#yes * 4), textY, 5)
+            print(no, camX + 26 + (#yes * 4), textY, 7)
         end
     end
 
@@ -46,16 +46,16 @@ function Info:draw(state)
         local stat = self.unit.stat
 
         -- atk
-        print("a", camX + 99, camY + 120, 7)
-        print(stat.atk, camX + 103, camY + 120, self.colorize(stat.atk))
+        print("a", camX + 99, textY, 7)
+        print(stat.atk, camX + 103, textY, self.colorize(stat.atk))
 
         -- mov
-        print("m", camX + 117, camY + 120, 7)
-        print(stat.mov, camX + 121, camY + 120, self.colorize(stat.mov))
+        print("m", camX + 117, textY, 7)
+        print(stat.mov, camX + 121, textY, self.colorize(stat.mov))
 
         -- rng
-        print("r", camX + 108, camY + 120, 7)
-        print(stat.rng, camX + 112, camY + 120, self.colorize(stat.rng))
+        print("r", camX + 108, textY, 7)
+        print(stat.rng, camX + 112, textY, self.colorize(stat.rng))
     end
 end
 

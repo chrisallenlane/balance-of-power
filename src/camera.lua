@@ -9,42 +9,23 @@ function Camera:new()
 end
 
 -- update camera state
-function Camera:update(state)
-    local cursor, stage = state.player.cursor, state.stage
+function Camera:update()
+    local destx, desty = self.cell.x * 8, self.cell.y * 8
 
-    -- track camera position as cell coordinates, and compare those coordinates
-    -- to the cursor and screen position.
-    -- right/left
-    if cursor.cell.x - self.cell.x > 11 and self.cell.x < stage.cell.w - 16 then
-        self.cell.x = self.cell.x + 1
-    elseif self.cell.x > 0 and cursor.cell.x - self.cell.x < 4 then
-        self.cell.x = self.cell.x - 1
-    end
-
-    -- down/up
-    if cursor.cell.y - self.cell.y > 11 and self.cell.y < stage.cell.h - 16 then
-        self.cell.y = self.cell.y + 1
-    elseif self.cell.y > 0 and cursor.cell.y - self.cell.y < 4 then
-        self.cell.y = self.cell.y - 1
-    end
-
-    -- Track camera pixel position. Ease toward the cell coordinates to make
-    -- scrolling look smoother.
-    if self.px.x < self.cell.x * 8 then
+    if self.px.x < destx then
         self.px.x = self.px.x + 1
-    elseif self.px.x > self.cell.x * 8 then
+    elseif self.px.x > destx then
         self.px.x = self.px.x - 1
     end
 
-    if self.px.y < self.cell.y * 8 then
+    if self.px.y < desty then
         self.px.y = self.px.y + 1
-    elseif self.px.y > self.cell.y * 8 then
+    elseif self.px.y > desty then
         self.px.y = self.px.y - 1
     end
 end
 
 -- focus the camera on the specified grid position
--- TODO: parameterize wiggle?
 function Camera:focus(x, y, state)
     local w, h = state.stage.cell.w, state.stage.cell.h
 

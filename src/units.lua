@@ -16,10 +16,8 @@ function Units.first(player, units)
     for _, unit in pairs(units) do
         if unit.player == player then return unit end
     end
-
     -- NB: we realistically should never end up here
     -- TODO: throw exception if we somehow do
-    return false
 end
 
 -- draw the units

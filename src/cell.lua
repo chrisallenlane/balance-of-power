@@ -103,19 +103,15 @@ end
 
 -- return the set of cells adjacent to the specified cell
 function Cell.neighbors(x, y, stage)
-    local neighbors = {}
+    local cell, nbrs = stage.cell, {}
 
     -- add cells, while being mindful to stay in bounds
-    if x + 1 < stage.cell.w then
-        add(neighbors, Cell:new(x + 1, y, stage.cell.w))
-    end
-    if x - 1 >= 0 then add(neighbors, Cell:new(x - 1, y, stage.cell.w)) end
-    if y + 1 < stage.cell.h then
-        add(neighbors, Cell:new(x, y + 1, stage.cell.w))
-    end
-    if y - 1 >= 0 then add(neighbors, Cell:new(x, y - 1, stage.cell.w)) end
+    if x + 1 < cell.w then add(nbrs, Cell:new(x + 1, y, cell.w)) end
+    if x - 1 >= 0 then add(nbrs, Cell:new(x - 1, y, cell.w)) end
+    if y + 1 < cell.h then add(nbrs, Cell:new(x, y + 1, cell.w)) end
+    if y - 1 >= 0 then add(nbrs, Cell:new(x, y - 1, cell.w)) end
 
-    return neighbors
+    return nbrs
 end
 
 -- returns `true` if cells `a` and `b` are equal

@@ -3,6 +3,8 @@ function Screens.battle.update(state, inputs)
     -- return early if an animation is playing
     if Seq:play() then return end
 
+    state.camera:focus(state.player.cursor.cell.x, state.player.cursor.cell.y,
+                       state)
     state.camera:update(state)
 
     -- determine if the stage has been cleared

@@ -23,12 +23,9 @@ function Menus.Title:draw(_)
     local y = 50
 
     for i, choice in ipairs(self.choices) do
-        if i == self.sel then
-            print("* " .. choice, 20, y, 1)
-        else
-            print("  " .. choice, 20, y, 1)
-        end
-
+        local mark = "  "
+        if i == self.sel then mark = "* " end
+        print(mark .. choice, 20, y, 1)
         y = y + 10
     end
 end

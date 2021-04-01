@@ -50,9 +50,7 @@ end
 
 -- Move moves a unit
 function Unit:move(to_x, to_y)
-    self.cell.x = to_x
-    self.cell.y = to_y
-    self.act.mov = true
+    self.cell.x, self.cell.y, self.act.mov = to_x, to_y, true
 end
 
 -- Attack attacks a unit
@@ -100,9 +98,7 @@ end
 
 -- Refresh the unit
 function Unit:refresh()
-    self.active = true
-    self.act.atk = false
-    self.act.mov = false
+    self.active, self.act.atk, self.act.mov = true, false, false
 end
 
 -- Return true if the unit has taken any action
