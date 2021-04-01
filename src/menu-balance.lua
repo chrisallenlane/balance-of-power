@@ -17,16 +17,18 @@ end
 -- update balance menu state
 function Menus.Balance:update(state, inputs)
     -- get the current unit
-    local unit = state.stage.units[self.idx]
+    self.unit = state.stage.units[self.idx]
 
     -- for convenience
-    local player, radius, stage = state.player, unit.radius, state.stage
+    local player, radius, stage, unit = state.player, self.unit.radius,
+                                        state.stage, self.unit
 
     -- cancel the balance and close the menu
     if inputs.no:once() then
+        state.stage.units[self.idx] = self.orig
         state.menu = nil
         self.unit = nil
-        radius:update(unit, stage, player.num)
+        self.orig = nil
         return
     end
 
@@ -39,22 +41,19 @@ function Menus.Balance:update(state, inputs)
 
     -- determine how much power has been allocated
     local alloc = 0
-    for _, stat in pairs(self.choices) do
-        alloc = alloc + self.unit.stat[stat]
-    end
+    for _, stat in pairs(self.choices) do alloc = alloc + unit.stat[stat] end
 
     -- get the selected stat
     local stat = self.choices[self.sel]
 
     -- adjust power levels
-    if inputs.left:rep() and self.unit.stat[stat] >= 1 then
+    if inputs.left:rep() and unit.stat[stat] >= 1 then
         SFX:play('power-down')
-        self.unit.stat[stat] = self.unit.stat[stat] - 1
+        unit.stat[stat] = unit.stat[stat] - 1
         radius:update(unit, stage, player.num)
-    elseif inputs.right:rep() and self.unit.stat[stat] < 5 and alloc <
-        self.unit.pwr then
+    elseif inputs.right:rep() and unit.stat[stat] < 5 and alloc < unit.pwr then
         SFX:play('power-up')
-        self.unit.stat[stat] = self.unit.stat[stat] + 1
+        unit.stat[stat] = unit.stat[stat] + 1
         radius:update(unit, stage, player.num)
     end
 
@@ -62,15 +61,15 @@ function Menus.Balance:update(state, inputs)
     -- update the unit and end the turn if and only if the unit stats have
     -- been modified
     if self:changed() then
-        Info:set("confirm", "cancel", self.unit)
+        Info:set("confirm", "cancel", unit)
         if inputs.yes:once() then
-            stage.units[self.idx] = Unit.clone(self.unit)
+            stage.units[self.idx] = Unit.clone(unit)
             player:turn_end(state)
             state.menu = nil
             self.unit = nil
         end
     else
-        Info:set("cancel", "cancel", self.unit)
+        Info:set("cancel", "cancel", unit)
         if inputs.yes:once() then
             state.menu = nil
             self.unit = nil
