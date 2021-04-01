@@ -150,23 +150,37 @@ function Radius:draw(friend)
     if not friend then sprite = 3 end
 
     -- don't draw an indicator at the center of the radii
-    self:remove('mov', self.center.x, self.center.y)
+    self:remove('atk', self.center.x, self.center.y)
     self:remove('dng', self.center.x, self.center.y)
+    self:remove('mov', self.center.x, self.center.y)
 
     -- draw the movement radius
     for x, cell in pairs(self.cells.mov) do
         for y, _ in pairs(cell) do spr(sprite, x * 8, y * 8) end
     end
 
-    -- draw the attack radius
+    -- draw the danger radius
     for x, cell in pairs(self.cells.dng) do
-        -- NB: the palette swapping accomplishes nothing when rendering a
-        -- foe's danger radius, but that's fine.
-        pal(1, 8)
+        if friend then
+            pal(10, 8)
+        else
+            pal(10, 14)
+        end
         for y, _ in pairs(cell) do
             -- NB: making this check and only drawing the necessary cells is
             -- slightly faster than drawing the movement radius on top of the
             -- attack radius
+            if not self:contains('mov', x, y) and not self:contains('atk', x, y) then
+                spr(6, x * 8, y * 8)
+            end
+        end
+        pal()
+    end
+
+    -- draw the attack radius
+    for x, cell in pairs(self.cells.atk) do
+        pal(1, 8)
+        for y, _ in pairs(cell) do
             if not self:contains('mov', x, y) then
                 spr(sprite, x * 8, y * 8)
             end
