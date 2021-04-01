@@ -10,7 +10,6 @@ Backlog:
   - Art: feat: title, victory, defeat screens
   - Attack: counterattacking
   - CPU: implement 1-player enemy AI
-  - Camera: smooth movement
   - Cursor: feat: create toggle to "permanently" display enemy radii
   - Dialogue?
   - Info: hide info bar when cursor occludes

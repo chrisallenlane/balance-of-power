@@ -31,15 +31,15 @@ function Camera:update(state)
     -- Track camera pixel position. Ease toward the cell coordinates to make
     -- scrolling look smoother.
     if self.px.x < self.cell.x * 8 then
-        self.px.x = self.px.x + 4
+        self.px.x = self.px.x + 1
     elseif self.px.x > self.cell.x * 8 then
-        self.px.x = self.px.x - 4
+        self.px.x = self.px.x - 1
     end
 
     if self.px.y < self.cell.y * 8 then
-        self.px.y = self.px.y + 4
+        self.px.y = self.px.y + 1
     elseif self.px.y > self.cell.y * 8 then
-        self.px.y = self.px.y - 4
+        self.px.y = self.px.y - 1
     end
 end
 
