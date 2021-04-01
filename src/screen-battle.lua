@@ -17,7 +17,10 @@ function Screens.battle.update(state, inputs)
         -- handle 1-player games
         if state.players[2].cpu then
             if victor == 1 then
-                Banner:show(1, "victory")
+                Seq:enqueue(function()
+                    Banner:show(1, "victory")
+                    return true
+                end)
                 Seq:enqueue(Anim.delay(300))
                 Seq:enqueue(function()
                     Banner:hide()
@@ -25,7 +28,10 @@ function Screens.battle.update(state, inputs)
                     return true
                 end)
             else
-                Banner:show(2, "defeat")
+                Seq:enqueue(function()
+                    Banner:show(2, "defeat")
+                    return true
+                end)
                 Seq:enqueue(Anim.delay(300))
                 Seq:enqueue(function()
                     Banner:hide()
@@ -37,7 +43,10 @@ function Screens.battle.update(state, inputs)
             -- handle 2-player games
         else
             -- display the winning player's banner
-            Banner:show(victor, "player " .. victor .. " victory")
+            Seq:enqueue(function()
+                Banner:show(victor, "player " .. victor .. " victory")
+                return true
+            end)
 
             -- delay, then go to the title screen (or where?)
             Seq:enqueue(Anim.delay(300))
