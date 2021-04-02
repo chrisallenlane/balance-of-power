@@ -3,9 +3,9 @@ Seq = {
     queue = {},
 }
 
--- TODO: accept an array of functions
-function Seq:enqueue(fn)
-    add(self.queue, fn)
+-- enqueue animations
+function Seq:enqueue(fns)
+    for _, fn in ipairs(fns) do add(self.queue, fn) end
 end
 
 function Seq:play()

@@ -101,19 +101,16 @@ function Player.battle.update(state, inputs)
                 cur.unit.sel:activate()
 
                 -- enqueue animations
-                Seq:enqueue(Anim.trans(cur.unit.sel, cur.cell.x, cur.cell.y))
-                Seq:enqueue(function()
-                    -- end the player's turn if the unit is exhausted
-                    if cur.unit.sel:attacked() or cur.unit.sel.stat.atk == 0 or
-                        cur.unit.sel.stat.rng == 0 then
-                        player:turn_end(state)
-                        -- otherwise, show the attack radius
-                    else
-                        cur.unit.sel.radius:update(cur.unit.sel, stage,
-                                                   player.num)
-                    end
-                    return true
-                end)
+                Seq:enqueue({Anim.trans(cur.unit.sel, cur.cell.x, cur.cell.y)})
+
+                -- end the player's turn if the unit is exhausted
+                if cur.unit.sel:attacked() or cur.unit.sel.stat.atk == 0 or
+                    cur.unit.sel.stat.rng == 0 then
+                    player:turn_end(state)
+                    -- otherwise, show the attack radius
+                else
+                    cur.unit.sel.radius:update(cur.unit.sel, stage, player.num)
+                end
             end
 
             -- show the "end turn" menu
@@ -166,7 +163,8 @@ function Player:turn_end(state)
     state.camera:focus(state.player.cursor.cell.x, state.player.cursor.cell.y,
                        state)
 
-    Seq:enqueue(Anim.delay(30))
-    Seq:enqueue(Anim.trans(state.camera, state.camera.cell.x,
-                           state.camera.cell.y))
+    Seq:enqueue({
+        Anim.delay(30),
+        Anim.trans(state.camera, state.camera.cell.x, state.camera.cell.y),
+    })
 end

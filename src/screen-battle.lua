@@ -14,49 +14,55 @@ function Screens.battle.update(state, inputs)
     if clear then
         state.player.cursor.vis = false
         Radius.clearAll(state.stage.units)
-        Seq:enqueue(Anim.delay(120))
+        Seq:enqueue({Anim.delay(120)})
 
         -- handle 1-player games
         if state.players[2].cpu then
             if victor == 1 then
-                Seq:enqueue(function()
-                    Banner:show(1, "victory")
-                    return true
-                end)
-                Seq:enqueue(Anim.delay(300))
-                Seq:enqueue(function()
-                    Banner:hide()
-                    state.stage:advance(Stages, Screens, state)
-                    return true
-                end)
+                Seq:enqueue({
+                    function()
+                        Banner:show(1, "victory")
+                        return true
+                    end,
+                    Anim.delay(300),
+                    function()
+                        Banner:hide()
+                        state.stage:advance(Stages, Screens, state)
+                        return true
+                    end,
+                })
             else
-                Seq:enqueue(function()
-                    Banner:show(2, "defeat")
-                    return true
-                end)
-                Seq:enqueue(Anim.delay(300))
-                Seq:enqueue(function()
-                    Banner:hide()
-                    state.screen = Screens.defeat
-                    return true
-                end)
+                Seq:enqueue({
+                    function()
+                        Banner:show(2, "defeat")
+                        return true
+                    end,
+                    Anim.delay(300),
+                    function()
+                        Banner:hide()
+                        state.screen = Screens.defeat
+                        return true
+                    end,
+                })
             end
 
             -- handle 2-player games
         else
             -- display the winning player's banner
-            Seq:enqueue(function()
-                Banner:show(victor, "player " .. victor .. " victory")
-                return true
-            end)
+            Seq:enqueue({
+                function()
+                    Banner:show(victor, "player " .. victor .. " victory")
+                    return true
+                end,
 
-            -- delay, then go to the title screen (or where?)
-            Seq:enqueue(Anim.delay(300))
-            Seq:enqueue(function()
-                Banner:hide()
-                state.screen = Screens.title
-                return true
-            end)
+                -- delay, then go to the title screen (or where?)
+                Anim.delay(300),
+                function()
+                    Banner:hide()
+                    state.screen = Screens.title
+                    return true
+                end,
+            })
         end
 
         return
