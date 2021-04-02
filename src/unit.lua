@@ -116,16 +116,6 @@ function Unit:deactivate()
     self.active = false
 end
 
--- Return true if the unit is a friend
-function Unit:friend(player)
-    return self.player == player
-end
-
--- Return true if the unit is an enemy
-function Unit:foe(player)
-    return self.player ~= player
-end
-
 -- Return the first functional unit system
 function Unit:functional()
     for _, stat in ipairs({'atk', 'rng', 'mov'}) do

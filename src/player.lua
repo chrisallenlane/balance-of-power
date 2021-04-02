@@ -21,10 +21,12 @@ function Player.battle.update(state, inputs)
 
     -- if there is a unit beneath the cursor...
     if unit then
-        -- select friendly unit:
-        if unit:friend(player.num) and not cur:selected(unit) and unit.active then
-            Info:set("select", "", unit)
+        -- is the unit a friend?
+        local friend = unit.player == player.num
 
+        -- select friendly unit:
+        if friend and not cur:selected(unit) and unit.active then
+            Info:set("select", "", unit)
             if yes:once() then
                 cur.unit.sel = unit
                 -- hide all other friendly unit radii
@@ -38,26 +40,21 @@ function Player.battle.update(state, inputs)
             end
 
             -- open friendly balance menu:
-        elseif unit:friend(player.num) and cur:selected(unit) and
-            not unit:acted() then
+        elseif friend and cur:selected(unit) and not unit:acted() then
             Info:set("balance", "unselect", unit)
-
             if yes:once() then
                 Menus.Balance:open(cur.unit.sel, idx, state)
             end
 
             -- open the "turn end" menu if the unit has already
             -- taken an action
-        elseif unit:friend(player.num) and cur:selected(unit) and unit:acted() then
+        elseif friend and cur:selected(unit) and unit:acted() then
             Info:set("end turn", "unselect", unit)
-
             if yes:once() then Menus.TurnEnd:open(state) end
 
             -- show enemy radii:
-        elseif unit:foe(player.num) and not cur:selected() and unit.radius.vis ==
-            false then
+        elseif not friend and not cur:selected() and unit.radius.vis == false then
             Info:set("view radii", "", unit)
-
             if yes:once() then
                 -- get the enemy player number
                 local enemy = 2
@@ -68,18 +65,15 @@ function Player.battle.update(state, inputs)
             end
 
             -- hide enemy radii:
-        elseif unit:foe(player.num) and not cur:selected() and unit.radius.vis ==
-            true then
+        elseif not friend and not cur:selected() and unit.radius.vis == true then
             Info:set("hide radii", "", unit)
-
             if yes:once() then unit.radius.vis = false end
 
             -- attack enemy:
-        elseif unit:foe(player.num) and cur:selected() and
-            not cur.unit.sel:attacked() and cur.unit.sel.active and
+        elseif not friend and cur:selected() and not cur.unit.sel:attacked() and
+            cur.unit.sel.active and
             cur.unit.sel.radius:contains('atk', unit.cell.x, unit.cell.y) then
             Info:set("attack", "unselect", unit)
-
             if yes:once() then Menus.Target:open(unit, idx, state) end
         end
 
@@ -141,7 +135,7 @@ end
 
 -- change the player turn
 function Player:turn_end(state)
-    local cur, stage = state.player.cursor, state.stage
+    local cam, cur, stage = state.camera, state.player.cursor, state.stage
 
     -- hide radii
     Radius.clearAll(state.stage.units)
@@ -152,19 +146,11 @@ function Player:turn_end(state)
     -- refresh all units
     Units.refresh(stage.units)
 
-    -- end the turn
-    if self.num == 1 then
-        state.player = state.players[2]
-    else
-        state.player = state.players[1]
-    end
+    -- swap the current player
+    state.player = state.players[2]
+    if self.num == 2 then state.player = state.players[1] end
 
     -- center the screen on the specified coordinates
-    state.camera:focus(state.player.cursor.cell.x, state.player.cursor.cell.y,
-                       state)
-
-    Seq:enqueue({
-        Anim.delay(30),
-        Anim.trans(state.camera, state.camera.cell.x, state.camera.cell.y),
-    })
+    cam:focus(state.player.cursor.cell.x, state.player.cursor.cell.y, state)
+    Seq:enqueue({Anim.delay(30), Anim.trans(cam, cam.cell.x, cam.cell.y)})
 end
