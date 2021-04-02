@@ -14,8 +14,8 @@ function Menus.Title:update(state, inputs)
         -- flag P2 as a CPU if a 1-player game is selected
         if self.sel == 1 then state.players[2].cpu = true end
 
-        -- load the stage interstitial
-        state.screen = Screens.intr
+        -- load the first stage
+        Stage.load(1, Stages, Screens, state)
     end
 end
 

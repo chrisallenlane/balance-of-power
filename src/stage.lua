@@ -8,7 +8,7 @@ function Stage:new(stage)
 end
 
 -- load the specified stage
-function Stage.load(num, stages, state)
+function Stage.load(num, stages, screens, state)
     -- load the specified stage
     -- NB: this indirection is necessary in order to facilitate the "reset map"
     -- function. Each stage must be initialized atop a new literal object in
@@ -29,13 +29,13 @@ function Stage.load(num, stages, state)
 
     -- reset the camera position
     state.camera:warp(state.stage.camera.x, state.stage.camera.y)
+    state.screen = screens.intr
 end
 
 -- advance to the next stage
 function Stage:advance(stages, screens, state)
     if self.num < #stages then
-        Stage.load(self.num + 1, stages, state)
-        state.screen = screens.intr
+        Stage.load(self.num + 1, stages, screens, state)
     else
         state.screen = screens.victory
     end

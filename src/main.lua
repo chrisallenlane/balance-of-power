@@ -8,18 +8,15 @@ function _init()
 
     -- implement a "reset stage" menu function
     menuitem(2, "reset stage", function()
-        Stage.load(State.stage.num, Stages, State)
+        Stage.load(State.stage.num, Stages, Screens, State)
     end)
 
     -- build an in-memory table of cell traversal costs
     Cell.costs = Cell.init()
-
-    -- load the first stage
-    Stage.load(1, Stages, State)
 end
 
 function _update60()
-    Inputs:poll(State.player.num)
+    Inputs:poll(State.player.num or 1)
     State.screen.update(State, Inputs)
 end
 
