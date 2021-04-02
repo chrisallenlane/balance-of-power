@@ -100,7 +100,7 @@ function Player.battle.update(state, inputs)
                 -- end the player's turn if the unit is exhausted
                 if cur.unit.sel:attacked() or cur.unit.sel.stat.atk == 0 or
                     cur.unit.sel.stat.rng == 0 then
-                    player:turn_end(state)
+                    player:turnEnd(state)
                     -- otherwise, show the attack radius
                 else
                     cur.unit.sel.radius:update(cur.unit.sel, stage, player.num)
@@ -134,7 +134,7 @@ function Player:human(players)
 end
 
 -- change the player turn
-function Player:turn_end(state)
+function Player:turnEnd(state)
     local cam, cur, stage = state.camera, state.player.cursor, state.stage
 
     -- hide radii

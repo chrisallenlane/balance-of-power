@@ -52,7 +52,7 @@ function Menus.Target:update(state, inputs)
 
         -- end the player's turn if the unit is exhausted
         if sel:moved() or sel.stat.mov == 0 then
-            player:turn_end(state)
+            player:turnEnd(state)
             -- otherwise, show the movement radius
         else
             -- XXX: is this correct?

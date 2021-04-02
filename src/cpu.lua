@@ -34,5 +34,5 @@ function CPU.battle.update(state)
     player.cursor.cell.y = unit.cell.y
 
     -- end the CPU turn
-    player:turn_end(state)
+    player:turnEnd(state)
 end

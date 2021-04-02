@@ -20,7 +20,7 @@ function Menus.TurnEnd:update(state, inputs)
 
     -- selection: "yes"
     if inputs.yes:once() and self.sel == 1 then
-        state.player:turn_end(state)
+        state.player:turnEnd(state)
         state.menu = nil
 
         -- selection: "no"

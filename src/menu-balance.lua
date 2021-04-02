@@ -60,7 +60,7 @@ function Menus.Balance:update(state, inputs)
         Info:set("confirm", "cancel", unit)
         if inputs.yes:once() then
             stage.units[self.idx] = Unit.clone(unit)
-            player:turn_end(state)
+            player:turnEnd(state)
             self.unit, state.menu = nil, nil
         end
     else
