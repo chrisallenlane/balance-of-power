@@ -3,8 +3,9 @@ function Screens.battle.update(state, inputs)
     -- return early if an animation is playing
     if Seq:play() then return end
 
-    state.camera:focus(state.player.cursor.cell.x, state.player.cursor.cell.y,
-                       state)
+    local cur = state.player.cursor
+
+    state.camera:focus(cur.cell.x, cur.cell.y, state)
     state.camera:update(state)
 
     -- determine if the stage has been cleared
@@ -12,7 +13,7 @@ function Screens.battle.update(state, inputs)
 
     -- handle stage clears
     if clear then
-        state.player.cursor.vis = false
+        cur.vis = false
         Radius.clearAll(state.stage.units)
         Seq:enqueue({Anim.delay(120)})
 
@@ -56,7 +57,7 @@ function Screens.battle.update(state, inputs)
             return
         end
         -- update the cursor state
-        state.player.cursor:update(state.stage, inputs)
+        cur:update(state.stage, inputs)
 
         -- update the battle state
         Player.battle.update(state, inputs)
@@ -75,7 +76,7 @@ function Screens.battle.draw(state)
     -- draw the stage
     Stage.draw(state)
 
-    -- TODO: move this elsewhere
+    -- draw unit radii
     for _, unit in pairs(state.stage.units) do
         unit.radius:draw(unit.player == state.player.num)
     end
