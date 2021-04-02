@@ -52,10 +52,10 @@ end
 -- immediately move the cursor to the specified cell coordinates
 function Cursor:warp(x, y)
     self.cell = {x = x, y = y}
-    self.px = {x = x * 8, y = y * 8}
 end
 
 -- render the cursor
+-- NB: if I become desperate tokens, I can eliminate the cursor "throb"
 function Cursor:draw()
     -- end early if the cursor is not visible
     if not self.vis then return end
@@ -70,9 +70,6 @@ function Cursor:draw()
 
     -- increment the frame counter
     self.frame = self.frame + 1
-
-    -- draw the A* path
-    for _, cell in ipairs(self.path) do spr(6, cell.x * 8, cell.y * 8) end
 
     -- draw the sprite
     spr(sprite, self.cell.x * 8, self.cell.y * 8)
