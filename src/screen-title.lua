@@ -7,6 +7,6 @@ end
 -- TODO: this is a stub
 function Screens.title.draw(state)
     rectfill(0, 0, 127, 127, 12)
-    String.centerX("balance of power", 30, 1)
+    String.centerX("balance of power", 30, 1, state)
     Menus.Title:draw(state)
 end

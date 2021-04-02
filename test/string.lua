@@ -7,11 +7,15 @@ describe("string", function()
             return str, x, y, color
         end
 
+        -- stub a state object
+        local state = {camera = {px = {x = 10, y = 10}}}
+
         -- run assertions on spied values
-        local str, x, y, color = String.centerX("hello, world", 64, 1, pr)
+        local str, x, y, color =
+            String.centerX("hello, world", 64, 1, state, pr)
         assert.equal("hello, world", str)
-        assert.equal(40, x)
-        assert.equal(64, y)
+        assert.equal(50, x)
+        assert.equal(74, y)
         assert.equal(1, color)
     end)
 end)

@@ -25,5 +25,5 @@ function Banner:draw(state)
     line(xStart, 47 + py, xEnd, 47 + py, light)
     line(xStart, 68 + py, xEnd, 68 + py, light)
     line(xStart, 69 + py, xEnd, 69 + py, 7)
-    String.centerX(self.msg, 55 + py, 7)
+    String.centerX(self.msg, 55 + py, 7, state)
 end
