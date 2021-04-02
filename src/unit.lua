@@ -54,33 +54,37 @@ function Unit:move(to_x, to_y)
 end
 
 -- Attack attacks a unit
-function Unit:attack(target, stat, atk, overflow)
+function Unit:attack(target, stat, atk, def, overflow)
     -- record that the unit has attacked
     self.act.atk = true
+
+    -- compute the damage inflicted, ensuring that it is at least `1`
+    local dmg = atk - def
+    if dmg <= 0 then dmg = 1 end
 
     -- damage the target
     -- if this is overflow damage, don't substract from pwr
     if not overflow then
-        target.pwr = target.pwr - atk
+        target.pwr = target.pwr - dmg
 
         -- kill the unit if its pwr reaches 0
         if target.pwr <= 0 then return true end
     end
 
     -- damage the targeted system
-    target.stat[stat] = target.stat[stat] - atk
+    target.stat[stat] = target.stat[stat] - dmg
 
     -- overflow damage if necessary
     if target.stat[stat] < 0 then
         -- compute the overflow damage
-        local dmg = target.stat[stat] * -1
+        dmg = target.stat[stat] * -1
 
         -- zero the disabled system
         target.stat[stat] = 0
 
         -- recursively damage the next system
-        local sys = target:functional()
-        self:attack(target, sys, dmg, true)
+        -- NB: zero out `def` so we don't double-count it
+        self:attack(target, target:functional(), dmg, 0, true)
     end
 
     return false

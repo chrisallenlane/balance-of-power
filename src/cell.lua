@@ -1,6 +1,6 @@
 Cell = {id = nil, x = nil, y = nil, w = nil, costs = {}}
 
--- Build a map of [tile number] => [traversal cost]
+-- Build a map of [tile number] => [traversal cost], [terrain defense]
 -- NB: we're doing this rather than hard-coding a map simply to reduce the
 -- number of "tokens" required.
 function Cell.init()
@@ -9,32 +9,39 @@ function Cell.init()
 
     -- enumerate tile costs (in a token-efficient way)
     local costs = {
+        -- city
+        {tiles = {112}, cost = 0.5, def = 1},
         -- road/city
         {
             tiles = split(
-                "71,72,73,74,75,87,88,89,90,91,103,104,105,112,119,120,121"),
+                "71,72,73,74,75,87,88,89,90,91,103,104,105,119,120,121"),
             cost = 0.5,
+            def = -1,
         },
         -- forest
         {
             tiles = split(
                 "76,77,78,79,92,93,94,95,106,107,108,109,110,111,122,123,124,125,126,127"),
             cost = 1.5,
+            def = 1,
         },
         -- mountain
         {
             tiles = split(
                 "32,33,34,35,36,37,38,39,40,41,48,49,50,51,52,53,54,55,56,57"),
             cost = 2,
+            def = 2,
         },
         -- impassible (shore/water)
-        {tiles = split("96,101,102,117,118"), cost = inf},
+        {tiles = split("96,101,102,117,118"), cost = inf, def = 0},
     }
 
-    -- build a map of [tile number] => [traversal cost]
+    -- build the map
     local map = {}
     for _, set in pairs(costs) do
-        for _, tile in pairs(set.tiles) do map[tile] = set.cost end
+        for _, tile in pairs(set.tiles) do
+            map[tile] = {cost = set.cost, def = set.def}
+        end
     end
 
     return map
@@ -89,16 +96,27 @@ end
 
 -- return the cell traversal cost at `x`, `y`
 function Cell.cost(x, y, stage)
-    -- assume a traversal cost of 1
-    local cost = 1
+    -- look up a traversal cost for the tile
+    local tile = Cell.costs[mget(stage.cell.x + x, stage.cell.y + y)]
 
-    -- determine if the tile has a "special" traversal cost
-    -- stage cell traversal costs
-    local special = Cell.costs[mget(stage.cell.x + x, stage.cell.y + y)]
+    -- if a cost is specified, return it
+    if tile then return tile.cost end
 
-    -- if it does, return the special
-    if special then cost = special end
-    return cost
+    -- otherwise, return the default
+    return 1
+end
+
+-- return the cell traversal cost at `x`, `y`
+-- TODO: this should be de-duplicated with the above
+function Cell.def(x, y, stage)
+    -- look up a traversal cost for the tile
+    local tile = Cell.costs[mget(stage.cell.x + x, stage.cell.y + y)]
+
+    -- if a cost is specified, return it
+    if tile then return tile.def end
+
+    -- otherwise, return the default
+    return 0
 end
 
 -- return the set of cells adjacent to the specified cell

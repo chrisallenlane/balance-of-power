@@ -41,7 +41,8 @@ function Menus.Target:update(state, inputs)
 
         -- attack the enemy unit
         local killed = sel:attack(self.unit, self.choices[self.sel],
-                                  sel.stat.atk)
+                                  sel.stat.atk, Cell.def(self.unit.cell.x,
+                                                         self.unit.cell.y, stage))
 
         -- delete the enemy unit if it has been destroyed
         if killed then Units.die(self.idx, units) end
