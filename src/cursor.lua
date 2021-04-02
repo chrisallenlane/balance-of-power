@@ -51,7 +51,8 @@ end
 
 -- immediately move the cursor to the specified cell coordinates
 function Cursor:warp(x, y)
-    self.cell.x, self.cell.y = x, y
+    self.cell = {x = x, y = y}
+    self.px = {x = x * 8, y = y * 8}
 end
 
 -- render the cursor

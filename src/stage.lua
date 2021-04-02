@@ -20,14 +20,11 @@ function Stage.load(num, stages, state)
     state.player = state.players[1]
 
     -- set each player's cursor to rest on their first unit
-    -- NB: we're iterating backwards so the cursor ends up focused on player
-    -- 1's first unit
-    for i = 2, 1, -1 do
-        local units = Units.first(i, state.stage.units)
-        local x, y = units.cell.x, units.cell.y
-        state.players[i].cursor.cell = {x = x, y = y}
+    for i = 1, 2 do
+        local unit = Units.first(i, state.stage.units)
+        local x, y = unit.cell.x, unit.cell.y
+        state.players[i].cursor:warp(x, y)
         state.players[i].cursor.vis = true
-        state.player.cursor:warp(x, y)
     end
 
     -- reset the camera position
