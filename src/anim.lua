@@ -3,10 +3,9 @@ Anim = {}
 
 -- delay `delay` frames
 function Anim.delay(frames)
-    local d = {frames = frames}
     return function()
-        d.frames = d.frames - 1
-        return d.frames == 0
+        frames = frames - 1
+        return frames == 0
     end
 end
 
