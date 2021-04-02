@@ -39,3 +39,27 @@ function Anim.trans(obj, x, y)
         return false
     end
 end
+
+-- fire a laser from `src` to `dst`
+function Anim.laser(src, dst)
+    -- animation duration
+    local frames = 20
+
+    return function()
+        -- hide the attacking unit's radii
+        src.radius.vis = false
+
+        -- end the animation after `frames` frames
+        if frames == 0 then
+            src.radius.vis = true
+            return true
+        end
+
+        -- fire the laser!
+        line(src.px.x + 3, src.px.y + 3, dst.px.x + 3, dst.px.y + 3, 7 + rnd(3))
+
+        -- continue the animation
+        frames = frames - 1
+        return false
+    end
+end

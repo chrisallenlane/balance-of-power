@@ -39,26 +39,26 @@ function Menus.Target:update(state, inputs)
         -- hide this menu
         state.menu = nil
 
+        -- deactivate all *other* units belonging to the player
+        Units.deactivate(units, player.num)
+        sel:activate()
+
         -- attack the enemy unit
+        Seq:enqueue({Anim.laser(sel, self.unit)})
         local killed = sel:attack(self.unit, self.choices[self.sel],
                                   sel.stat.atk, Cell.def(self.unit.cell.x,
                                                          self.unit.cell.y, stage))
 
         -- delete the enemy unit if it has been destroyed
+        -- XXX: `die` needs to be invoked before the radius is updated, but
+        -- this makes the unit disappear prematurely
         if killed then Units.die(self.idx, units) end
 
-        -- deactivate all *other* units belonging to the player
-        Units.deactivate(units, player.num)
-        sel:activate()
+        -- update the unit radius
+        sel.radius:update(sel, stage, player.num)
 
         -- end the player's turn if the unit is exhausted
-        if sel:moved() or sel.stat.mov == 0 then
-            player:turnEnd(state)
-            -- otherwise, show the movement radius
-        else
-            -- XXX: is this correct?
-            sel.radius:update(sel, stage, player.num)
-        end
+        if sel:moved() or sel.stat.mov == 0 then player:turnEnd(state) end
     end
 end
 

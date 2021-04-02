@@ -1,10 +1,12 @@
 -- update the battle screen
 function Screens.battle.update(state, inputs)
-    -- return early if an animation is playing
-    if Seq:play() then return end
+    -- return early if a sequence is playing
+    if not Seq:done() then return end
 
+    -- save tokens
     local cur = state.player.cursor
 
+    -- have the camera follow the cursor
     state.camera:focus(cur.cell.x, cur.cell.y, state)
     state.camera:update(state)
 
@@ -95,6 +97,9 @@ function Screens.battle.draw(state)
 
     -- draw the victory/loss banner
     Banner:draw(state)
+
+    -- play animations
+    Seq:play()
 
     -- display debug output (if so configured)
     if DEBUG_SHOW then Debug.vars(state) end
