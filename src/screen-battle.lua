@@ -19,49 +19,29 @@ function Screens.battle.update(state, inputs)
         -- handle 1-player games
         if state.players[2].cpu then
             if victor == 1 then
+                -- show player 1 "victory" banner for 300 frames, then advance to the next stage
                 Seq:enqueue({
-                    function()
-                        Banner:show(1, "victory")
-                        return true
-                    end,
-                    Anim.delay(300),
-                    function()
-                        Banner:hide()
+                    Banner:display(1, "victory", 300, function()
                         state.stage:advance(Stages, Screens, state)
-                        return true
-                    end,
+                    end),
                 })
             else
+                -- show player 1 "defeat" banner for 300 frames, then show the "defeat" screen
                 Seq:enqueue({
-                    function()
-                        Banner:show(2, "defeat")
-                        return true
-                    end,
-                    Anim.delay(300),
-                    function()
-                        Banner:hide()
+                    Banner:display(2, "defeat", 300, function()
                         state.screen = Screens.defeat
-                        return true
-                    end,
+                    end),
                 })
             end
 
             -- handle 2-player games
         else
-            -- display the winning player's banner
+            -- display the winning player's banner, then go to the title screen
+            local msg = "player " .. victor .. " victory"
             Seq:enqueue({
-                function()
-                    Banner:show(victor, "player " .. victor .. " victory")
-                    return true
-                end,
-
-                -- delay, then go to the title screen (or where?)
-                Anim.delay(300),
-                function()
-                    Banner:hide()
+                Banner:display(victor, msg, 300, function()
                     state.screen = Screens.title
-                    return true
-                end,
+                end),
             })
         end
 
@@ -83,8 +63,6 @@ function Screens.battle.update(state, inputs)
     else
         CPU.battle.update(state)
     end
-
-    -- Units.update(state)
 end
 
 -- draw the battle screen
