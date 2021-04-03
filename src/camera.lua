@@ -10,6 +10,10 @@ end
 
 -- update camera state
 function Camera:update()
+    -- ensure that the camera is not at a fractional coordinate
+    self.px.x, self.px.y = flr(self.px.x), flr(self.px.y)
+
+    -- move toward the destination
     local destx, desty = self.cell.x * 8, self.cell.y * 8
 
     if self.px.x < destx then
