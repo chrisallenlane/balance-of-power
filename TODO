@@ -5,17 +5,14 @@ Priority:
   - Docs: update the README
 
 Backlog:
-  - Animation: feat: unit explosion
-  - Animation: feat: weapon fire
   - Art: feat: title, victory, defeat screens
-  - Attack: counterattacking
   - CPU: implement 1-player enemy AI
-  - Cursor: feat: create toggle to "permanently" display enemy radii
-  - Dialogue?
+  - Dialogue
   - Info: hide info bar when cursor occludes
   - Info: show/hide bar animation
-  - Radius: refactor: use "real" `Cell` objects
+  - Map triggers
   - Tooling: feat: Implement benchmarking harness
+  - Unit repair
 
 ----
 SFX:
