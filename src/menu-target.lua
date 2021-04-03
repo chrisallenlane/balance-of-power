@@ -78,63 +78,7 @@ function Menus.Target:update(state, inputs)
     end
 end
 
--- draw the "power balance" menu
+-- draw the "target" menu
 function Menus.Target:draw(state)
-    -- padding to align the menu location with the camera
-    local camMarginX, camMarginY = state.camera.px.x, state.camera.px.y
-
-    -- the menu dimensions
-    local menuWidth, menuHeight = 62, 28
-
-    -- padding applied inside the camera box
-    local menuMarginX = (128 - menuWidth) / 2
-    local menuMarginY = (128 - menuHeight) / 2
-    local menuPad = 4
-
-    -- padding applied between rows
-    local rowPadY = 0
-
-    -- draw the menu background
-    rectfill(camMarginX + menuMarginX, camMarginY + menuMarginY,
-             camMarginX + menuMarginX + menuWidth,
-             camMarginY + menuMarginY + menuHeight, 0)
-
-    -- sum the stat powers
-    local alloc = 0
-
-    -- draw the menu text
-    for _, stat in pairs(self.choices) do
-        -- read the unit's stat power level
-        local power = self.unit.stat[stat]
-
-        -- add the power to the sum
-        alloc = alloc + power
-
-        -- generate a bar representing the power level
-        local bar = ""
-        for _ = 1, power do bar = bar .. "\150" end
-
-        -- choose the appropriate color for the stat label
-        local color = 5
-        if self.choices[self.sel] == stat then color = 7 end
-
-        -- print the stat labels
-        print(stat .. ":", camMarginX + menuMarginX + menuPad,
-              camMarginY + menuMarginY + menuPad + rowPadY, color)
-
-        -- choose an appropriate color for the power bar
-        color = 8 -- red (default)
-        if power == 5 then
-            color = 11 -- green
-        elseif power >= 3 then
-            color = 10 -- yellow
-        end
-
-        -- draw the bar
-        print(bar, camMarginX + menuMarginX + menuPad + 16,
-              camMarginY + menuMarginY + menuPad + rowPadY, color)
-
-        -- create space for the next row
-        rowPadY = rowPadY + 8
-    end
+    Menus.Stat.draw(self, state, false)
 end

@@ -26,6 +26,7 @@ Menus, Stages = {}, {}
 #include src/info.lua
 #include src/input.lua
 #include src/inputs.lua
+#include src/menu-stat.lua
 #include src/menu-balance.lua
 #include src/menu-target.lua
 #include src/menu-title.lua
