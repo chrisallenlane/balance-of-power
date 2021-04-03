@@ -49,16 +49,32 @@ function Menus.Target:update(state, inputs)
                                   sel.stat.atk, Cell.def(self.unit.cell.x,
                                                          self.unit.cell.y, stage))
 
+        if not killed then
+            -- update the unit radius
+            sel.radius:update(sel, stage, player.num)
+
+            -- end the player's turn if the unit is exhausted
+            if sel:moved() or sel.stat.mov == 0 then
+                player:turnEnd(state)
+            end
+            return
+        end
+
         -- delete the enemy unit if it has been destroyed
-        -- XXX: `die` needs to be invoked before the radius is updated, but
-        -- this makes the unit disappear prematurely
-        if killed then Units.die(self.idx, units) end
+        Seq:enqueue({
+            Anim.explode(self.unit, state),
+            function()
+                Units.die(self.idx, units)
+                -- update the unit radius
+                sel.radius:update(sel, stage, player.num)
 
-        -- update the unit radius
-        sel.radius:update(sel, stage, player.num)
-
-        -- end the player's turn if the unit is exhausted
-        if sel:moved() or sel.stat.mov == 0 then player:turnEnd(state) end
+                -- end the player's turn if the unit is exhausted
+                if sel:moved() or sel.stat.mov == 0 then
+                    player:turnEnd(state)
+                end
+                return true
+            end,
+        })
     end
 end
 

@@ -63,3 +63,30 @@ function Anim.laser(src, dst)
         return false
     end
 end
+
+-- explode `unit`
+function Anim.explode(unit, state)
+    local cam, frames = state.camera, 0
+    local orig = {x = cam.px.x, y = cam.px.y}
+
+    return function()
+        -- end the animation after `frames` frames
+        if frames == 15 then
+            cam.px = orig
+            return true
+        end
+
+        -- shake the camera
+        for _, c in ipairs({"x", "y"}) do cam.px[c] = flr(2 - rnd(3)) end
+
+        -- draw the explosion
+        local cx, cy = unit.px.x + 3, unit.px.y + 3
+        circfill(cx, cy, frames, 9)
+        circ(cx, cy, frames * 2 + 1, 10)
+        circ(cx, cy, frames * 2 + 2, 7)
+
+        -- continue the animation
+        frames = frames + 1
+        return false
+    end
+end
