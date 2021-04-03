@@ -24,7 +24,7 @@ function Menus.TurnEnd:update(state, inputs)
         state.menu = nil
 
         -- selection: "no"
-    elseif inputs.no:once() or (inputs.yes:once() and self.sel == 2) then
+    elseif inputs.no:once() or inputs.yes:once() and self.sel == 2 then
         state.menu = nil
     end
 end

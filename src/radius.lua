@@ -145,8 +145,7 @@ function Radius:draw(friend)
     if not self.vis then return end
 
     -- choose the sprite to render
-    local sprite = 2
-    if not friend then sprite = 3 end
+    local sprite = friend and 2 or 3
 
     -- draw the movement radius
     for x, cell in pairs(self.cells.mov) do

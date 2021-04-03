@@ -57,8 +57,7 @@ function Player.battle.update(state, inputs)
             Info:set("view radii", "", unit)
             if yes:once() then
                 -- get the enemy player number
-                local enemy = 2
-                if player.num == 2 then enemy = 1 end
+                local enemy = player.num == 2 and 1 or 2
 
                 -- draw the radii for the enemy player
                 unit.radius:update(unit, stage, enemy)

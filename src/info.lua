@@ -61,11 +61,5 @@ end
 
 -- Return a color value based on a stat value
 function Info.colorize(val)
-    if val == 5 then
-        return 11 -- green
-    elseif val >= 3 then
-        return 10 -- yellow
-    end
-
-    return 8
+    return val == 5 and 11 or val >= 3 and 10 or 8
 end
