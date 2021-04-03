@@ -5,13 +5,15 @@ Priority:
   - Docs: update the README
 
 Backlog:
-  - Art: feat: title, victory, defeat screens
+  - "compression" (SFX, stages)
+  - Art: title, victory, defeat screens
   - CPU: implement 1-player enemy AI
+  - Camera: bugs
+  - Camera: refinements
   - Dialogue
   - Info: hide info bar when cursor occludes
-  - Info: show/hide bar animation
   - Map triggers
-  - Tooling: feat: Implement benchmarking harness
+  - Movement: undo
   - Unit repair
 
 ----
