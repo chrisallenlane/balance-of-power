@@ -19,6 +19,9 @@ State = {
     -- the current menu
     menu = nil,
 
+    -- the talk screen
+    talk = Talk:new(),
+
     -- the current stage
     stage = {},
 }

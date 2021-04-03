@@ -127,6 +127,7 @@ globals = {
 	"Stages",
 	"State",
 	"String",
+	"Talk",
 	"Turn",
 	"Unit",
 	"Units",

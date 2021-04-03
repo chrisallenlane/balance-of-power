@@ -53,11 +53,18 @@ function Screens.battle.update(state, inputs)
 
     -- run the command loop
     if state.player:human(state.players) then
+        -- direct inputs to the `talk` box if displayed
+        if state.talk.vis then
+            state.talk:update(state, inputs)
+            return
+        end
+
         -- update the menu if it is visible
         if state.menu then
             state.menu:update(state, inputs)
             return
         end
+
         -- update the cursor state
         cur:update(state.stage, inputs)
 
@@ -94,6 +101,9 @@ function Screens.battle.draw(state)
 
     -- draw the info bar
     Info:draw(state)
+
+    -- draw the walk window
+    state.talk:draw(state)
 
     -- draw the victory/loss banner
     Banner:draw(state)

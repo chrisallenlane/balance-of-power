@@ -16,6 +16,7 @@ Menus, Stages = {}, {}
 #include src/cursor.lua
 #include src/player.lua
 #include src/screens.lua
+#include src/talk.lua
 #include src/state.lua
 
 -- load assets (order independent)
