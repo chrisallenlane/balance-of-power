@@ -15,7 +15,6 @@ function Screens.battle.update(state, inputs)
 
     -- handle stage clears
     if clear then
-        cur.vis = false
         Radius.clearAll(state.stage.units)
         Seq:enqueue({Anim.delay(120)})
 
@@ -91,7 +90,7 @@ function Screens.battle.draw(state)
     end
 
     -- draw the cursor (if the player is a human)
-    if state.player:human(state.players) then state.player.cursor:draw() end
+    if state.player:human(state.players) then state.player.cursor:draw(state) end
 
     -- draw units
     Units.draw(state)

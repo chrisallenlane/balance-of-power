@@ -56,9 +56,9 @@ end
 
 -- render the cursor
 -- NB: if I become desperate tokens, I can eliminate the cursor "throb"
-function Cursor:draw()
-    -- end early if the cursor is not visible
-    if not self.vis then return end
+function Cursor:draw(state)
+    -- end early if the cursor should not be visible
+    if not self.vis or not Seq:done() or state.talk.vis then return end
 
     -- choose the appropriate sprite
     local sprite = 4
