@@ -40,6 +40,7 @@ function Player.battle.update(state, inputs)
                     end
 
                     unit.radius:update(unit, stage, player.num)
+                    return
                 end
 
                 -- ... and is selected ...
@@ -50,6 +51,7 @@ function Player.battle.update(state, inputs)
                     Info:set("balance", "unselect", unit)
                     if yes:once() then
                         Menus.Balance:open(cur.unit.sel, idx, state)
+                        return
                     end
 
                     -- ... and has already acted, then open the "turn end" menu
@@ -57,6 +59,7 @@ function Player.battle.update(state, inputs)
                     Info:set("end turn", "unselect", unit)
                     if yes:once() then
                         Menus.TurnEnd:open(state)
+                        return
                     end
                 end
             end
@@ -74,13 +77,15 @@ function Player.battle.update(state, inputs)
                         -- draw the radii for the enemy player
                         unit.radius:update(unit, stage,
                                            player.num == 2 and 1 or 2)
+                        return
                     end
 
                     -- ... and the enemy's radii are visible, then hide the radii
                 elseif unit.radius.vis == true then
                     Info:set("hide radii", "", unit)
-                    if yes:once() then
+                    if yes:once() or no:once() then
                         unit.radius.vis = false
+                        return
                     end
                 end
 
@@ -92,6 +97,7 @@ function Player.battle.update(state, inputs)
                 Info:set("attack", "unselect", unit)
                 if yes:once() then
                     Menus.Target:open(unit, idx, state)
+                    return
                 end
             end
         end
@@ -126,12 +132,16 @@ function Player.battle.update(state, inputs)
                 else
                     cur.unit.sel.radius:update(cur.unit.sel, stage, player.num)
                 end
+                return
             end
 
             -- ... but no unit has been selected, then show the "end turn" menu
         elseif not cur:selected() then
             Info:set("end turn", "end turn")
-            if yes:once() then Menus.TurnEnd:open(state) end
+            if yes:once() then
+                Menus.TurnEnd:open(state)
+                return
+            end
         end
     end
 
@@ -146,6 +156,7 @@ function Player.battle.update(state, inputs)
         else
             Menus.TurnEnd:open(state)
         end
+        return
     end
 end
 
