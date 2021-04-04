@@ -27,7 +27,7 @@ function Banner:draw(state)
 
     -- choose the appropriate color for the winner
     local light, dark = 12, 1
-    if self.player == 2 then dark, light = 8, 2 end
+    if self.player == 2 then dark, light = 2, 8 end
 
     -- draw the banner
     rectfill(0 + px, 45 + py, 128 + px, 70 + py, dark)
