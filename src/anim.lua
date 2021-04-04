@@ -77,7 +77,9 @@ function Anim.explode(unit, state)
         end
 
         -- shake the camera
-        for _, c in ipairs({"x", "y"}) do cam.px[c] = flr(2 - rnd(3)) end
+        for _, c in ipairs({"x", "y"}) do
+            cam.px[c] = cam.px[c] + flr(2 - rnd(3))
+        end
 
         -- draw the explosion
         local cx, cy = unit.px.x + 3, unit.px.y + 3
