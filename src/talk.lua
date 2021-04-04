@@ -8,6 +8,8 @@ function Talk:new()
         page = 1,
         pages = {},
         said = "",
+        frame = 0,
+        color = 6,
     }
     setmetatable(t, self)
     self.__index = self
@@ -67,4 +69,9 @@ function Talk:draw(state)
 
     -- print the dialog
     print(self.said, 30 + x, 95 + y, 7)
+
+    -- print the "next" button
+    self.frame = self.frame + 1
+    if self.frame % 30 == 0 then self.color = self.color == 5 and 6 or 5 end
+    print("\142", 119 + x, 121 + y, self.color)
 end
