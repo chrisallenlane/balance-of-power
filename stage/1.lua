@@ -22,5 +22,10 @@ add(Stages, function ()
       Unit:new({player = 2, cell = {x = 22, y = 3}}),
       Unit:new({player = 2, cell = {x = 24, y = 3}}),
     },
+
+    talk = {
+        start = "alice|let's fuck 'em up!\nbob|hoo-rah!",
+        clear = "bob|gg ez",
+    },
   }
 end)

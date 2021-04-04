@@ -30,6 +30,17 @@ function Stage.load(num, stages, screens, state)
     -- reset the camera position
     state.camera:warp(state.stage.camera.x, state.stage.camera.y)
     state.screen = screens.intr
+
+    -- play the opening dialogue if provided (for single-player games only)
+    if state.stage.talk and state.stage.talk.start and state.players[2].cpu then
+        Seq:enqueue({
+            Anim.delay(90),
+            function()
+                state.talk:say(state.stage.talk.start)
+                return true
+            end,
+        })
+    end
 end
 
 -- advance to the next stage
