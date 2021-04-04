@@ -87,26 +87,6 @@ describe("unit", function()
         end)
     end)
 
-    describe("refresh", function()
-        it("should reset the unit action flags", function()
-            -- initialize a unit
-            local u = Unit:new({spr = 1, player = 2, cell = {x = 3, y = 4}})
-
-            -- manually exhaust the unit
-            u.active = false
-            u.act.atk = true
-            u.act.mov = true
-
-            -- refresh the unit
-            u:refresh()
-
-            -- assert that the unit has been refreshed
-            assert.equal(u.active, true)
-            assert.equal(u.act.atk, false)
-            assert.equal(u.act.mov, false)
-        end)
-    end)
-
     describe("acted", function()
         it("should report whether a unit has acted", function()
             -- initialize a unit

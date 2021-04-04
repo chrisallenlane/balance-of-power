@@ -71,7 +71,9 @@ end
 
 -- refresh all units
 function Units.refresh(units)
-    for _, unit in pairs(units) do unit:refresh() end
+    for _, unit in pairs(units) do
+        unit.active, unit.act.atk, unit.act.mov = true, false, false
+    end
 end
 
 -- Die kills a unit

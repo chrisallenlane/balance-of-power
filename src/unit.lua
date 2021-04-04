@@ -100,11 +100,6 @@ function Unit:attacked()
     return self.act.atk
 end
 
--- Refresh the unit
-function Unit:refresh()
-    self.active, self.act.atk, self.act.mov = true, false, false
-end
-
 -- Return true if the unit has taken any action
 function Unit:acted()
     return self.act.mov or self.act.atk

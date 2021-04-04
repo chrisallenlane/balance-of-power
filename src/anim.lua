@@ -42,6 +42,7 @@ function Anim.laser(src, dst)
 
         -- end the animation after `frames` frames
         if frames == 0 then
+            -- TODO: hide the opponent's radii?
             src.radius.vis = true
             return true
         end
