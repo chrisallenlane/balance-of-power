@@ -35,6 +35,7 @@ function Unit.clone(u)
         spr = u.spr,
         player = u.player,
         cell = {x = u.cell.x, y = u.cell.y},
+        from = {x = u.from.x, y = u.from.y},
         pwr = u.pwr,
         stat = {atk = u.stat.atk, mov = u.stat.mov, rng = u.stat.rng},
         px = {x = u.px.x, y = u.px.y},
@@ -50,7 +51,27 @@ end
 
 -- Move moves a unit
 function Unit:move(to_x, to_y)
+    self.from = {x = self.cell.x, y = self.cell.y}
     self.cell.x, self.cell.y, self.act.mov = to_x, to_y, true
+end
+
+-- Reverses the prior move
+function Unit:unmove(state)
+    -- move the unit to its `from` position
+    self.cell.x, self.cell.y = self.from.x, self.from.y
+
+    -- clear the `from` position
+    self.from = {x = nil, y = nil}
+
+    -- place the cursor back atop the unit
+    state.player.cursor.cell.x, state.player.cursor.cell.y = self.cell.x,
+                                                             self.cell.y
+    -- refresh all units on this unit's team
+    for _, unit in pairs(state.stage.units) do
+        if unit.player == self.player then
+            unit.active, unit.act.atk, unit.act.mov = true, false, false
+        end
+    end
 end
 
 -- Attack attacks a unit

@@ -28,7 +28,12 @@ describe("unit", function()
     describe("clone", function()
         it("should clone the unit", function()
             -- initialize a unit
-            local orig = Unit:new({spr = 1, player = 2, cell = {x = 3, y = 4}})
+            local orig = Unit:new({
+                spr = 1,
+                player = 2,
+                cell = {x = 3, y = 4},
+                from = {x = 5, y = 6},
+            })
             local clone = Unit.clone(orig)
 
             -- assert that `clone` has the same values as `orig`

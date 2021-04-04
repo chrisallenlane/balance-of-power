@@ -56,9 +56,19 @@ function Player.battle.update(state, inputs)
 
                     -- ... and has already acted, then open the "turn end" menu
                 elseif unit:acted() then
-                    Info:set("end turn", "unselect", unit)
+                    Info:set("end turn", "cancel", unit)
                     if yes:once() then
                         Menus.TurnEnd:open(state)
+                        return
+                    end
+                    if no:once() then
+                        cur.unit.sel:unmove(state)
+                        cur.unit.sel.radius:update(cur.unit.sel, stage,
+                                                   player.num)
+                        Seq:enqueue({
+                            Anim.trans(cur.unit.sel, cur.unit.sel.cell.x,
+                                       cur.unit.sel.cell.y),
+                        })
                         return
                     end
                 end
