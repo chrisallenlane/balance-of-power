@@ -154,11 +154,7 @@ function Radius:draw(friend)
 
     -- draw the danger radius
     for x, cell in pairs(self.cells.dng) do
-        if friend then
-            pal(10, 8)
-        else
-            pal(10, 14)
-        end
+        pal(10, friend and 8 or 14)
         for y, _ in pairs(cell) do
             -- NB: making this check and only drawing the necessary cells is
             -- slightly faster than drawing the movement radius on top of the

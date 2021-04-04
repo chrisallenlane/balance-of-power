@@ -2,7 +2,6 @@ Units = {delay = 0}
 
 -- At returns the unit at the specified coordinates, or false if none is there
 function Units.at(x, y, units)
-    -- XXX: this runs in linear time
     for idx, unit in pairs(units) do
         if unit.cell.x == x and unit.cell.y == y then return unit, idx end
     end
@@ -12,32 +11,32 @@ end
 
 -- Returns the first unit on `player`'s team team
 function Units.first(player, units)
-    -- XXX: this runs in linear time
     for _, unit in pairs(units) do
         if unit.player == player then return unit end
     end
-    -- NB: we realistically should never end up here
-    -- TODO: throw exception if we somehow do
 end
 
 -- draw the units
 function Units.draw(state)
     for _, unit in pairs(state.stage.units) do
-        pal()
         -- use palette swapping to reduce the number of sprites required
+        pal()
+
         -- player 1, inactive
         if unit.player == 1 and not unit.active then
             pal(12, 13)
 
+        elseif unit.player == 2 then
             -- player 2, active
-        elseif unit.player == 2 and unit.active then
-            pal(12, 8)
-            pal(1, 2)
+            if unit.active then
+                pal(12, 8)
+                pal(1, 2)
 
-            -- player 2, inactive
-        elseif unit.player == 2 and not unit.active then
-            pal(12, 2)
-            pal(1, 5)
+                -- player 2, inactive
+            else
+                pal(12, 2)
+                pal(1, 5)
+            end
         end
 
         spr(1, unit.px.x, unit.px.y)
@@ -53,8 +52,11 @@ function Units.remain(units)
 
     -- iterate over all units on the stage
     for _, unit in pairs(units) do
-        if unit.player == 1 then p1 = p1 + 1 end
-        if unit.player == 2 then p2 = p2 + 1 end
+        if unit.player == 1 then
+            p1 = p1 + 1
+        else
+            p2 = p2 + 1
+        end
     end
 
     return p1, p2

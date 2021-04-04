@@ -22,19 +22,10 @@ function Anim.trans(obj, x, y)
         -- conclude the animation if the object has reached its destination
         if px == destx and py == desty then return true end
 
-        -- x
-        if px < destx then
-            obj.px.x = px + 4
-        elseif px > destx then
-            obj.px.x = px - 4
-        end
-
-        -- y
-        if py < desty then
-            obj.px.y = py + 4
-        elseif py > desty then
-            obj.px.y = py - 4
-        end
+        -- constrain to in-bounds
+        -- NB: `4` is the movement speed
+        obj.px.x = px < destx and px + 4 or px > destx and px - 4 or obj.px.x
+        obj.px.y = py < desty and py + 4 or py > desty and py - 4 or obj.px.y
 
         return false
     end
@@ -67,6 +58,7 @@ end
 -- explode `unit`
 function Anim.explode(unit, state)
     local cam, frames = state.camera, 0
+    -- TODO: can can _probably_ remove `orig` once I fix the camera bugs
     local orig = {x = cam.px.x, y = cam.px.y}
 
     return function()

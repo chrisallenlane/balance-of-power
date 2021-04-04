@@ -10,23 +10,15 @@ end
 
 -- update camera state
 function Camera:update()
-    -- ensure that the camera is not at a fractional coordinate
-    self.px.x, self.px.y = flr(self.px.x), flr(self.px.y)
+    -- ensure that the camera is not at a fractional coordinate, and compute
+    -- the destination
+    local x, y, destx, desty = flr(self.px.x), flr(self.px.y), self.cell.x * 8,
+                               self.cell.y * 8
 
     -- move toward the destination
-    local destx, desty = self.cell.x * 8, self.cell.y * 8
-
-    if self.px.x < destx then
-        self.px.x = self.px.x + 1
-    elseif self.px.x > destx then
-        self.px.x = self.px.x - 1
-    end
-
-    if self.px.y < desty then
-        self.px.y = self.px.y + 1
-    elseif self.px.y > desty then
-        self.px.y = self.px.y - 1
-    end
+    x = x < destx and x + 1 or x > destx and x - 1 or x
+    y = y < desty and y + 1 or y > desty and y - 1 or y
+    self.px = {x = x, y = y}
 end
 
 -- focus the camera on the specified grid position
@@ -37,19 +29,9 @@ function Camera:focus(x, y, state)
     -- is being applied because the screen is 16 cells wide.)
     x, y = x - 8, y - 8
 
-    -- constrain x
-    if x < 0 then
-        x = 0
-    elseif x > w - 16 then
-        x = w - 16
-    end
-
-    -- constrain y
-    if y < 0 then
-        y = 0
-    elseif y > h - 16 then
-        y = h - 16
-    end
+    -- constrain
+    x = x < 0 and 0 or x > w - 16 and w - 16 or x
+    y = y < 0 and 0 or y > h - 16 and h - 16 or y
 
     -- TODO: this needs to be refined
     -- if the adjustment to make is minor, don't bother
