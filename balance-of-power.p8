@@ -39,7 +39,6 @@ Menus, Stages = {}, {}
 #include src/screen-title.lua
 #include src/screen-victory.lua
 #include src/seq.lua
-#include src/sfx.lua
 #include src/stage.lua
 #include src/string.lua
 #include src/unit.lua

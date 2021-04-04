@@ -44,11 +44,11 @@ function Menus.Balance:update(state, inputs)
 
     -- adjust power levels
     if inputs.left:rep() and unit.stat[stat] >= 1 then
-        SFX:play('power-down')
+        sfx(0, -1, 8, 8)
         unit.stat[stat] = unit.stat[stat] - 1
         radius:update(unit, stage, player.num)
     elseif inputs.right:rep() and unit.stat[stat] < 5 and alloc < unit.pwr then
-        SFX:play('power-up')
+        sfx(0, -1, 0, 8)
         unit.stat[stat] = unit.stat[stat] + 1
         radius:update(unit, stage, player.num)
     end
