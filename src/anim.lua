@@ -79,6 +79,7 @@ function Anim.explode(unit, state)
         -- shake the camera
         for _, c in ipairs({"x", "y"}) do
             cam.px[c] = cam.px[c] + flr(2 - rnd(3))
+            if cam.px[c] < 0 then cam.px[c] = 0 end
         end
 
         -- draw the explosion
