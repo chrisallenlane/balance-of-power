@@ -24,61 +24,83 @@ function Player.battle.update(state, inputs)
         -- is the unit a friend?
         local friend = unit.player == player.num
 
-        -- select friendly unit:
-        if friend and not cur:selected(unit) and unit.active then
-            Info:set("select", "", unit)
-            if yes:once() then
-                cur.unit.sel = unit
-                -- hide all other friendly unit radii
-                for _, u in pairs(state.stage.units) do
-                    if u.player == player.num then
-                        u.radius.vis = false
+        -- ... and the unit is a friend...
+        if friend then
+
+            --- ...and is active but not selected, then select it
+            if not cur:selected(unit) and unit.active then
+                Info:set("select", "", unit)
+                if yes:once() then
+                    cur.unit.sel = unit
+                    -- hide all other friendly unit radii
+                    for _, u in pairs(state.stage.units) do
+                        if u.player == player.num then
+                            u.radius.vis = false
+                        end
+                    end
+
+                    unit.radius:update(unit, stage, player.num)
+                end
+
+                -- ... and is selected ...
+            elseif cur:selected() then
+
+                -- ... and has not acted, then open the balance menu
+                if not unit:acted() then
+                    Info:set("balance", "unselect", unit)
+                    if yes:once() then
+                        Menus.Balance:open(cur.unit.sel, idx, state)
+                    end
+
+                    -- ... and has already acted, then open the "turn end" menu
+                elseif unit:acted() then
+                    Info:set("end turn", "unselect", unit)
+                    if yes:once() then
+                        Menus.TurnEnd:open(state)
+                    end
+                end
+            end
+
+            -- ... and the unit is not a friend ...
+        elseif not friend then
+
+            -- ... and if no friendly unit has been selected ...
+            if not cur:selected() then
+
+                -- ... and the enemy's radii are invisible, then show the radii
+                if unit.radius.vis == false then
+                    Info:set("view radii", "", unit)
+                    if yes:once() then
+                        -- draw the radii for the enemy player
+                        unit.radius:update(unit, stage,
+                                           player.num == 2 and 1 or 2)
+                    end
+
+                    -- ... and the enemy's radii are visible, then hide the radii
+                elseif unit.radius.vis == true then
+                    Info:set("hide radii", "", unit)
+                    if yes:once() then
+                        unit.radius.vis = false
                     end
                 end
 
-                unit.radius:update(unit, stage, player.num)
+                -- ... and if a friendly unit has been selected, and is capable
+                -- of attacking, then attack the enemy unit
+            elseif cur:selected() and not cur.unit.sel:attacked() and
+                cur.unit.sel.active and
+                cur.unit.sel.radius:contains('atk', unit.cell.x, unit.cell.y) then
+                Info:set("attack", "unselect", unit)
+                if yes:once() then
+                    Menus.Target:open(unit, idx, state)
+                end
             end
-
-            -- open friendly balance menu:
-        elseif friend and cur:selected(unit) and not unit:acted() then
-            Info:set("balance", "unselect", unit)
-            if yes:once() then
-                Menus.Balance:open(cur.unit.sel, idx, state)
-            end
-
-            -- open the "turn end" menu if the unit has already
-            -- taken an action
-        elseif friend and cur:selected(unit) and unit:acted() then
-            Info:set("end turn", "unselect", unit)
-            if yes:once() then Menus.TurnEnd:open(state) end
-
-            -- show enemy radii:
-        elseif not friend and not cur:selected() and unit.radius.vis == false then
-            Info:set("view radii", "", unit)
-            if yes:once() then
-                -- get the enemy player number
-                local enemy = player.num == 2 and 1 or 2
-
-                -- draw the radii for the enemy player
-                unit.radius:update(unit, stage, enemy)
-            end
-
-            -- hide enemy radii:
-        elseif not friend and not cur:selected() and unit.radius.vis == true then
-            Info:set("hide radii", "", unit)
-            if yes:once() then unit.radius.vis = false end
-
-            -- attack enemy:
-        elseif not friend and cur:selected() and not cur.unit.sel:attacked() and
-            cur.unit.sel.active and
-            cur.unit.sel.radius:contains('atk', unit.cell.x, unit.cell.y) then
-            Info:set("attack", "unselect", unit)
-            if yes:once() then Menus.Target:open(unit, idx, state) end
         end
 
-        -- if no unit is beneath the cursor...
+        -- if there is no unit is beneath the cursor...
     elseif not unit then
-        -- move friendly unit:
+
+        -- ... but an active, friendly unit has been selected, then move the
+        -- friendly unit
         if cur:selected() and cur.unit.sel.active and not cur.unit.sel:moved() and
             Cell.open(cur.cell.x, cur.cell.y, stage) and
             cur.unit.sel.radius:contains('mov', cur.cell.x, cur.cell.y) then
@@ -106,7 +128,7 @@ function Player.battle.update(state, inputs)
                 end
             end
 
-            -- show the "end turn" menu
+            -- ... but no unit has been selected, then show the "end turn" menu
         elseif not cur:selected() then
             Info:set("end turn", "end turn")
             if yes:once() then Menus.TurnEnd:open(state) end
@@ -115,11 +137,11 @@ function Player.battle.update(state, inputs)
 
     -- "Z"
     if no:once() then
-        -- hide radii
-        if cur.unit.sel and cur.unit.sel.radius.vis then
+        -- if a unit is selected, unselect it
+        if cur:selected() then
             -- unselect the unit if it is ours
             cur.unit.sel.radius.vis = false
-            if cur:selected() then cur.unit.sel = nil end
+            cur.unit.sel = nil
             -- show the "end turn" menu
         else
             Menus.TurnEnd:open(state)
@@ -146,8 +168,7 @@ function Player:turnEnd(state)
     Units.refresh(stage.units)
 
     -- swap the current player
-    state.player = state.players[2]
-    if self.num == 2 then state.player = state.players[1] end
+    state.player = self.num == 1 and state.players[2] or state.players[1]
 
     -- center the screen on the specified coordinates
     cam:focus(state.player.cursor.cell.x, state.player.cursor.cell.y, state)
