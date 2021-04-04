@@ -15,6 +15,7 @@ function Screens.battle.update(state, inputs)
 
     -- handle stage clears
     if clear then
+        Info:set("", "")
         Radius.clearAll(state.stage.units)
         Seq:enqueue({Anim.delay(120)})
 
