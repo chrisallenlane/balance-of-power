@@ -54,8 +54,8 @@ function Player.battle.update(state, inputs)
                         return
                     end
 
-                    -- ... and has already acted, then open the "turn end" menu
-                elseif unit:acted() then
+                    -- ... and has moved but not attack, allow an undo move
+                elseif unit:moved() and not unit:attacked() then
                     Info:set("end turn", "cancel", unit)
                     if yes:once() then
                         Menus.TurnEnd:open(state)
