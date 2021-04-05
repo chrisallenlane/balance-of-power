@@ -9,6 +9,16 @@ function Anim.delay(frames)
     end
 end
 
+-- return the number of steps to take from `src` to `dst` at `speed` in a
+-- single frame.
+function Anim.step(src, dst, speed)
+    local delta = dst - src
+
+    if delta >= 0 then return speed < delta and speed or delta end
+
+    return -(speed < delta and delta or speed)
+end
+
 -- translate an object across the stage
 function Anim.trans(obj, x, y)
     -- warp the object to the specified cell
@@ -22,10 +32,10 @@ function Anim.trans(obj, x, y)
         -- conclude the animation if the object has reached its destination
         if px == destx and py == desty then return true end
 
-        -- constrain to in-bounds
-        -- NB: `4` is the movement speed
-        obj.px.x = px < destx and px + 4 or px > destx and px - 4 or obj.px.x
-        obj.px.y = py < desty and py + 4 or py > desty and py - 4 or obj.px.y
+        obj.px = {
+            x = obj.px.x + Anim.step(px, destx, 4),
+            y = obj.px.y + Anim.step(py, desty, 4),
+        }
 
         return false
     end
