@@ -16,6 +16,9 @@ function Unit:new(u)
     -- compute the pixel position from the cell position
     u.px = {x = u.cell.x * 8, y = u.cell.y * 8}
 
+    -- initialize `from` cells
+    u.from = {x = nil, y = nil}
+
     -- track actions taken
     u.act = u.act or {atk = false, mov = false}
 

@@ -13,6 +13,7 @@ describe("unit", function()
                 act = {atk = false, mov = false},
                 active = true,
                 cell = {x = 3, y = 4},
+                from = {x = nil, y = nil},
                 player = 2,
                 pwr = 10,
                 px = {x = 24, y = 32},
