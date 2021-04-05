@@ -45,9 +45,9 @@ function Menus.Target:update(state, inputs)
 
         -- attack the enemy unit
         Seq:enqueue({Anim.laser(sel, self.unit)})
+        local def = Cell.def(self.unit.cell.x, self.unit.cell.y, stage)
         local killed = sel:attack(self.unit, self.choices[self.sel],
-                                  sel.stat.atk, Cell.def(self.unit.cell.x,
-                                                         self.unit.cell.y, stage))
+                                  sel.stat.atk, def, false, state)
 
         if not killed then
             -- update the unit radius

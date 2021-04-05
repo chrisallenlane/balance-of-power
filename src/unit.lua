@@ -78,9 +78,13 @@ function Unit:unmove(state)
 end
 
 -- Attack attacks a unit
-function Unit:attack(target, stat, atk, def, overflow)
+function Unit:attack(target, stat, atk, def, overflow, state)
     -- record that the unit has attacked
     self.act.atk = true
+
+    -- set the attacking player's cursor position atop the attacking unit
+    -- (This is a QOL feature for the next turn.)
+    state.player.cursor.cell = {x = self.cell.x, y = self.cell.y}
 
     -- compute the damage inflicted, ensuring that it is at least `1`
     local dmg = atk - def
@@ -108,7 +112,7 @@ function Unit:attack(target, stat, atk, def, overflow)
 
         -- recursively damage the next system
         -- NB: zero out `def` so we don't double-count it
-        self:attack(target, target:functional(), dmg, 0, true)
+        self:attack(target, target:functional(), dmg, 0, true, state)
     end
 
     return false
