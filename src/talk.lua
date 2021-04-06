@@ -60,7 +60,7 @@ function Talk:draw(state)
     rectfill(0 + x, 91 + y, 127 + x, 127 + y, 0)
 
     -- draw the portrait
-    sspr(page.who == "alice" and 80 or 104, 0, 24, 32, 2 + x, 94 + y)
+    sspr(page.who == "alice" and 64 or 96, 0, 32, 32, 2 + x, 94 + y)
 
     -- extract the substring
     if #self.said < #page.text then
@@ -68,7 +68,7 @@ function Talk:draw(state)
     end
 
     -- print the dialog
-    print(self.said, 30 + x, 95 + y, 7)
+    print(self.said, 38 + x, 95 + y, 7)
 
     -- print the "next" button
     self.frame = self.frame + 1
