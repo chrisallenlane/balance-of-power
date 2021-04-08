@@ -8,8 +8,6 @@ Backlog:
   - "compression" (SFX, stages)
   - Art: title, victory, defeat screens
   - CPU: implement 1-player enemy AI
-  - Camera: bugs
-  - Camera: refinements
   - Cursor: go to last unit instead of cursor position
   - Dialogue
   - Info: hide info bar when cursor occludes

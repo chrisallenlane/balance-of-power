@@ -33,9 +33,16 @@ function Camera:focus(x, y, state)
     x = x < 0 and 0 or x > w - 16 and w - 16 or x
     y = y < 0 and 0 or y > h - 16 and h - 16 or y
 
-    -- TODO: this needs to be refined
-    -- if the adjustment to make is minor, don't bother
-    if (abs(self.cell.x - x) < 4) and (abs(self.cell.y - y) < 4) then return end
+    -- calculate the difference from the current and new camera positions
+    local deltaX, deltaY = abs(self.cell.x - x), abs(self.cell.y - y)
+
+    -- calculate which cells are now on screen
+    local boundX, boundY = self.cell.x + 15, self.cell.y + 15
+
+    -- if the adjustment to make is minor, don't bother - as long as the focus
+    -- cell is still onscreen!
+    if deltaX < 4 and deltaY < 4 and x >= self.cell.x and x <= boundX and y >=
+        self.cell.y and y <= boundY then return end
 
     -- update the camera position
     self.cell.x, self.cell.y = x, y
