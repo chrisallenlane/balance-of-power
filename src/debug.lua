@@ -29,3 +29,9 @@ function Debug.vars(state)
         print(msg, 4 + camera.px.x, (4 + 8 * i) + camera.px.y, 7)
     end
 end
+
+function Debug.log(vals)
+    local line = ""
+    for _, v in ipairs(vals) do line = line .. v .. ", " end
+    printh(line)
+end
