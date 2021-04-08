@@ -7,6 +7,11 @@ end
 
 -- Draw the info box
 function Info:draw(state)
+    -- hide the info bar if it would occlude the cursor
+    if state.player.cursor.cell.y == state.stage.cell.y + state.stage.cell.h - 1 then
+        return
+    end
+
     local yes, no = self.yes, self.no
 
     -- short circuit if there is no info to display
