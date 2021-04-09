@@ -25,8 +25,11 @@ end
 -- handle talk box inputs
 function Talk:update(_, inputs)
     if inputs.yes:once() then
+        sfx(1)
+
         -- if we've reached the last page, close the talk box
         if self.page == #self.pages then
+            sfx(1, -2)
             self.vis = false
             return
         end
@@ -43,6 +46,9 @@ function Talk:say(lines, state)
 
     -- reset state
     self.page, self.frame, self.pages, self.said = 1, 0, {}, ""
+
+    -- play the talk sound-effect
+    sfx(1)
 
     -- split the block of text into individual lines
     for i, line in ipairs(lines) do
@@ -70,6 +76,8 @@ function Talk:draw(state)
     -- extract the substring
     if #self.said < #page.text then
         self.said = sub(page.text, 0, #self.said + 1)
+    else
+        sfx(1, -2)
     end
 
     -- print the dialog

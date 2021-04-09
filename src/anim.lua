@@ -64,7 +64,7 @@ Fire a laser from `src` to `dst`
 ]] --
 function Anim.laser(attacker, target)
     -- animation duration
-    local frame = 0
+    local frame, sound = 0, false
 
     -- randomly choose an attacker and target ship
     local as, ts = rnd(attacker:swarm()) + 1, rnd(target:swarm()) + 1
@@ -82,6 +82,12 @@ function Anim.laser(attacker, target)
         -- get ship coordinates
         local ax, ay = attacker:ship(as)
         local tx, ty = target:ship(ts)
+
+        -- play the sound effect only once
+        if not sound then
+            sfx(3)
+            sound = true
+        end
 
         -- fire the laser!
         local color = frame % 3 == 0 and 7 or frame % 2 == 0 and 10 or 0
@@ -104,11 +110,16 @@ Explode `unit`
 @return done `true` if the animation is complete; `false` otherwise
 ]] --
 function Anim.explode(x, y, state)
-    local frame = 0
+    local frame, sound = 0, false
 
     return function()
         -- end the animation after the specified number of frames
         if frame == 12 then return true end
+
+        if not sound then
+            sfx(4)
+            sound = true
+        end
 
         -- shake the camera
         state.camera.pxx = state.camera.pxx + (frame % 2 == 0 and -2 or 2)

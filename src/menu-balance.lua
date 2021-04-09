@@ -42,11 +42,11 @@ function Menus.Balance:update(state, inputs)
 
     -- adjust power levels
     if inputs.left:rep() and sys >= 1 then
-        sfx(0, -1, 8, 8)
+        sfx(0, -1, 5, 4)
         unit.stat[stat] = sys - 1
         radius:update(unit, state, player.num)
     elseif inputs.right:rep() and sys < 5 and alloc < unit.pwr then
-        sfx(0, -1, 0, 8)
+        sfx(0, -1, 0, 4)
         unit.stat[stat] = sys + 1
         radius:update(unit, state, player.num)
     end

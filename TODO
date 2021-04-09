@@ -23,7 +23,6 @@ Priority:
   - Bug: talk happens immediately on non-initial stage load
   - Camera: "offscreen" focus bug
   - Camera: optimizations
-  - Info: units hiding behind info bar
   - Talk: stage clear
 
 Backlog:

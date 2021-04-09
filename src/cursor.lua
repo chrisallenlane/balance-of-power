@@ -28,15 +28,19 @@ function Cursor:update(stage, inputs)
     -- left/right
     if inputs.left:rep() and self.cellx > 0 then
         self.cellx = self.cellx - 1
+        sfx(2)
     elseif inputs.right:rep() and self.cellx < stage.cellw - 1 then
         self.cellx = self.cellx + 1
+        sfx(2)
     end
 
     -- up/down
     if inputs.up:rep() and self.celly > 0 then
         self.celly = self.celly - 1
+        sfx(2)
     elseif inputs.down:rep() and self.celly < stage.cellh - 2 then
         self.celly = self.celly + 1
+        sfx(2)
     end
 end
 
