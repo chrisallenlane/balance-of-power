@@ -1,4 +1,4 @@
-Menus.TurnEnd = {choices = {"yes", "no"}, sel = 1, vis = false}
+Menus.TurnEnd = {choices = {"yes", "no"}, sel = 1}
 
 -- open the target menu
 function Menus.TurnEnd:open(state)
