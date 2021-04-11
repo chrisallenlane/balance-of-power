@@ -2,6 +2,9 @@ pico-8 cartridge // http://www.pico-8.com
 version 32
 __lua__
 
+-- This is minified source code. Unminified source is available here:
+-- https://github.com/chrisallenlane/balance-of-power
+
 -- show/hide on-screen debugging info
 DEBUG_SHOW = false
 
@@ -12,37 +15,37 @@ DEBUG_CHEAT = true
 Menus, Stages = {}, {}
 
 -- build the `State` object (order dependent)
-#include src/camera.lua
-#include src/cursor.lua
-#include src/player.lua
-#include src/screens.lua
-#include src/talk.lua
-#include src/state.lua
+#include inc/camera.lua
+#include inc/cursor.lua
+#include inc/player.lua
+#include inc/screens.lua
+#include inc/talk.lua
+#include inc/state.lua
 
 -- load assets (order independent)
-#include src/anim.lua
-#include src/banner.lua
-#include src/cell.lua
-#include src/cpu.lua
-#include src/info.lua
-#include src/input.lua
-#include src/inputs.lua
-#include src/menu-stat.lua
-#include src/menu-balance.lua
-#include src/menu-target.lua
-#include src/menu-title.lua
-#include src/menu-turn-end.lua
-#include src/radius.lua
-#include src/screen-battle.lua
-#include src/screen-defeat.lua
-#include src/screen-intr.lua
-#include src/screen-title.lua
-#include src/screen-victory.lua
-#include src/seq.lua
-#include src/stage.lua
-#include src/string.lua
-#include src/unit.lua
-#include src/units.lua
+#include inc/anim.lua
+#include inc/banner.lua
+#include inc/cell.lua
+#include inc/cpu.lua
+#include inc/info.lua
+#include inc/input.lua
+#include inc/inputs.lua
+#include inc/menu-stat.lua
+#include inc/menu-balance.lua
+#include inc/menu-target.lua
+#include inc/menu-title.lua
+#include inc/menu-turn-end.lua
+#include inc/radius.lua
+#include inc/screen-battle.lua
+#include inc/screen-defeat.lua
+#include inc/screen-intr.lua
+#include inc/screen-title.lua
+#include inc/screen-victory.lua
+#include inc/seq.lua
+#include inc/stage.lua
+#include inc/string.lua
+#include inc/unit.lua
+#include inc/units.lua
 
 -- load stages
 #include stage/1.lua
@@ -50,8 +53,8 @@ Menus, Stages = {}, {}
 #include stage/3.lua
 
 -- load main
-#include src/debug.lua
-#include src/main.lua
+#include inc/debug.lua
+#include inc/main.lua
 
 -- media assets
 __gfx__
