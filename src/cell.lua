@@ -1,46 +1,40 @@
 Cell = {id = nil, x = nil, y = nil, w = nil, costs = {}}
 
 -- Build a map of [tile number] => [traversal cost], [terrain defense]
--- NB: we're doing this rather than hard-coding a map simply to reduce the
--- number of "tokens" required.
+-- NB: cell data is thusly serialized to reduce the number of required tokens
 function Cell.init()
-    -- create an infinity value
-    local inf = 1 / 0
-
-    -- enumerate tile costs (in a token-efficient way)
+    -- column 1: map tile IDs
+    -- column 2: traversal cost
+    -- column 3: defense modifier
     local costs = {
         -- city
-        {tiles = {112}, cost = 0.5, def = 1},
-        -- road/city
-        {
-            tiles = split(
-                "71,72,73,74,75,87,88,89,90,91,103,104,105,119,120,121"),
-            cost = 0.5,
-            def = -1,
-        },
+        "112|0.5|1",
+
+        -- road
+        "71,72,73,74,75,87,88,89,90,91,103,104,105,119,120,121|0.5|-1",
+
         -- forest
-        {
-            tiles = split(
-                "76,77,78,79,92,93,94,95,106,107,108,109,110,111,122,123,124,125,126,127"),
-            cost = 1.5,
-            def = 1,
-        },
+        "76,77,78,79,92,93,94,95,106,107,108,109,110,111,122,123,124,125,126,127|1.5|1.",
+
         -- mountain
-        {
-            tiles = split(
-                "16,17,18,19,32,33,34,35,36,37,38,39,48,49,50,51,52,53,54,55"),
-            cost = 2,
-            def = 2,
-        },
+        "16,17,18,19,32,33,34,35,36,37,38,39,48,49,50,51,52,53,54,55|2|2",
+
         -- impassible (shore/water)
-        {tiles = split("96,101,102,117,118"), cost = inf, def = 0},
+        "96,101,102,117,118|1000|0",
     }
 
     -- build the map
     local map = {}
-    for _, set in pairs(costs) do
-        for _, tile in pairs(set.tiles) do
-            map[tile] = {cost = set.cost, def = set.def}
+
+    -- iterate over each row in the costs table
+    for _, row in ipairs(costs) do
+
+        -- split each row into columns
+        local cols = split(row, "|")
+
+        -- assemble the cost map in memory
+        for _, tile in ipairs(split(cols[1])) do
+            map[tile] = {cost = cols[2], def = cols[3]}
         end
     end
 
