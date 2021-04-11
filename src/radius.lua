@@ -144,34 +144,31 @@ end
 function Radius:draw(friend)
     if not self.vis then return end
 
-    -- choose the sprite to render
-    local sprite = friend and 2 or 3
-
     -- draw the movement radius
     for x, cell in pairs(self.cells.mov) do
-        for y, _ in pairs(cell) do spr(sprite, x * 8, y * 8) end
+        pal(10, 1)
+        for y, _ in pairs(cell) do spr(friend and 2 or 3, x * 8, y * 8) end
+        pal()
     end
 
     -- draw the danger radius
     for x, cell in pairs(self.cells.dng) do
-        pal(10, friend and 8 or 14)
         for y, _ in pairs(cell) do
             -- NB: making this check and only drawing the necessary cells is
             -- slightly faster than drawing the movement radius on top of the
             -- attack radius
             if not self:contains('mov', x, y) and not self:contains('atk', x, y) then
-                spr(6, x * 8, y * 8)
+                spr(friend and 4 or 3, x * 8, y * 8)
             end
         end
-        pal()
     end
 
     -- draw the attack radius
     for x, cell in pairs(self.cells.atk) do
-        pal(1, 8)
+        pal(10, 8)
         for y, _ in pairs(cell) do
             if not self:contains('mov', x, y) then
-                spr(sprite, x * 8, y * 8)
+                spr(2, x * 8, y * 8)
             end
         end
         pal()

@@ -39,7 +39,7 @@ function Units.draw(state)
             end
         end
 
-        spr(1, unit.px.x, unit.px.y)
+        spr(0, unit.px.x, unit.px.y)
     end
 
     pal()

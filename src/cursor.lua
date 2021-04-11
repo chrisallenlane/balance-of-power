@@ -61,9 +61,9 @@ function Cursor:draw(state)
     if not self.vis or not Seq:done() or state.talk.vis then return end
 
     -- choose the appropriate sprite
-    local sprite = 4
+    local sprite = 1
     if self.frame < 30 then
-        sprite = 5
+        sprite = 2
     elseif self.frame > 60 then
         self.frame = 0
     end
