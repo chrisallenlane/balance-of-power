@@ -8,7 +8,7 @@ ENV TZ=America/New_York
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # install build dependencies
-RUN apt-get update         && \
+RUN apt-get update &&     \
 		apt-get install --yes \
 		build-essential       \
 		ca-certificates       \
@@ -19,20 +19,22 @@ RUN apt-get update         && \
 		lcov                  \
 		liblua5.2-dev         \
 		lua5.2                \
-		luarocks
+		luarocks              \
+		nodejs                \
+		npm
 
 # install luarocks dependencies
-RUN luarocks install busted   && \
+RUN luarocks install busted && \
 	luarocks install cluacov  && \
 	luarocks install luacheck && \
 	luarocks install luacov-reporter-lcov
 
 # install lua-format
 # NB: don't try to do this via luarocks - dependency hell awaits
-RUN cd /tmp                           && \
+RUN cd /tmp                         && \
 	git clone                            \
-		--depth=1                        \
-		--recurse-submodules $LUA_FMT && \
+		--depth=1                          \
+		--recurse-submodules $LUA_FMT   && \
 	cd LuaFormatter                   && \
 	cmake .                           && \
 	make                              && \
@@ -41,13 +43,17 @@ RUN cd /tmp                           && \
 # install go tooling
 RUN go get -u github.com/boyter/scc
 
+# install luamin
+RUN npm install -g luamin
+
 # uninstall build dependencies
 # NB: don't uninstall `gcc`. It will also remove `lcov`.
-RUN apt-get remove --yes        \
+RUN apt-get remove --yes      \
 	build-essential             \
 	cmake                       \
 	git                         \
-	golang                   && \
+	golang                      \
+	npm                      && \
 	rm -rf /tmp/LuaFormatter && \
 	apt-get clean --yes      && \
 	apt-get autoremove --yes
