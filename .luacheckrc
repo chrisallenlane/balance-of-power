@@ -91,6 +91,10 @@ globals = {
 	"type",
 	"yield",
 
+	-- test globals
+	"describe",
+	"it",
+
 	-- bop globals
 	"AStar",
 	"Anim",
