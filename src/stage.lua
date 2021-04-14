@@ -84,3 +84,62 @@ function Stage.draw(state)
     -- reset palette swaps
     pal()
 end
+
+-- unserialize stage data
+function Stage.unserialize(serialized, spl, ad)
+    -- NB: the unit tests need this
+    spl = spl or split
+    ad = ad or add
+
+    -- initialize a table of stage constructor functions
+    local stages = {}
+
+    -- stage rows are separated by a `&`
+    for _, stage in ipairs(spl(serialized, '&')) do
+        -- fields are separated by a `~`
+        local fields = spl(stage, '~')
+
+        -- unpack the "easy" object properties
+        local obj = {
+            num = fields[1],
+            intr = Stage.unpack("head,body", fields[2], spl),
+            camera = Stage.unpack("x,y", fields[3], spl),
+            cell = Stage.unpack("x,y,w,h", fields[4], spl),
+            swap = {},
+            units = {},
+            talk = {start = spl(fields[7], "@"), clear = spl(fields[8], "@")},
+        }
+
+        -- parse out swap data
+        local sd = spl(fields[5], "@")
+        for i = 1, #sd, 2 do ad(obj.swap, {sd[i], sd[i + 1]}) end
+
+        -- parse out unit data
+        local ud = spl(fields[6], "@")
+        for i = 1, #ud, 3 do
+            ad(obj.units, Unit:new({
+                player = ud[i],
+                cell = {x = ud[i + 1], y = ud[i + 2]},
+            }))
+        end
+
+        -- create a constructor that returns the object
+        ad(stages, function()
+            return obj
+        end)
+    end
+
+    return stages
+end
+
+function Stage.unpack(keystr, field, spl)
+    -- NB: the unit tests need this
+    spl = spl or split
+
+    -- NB: specify the comma separator, or the unit-tests will fail
+    local keys, obj = spl(keystr, ","), {}
+
+    for i, val in ipairs(spl(field, "@")) do obj[keys[i]] = val end
+
+    return obj
+end

@@ -1,0 +1,49 @@
+---
+# stage number
+num: 1
+
+# interstitial text
+intr:
+    head: stage 1
+    body: lorem ipsum dolor sit amet
+
+# camera position
+camera:
+    x: 0
+    y: 0
+
+# map dimensions
+cell:
+    x: 0
+    y: 0
+    w: 32
+    h: 16
+
+# palette swaps
+swap:
+    # none
+
+# units
+units:
+    # player 1
+    - {player: 1, x: 3, y: 2}
+    - {player: 1, x: 1, y: 1}
+    - {player: 1, x: 1, y: 3}
+
+    # player 2
+    - {player: 2, x: 16, y: 3}
+    - {player: 2, x: 18, y: 3}
+    - {player: 2, x: 20, y: 3}
+    - {player: 2, x: 22, y: 3}
+    - {player: 2, x: 24, y: 3}
+# dialog
+talk:
+    # opening dialog
+    start:
+      - "alice|This is the first stage start."
+      - "bob|hoo-rah!"
+
+    # map clear dialog
+    clear:
+      - "alice|This is the first stage end."
+      - "bob|hoo-rah!"

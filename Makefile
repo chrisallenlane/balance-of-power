@@ -38,7 +38,7 @@ docker_image := bop
 ## setup: build the docker container and link source files into the cartridge
 .PHONY: setup
 setup: inc
-	$(DOCKER) build -t $(docker_image) -f ./Dockerfile .
+	$(DOCKER) build -t $(docker_image) -f Dockerfile .
 
 # create the `build` directory for storing minified source files
 build:
@@ -53,11 +53,11 @@ $(lua_min): %:
 
 ## fast: format and lint
 .PHONY: fast
-fast: | fmt lint minify
+fast: | fmt lint build-stages minify
 
 ## check: format, lint, and test
 .PHONY: check
-check: | fmt lint test minify
+check: | fmt lint build-stages test minify
 
 # create the coverage directory
 $(COVER_DIR):
@@ -80,13 +80,13 @@ cover: test
 .PHONY: lint
 lint:
 	$(DOCKER) run -v $(realpath .):/app $(docker_image) \
-		$(LUACHECK) src/* --formatter=plain --no-color --quiet
+		$(LUACHECK) scripts/*.lua src/*.lua test/*.lua --formatter=plain --no-color --quiet
 
 ## fmt: format files
 .PHONY: fmt
 fmt:
 	$(DOCKER) run -v $(realpath .):/app $(docker_image) \
-		$(LUAFMT) -i src/* test/*
+		$(LUAFMT) -i scripts/*.lua src/*.lua test/*.lua
 
 ## sloc: count "semantic lines of code"
 .PHONY: sloc
@@ -94,10 +94,15 @@ sloc:
 	$(DOCKER) run -v $(realpath .):/app $(docker_image) \
 		$(SCC) --exclude-dir=vendor --count-as p8:lua
 
-## clean: remove coverage report and minified files
+## clean: remove coverage report files
 .PHONY: clean
 clean:
-	@rm -f build/* $(REPORT_FILE) $(STATS_FILE)
+	@rm -f $(REPORT_FILE) $(STATS_FILE)
+
+## clean-all: remove coverage report and minified files
+.PHONY: clean-all
+clean-all: clean
+	@rm -f build/*
 
 ## distclean: remove the docker container
 .PHONY: distclean
@@ -136,6 +141,11 @@ sh:
 .PHONY: lua
 lua:
 	$(DOCKER) run -v $(realpath .):/app -ti $(docker_image) $(LUA)
+
+## build-stages: serialize stage data
+build-stages:
+	$(DOCKER) run -v $(realpath .):/app -ti $(docker_image) \
+		$(LUA) scripts/build-stages.lua > build/stages.lua
 
 ## help: display this help text
 help:

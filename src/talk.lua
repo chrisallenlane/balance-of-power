@@ -39,7 +39,7 @@ end
 -- type text into the talk box
 function Talk:say(lines)
     -- split the block of text into individual lines
-    for i, line in ipairs(split(lines, "\n")) do
+    for i, line in ipairs(lines) do
         -- create a new page from each line
         self.pages[i] = self.newPage(line)
     end

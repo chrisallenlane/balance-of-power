@@ -128,6 +128,7 @@ globals = {
 	"Screens",
 	"Seq",
 	"Stage",
+	"StageData",
 	"Stages",
 	"State",
 	"String",

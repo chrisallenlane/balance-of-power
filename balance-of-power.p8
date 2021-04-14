@@ -12,7 +12,7 @@ DEBUG_SHOW = false
 DEBUG_CHEAT = true
 
 -- initialize globals
-Menus, Stages = {}, {}
+Menus = {}
 
 -- build the `State` object (order dependent)
 #include inc/camera.lua
@@ -48,9 +48,7 @@ Menus, Stages = {}, {}
 #include inc/units.lua
 
 -- load stages
-#include stage/1.lua
-#include stage/2.lua
-#include stage/3.lua
+#include build/stages.lua
 
 -- load main
 #include inc/debug.lua

@@ -8,7 +8,7 @@ ENV TZ=America/New_York
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # install build dependencies
-RUN apt-get update &&     \
+RUN apt-get update &&         \
 		apt-get install --yes \
 		build-essential       \
 		ca-certificates       \
@@ -18,26 +18,30 @@ RUN apt-get update &&     \
 		golang                \
 		lcov                  \
 		liblua5.2-dev         \
+		libyaml-dev           \
 		lua5.2                \
 		luarocks              \
 		nodejs                \
 		npm
 
 # install luarocks dependencies
-RUN luarocks install busted && \
-	luarocks install cluacov  && \
-	luarocks install luacheck && \
-	luarocks install luacov-reporter-lcov
+RUN luarocks install busted               && \
+	luarocks install cluacov              && \
+	luarocks install luacheck             && \
+	luarocks install luacov-reporter-lcov && \
+	luarocks install luafilesystem        && \
+	luarocks install lyaml                && \
+	luarocks install penlight
 
 # install lua-format
 # NB: don't try to do this via luarocks - dependency hell awaits
-RUN cd /tmp                         && \
-	git clone                            \
-		--depth=1                          \
-		--recurse-submodules $LUA_FMT   && \
-	cd LuaFormatter                   && \
-	cmake .                           && \
-	make                              && \
+RUN cd /tmp                            && \
+	git clone                             \
+		--depth=1                         \
+		--recurse-submodules $LUA_FMT  && \
+	cd LuaFormatter                    && \
+	cmake .                            && \
+	make                               && \
 	make install
 
 # install go tooling
@@ -48,7 +52,7 @@ RUN npm install -g luamin
 
 # uninstall build dependencies
 # NB: don't uninstall `gcc`. It will also remove `lcov`.
-RUN apt-get remove --yes      \
+RUN apt-get remove --yes        \
 	build-essential             \
 	cmake                       \
 	git                         \
