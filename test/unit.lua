@@ -9,7 +9,7 @@ describe("unit", function()
             local u = Unit:new({spr = 1, player = 2, cell = {x = 3, y = 4}})
 
             -- declare the expected values
-            local expect = {
+            local want = {
                 act = {atk = false, mov = false},
                 active = true,
                 cell = {x = 3, y = 4},
@@ -22,7 +22,7 @@ describe("unit", function()
                 stat = {atk = 5, mov = 3, rng = 2},
             }
 
-            assert.same(u, expect)
+            assert.same(want, u)
         end)
     end)
 
@@ -55,9 +55,9 @@ describe("unit", function()
             u:move(5, 6)
 
             -- assert that the correct state changes have been made
-            assert.equal(u.cell.x, 5)
-            assert.equal(u.cell.y, 6)
-            assert.equal(u.act.mov, true)
+            assert.equal(5, u.cell.x)
+            assert.equal(6, u.cell.y)
+            assert.equal(true, u.act.mov)
         end)
     end)
 
@@ -67,13 +67,13 @@ describe("unit", function()
             local u = Unit:new({spr = 1, player = 2, cell = {x = 3, y = 4}})
 
             -- assert that the unit has not moved
-            assert.equal(u:moved(), false)
+            assert.equal(false, u:moved())
 
             -- manually move the unit
             u.act.mov = true
 
             -- assert that the unit has moved
-            assert.equal(u:moved(), true)
+            assert.equal(true, u:moved())
         end)
     end)
 
@@ -83,13 +83,13 @@ describe("unit", function()
             local u = Unit:new({spr = 1, player = 2, cell = {x = 3, y = 4}})
 
             -- assert that the unit has not attacked
-            assert.equal(u:attacked(), false)
+            assert.equal(false, u:attacked())
 
             -- manually move the unit
             u.act.atk = true
 
             -- assert that the unit has attacked
-            assert.equal(u:attacked(), true)
+            assert.equal(true, u:attacked())
         end)
     end)
 
@@ -99,24 +99,24 @@ describe("unit", function()
             local u = Unit:new({spr = 1, player = 2, cell = {x = 3, y = 4}})
 
             -- reset the unit's action flags
-            local refresh = function(u)
-                u.act.atk = false
-                u.act.mov = false
+            local refresh = function(unit)
+                unit.act.atk = false
+                unit.act.mov = false
             end
 
             -- assert that the negative case is reported correctly
-            assert.equal(u:acted(), false)
+            assert.equal(false, u:acted())
 
             -- manually attack
             u.act.atk = true
-            assert.equal(u:acted(), true)
+            assert.equal(true, u:acted())
 
             -- reset the unit
             refresh(u)
 
             -- manually move
             u.act.mov = true
-            assert.equal(u:acted(), true)
+            assert.equal(true, u:acted())
 
             -- reset the unit
             refresh(u)
@@ -124,7 +124,7 @@ describe("unit", function()
             -- manually attack and move
             u.act.atk = true
             u.act.mov = true
-            assert.equal(u:acted(), true)
+            assert.equal(true, u:acted())
         end)
     end)
 end)
