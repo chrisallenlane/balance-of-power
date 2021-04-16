@@ -38,6 +38,9 @@ end
 
 -- type text into the talk box
 function Talk:say(lines)
+    -- reset state
+    self.page, self.frame, self.pages, self.said = 1, 0, {}, ""
+
     -- split the block of text into individual lines
     for i, line in ipairs(lines) do
         -- create a new page from each line
