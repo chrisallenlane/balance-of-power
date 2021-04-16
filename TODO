@@ -1,14 +1,11 @@
 Priority:
-  - Animation: feat: victory/loss banner
-
-  - Docs: add a license
-  - Docs: update the README
+  - Talk: stage clear
+  - Unit repair
 
 Backlog:
-  - "compression" (SFX, stages)
+  - Animation: feat: victory/loss banner
   - Art: title, victory, defeat screens
   - CPU: implement 1-player enemy AI
   - Cursor: go to last unit instead of cursor position
-  - Dialogue
-  - Map triggers
-  - Unit repair
+  - Docs: add a license
+  - Docs: update the README
