@@ -8,7 +8,7 @@ local tablex = require 'pl.tablex'
 local stages = {}
 
 -- iterate over files in the stage directory
--- NB:there has to be a less stupid way to do this
+-- NB: there has to be a less stupid way to do this
 for f in lfs.dir('stage') do
     if f ~= '.' and f ~= '..' then
         local stage = lyaml.load(file.read('stage/' .. f))
