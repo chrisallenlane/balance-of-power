@@ -40,10 +40,11 @@ units:
 talk:
     # opening dialog
     start:
-      - "alice|This is the second stage start."
+      - "alice|Blah blah blah."
+      - "alice|Yada yada yada."
       - "bob|hoo-rah!"
 
     # map clear dialog
     clear:
-      - "alice|This is the first stage end."
+      - "alice|Stage clear!."
       - "bob|hoo-rah!"
