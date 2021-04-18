@@ -24,4 +24,7 @@ State = {
 
     -- the current stage
     stage = {},
+
+    -- suppress talk dialog
+    quiet = false,
 }

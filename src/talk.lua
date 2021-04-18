@@ -37,7 +37,10 @@ function Talk:update(_, inputs)
 end
 
 -- type text into the talk box
-function Talk:say(lines)
+function Talk:say(lines, state)
+    -- don't display the talk dialog if so configured
+    if state.quiet then return end
+
     -- reset state
     self.page, self.frame, self.pages, self.said = 1, 0, {}, ""
 

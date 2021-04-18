@@ -36,7 +36,7 @@ function Stage.load(num, stages, screens, state)
         Seq:enqueue({
             Anim.delay(90),
             function()
-                state.talk:say(state.stage.talk.start)
+                state.talk:say(state.stage.talk.start, state)
                 return true
             end,
         })
