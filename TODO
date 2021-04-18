@@ -1,10 +1,19 @@
 Priority:
+  - Battle: refactor battle loop
+  - Build: excluded `debug.lua` when building release
+  - Build: implement ldoc
+  - Camera: bugs
+  - Camera: optimizations
   - Talk: stage clear
 
 Backlog:
-  - Animation: feat: victory/loss banner
-  - Art: title, victory, defeat screens
+  - Animation: "wipe" animation?
+  - Art: title, credits creen, "game over" screen
   - CPU: implement 1-player enemy AI
   - Cursor: go to last unit instead of cursor position
   - Docs: add a license
   - Docs: update the README
+  - Map design
+  - Music
+  - SFX
+  - Story writing
