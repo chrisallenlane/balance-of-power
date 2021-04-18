@@ -62,6 +62,35 @@ function Units.remain(units)
     return p1, p2
 end
 
+-- repairs units that are placed within a city
+function Units.repair(state)
+    -- iterate over each unit that belongs to the player
+    for _, unit in ipairs(state.stage.units) do
+        -- filter to only units belonging to the current player
+        if unit.player == state.player.num then
+            -- get the tile beneath the unit
+            local tile = mget(unit.cell.x + state.stage.cell.x,
+                              unit.cell.y + state.stage.cell.y)
+
+            -- repair the unit if it's in a city
+            if tile == 112 then
+                if unit.pwr < 10 then
+                    -- increment the unit power
+                    unit.pwr = unit.pwr + 1
+
+                    -- play the repair animation
+                    state.camera:focus(unit.cell.x, unit.cell.y, state)
+                    Seq:enqueue({
+                        Anim.delay(30),
+                        Anim.trans(state.camera, unit.cell.x, unit.cell.y),
+                        Anim.repair(unit, state),
+                    })
+                end
+            end
+        end
+    end
+end
+
 -- deactivate all units
 function Units.deactivate(units, player)
     for _, unit in pairs(units) do

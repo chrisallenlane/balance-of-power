@@ -191,6 +191,9 @@ function Player:turnEnd(state)
     -- swap the current player
     state.player = self.num == 1 and state.players[2] or state.players[1]
 
+    -- repair units (that belong to the new player) that are in a city
+    Units.repair(state)
+
     -- center the screen on the specified coordinates
     cam:focus(state.player.cursor.cell.x, state.player.cursor.cell.y, state)
     Seq:enqueue({Anim.delay(30), Anim.trans(cam, cam.cell.x, cam.cell.y)})

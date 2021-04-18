@@ -96,3 +96,26 @@ function Anim.explode(unit, state)
         return false
     end
 end
+
+-- repair `unit`
+function Anim.repair(unit, state)
+    local cam, frames = state.camera, 0
+    -- TODO: can can _probably_ remove `orig` once I fix the camera bugs
+    local orig = {x = cam.px.x, y = cam.px.y}
+
+    return function()
+        -- end the animation after `frames` frames
+        if frames == 15 then
+            cam.px = orig
+            return true
+        end
+
+        -- draw the explosion
+        local cx, cy = unit.px.x + 3, unit.px.y + 3
+        circ(cx, cy, frames * 2 + 1, 12)
+
+        -- continue the animation
+        frames = frames + 1
+        return false
+    end
+end
