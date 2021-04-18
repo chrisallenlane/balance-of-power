@@ -13,6 +13,11 @@ COVER_REPORT := $(COVER_DIR)/index.html
 REPORT_FILE  := $(COVER_DIR)/luacov.report.out
 STATS_FILE   := $(COVER_DIR)/luacov.stats.out
 
+# asset paths
+BUILD_DIR  := build
+DIST_DIR   := dist
+EXPORT_DIR := balance-of-power.bin
+
 # executable paths
 BROWSER  := sensible-browser
 CAT      := cat
@@ -24,6 +29,9 @@ LUACHECK := luacheck
 LUAFMT   := lua-format
 LUAMIN   := luamin
 MKDIR    := mkdir -p
+MV       := mv
+PICO8    := pico8
+RMDIR    := rm -rf 
 SCC      := /root/go/bin/scc
 SED      := sed
 SORT     := sort
@@ -40,13 +48,9 @@ docker_image := bop
 setup: inc
 	$(DOCKER) build -t $(docker_image) -f Dockerfile .
 
-# create the `build` directory for storing minified source files
-build:
-	mkdir -p build
-
 ## minify: minify source files
 .PHONY: minify
-minify: build $(lua_min)
+minify: $(BUILD_DIR) $(lua_min)
 $(lua_min): %:
 	$(DOCKER) run -tv $(realpath .):/app $(docker_image) \
 		bash -c '$(LUAMIN) -f src/$(notdir $@) > $@'
@@ -57,7 +61,7 @@ fast: | fmt lint build-stages minify
 
 ## check: format, lint, and test
 .PHONY: check
-check: | fmt lint build-stages test minify
+check: | fmt lint test minify
 
 # create the coverage directory
 $(COVER_DIR):
@@ -94,33 +98,32 @@ sloc:
 	$(DOCKER) run -v $(realpath .):/app $(docker_image) \
 		$(SCC) --exclude-dir=vendor --count-as p8:lua
 
-## clean: remove coverage report files
+## clean: remove distributions and coverage report
 .PHONY: clean
 clean:
-	@rm -f $(REPORT_FILE) $(STATS_FILE)
+	@rm -f $(DIST_DIR)/* $(REPORT_FILE) $(STATS_FILE)
 
 ## clean-all: remove coverage report and minified files
 .PHONY: clean-all
 clean-all: clean
-	@rm -f build/*
+	@rm -f $(BUILD_DIR)/*
 
 ## distclean: remove the docker container
 .PHONY: distclean
 distclean:
 	$(DOCKER) image rm $(docker_image) --force
 
-# by default, link development files into the cartridge
-inc: link-dev
-
 ## link-dev: link development source files into cartridge
 .PHONY: link-dev
 link-dev:
-	rm -f inc && ln -s src inc
+	@rm -f inc && ln -s src inc && \
+	echo "linked development assets"
 
 ## link-release: link release (minified) source files into cartridge
 .PHONY: link-release
 link-release: minify
-	rm -f inc && ln -s build inc
+	@rm -f inc && ln -s $(BUILD_DIR) inc && \
+	echo "linked release assets"
 
 ## install: link cartridge into Pico-8 environment
 .PHONY: install
@@ -142,10 +145,29 @@ sh:
 lua:
 	$(DOCKER) run -v $(realpath .):/app -ti $(docker_image) $(LUA)
 
+## build-release: build release versions of the game
+.PHONY: build-release
+build-release: link-release $(DIST_DIR) build-stages check
+	$(PICO8) balance-of-power.p8 \
+		-export "$(EXPORT_DIR) -i 0 -s 1 -c 1" && \
+	$(MV) $(EXPORT_DIR)/*.zip dist/ && \
+	$(RMDIR) $(EXPORT_DIR)
+
+# create the `build` directory for storing minified source files
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
+
 ## build-stages: serialize stage data
 build-stages:
 	$(DOCKER) run -v $(realpath .):/app -ti $(docker_image) \
 		$(LUA) scripts/build-stages.lua > build/stages.lua
+
+# by default, link development files into the cartridge
+inc: link-dev
+
+# create `dist` directory
+$(DIST_DIR):
+	$(MKDIR) $(DIST_DIR)
 
 ## help: display this help text
 help:
