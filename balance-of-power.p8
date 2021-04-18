@@ -2,6 +2,12 @@ pico-8 cartridge // http://www.pico-8.com
 version 32
 __lua__
 
+-- balance of power
+-- by mudbound_dragon
+--
+-- https://twitch.tv/mudbound_dragon
+-- https://chris-allen-lane.com
+
 -- This is minified source code. Unminified source is available here:
 -- https://github.com/chrisallenlane/balance-of-power
 
