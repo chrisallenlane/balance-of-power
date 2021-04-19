@@ -48,24 +48,29 @@ docker_image := bop
 setup: inc
 	$(DOCKER) build -t $(docker_image) -f Dockerfile .
 
+## fast: format and lint
+.PHONY: fast
+fast: | fmt lint build-stages trim
+
+## check: format, lint, and test
+.PHONY: check
+check: | fmt lint test
+
 ## minify: minify source files
 .PHONY: minify
 minify: $(BUILD_DIR) $(lua_min)
 $(lua_min): %:
+	echo "minify: $@" && \
 	$(DOCKER) run -tv $(realpath .):/app $(docker_image) \
 		bash -c '$(LUAMIN) -f src/$(notdir $@) > $@'
 
-## fast: format and lint
-.PHONY: fast
-fast: | fmt lint build-stages minify
-
-## check: format, lint, and test
-.PHONY: check
-check: | fmt lint test minify
-
-# create the coverage directory
-$(COVER_DIR):
-	@$(MKDIR) $(COVER_DIR)
+## trim: minify and prune files
+# NB: we truncate `build/debug.lua` because we do not want it to add weight to
+# the production release.
+.PHONY: trim
+trim: minify
+	$(DOCKER) run -tv $(realpath .):/app $(docker_image) \
+		bash -c 'truncate -s 0 $(BUILD_DIR)/debug.lua'
 
 ## test: run unit-tests
 .PHONY: test
@@ -121,7 +126,7 @@ link-dev:
 
 ## link-release: link release (minified) source files into cartridge
 .PHONY: link-release
-link-release: minify
+link-release: trim
 	@rm -f inc && ln -s $(BUILD_DIR) inc && \
 	echo "linked release assets"
 
@@ -161,6 +166,10 @@ $(BUILD_DIR):
 build-stages:
 	$(DOCKER) run -v $(realpath .):/app -ti $(docker_image) \
 		$(LUA) scripts/build-stages.lua > build/stages.lua
+
+# create the coverage directory
+$(COVER_DIR):
+	@$(MKDIR) $(COVER_DIR)
 
 # by default, link development files into the cartridge
 inc: link-dev
