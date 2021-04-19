@@ -44,7 +44,7 @@ function Unit.clone(u)
         px = {x = u.px.x, y = u.px.y},
         act = {atk = u.act.atk, mov = u.act.mov},
         active = u.active,
-        -- TODO XXX: this is a shallow copy - though it seems to work?
+        -- @todo: this is a shallow copy - though it seems to work?
         radius = u.radius,
     }
 

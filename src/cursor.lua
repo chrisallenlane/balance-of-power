@@ -6,7 +6,7 @@ function Cursor:new()
         cell = {x = 0, y = 0},
 
         -- the currently selected unit
-        -- TODO: remove the `unit` wrapper if I never add additional properties
+        -- @todo: remove the `unit` wrapper if I never add additional properties
         unit = {sel = nil},
 
         -- is the cursor visible?
@@ -41,7 +41,7 @@ function Cursor:update(stage, inputs)
     end
 end
 
--- TODO: move this into unit state
+-- @todo: move this into unit state
 -- Return true if `unit` unit is selected, or true if any unit is selected
 -- otherwise
 function Cursor:selected(unit)

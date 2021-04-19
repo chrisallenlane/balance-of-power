@@ -24,6 +24,7 @@ CAT      := cat
 COLUMN   := column
 DOCKER   := docker
 GREP     := grep
+LDOC     := ldoc
 LUA      := lua5.2
 LUACHECK := luacheck
 LUAFMT   := lua-format
@@ -77,6 +78,17 @@ trim: minify
 test: clean $(COVER_DIR) 
 	@$(DOCKER) run -v $(realpath .):/app $(docker_image) \
 		bash -c 'busted --coverage test/*'
+
+## build-doc: build project documentation
+.PHONY: build-doc
+build-doc:
+	@$(DOCKER) run -v $(realpath .):/app $(docker_image) \
+		bash -c '$(LDOC) .'
+
+## doc: build project documentation, and view it in a browser
+.PHONY: doc
+doc: build-doc
+	$(BROWSER) doc/index.html
 
 ## cover: generate a test coverage report
 .PHONY: cover

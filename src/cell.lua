@@ -75,7 +75,7 @@ function Cell.pass(x, y, stage, turn)
     if Cell.oob(x, y, stage) then return false end
 
     -- check for a unit at the specified coordinates
-    -- TODO: de-duplicate with `self.open`, possibly via a state var
+    -- @todo: de-duplicate with `self.open`, possibly via a state var
     local unit = Units.at(x, y, stage.units)
 
     -- if no unit is found, return true
@@ -101,7 +101,7 @@ function Cell.cost(x, y, stage)
 end
 
 -- return the cell traversal cost at `x`, `y`
--- TODO: this should be de-duplicated with the above
+-- @todo: this should be de-duplicated with the above
 function Cell.def(x, y, stage)
     -- look up a traversal cost for the tile
     local tile = Cell.costs[mget(stage.cell.x + x, stage.cell.y + y)]

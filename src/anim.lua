@@ -1,7 +1,13 @@
--- initialize the class metatable
+--[[
+Anim implements game animations.
+]] -- initialize the class metatable
 Anim = {}
 
--- delay `delay` frames
+--[[--
+Delay an arbitrary number of frames
+@param frames The number of frames to delay
+@return done `true` if the delay is complete; `false` otherwise
+]] --
 function Anim.delay(frames)
     return function()
         frames = frames - 1
@@ -9,8 +15,14 @@ function Anim.delay(frames)
     end
 end
 
--- return the number of steps to take from `src` to `dst` at `speed` in a
--- single frame.
+--[[--
+Return the number of steps to take from `src` to `dst` at `speed` in a
+single frame.
+@param src The source coordinate (1-dimensional)
+@param dst The destination coordinate (1-dimensional)
+@param speed The rate at which to move from `src` to `dst`
+@return The step size to take
+]] --
 function Anim.step(src, dst, speed)
     local delta = dst - src
 
@@ -19,7 +31,13 @@ function Anim.step(src, dst, speed)
     return -(speed < delta and delta or speed)
 end
 
--- translate an object across the stage
+--[[--
+Translate an object across the stage
+@param obj The object to translate
+@param x The x-coordinate destination
+@param y The y-coordinate destination
+@return done `true` if the animation is complete; `false` otherwise
+]] --
 function Anim.trans(obj, x, y)
     -- warp the object to the specified cell
     obj.cell.x, obj.cell.y = x, y
@@ -41,7 +59,12 @@ function Anim.trans(obj, x, y)
     end
 end
 
--- fire a laser from `src` to `dst`
+--[[--
+Fire a laser from `src` to `dst`
+@param src The laser origin
+@param dst The laser destination
+@return done `true` if the animation is complete; `false` otherwise
+]] --
 function Anim.laser(src, dst)
     -- animation duration
     local frames = 20
@@ -52,7 +75,7 @@ function Anim.laser(src, dst)
 
         -- end the animation after `frames` frames
         if frames == 0 then
-            -- TODO: hide the opponent's radii?
+            -- @todo: hide the opponent's radii?
             src.radius.vis = true
             return true
         end
@@ -66,10 +89,15 @@ function Anim.laser(src, dst)
     end
 end
 
--- explode `unit`
+--[[--
+Explode `unit`
+@param unit The unit to explode.
+@param state The game state.
+@return done `true` if the animation is complete; `false` otherwise
+]] --
 function Anim.explode(unit, state)
     local cam, frames = state.camera, 0
-    -- TODO: can can _probably_ remove `orig` once I fix the camera bugs
+    -- @todo: can can _probably_ remove `orig` once I fix the camera bugs
     local orig = {x = cam.px.x, y = cam.px.y}
 
     return function()
@@ -97,10 +125,15 @@ function Anim.explode(unit, state)
     end
 end
 
--- repair `unit`
+--[[--
+Repair `unit`
+@param unit The unit to repair.
+@param state The game state.
+@return done `true` if the animation is complete; `false` otherwise
+]] --
 function Anim.repair(unit, state)
     local cam, frames = state.camera, 0
-    -- TODO: can can _probably_ remove `orig` once I fix the camera bugs
+    -- @todo: can can _probably_ remove `orig` once I fix the camera bugs
     local orig = {x = cam.px.x, y = cam.px.y}
 
     return function()

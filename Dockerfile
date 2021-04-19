@@ -27,6 +27,7 @@ RUN apt-get update &&         \
 # install luarocks dependencies
 RUN luarocks install busted               && \
 	luarocks install cluacov              && \
+	luarocks install ldoc                 && \
 	luarocks install luacheck             && \
 	luarocks install luacov-reporter-lcov && \
 	luarocks install luafilesystem        && \

@@ -1,4 +1,6 @@
 build
 coverage
 dist
+doc/index.html
+doc/ldoc.css
 inc

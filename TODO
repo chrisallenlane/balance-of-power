@@ -1,6 +1,5 @@
 Priority:
   - Battle: refactor battle loop
-  - Build: implement ldoc
   - Camera: bugs
   - Camera: optimizations
   - Talk: stage clear
