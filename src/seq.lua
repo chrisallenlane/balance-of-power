@@ -23,3 +23,8 @@ end
 function Seq:done()
     return #self.queue == 0
 end
+
+-- clear animations
+function Seq:clear()
+    self.queue = {}
+end

@@ -31,6 +31,9 @@ function Stage.load(num, stages, screens, state)
     state.camera:warp(state.stage.camera.x, state.stage.camera.y)
     state.screen = screens.intr
 
+    -- clear enqueued animation sequences
+    Seq:clear()
+
     -- play the opening dialogue if provided (for single-player games only)
     if state.stage.talk and state.stage.talk.start and state.players[2].cpu then
         Seq:enqueue({
