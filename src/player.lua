@@ -195,6 +195,13 @@ function Player:turnEnd(state)
     Units.repair(state)
 
     -- center the screen on the specified coordinates
-    cam:focus(state.player.cursor.cell.x, state.player.cursor.cell.y, state)
-    Seq:enqueue({Anim.delay(30), Anim.trans(cam, cam.cell.x, cam.cell.y)})
+    Seq:enqueue({
+        Anim.delay(30),
+        function()
+            cam:focus(state.player.cursor.cell.x, state.player.cursor.cell.y,
+                      state)
+            return true
+        end,
+        Anim.trans(cam, cam.cell.x, cam.cell.y),
+    })
 end

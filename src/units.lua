@@ -79,10 +79,14 @@ function Units.repair(state)
                     unit.pwr = unit.pwr + 1
 
                     -- play the repair animation
-                    state.camera:focus(unit.cell.x, unit.cell.y, state)
                     Seq:enqueue({
                         Anim.delay(30),
-                        Anim.trans(state.camera, unit.cell.x, unit.cell.y),
+                        function()
+                            state.camera:focus(unit.cell.x, unit.cell.y, state)
+                            return true
+                        end,
+                        Anim.trans(state.camera, state.camera.cell.x,
+                                   state.camera.cell.y),
                         Anim.repair(unit, state),
                     })
                 end

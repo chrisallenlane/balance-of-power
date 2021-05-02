@@ -128,20 +128,15 @@ end
 --[[--
 Repair `unit`
 @param unit The unit to repair.
-@param state The game state.
+@param state The game state (unused)
 @return done `true` if the animation is complete; `false` otherwise
 ]] --
-function Anim.repair(unit, state)
-    local cam, frames = state.camera, 0
-    -- @todo: can can _probably_ remove `orig` once I fix the camera bugs
-    local orig = {x = cam.px.x, y = cam.px.y}
+function Anim.repair(unit, _)
+    local frames = 0
 
     return function()
         -- end the animation after `frames` frames
-        if frames == 15 then
-            cam.px = orig
-            return true
-        end
+        if frames == 15 then return true end
 
         -- draw the explosion
         local cx, cy = unit.px.x + 3, unit.px.y + 3
