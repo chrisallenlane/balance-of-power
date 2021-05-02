@@ -1,6 +1,6 @@
 Priority:
   - Battle: refactor battle loop
-  - Camera: bugs
+  - Battle: unit deactivation bug
   - Camera: optimizations
   - Talk: stage clear
 
@@ -14,4 +14,4 @@ Backlog:
   - Map design
   - Music
   - SFX
-  - Story writing
+  - Story
