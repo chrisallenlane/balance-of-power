@@ -194,12 +194,19 @@ function Player:turnEnd(state)
     -- repair units (that belong to the new player) that are in a city
     Units.repair(state)
 
+    -- determine if a unit is still beneath the cursor (ie, assert that the
+    -- unit has not been destroyed)
+    local unit, _ = Units.at(state.player.cursor.cell.x,
+                             state.player.cursor.cell.y, stage.units)
+
+    -- if the unit has been destroyed, choose the first available unit
+    if not unit then unit = Units.first(state.player.num, stage.units) end
+
     -- center the screen on the specified coordinates
     Seq:enqueue({
         Anim.delay(30),
         function()
-            cam:focus(state.player.cursor.cell.x, state.player.cursor.cell.y,
-                      state)
+            cam:focus(unit.cell.x, unit.cell.y, state)
             return true
         end,
         Anim.trans(cam, cam.cell.x, cam.cell.y),
