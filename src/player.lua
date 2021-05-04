@@ -47,7 +47,7 @@ function Player.battle.update(state, inputs)
             elseif cur:selected() then
 
                 -- ... and has not acted, then open the balance menu
-                if not unit:acted() then
+                if not unit:acted() and unit.active then
                     Info:set("balance", "unselect", unit)
                     if yes:once() then
                         Menus.Balance:open(cur.unit.sel, idx, state)
