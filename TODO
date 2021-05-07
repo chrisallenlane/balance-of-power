@@ -1,6 +1,14 @@
 Priority:
+  - Bug: 1p units can blend in with water
+  - Bug: cancel move should also unselect unit
+  - Bug: enemy threat radius is visible even with 0 `ATK`
+  - Bug: enemy units can hide behind info bar
+  - Bug: enemy units can move offscreen (to the right, anyway) (probably bad +1)
+  - Bug: enemy units can stack
+  - Bug: game crashes when destroying enemy with 0, 0, N(MOV) HP remaining?
+  - Battle: control optimizations
   - Battle: refactor battle loop
-  - Battle: unit deactivation bug
+  - Camera: "offscreen" focus bug
   - Camera: optimizations
   - Talk: stage clear
 
@@ -8,7 +16,6 @@ Backlog:
   - Animation: "wipe" animation?
   - Art: title, credits creen, "game over" screen
   - CPU: implement 1-player enemy AI
-  - Cursor: go to last unit instead of cursor position
   - Docs: add a license
   - Docs: update the README
   - Map design
