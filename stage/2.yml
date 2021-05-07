@@ -10,32 +10,32 @@ intr:
 # camera position
 camera:
     x: 0
-    y: 16
+    y: 0
 
 # map dimensions
 cell:
-    x: 32
+    x: 0
     y: 0
-    w: 16
-    h: 32
+    w: 32
+    h: 16
 
 # palette swaps
 swap:
-    - [3, 15]
-    - [11, 15]
+    # none
 
 # units
 units:
     # player 1
-    - {player: 1, x: 3, y: 27}
-    - {player: 1, x: 3, y: 28}
-    - {player: 1, x: 3, y: 29}
+    - {player: 1, x: 3, y: 2}
+    - {player: 1, x: 1, y: 1}
+    - {player: 1, x: 1, y: 3}
 
     # player 2
-    - {player: 2, x: 1, y: 1}
-    - {player: 2, x: 1, y: 2}
-    - {player: 2, x: 1, y: 3}
-
+    - {player: 2, x: 16, y: 3}
+    - {player: 2, x: 18, y: 3}
+    - {player: 2, x: 20, y: 3}
+    - {player: 2, x: 22, y: 3}
+    - {player: 2, x: 24, y: 3}
 # dialog
 talk:
     # opening dialog

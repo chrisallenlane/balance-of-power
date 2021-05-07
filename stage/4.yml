@@ -1,43 +1,35 @@
 ---
 # stage number
-num: 1
+num: 4
 
 # interstitial text
 intr:
-    head: stage 1
+    head: stage 4
     body: lorem ipsum dolor sit amet
 
 # camera position
 camera:
-    x: 0
-    y: 0
+    x: 16
+    y: 16
 
 # map dimensions
 cell:
-    x: 0
-    y: 16
-    w: 16
-    h: 16
+    x: 48
+    y: 0
+    w: 32
+    h: 32
 
 # palette swaps
 swap:
-    # none
+    - [12, 1]
 
 # units
 units:
     # player 1
-    - {player: 1, x: 2, y: 1}
-    - {player: 1, x: 3, y: 2}
-    - {player: 1, x: 2, y: 3}
-    - {player: 1, x: 1, y: 2}
+    - {player: 1, x: 28, y: 29}
 
     # player 2
-    - {player: 2, x: 10, y: 6}
-    - {player: 2, x: 10, y: 4}
-    - {player: 2, x: 9, y: 12}
-    - {player: 2, x: 9, y: 13}
-    - {player: 2, x: 3, y: 12}
-    - {player: 2, x: 3, y: 13}
+    - {player: 2, x: 9, y: 5}
 
 # dialog
 talk:
