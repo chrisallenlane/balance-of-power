@@ -202,6 +202,10 @@ function Player:turnEnd(state)
     -- if the unit has been destroyed, choose the first available unit
     if not unit then unit = Units.first(state.player.num, stage.units) end
 
+    -- if there is _still_ not a unit, then the other player has lost, and the
+    -- map will "clear" on the next tick
+    if not unit then return end
+
     -- center the screen on the specified coordinates
     Seq:enqueue({
         Anim.delay(30),
