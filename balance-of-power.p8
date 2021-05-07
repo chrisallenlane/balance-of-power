@@ -17,6 +17,10 @@ DEBUG_SHOW = false
 -- enable/disable debugging "cheat" functions
 DEBUG_CHEAT = true
 
+-- load which stage from the title screen?
+-- (useful while developing new maps)
+TITLE_STAGE = 1
+
 -- initialize globals
 Menus = {}
 

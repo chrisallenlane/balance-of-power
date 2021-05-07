@@ -15,7 +15,7 @@ function Menus.Title:update(state, inputs)
         if self.sel == 1 then state.players[2].cpu = true end
 
         -- load the first stage
-        Stage.load(1, Stages, Screens, state)
+        Stage.load(TITLE_STAGE, Stages, Screens, state)
     end
 end
 
