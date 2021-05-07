@@ -4,24 +4,31 @@ CPU = {battle = {}}
 function CPU.battle.update(state)
     Info:set("", "")
 
-    local player, mv = state.player, -1
+    local player, stage = state.player, state.stage
 
-    -- select the first enemy unit
-    local unit = Units.first(2, state.stage.units)
-
-    -- if moving left is invalid, move right
-    if not Cell.pass(unit.cell.x + mv, unit.cell.y, state.stage, player.num) then
-        mv = mv * -1
+    -- select an enemy unit at random
+    -- TODO: it might be worth refactoring this into a "filter" method or
+    -- something
+    local units = {}
+    for _, u in pairs(state.stage.units) do
+        if u.player == 2 then add(units, u) end
     end
+    local unit = rnd(units)
 
-    local newx, newy = unit.cell.x + mv, unit.cell.y
+    -- calculate the unit's radius
+    unit.radius:update(unit, stage, 2)
 
-    -- move the unit and end the turn
-    unit:move(newx, newy)
-    Seq:enqueue({Anim.delay(30), Anim.trans(unit, newx, newy)})
+    -- select a random cell within the movement radius
+    local cell = unit.radius:rand('mov', state)
 
-    -- KLUDGE
-    player.cursor.cell.x, player.cursor.cell.y = newx, newy
+    -- move the unit
+    unit:move(cell.x, cell.y)
+
+    -- unqueue the animations
+    Seq:enqueue({Anim.delay(30), Anim.trans(unit, cell.x, cell.y)})
+
+    -- record the CPU's (fake) cursor location
+    player.cursor.cell.x, player.cursor.cell.y = cell.x, cell.y
 
     -- end the CPU turn
     player:turnEnd(state)

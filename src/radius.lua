@@ -140,6 +140,24 @@ function Radius.clearAll(units)
     for _, unit in pairs(units) do unit.radius.vis = false end
 end
 
+-- return a random cell contained within the radius
+-- NB: this _probably_ won't need to be in the production release
+function Radius:rand(key, state)
+    -- track x and y keys
+    local xs, ys = {}, {}
+
+    -- get available x keys; grab a random x
+    for x, _ in pairs(self.cells[key]) do add(xs, x) end
+    local x = rnd(xs)
+
+    -- get available y keys; grab a random y
+    for y, _ in pairs(self.cells[key][x]) do add(ys, y) end
+    local y = rnd(ys)
+
+    -- initialize and return a cell
+    return Cell:new(x, y, state.stage.cell.w)
+end
+
 -- draw the radius to the stage
 function Radius:draw(friend)
     if not self.vis then return end
