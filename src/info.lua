@@ -19,10 +19,10 @@ function Info:draw(state)
     local camX, camY = state.camera.px.x, state.camera.px.y
 
     -- text position
-    local textY = camY + 120
+    local textY = camY + 122
 
     -- draw the menu background
-    rectfill(camX, camY + 117, camX + 128, camY + 128, 0)
+    rectfill(camX, camY + 120, camX + 128, camY + 128, 0)
 
     -- if both buttons do the same thing, combine them
     if yes ~= "" and yes == no then

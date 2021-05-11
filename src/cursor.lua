@@ -36,7 +36,7 @@ function Cursor:update(stage, inputs)
     -- up/down
     if inputs.up:rep() and cell.y > 0 then
         cell.y = cell.y - 1
-    elseif inputs.down:rep() and cell.y < stage.cell.h - 1 then
+    elseif inputs.down:rep() and cell.y < stage.cell.h - 2 then
         cell.y = cell.y + 1
     end
 end

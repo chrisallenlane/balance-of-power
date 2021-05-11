@@ -1,7 +1,5 @@
 Priority:
   - Bug: 1p units can blend in with water
-  - Bug: enemy threat radius is visible even with 0 `ATK`
-  - Bug: enemy units can hide behind info bar
   - Bug: enemy units can move offscreen (to the right, anyway) (probably bad +1)
   - Bug: enemy units can stack
   - Bug: game crashes when destroying enemy with 0, 0, N(MOV) HP remaining?
