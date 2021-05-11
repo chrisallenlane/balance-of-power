@@ -62,12 +62,15 @@ function Player.battle.update(state, inputs)
                         return
                     end
                     if no:once() then
+                        cur.unit.sel.radius.vis = false
                         cur.unit.sel:unmove(state)
-                        cur.unit.sel.radius:update(cur.unit.sel, stage,
-                                                   player.num)
                         Seq:enqueue({
                             Anim.trans(cur.unit.sel, cur.unit.sel.cell.x,
                                        cur.unit.sel.cell.y),
+                            function()
+                                cur.unit.sel = nil
+                                return true
+                            end,
                         })
                         return
                     end
