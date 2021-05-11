@@ -99,6 +99,12 @@ function Unit:attack(target, stat, atk, def, overflow, state)
         if target.pwr <= 0 then return true end
     end
 
+    -- if the enemy still has power, but none of that power is allocated to
+    -- systems, do not attempt to subtract power from a system
+    if target.stat.atk == 0 and target.stat.rng == 0 and target.stat.mov == 0 then
+        return false
+    end
+
     -- damage the targeted system
     target.stat[stat] = target.stat[stat] - dmg
 
