@@ -66,31 +66,24 @@ end
 function Units.repair(state)
     -- iterate over each unit that belongs to the player
     for _, unit in ipairs(state.stage.units) do
-        -- filter to only units belonging to the current player
-        if unit.player == state.player.num then
-            -- get the tile beneath the unit
-            local tile = mget(unit.cell.x + state.stage.cell.x,
-                              unit.cell.y + state.stage.cell.y)
+        -- repair the unit if applicable
+        if unit.player == state.player.num and
+            Cell.repair(unit.cell.x, unit.cell.y, state.stage) >= 1 and unit.pwr <
+            10 then
+            -- increment the unit power
+            unit.pwr = unit.pwr + 1
 
-            -- repair the unit if it's in a city
-            if tile == 112 then
-                if unit.pwr < 10 then
-                    -- increment the unit power
-                    unit.pwr = unit.pwr + 1
-
-                    -- play the repair animation
-                    Seq:enqueue({
-                        Anim.delay(30),
-                        function()
-                            state.camera:focus(unit.cell.x, unit.cell.y, state)
-                            return true
-                        end,
-                        Anim.trans(state.camera, state.camera.cell.x,
-                                   state.camera.cell.y),
-                        Anim.repair(unit, state),
-                    })
-                end
-            end
+            -- play the repair animation
+            Seq:enqueue({
+                Anim.delay(30),
+                function()
+                    state.camera:focus(unit.cell.x, unit.cell.y, state)
+                    return true
+                end,
+                Anim.trans(state.camera, state.camera.cell.x,
+                           state.camera.cell.y),
+                Anim.repair(unit, state),
+            })
         end
     end
 end

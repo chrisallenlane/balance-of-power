@@ -1,26 +1,40 @@
+-- TODO: rename "costs"?
 Cell = {id = nil, x = nil, y = nil, w = nil, costs = {}}
 
--- Build a map of [tile number] => [traversal cost], [terrain defense]
+-- Build a map of [tile number] => [traversal cost], [terrain defense], [repair value]
 -- NB: cell data is thusly serialized to reduce the number of required tokens
 function Cell.init()
     -- column 1: map tile IDs
     -- column 2: traversal cost
     -- column 3: defense modifier
+    -- column 4: cell repair value
     local costs = {
+        -- XXX TODO: remove this when enemies may no longer move offscreen
+        "0|1|0|0",
+
+        -- land
+        "64,65,66,67,68,69,70,81,82,83,84,85,86|1|0|0",
+
+        -- shore
+        "97,98,99,100,101,102,113,114,115,116,117,118|1|0|0",
+
         -- city
-        "112|0.5|1",
+        "5,6,7,20,21,22,23,24|0.5|1|1",
 
         -- road
-        "20,71,72,73,74,75,87,88,89,90,91,103,104,105,119,120,121|0.5|-1",
+        "71,72,73,74,75,87,88,89,90,91,103,104,105,112,119,120,121|0.5|-1|0",
+
+        -- bridge
+        "67,68,69,77,78,79|0.5|-1|0",
 
         -- forest
-        "76,77,78,79,92,93,94,95,106,107,108,109,110,111,122,123,124,125,126,127|1.5|1.",
+        "76,77,78,79,80,92,93,94,95,106,107,108,109,110,111,122,123,124,125,126,127|1.5|1|0",
 
         -- mountain
-        "16,17,18,19,32,33,34,35,36,37,38,39,48,49,50,51,52,53,54,55|2|2",
+        "16,17,18,19,32,33,34,35,36,37,38,39,48,49,50,51,52,53,54,55|2|2|0",
 
         -- impassible (shore/water)
-        "96,101,102,117,118|1000|0",
+        "96,101,102,117,118|1000|0|0",
     }
 
     -- build the map
@@ -32,9 +46,9 @@ function Cell.init()
         -- split each row into columns
         local cols = split(row, "|")
 
-        -- assemble the cost map in memory
+        -- assemble the map in memory
         for _, tile in ipairs(split(cols[1])) do
-            map[tile] = {cost = cols[2], def = cols[3]}
+            map[tile] = {cost = cols[2], def = cols[3], repair = cols[4]}
         end
     end
 
@@ -88,29 +102,20 @@ function Cell.pass(x, y, stage, turn)
     return false
 end
 
+-- return the cell repair value at `x`, `y`
+function Cell.repair(x, y, stage)
+    return Cell.costs[mget(stage.cell.x + x, stage.cell.y + y)].repair
+end
+
 -- return the cell traversal cost at `x`, `y`
 function Cell.cost(x, y, stage)
-    -- look up a traversal cost for the tile
-    local tile = Cell.costs[mget(stage.cell.x + x, stage.cell.y + y)]
-
-    -- if a cost is specified, return it
-    if tile then return tile.cost end
-
-    -- otherwise, return the default
-    return 1
+    return Cell.costs[mget(stage.cell.x + x, stage.cell.y + y)].cost
 end
 
 -- return the cell traversal cost at `x`, `y`
 -- @todo: this should be de-duplicated with the above
 function Cell.def(x, y, stage)
-    -- look up a traversal cost for the tile
-    local tile = Cell.costs[mget(stage.cell.x + x, stage.cell.y + y)]
-
-    -- if a cost is specified, return it
-    if tile then return tile.def end
-
-    -- otherwise, return the default
-    return 0
+    return Cell.costs[mget(stage.cell.x + x, stage.cell.y + y)].def
 end
 
 -- return the set of cells adjacent to the specified cell
