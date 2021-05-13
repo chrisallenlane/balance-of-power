@@ -16,6 +16,23 @@ function Units.first(player, units)
     end
 end
 
+-- Group the units into a table of "friends" and "foes" (relative) to the
+-- current player
+function Units.teams(state)
+    local friends, foes = {}, {}
+
+    -- iterate over and sort the units
+    for _, u in pairs(state.stage.units) do
+        if u.player == state.player.num then
+            add(friends, u)
+        else
+            add(foes, u)
+        end
+    end
+
+    return friends, foes
+end
+
 -- draw the units
 function Units.draw(state)
     for _, unit in pairs(state.stage.units) do

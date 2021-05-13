@@ -6,14 +6,9 @@ function CPU.battle.update(state)
 
     local player, stage = state.player, state.stage
 
-    -- select an enemy unit at random
-    -- TODO: it might be worth refactoring this into a "filter" method or
-    -- something
-    local units = {}
-    for _, u in pairs(state.stage.units) do
-        if u.player == 2 then add(units, u) end
-    end
-    local unit = rnd(units)
+    -- select an CPU unit at random
+    local friends, _ = Units.teams(state)
+    local unit = rnd(friends)
 
     -- calculate the unit's radius
     unit.radius:update(unit, stage, 2)
