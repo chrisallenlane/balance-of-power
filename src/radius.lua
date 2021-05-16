@@ -157,7 +157,6 @@ function Radius.clearAll(units)
 end
 
 -- return a random cell contained within the radius
--- NB: this _probably_ won't need to be in the production release
 function Radius:rand(key, state)
     -- track x and y keys
     local xs, ys = {}, {}
@@ -172,6 +171,25 @@ function Radius:rand(key, state)
 
     -- initialize and return a cell
     return Cell:new(x, y, state.stage.cell.w)
+end
+
+-- find cells that are common to both `self` and `rad` iterate over
+-- numerically-indexed table
+function Radius:intersect(keySelf, keyOther, rad)
+    -- initialize a new radius to store the intersection of cells
+    local intersection = Radius:new()
+
+    -- iterate over every cell in the (specified) radius
+    for x, cell in pairs(self.cells[keySelf]) do
+        for y, _ in pairs(cell) do
+            if rad:contains(keyOther, x, y) then
+                intersection:append(keySelf, x, y)
+            end
+        end
+    end
+
+    -- return the intersecting cells
+    return intersection
 end
 
 -- draw the radius to the stage

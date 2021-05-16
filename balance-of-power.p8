@@ -35,7 +35,7 @@ Menus = {}
 -- load assets (order independent)
 #include inc/anim.lua
 #include inc/banner.lua
-#include inc/cell.lua
+#include src/cell.lua
 #include inc/cpu.lua
 #include inc/info.lua
 #include inc/input.lua
@@ -45,7 +45,7 @@ Menus = {}
 #include inc/menu-target.lua
 #include inc/menu-title.lua
 #include inc/menu-turn-end.lua
-#include inc/radius.lua
+#include src/radius.lua
 #include inc/screen-battle.lua
 #include inc/screen-defeat.lua
 #include inc/screen-intr.lua

@@ -63,6 +63,7 @@ end
 Fire a laser from `src` to `dst`
 @param src The laser origin
 @param dst The laser destination
+@param showRadius Show radius when animation is complete?
 @return done `true` if the animation is complete; `false` otherwise
 ]] --
 function Anim.laser(src, dst)
