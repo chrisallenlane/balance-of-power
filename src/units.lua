@@ -103,6 +103,11 @@ function Units.refresh(units)
 end
 
 -- Die kills a unit
-function Units.die(idx, units)
-    deli(units, idx)
+function Units.die(id, units)
+    for i, unit in ipairs(units) do
+        if unit.id == id then
+            deli(units, i)
+            break
+        end
+    end
 end

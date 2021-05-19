@@ -124,6 +124,7 @@ function Stage.unserialize(serialized, spl, ad)
         local ud = spl(fields[6], "@")
         for i = 1, #ud, 3 do
             ad(obj.units, Unit:new({
+                id = #obj.units + 1,
                 player = ud[i],
                 cell = {x = ud[i + 1], y = ud[i + 2]},
             }))

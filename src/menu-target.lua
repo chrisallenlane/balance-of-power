@@ -64,7 +64,7 @@ function Menus.Target:update(state, inputs)
         Seq:enqueue({
             Anim.explode(self.unit, state),
             function()
-                Units.die(self.idx, units)
+                Units.die(self.unit.id, units)
                 -- update the unit radius
                 sel.radius:update(sel, stage, player.num)
 

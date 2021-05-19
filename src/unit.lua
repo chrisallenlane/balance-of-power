@@ -35,6 +35,7 @@ end
 function Unit.clone(u)
     -- create a deep copy of `u`'s properties
     local clone = {
+        id = u.id,
         spr = u.spr,
         player = u.player,
         cell = {x = u.cell.x, y = u.cell.y},
