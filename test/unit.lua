@@ -6,10 +6,16 @@ describe("unit", function()
     describe("new", function()
         it("should initialize a unit", function()
             -- initialize a unit
-            local u = Unit:new({spr = 1, player = 2, cell = {x = 3, y = 4}})
+            local u = Unit:new({
+                spr = 1,
+                player = 2,
+                cell = {x = 3, y = 4},
+                id = 1,
+            })
 
             -- declare the expected values
             local want = {
+                id = 1,
                 act = {atk = false, mov = false},
                 active = true,
                 cell = {x = 3, y = 4},

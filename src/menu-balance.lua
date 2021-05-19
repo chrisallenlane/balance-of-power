@@ -1,6 +1,7 @@
 Menus.Balance = {choices = {"atk", "rng", "mov"}, sel = 1, unit = nil}
 
 -- open the balance menu
+-- TODO: refactor away `idx` if possible
 function Menus.Balance:open(unit, idx, state)
     -- reset the menu selection
     self.sel = 1

@@ -38,10 +38,10 @@ describe("stage", function()
                     cell = {x = 3, y = 4, w = 5, h = 6},
                     swap = {{1, 2}, {3, 4}},
                     units = {
-                        Unit:new({player = 1, cell = {x = 7, y = 8}}),
-                        Unit:new({player = 1, cell = {x = 9, y = 10}}),
-                        Unit:new({player = 2, cell = {x = 11, y = 12}}),
-                        Unit:new({player = 2, cell = {x = 13, y = 14}}),
+                        Unit:new({player = 1, cell = {x = 7, y = 8}, id = 1}),
+                        Unit:new({player = 1, cell = {x = 9, y = 10}, id = 2}),
+                        Unit:new({player = 2, cell = {x = 11, y = 12}, id = 3}),
+                        Unit:new({player = 2, cell = {x = 13, y = 14}, id = 4}),
                     },
                     talk = {start = {"foo bar"}, clear = {"baz bat"}},
                 }
@@ -54,10 +54,10 @@ describe("stage", function()
                     cell = {x = 3, y = 4, w = 5, h = 6},
                     swap = {{1, 2}, {3, 4}},
                     units = {
-                        Unit:new({player = 1, cell = {x = 7, y = 8}}),
-                        Unit:new({player = 1, cell = {x = 9, y = 10}}),
-                        Unit:new({player = 2, cell = {x = 11, y = 12}}),
-                        Unit:new({player = 2, cell = {x = 13, y = 14}}),
+                        Unit:new({player = 1, cell = {x = 7, y = 8}, id = 1}),
+                        Unit:new({player = 1, cell = {x = 9, y = 10}, id = 2}),
+                        Unit:new({player = 2, cell = {x = 11, y = 12}, id = 3}),
+                        Unit:new({player = 2, cell = {x = 13, y = 14}, id = 4}),
                     },
                     talk = {start = {"foo bar"}, clear = {"baz bat"}},
                 }
