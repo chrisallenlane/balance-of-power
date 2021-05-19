@@ -109,7 +109,7 @@ function Player.battle.update(state, inputs)
                 cur.unit.sel.radius:contains('atk', unit.cell.x, unit.cell.y) then
                 Info:set("attack", "unselect", unit)
                 if yes:once() then
-                    Menus.Target:open(unit, idx, state)
+                    Menus.Target:open(unit, state)
                     return
                 end
             end

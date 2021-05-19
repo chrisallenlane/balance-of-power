@@ -1,7 +1,7 @@
-Menus.Target = {choices = {"atk", "rng", "mov"}, sel = 1, idx = nil, unit = nil}
+Menus.Target = {choices = {"atk", "rng", "mov"}, sel = 1, unit = nil}
 
 -- open the target menu
-function Menus.Target:open(unit, idx, state)
+function Menus.Target:open(unit, state)
     -- reset the menu selection
     self.sel = 1
 
@@ -9,7 +9,7 @@ function Menus.Target:open(unit, idx, state)
     state.menu = self
 
     -- bind params
-    self.idx, self.unit = idx, unit
+    self.unit = unit
 end
 
 -- @todo: disallow targeting a system with 0 power
@@ -23,7 +23,7 @@ function Menus.Target:update(state, inputs)
 
     -- cancel the balance and close the menu
     if inputs.no:once() then
-        self.idx, self.unit, state.menu = nil, nil, nil
+        self.unit, state.menu = nil, nil
         return
     end
 
