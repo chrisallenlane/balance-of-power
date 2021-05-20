@@ -60,6 +60,8 @@ check: | fmt lint test
 ## minify: minify source files
 .PHONY: minify
 minify: $(BUILD_DIR) $(lua_min)
+
+# BUG: this does not rebuild minified files when source files are changed
 $(lua_min): %:
 	echo "minify: $@" && \
 	$(DOCKER) run -tv $(realpath .):/app $(docker_image) \
@@ -118,7 +120,7 @@ sloc:
 ## clean: remove distributions and coverage report
 .PHONY: clean
 clean:
-	@rm -f $(DIST_DIR)/* $(REPORT_FILE) $(STATS_FILE)
+	@rm -f $(BUILD_DIR)/* $(DIST_DIR)/* $(REPORT_FILE) $(STATS_FILE)
 
 ## clean-all: remove coverage report and minified files
 .PHONY: clean-all
