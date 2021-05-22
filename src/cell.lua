@@ -125,7 +125,10 @@ function Cell.neighbors(x, y, stage)
     -- add cells, while being mindful to stay in bounds
     if x + 1 < cell.w then add(nbrs, Cell:new(x + 1, y, cell.w)) end
     if x - 1 >= 0 then add(nbrs, Cell:new(x - 1, y, cell.w)) end
-    if y + 1 < cell.h then add(nbrs, Cell:new(x, y + 1, cell.w)) end
+    -- NB: the `+ 2` is not a typo. The bottommost row in each map is "empty",
+    -- because the Info bar is written on top of it. This adjustment prevents
+    -- units from moving behind the Info bar.
+    if y + 2 < cell.h then add(nbrs, Cell:new(x, y + 1, cell.w)) end
     if y - 1 >= 0 then add(nbrs, Cell:new(x, y - 1, cell.w)) end
 
     return nbrs
