@@ -60,9 +60,7 @@ check: | fmt lint test
 ## minify: minify source files
 .PHONY: minify
 minify: $(BUILD_DIR) $(lua_min)
-
-# BUG: this does not rebuild minified files when source files are changed
-$(lua_min): %:
+build/%.lua: src/%.lua
 	echo "minify: $@" && \
 	$(DOCKER) run -tv $(realpath .):/app $(docker_image) \
 		bash -c '$(LUAMIN) -f src/$(notdir $@) > $@'
@@ -108,8 +106,7 @@ lint:
 ## fmt: format files
 .PHONY: fmt
 fmt:
-	$(DOCKER) run -v $(realpath .):/app $(docker_image) \
-		$(LUAFMT) -i scripts/*.lua src/*.lua test/*.lua
+	$(DOCKER) run -v $(realpath .):/app $(docker_image) scripts/fmt.sh
 
 ## sloc: count "semantic lines of code"
 .PHONY: sloc
@@ -120,7 +117,7 @@ sloc:
 ## clean: remove distributions and coverage report
 .PHONY: clean
 clean:
-	@rm -f $(BUILD_DIR)/* $(DIST_DIR)/* $(REPORT_FILE) $(STATS_FILE)
+	@rm -f $(DIST_DIR)/* $(REPORT_FILE) $(STATS_FILE)
 
 ## clean-all: remove coverage report and minified files
 .PHONY: clean-all
