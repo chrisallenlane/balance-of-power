@@ -99,9 +99,6 @@ function Screens.battle.draw(state)
     -- draw menus
     if state.menu then state.menu:draw(state) end
 
-    -- draw the info bar
-    Info:draw(state)
-
     -- draw the walk window
     state.talk:draw(state)
 
@@ -110,6 +107,9 @@ function Screens.battle.draw(state)
 
     -- play animations
     Seq:play()
+
+    -- draw the info bar
+    Info:draw(state)
 
     -- display debug output (if so configured)
     if DEBUG_SHOW then Debug.vars(state) end
