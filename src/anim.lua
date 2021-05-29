@@ -74,7 +74,8 @@ function Anim.laser(src, dst)
         if frame == 20 then return true end
 
         -- fire the laser!
-        line(src.px.x + 3, src.px.y + 3, dst.px.x + 3, dst.px.y + 3, 7 + rnd(3))
+        local color = frame % 3 == 0 and 7 or frame % 2 == 0 and 10 or 0
+        line(src.px.x + 3, src.px.y + 3, dst.px.x + 3, dst.px.y + 3, color)
 
         -- continue the animation
         frame = frame + 1
