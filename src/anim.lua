@@ -116,17 +116,18 @@ Repair `unit`
 @return done `true` if the animation is complete; `false` otherwise
 ]] --
 function Anim.repair(unit, _)
-    local frame = 0
+    local frame = 15
 
     return function()
         -- end the animation after the specified number of frames
-        if frame == 15 then return true end
+        if frame == 0 then return true end
 
-        -- draw the repair halo
-        circ(unit.px.x + 3, unit.px.y + 3, frame * 2 + 1, 12)
+        -- draw repair halos
+        circ(unit.px.x + 3, unit.px.y + 3, frame % 5 * 2.5,
+             frame % 2 == 0 and 12 or 2)
 
         -- continue the animation
-        frame = frame + 1
+        frame = frame - 1
         return false
     end
 end
