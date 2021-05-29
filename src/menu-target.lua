@@ -13,7 +13,7 @@ function Menus.Target:open(unit, state)
 end
 
 -- @todo: disallow targeting a system with 0 power
--- update "end turn?" menu state
+-- update targeting menu state
 function Menus.Target:update(state, inputs)
     Info:set("target", "cancel", self.unit)
 
@@ -43,33 +43,33 @@ function Menus.Target:update(state, inputs)
         Units.deactivate(units, player.num)
         sel:activate()
 
-        -- attack the enemy unit
-        Seq:enqueue({Anim.laser(sel, self.unit)})
         local def = Cell.def(self.unit.cell.x, self.unit.cell.y, stage)
         local killed = sel:attack(self.unit, self.choices[self.sel],
                                   sel.stat.atk, def, false, state)
 
-        if not killed then
-            -- update the unit radius
-            sel.radius:update(sel, stage, player.num)
+        -- hide the attacker's radii
+        sel.radius.vis = false
 
-            -- end the player's turn if the unit is exhausted
-            if sel:moved() or sel.stat.mov == 0 then
-                player:turnEnd(state)
-            end
-            return
+        -- attack the enemy unit
+        Seq:enqueue({Anim.laser(sel, self.unit)})
+
+        -- kill the enemy unit if it was destroyed
+        if killed then
+            Seq:enqueue({
+                Anim.explode(self.unit, state),
+                function()
+                    Units.die(self.unit.id, units)
+                    return true
+                end,
+                Anim.delay(30),
+            })
         end
 
-        -- delete the enemy unit if it has been destroyed
         Seq:enqueue({
-            Anim.explode(self.unit, state),
             function()
-                Units.die(self.unit.id, units)
-                -- update the unit radius
-                sel.radius:update(sel, stage, player.num)
-
-                -- end the player's turn if the unit is exhausted
-                if sel:moved() or sel.stat.mov == 0 then
+                if not sel:moved() then
+                    sel.radius:update(sel, stage, player.num)
+                else
                     player:turnEnd(state)
                 end
                 return true

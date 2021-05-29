@@ -151,6 +151,8 @@ function Radius:rand(key, state)
     local x = rnd(xs)
 
     -- get available y keys; grab a random y
+    -- XXX TODO FIXME: somehow `ys` can be empty
+    -- XXX TODO FIXME: it seems to affect units that have been repaired?
     for y, _ in pairs(self.cells[key][x]) do add(ys, y) end
     local y = rnd(ys)
 

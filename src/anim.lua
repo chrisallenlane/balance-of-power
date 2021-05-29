@@ -67,24 +67,17 @@ Fire a laser from `src` to `dst`
 ]] --
 function Anim.laser(src, dst)
     -- animation duration
-    local frames = 20
+    local frame = 0
 
     return function()
-        -- hide the attacking unit's radii
-        src.radius.vis = false
-
-        -- end the animation after `frames` frames
-        if frames == 0 then
-            -- @todo: hide the opponent's radii?
-            src.radius.vis = true
-            return true
-        end
+        -- end the animation after the specified number of frames
+        if frame == 20 then return true end
 
         -- fire the laser!
         line(src.px.x + 3, src.px.y + 3, dst.px.x + 3, dst.px.y + 3, 7 + rnd(3))
 
         -- continue the animation
-        frames = frames - 1
+        frame = frame + 1
         return false
     end
 end
@@ -96,31 +89,21 @@ Explode `unit`
 @return done `true` if the animation is complete; `false` otherwise
 ]] --
 function Anim.explode(unit, state)
-    local cam, frames = state.camera, 0
-    -- @todo: can can _probably_ remove `orig` once I fix the camera bugs
-    local orig = {x = cam.px.x, y = cam.px.y}
+    local frame = 0
 
     return function()
-        -- end the animation after `frames` frames
-        if frames == 15 then
-            cam.px = orig
-            return true
-        end
+        -- end the animation after the specified number of frames
+        if frame == 12 then return true end
 
         -- shake the camera
-        for _, c in ipairs({"x", "y"}) do
-            cam.px[c] = cam.px[c] + flr(2 - rnd(3))
-            if cam.px[c] < 0 then cam.px[c] = 0 end
-        end
+        state.camera.px.x = state.camera.px.x + (frame % 2 == 0 and -2 or 2)
 
         -- draw the explosion
-        local cx, cy = unit.px.x + 3, unit.px.y + 3
-        circfill(cx, cy, frames, 9)
-        circ(cx, cy, frames * 2 + 1, 10)
-        circ(cx, cy, frames * 2 + 2, 7)
+        circfill(unit.px.x + 2, unit.px.y + 2, 1.5 * frame,
+                 split("7,10,9")[frame % 7])
 
         -- continue the animation
-        frames = frames + 1
+        frame = frame + 1
         return false
     end
 end
@@ -132,18 +115,17 @@ Repair `unit`
 @return done `true` if the animation is complete; `false` otherwise
 ]] --
 function Anim.repair(unit, _)
-    local frames = 0
+    local frame = 0
 
     return function()
-        -- end the animation after `frames` frames
-        if frames == 15 then return true end
+        -- end the animation after the specified number of frames
+        if frame == 15 then return true end
 
-        -- draw the explosion
-        local cx, cy = unit.px.x + 3, unit.px.y + 3
-        circ(cx, cy, frames * 2 + 1, 12)
+        -- draw the repair halo
+        circ(unit.px.x + 3, unit.px.y + 3, frame * 2 + 1, 12)
 
         -- continue the animation
-        frames = frames + 1
+        frame = frame + 1
         return false
     end
 end
