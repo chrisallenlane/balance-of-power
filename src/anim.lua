@@ -85,11 +85,12 @@ end
 
 --[[--
 Explode `unit`
-@param unit The unit to explode.
+@param x The `x` position of the explosion center
+@param y The `y` position of the explosion center
 @param state The game state.
 @return done `true` if the animation is complete; `false` otherwise
 ]] --
-function Anim.explode(unit, state)
+function Anim.explode(x, y, state)
     local frame = 0
 
     return function()
@@ -100,8 +101,7 @@ function Anim.explode(unit, state)
         state.camera.px.x = state.camera.px.x + (frame % 2 == 0 and -2 or 2)
 
         -- draw the explosion
-        circfill(unit.px.x + 2, unit.px.y + 2, 1.5 * frame,
-                 split("7,10,9")[frame % 7])
+        circfill(x + 2, y + 2, 1.5 * frame, split("7,10,9")[frame % 7])
 
         -- continue the animation
         frame = frame + 1
