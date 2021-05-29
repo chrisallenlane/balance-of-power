@@ -164,33 +164,19 @@ end
 function Radius:draw(friend)
     if not self.vis then return end
 
-    -- draw the movement radius
-    for x, cell in pairs(self.cells.mov) do
-        pal(10, 1)
-        for y, _ in pairs(cell) do spr(friend and 2 or 3, x * 8, y * 8) end
-        pal()
-    end
+    -- use "interlocking" sprites for teams
+    local sprite = friend and 2 or 3
 
     -- draw the danger radius
+    pal(10, 14)
     for x, cell in pairs(self.cells.dng) do
-        for y, _ in pairs(cell) do
-            -- NB: making this check and only drawing the necessary cells is
-            -- slightly faster than drawing the movement radius on top of the
-            -- attack radius
-            if not self:contains('mov', x, y) and not self:contains('atk', x, y) then
-                spr(friend and 4 or 3, x * 8, y * 8)
-            end
-        end
+        for y, _ in pairs(cell) do spr(sprite, x * 8, y * 8) end
     end
 
-    -- draw the attack radius
-    for x, cell in pairs(self.cells.atk) do
-        pal(10, 8)
-        for y, _ in pairs(cell) do
-            if not self:contains('mov', x, y) then
-                spr(2, x * 8, y * 8)
-            end
-        end
-        pal()
+    -- draw the movement radius
+    pal(10, 1)
+    for x, cell in pairs(self.cells.mov) do
+        for y, _ in pairs(cell) do spr(sprite, x * 8, y * 8) end
     end
+    pal()
 end
