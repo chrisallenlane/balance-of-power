@@ -56,11 +56,11 @@ function Menus.Target:update(state, inputs)
         -- kill the enemy unit if it was destroyed
         if killed then
             Seq:enqueue({
-                Anim.explode(self.unit, state),
                 function()
                     Units.die(self.unit.id, units)
                     return true
                 end,
+                Anim.explode(self.unit.px.x, self.unit.px.y, state),
                 Anim.delay(30),
             })
         end
