@@ -11,7 +11,7 @@ function Unit:new(u)
     u.pwr = u.pwr or 10
 
     -- player-facing unit stats
-    u.stat = u.stat or {atk = 5, rng = 2, mov = 3}
+    u.stat = u.stat or {atk = 3, rng = 3, mov = 4}
 
     -- compute the pixel position from the cell position
     u.px = {x = u.cell.x * 8, y = u.cell.y * 8}
