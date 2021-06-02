@@ -13,7 +13,7 @@ function Info:draw(state)
     local yes, no = self.yes, self.no
 
     -- short circuit if there is no info to display
-    -- if yes == "" and no == "" then return end
+    if yes == "" and no == "" then return end
 
     -- padding to align the menu location with the camera
     local camX, camY = state.camera.px.x, state.camera.px.y
