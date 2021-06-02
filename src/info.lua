@@ -13,7 +13,7 @@ function Info:draw(state)
     local yes, no = self.yes, self.no
 
     -- short circuit if there is no info to display
-    if yes == "" and no == "" then return end
+    -- if yes == "" and no == "" then return end
 
     -- padding to align the menu location with the camera
     local camX, camY = state.camera.px.x, state.camera.px.y
@@ -59,6 +59,21 @@ function Info:draw(state)
         -- rng
         print("r", camX + 108, textY, 7)
         print(stat.rng, camX + 112, textY, self.colorize(stat.rng))
+    else
+        local cell, stage = state.player.cursor.cell, state.stage
+        local x, y = cell.x, cell.y
+        local cost, def = Cell.cost(x, y, stage), Cell.def(x, y, stage)
+        spr(mget(stage.cell.x + x, stage.cell.y + y), 101, textY, .70, .70)
+
+        -- movement cost
+        print("m", camX + 108, textY, 7)
+        print(abs(cost * -2), camX + 112, textY,
+              cost == 0 and 5 or cost >= 1 and 8 or 11)
+
+        -- defensive modifier
+        print("d", camX + 117, textY, 7)
+        print(abs(def * 2), camX + 121, textY,
+              def == 0 and 5 or def >= 1 and 11 or 8)
     end
 end
 
