@@ -1,4 +1,7 @@
 Priority:
+  - Feat: Atack auto-move
+  - Feat: Implement "swarm" animation
+  - Feat: Implement improved attack animation
   - Bug: 1p units can blend in with water
   - Bug: enemy units can move offscreen (to the right, anyway) (probably bad +1)
   - Bug: enemy units can stack
