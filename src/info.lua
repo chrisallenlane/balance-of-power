@@ -66,19 +66,28 @@ function Info:draw(state)
 
         -- draw the tile of interest into the Info bar
         -- implement any specified palette swaps for the stage
-        if stage.swap then for i = 1, #stage.swap do pal(stage.swap[i][1], stage.swap[i][2]) end end
-        spr(mget(stage.cell.x + x, stage.cell.y + y), state.camera.px.x + 101, textY, .70, .70)
+        Stage.palswap(state)
+        spr(mget(stage.cell.x + x, stage.cell.y + y), state.camera.px.x + 99,
+            textY, .70, .70)
         pal()
 
         -- movement cost
-        print("m", camX + 108, textY, 7)
-        --print(abs(cost * -2), camX + 112, textY,
-              --cost == 0 and 5 or cost >= 1 and 8 or 11)
+        print("m", camX + 106, textY, 7)
+        Info.arrow((cost - 1) * -1, camX + 110, textY)
 
         -- defensive modifier
         print("d", camX + 117, textY, 7)
-        --print(abs(def * 2), camX + 121, textY,
-              --def == 0 and 5 or def >= 1 and 11 or 8)
+        Info.arrow(def, camX + 121, textY)
+    end
+end
+
+function Info.arrow(val, x, y)
+    if val > 0 then
+        sspr(32, 0, 5, 3, x, y)
+    elseif val == 0 then
+        sspr(32, 3, 5, 1, x, y + 2)
+    elseif val < 0 then
+        sspr(32, 4, 5, 3, x, y + 2)
     end
 end
 

@@ -82,13 +82,18 @@ function Stage.draw(state)
     local s = state.stage
 
     -- implement any specified palette swaps for the stage
-    if s.swap then for i = 1, #s.swap do pal(s.swap[i][1], s.swap[i][2]) end end
+    Stage.palswap(state)
 
     -- draw the map
     map(s.cell.x, s.cell.y, 0, 0, s.cell.w, s.cell.h)
 
     -- reset palette swaps
     pal()
+end
+
+function Stage.palswap(state)
+    local s = state.stage
+    if s.swap then for i = 1, #s.swap do pal(s.swap[i][1], s.swap[i][2]) end end
 end
 
 -- unserialize stage data
