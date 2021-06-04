@@ -63,17 +63,22 @@ function Info:draw(state)
         local cell, stage = state.player.cursor.cell, state.stage
         local x, y = cell.x, cell.y
         local cost, def = Cell.cost(x, y, stage), Cell.def(x, y, stage)
-        spr(mget(stage.cell.x + x, stage.cell.y + y), 101, textY, .70, .70)
+
+        -- draw the tile of interest into the Info bar
+        -- implement any specified palette swaps for the stage
+        if stage.swap then for i = 1, #stage.swap do pal(stage.swap[i][1], stage.swap[i][2]) end end
+        spr(mget(stage.cell.x + x, stage.cell.y + y), state.camera.px.x + 101, textY, .70, .70)
+        pal()
 
         -- movement cost
         print("m", camX + 108, textY, 7)
-        print(abs(cost * -2), camX + 112, textY,
-              cost == 0 and 5 or cost >= 1 and 8 or 11)
+        --print(abs(cost * -2), camX + 112, textY,
+              --cost == 0 and 5 or cost >= 1 and 8 or 11)
 
         -- defensive modifier
         print("d", camX + 117, textY, 7)
-        print(abs(def * 2), camX + 121, textY,
-              def == 0 and 5 or def >= 1 and 11 or 8)
+        --print(abs(def * 2), camX + 121, textY,
+              --def == 0 and 5 or def >= 1 and 11 or 8)
     end
 end
 
