@@ -12,7 +12,7 @@ function _init()
     end)
 
     -- build an in-memory table of cell traversal costs
-    Cell.costs = Cell.init()
+    Cell.data = Cell.init()
 
     -- unserialize stage data
     Stages = Stage.unserialize(StageData)

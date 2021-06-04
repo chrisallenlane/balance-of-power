@@ -1,5 +1,4 @@
--- TODO: rename "costs"?
-Cell = {id = nil, x = nil, y = nil, w = nil, costs = {}}
+Cell = {id = nil, x = nil, y = nil, w = nil, data = {}}
 
 -- Build a map of [tile number] => [traversal cost], [terrain defense], [repair value]
 -- NB: cell data is thusly serialized to reduce the number of required tokens
@@ -8,7 +7,7 @@ function Cell.init()
     -- column 2: traversal cost
     -- column 3: defense modifier
     -- column 4: cell repair value
-    local costs = {
+    local data = {
         -- XXX TODO: remove this when enemies may no longer move offscreen
         "0|1|0|0",
 
@@ -40,8 +39,8 @@ function Cell.init()
     -- build the map
     local map = {}
 
-    -- iterate over each row in the costs table
-    for _, row in ipairs(costs) do
+    -- iterate over each row in the data table
+    for _, row in ipairs(data) do
 
         -- split each row into columns
         local cols = split(row, "|")
@@ -104,18 +103,18 @@ end
 
 -- return the cell repair value at `x`, `y`
 function Cell.repair(x, y, stage)
-    return Cell.costs[mget(stage.cell.x + x, stage.cell.y + y)].repair
+    return Cell.data[mget(stage.cell.x + x, stage.cell.y + y)].repair
 end
 
 -- return the cell traversal cost at `x`, `y`
 function Cell.cost(x, y, stage)
-    return Cell.costs[mget(stage.cell.x + x, stage.cell.y + y)].cost
+    return Cell.data[mget(stage.cell.x + x, stage.cell.y + y)].cost
 end
 
 -- return the cell traversal cost at `x`, `y`
 -- @todo: this should be de-duplicated with the above
 function Cell.def(x, y, stage)
-    return Cell.costs[mget(stage.cell.x + x, stage.cell.y + y)].def
+    return Cell.data[mget(stage.cell.x + x, stage.cell.y + y)].def
 end
 
 -- return the set of cells adjacent to the specified cell
