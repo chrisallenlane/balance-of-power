@@ -180,16 +180,16 @@ end
 
 -- change the player turn
 function Player:turnEnd(state)
-    local cam, cur, stage = state.camera, state.player.cursor, state.stage
+    local cam = state.camera
 
     -- hide radii
     Radius.clearAll(state.stage.units)
 
     -- unselect the unit
-    cur.unit.sel = nil
+    state.player.cursor.unit.sel = nil
 
     -- refresh all units
-    Units.refresh(stage.units)
+    Units.refresh(state.stage.units)
 
     -- swap the current player
     state.player = self.num == 1 and state.players[2] or state.players[1]
@@ -197,23 +197,12 @@ function Player:turnEnd(state)
     -- repair units (that belong to the new player) that are in a city
     Units.repair(state)
 
-    -- determine if a unit is still beneath the cursor (ie, assert that the
-    -- unit has not been destroyed)
-    local unit, _ = Units.at(state.player.cursor.cell.x,
-                             state.player.cursor.cell.y, stage.units)
-
-    -- if the unit has been destroyed, choose the first available unit
-    if not unit then unit = Units.first(state.player.num, stage.units) end
-
-    -- if there is _still_ not a unit, then the other player has lost, and the
-    -- map will "clear" on the next tick
-    if not unit then return end
-
     -- center the screen on the specified coordinates
+    local curcell = state.player.cursor.cell
     Seq:enqueue({
         Anim.delay(30),
         function()
-            cam:focus(unit.cell.x, unit.cell.y, state)
+            cam:focus(curcell.x, curcell.y, state)
             return true
         end,
         Anim.trans(cam, cam.cell.x, cam.cell.y),
