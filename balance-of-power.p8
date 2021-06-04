@@ -19,7 +19,7 @@ DEBUG_CHEAT = true
 
 -- load which stage from the title screen?
 -- (useful while developing new maps)
-TITLE_STAGE = 2
+TITLE_STAGE = 1
 
 -- initialize globals
 Menus = {}
