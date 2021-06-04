@@ -31,8 +31,8 @@ function Radius:update(unit, stage, turn)
     if not unit:attacked() and unit.stat.atk > 0 then
         -- don't "pay for" the cell where the unit is placed
         self:append('mov', unit.cell.x, unit.cell.y)
-        self:dng(self.center.x, self.center.y, unit.stat.rng, stage)
-        self:atk(self.center.x, self.center.y, unit.stat.rng, stage)
+        self:dng(self.center.x, self.center.y, unit.stat.rng, stage, turn)
+        self:atk(self.center.x, self.center.y, unit.stat.rng, stage, turn)
     end
 
     -- annotate that the radius is visible
@@ -53,14 +53,16 @@ function Radius:move(x, y, mvmt, stage, turn)
         -- determine the cost to traverse the tile
         local cost = Cell.cost(cell.x, cell.y, stage)
         if mvmt >= cost and Cell.pass(cell.x, cell.y, stage, turn) then
-            self:append('mov', cell.x, cell.y)
+            if Cell.open(cell.x, cell.y, stage) then
+                self:append('mov', cell.x, cell.y)
+            end
             self:move(cell.x, cell.y, mvmt - cost, stage, turn)
         end
     end
 end
 
 -- Compute an attack radius centered on `x`, `y`
-function Radius:atk(x, y, rng, stage)
+function Radius:atk(x, y, rng, stage, turn)
     -- exit early if we've visited this cell before (with `rng` range points remaining)
     if self:cached('atk', x, y, rng) then return end
 
@@ -72,13 +74,20 @@ function Radius:atk(x, y, rng, stage)
 
     -- iteratively search this cell's neighbors
     for _, cell in pairs(Cell.neighbors(x, y, stage)) do
-        self:append('atk', cell.x, cell.y)
-        self:atk(cell.x, cell.y, rng, stage)
+        -- append the cell to the attack radius if and only if:
+        -- 1. the cell is unoccupied
+        -- 2. the cell is occupied by an enemy unit
+        local unit = Units.at(cell.x, cell.y, stage.units)
+        if not unit or unit and unit.player ~= turn then
+            self:append('atk', cell.x, cell.y)
+        end
+
+        self:atk(cell.x, cell.y, rng, stage, turn)
     end
 end
 
 -- Compute a danger radius centered on `x`, `y`
-function Radius:dng(x, y, rng, stage)
+function Radius:dng(x, y, rng, stage, turn)
     -- exit early if we've visited this cell before (with `rng` range points remaining)
     if self:cached('dng', x, y, rng) then return end
 
@@ -91,8 +100,15 @@ function Radius:dng(x, y, rng, stage)
 
     -- iteratively search this cell's neighbors
     for _, cell in pairs(Cell.neighbors(x, y, stage)) do
-        self:append('dng', cell.x, cell.y)
-        self:dng(cell.x, cell.y, rng, stage)
+        -- append the cell to the danger radius if and only if:
+        -- 1. the cell is unoccupied
+        -- 2. the cell is occupied by an enemy unit
+        local unit = Units.at(cell.x, cell.y, stage.units)
+        if not unit or unit and unit.player ~= turn then
+            self:append('dng', cell.x, cell.y)
+        end
+
+        self:dng(cell.x, cell.y, rng, stage, turn)
     end
 end
 
