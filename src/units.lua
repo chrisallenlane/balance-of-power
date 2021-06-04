@@ -62,23 +62,6 @@ function Units.draw(state)
     pal()
 end
 
--- Remain returns the number of units remaining for each player
-function Units.remain(units)
-    -- track the number of units remaining for each player
-    local p1, p2 = 0, 0
-
-    -- iterate over all units on the stage
-    for _, unit in pairs(units) do
-        if unit.player == 1 then
-            p1 = p1 + 1
-        else
-            p2 = p2 + 1
-        end
-    end
-
-    return p1, p2
-end
-
 -- repairs units that are placed within a city
 function Units.repair(state)
     -- iterate over each unit that belongs to the player
