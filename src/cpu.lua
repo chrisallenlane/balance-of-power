@@ -21,14 +21,17 @@ function CPU.battle.update(state)
     -- select a random cell within the movement radius
     local cell = unit.radius:rand('mov', state)
 
-    -- move the unit
-    unit:move(cell.x, cell.y)
+    -- attempt to move the unit if and only if a valid move is available
+    if cell then
+        -- move the unit
+        unit:move(cell.x, cell.y)
 
-    -- unqueue the animations
-    Seq:enqueue({Anim.delay(30), Anim.trans(unit, cell.x, cell.y)})
+        -- unqueue the animations
+        Seq:enqueue({Anim.delay(30), Anim.trans(unit, cell.x, cell.y)})
 
-    -- record the CPU's (fake) cursor location
-    player.cursor.cell.x, player.cursor.cell.y = cell.x, cell.y
+        -- record the CPU's (fake) cursor location
+        player.cursor.cell.x, player.cursor.cell.y = cell.x, cell.y
+    end
 
     -- end the CPU turn
     player:turnEnd(state)

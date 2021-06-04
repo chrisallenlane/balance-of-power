@@ -143,6 +143,9 @@ end
 -- return a random cell contained within the radius
 -- NB: this _probably_ won't need to be in the production release
 function Radius:rand(key, state)
+    -- exit early if the radius is empty
+    if #self.cells[key] == 0 then return false end
+
     -- track x and y keys
     local xs, ys = {}, {}
 
@@ -151,8 +154,6 @@ function Radius:rand(key, state)
     local x = rnd(xs)
 
     -- get available y keys; grab a random y
-    -- XXX TODO FIXME: somehow `ys` can be empty
-    -- XXX TODO FIXME: it seems to affect units that have been repaired?
     for y, _ in pairs(self.cells[key][x]) do add(ys, y) end
     local y = rnd(ys)
 
