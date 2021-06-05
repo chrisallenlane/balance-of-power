@@ -54,7 +54,7 @@ function Player.battle.update(state, inputs)
                         return
                     end
 
-                    -- ... and has moved but not attack, allow an undo move
+                    -- ... and has moved but not attacked, allow an undo move
                 elseif unit:moved() and not unit:attacked() then
                     Info:set("end turn", "cancel", unit)
                     if yes:once() then

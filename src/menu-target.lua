@@ -67,7 +67,7 @@ function Menus.Target:update(state, inputs)
 
         Seq:enqueue({
             function()
-                if not sel:moved() then
+                if not sel:moved() and sel.stat.mov >= 1 then
                     sel.radius:update(sel, stage, player.num)
                 else
                     player:turnEnd(state)
