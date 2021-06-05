@@ -36,7 +36,7 @@ Menus = {}
 #include inc/anim.lua
 #include inc/banner.lua
 #include src/cell.lua
-#include inc/cpu.lua
+#include src/cpu.lua
 #include inc/info.lua
 #include inc/input.lua
 #include inc/inputs.lua

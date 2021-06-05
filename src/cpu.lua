@@ -11,14 +11,24 @@ function CPU.battle.update(state)
     -- split units into teams
     local friends, foes = Units.teams(state)
 
-    -- TODO: search every friendly unit for an intersection with every enemy
-    -- unit
+    -- identify friendly units that are within attack range of enemy units
+    local aggressors = {}
+    for _, friend in ipairs(friends) do
+        for _, foe in ipairs(foes) do
+            -- flag the aggressor
+            if friend.radius:contains('dng', foe.cell.x, foe.cell.y) and
+                friend.stat.atk >= 1 then add(aggressors, friend) end
+        end
+    end
+
     -- select CPU unit at random
-    local unit = rnd(friends)
+    local unit = rnd(#aggressors >= 1 and aggressors or friends)
 
     -- calculate the unit's radius
     unit.radius:update(unit, stage, 2)
 
+    -- TODO: this is inefficient. We can determine above which unit the enemy
+    -- is in contact with.
     -- iterate over the enemy (player) units
     local target = false
     for _, foe in ipairs(foes) do
