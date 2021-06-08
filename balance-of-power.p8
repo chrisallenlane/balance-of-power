@@ -61,7 +61,7 @@ Menus = {}
 #include build/stages.lua
 
 -- load main
-#include inc/debug.lua
+#include build/debug.lua
 #include inc/main.lua
 
 -- media assets
