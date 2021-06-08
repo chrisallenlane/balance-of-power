@@ -9,8 +9,7 @@ end
 
 -- load the specified stage
 function Stage.load(num, stages, screens, state)
-    -- explicitly free memory from the prior stage
-    state.stage.units, state.stage = nil, nil
+    -- XXX: is it necessary to free memory from the prior stage here?
 
     -- load the specified stage
     -- NB: this indirection is necessary in order to facilitate the "reset map"
