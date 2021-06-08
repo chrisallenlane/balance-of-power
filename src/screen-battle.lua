@@ -105,11 +105,11 @@ function Screens.battle.draw(state)
     -- draw the victory/loss banner
     Banner:draw(state)
 
-    -- play animations
-    Seq:play()
-
     -- draw the info bar
     Info:draw(state)
+
+    -- play animations
+    Seq:play()
 
     -- display debug output (if so configured)
     if DEBUG_SHOW then Debug.vars(state) end
