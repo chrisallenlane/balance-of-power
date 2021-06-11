@@ -119,6 +119,7 @@ globals = {
 	"Input",
 	"Inputs",
 	"Lock",
+	"Menu",
 	"Menus",
 	"Player",
 	"Players",

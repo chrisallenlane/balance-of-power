@@ -28,11 +28,7 @@ function Menus.Target:update(state, inputs)
     end
 
     -- move the stat selector
-    if inputs.up:rep() and self.sel >= 2 then
-        self.sel = self.sel - 1
-    elseif inputs.down:rep() and self.sel <= 2 then
-        self.sel = self.sel + 1
-    end
+    self.sel = Menu.select(self, inputs)
 
     -- accept the target and attack
     if inputs.yes:once() then

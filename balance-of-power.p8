@@ -40,6 +40,7 @@ Menus = {}
 #include build/info.lua
 #include build/input.lua
 #include build/inputs.lua
+#include build/menu.lua
 #include build/menu-stat.lua
 #include build/menu-balance.lua
 #include build/menu-target.lua

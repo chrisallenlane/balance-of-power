@@ -1,16 +1,9 @@
 Menus.Title = {choices = {"1 player", "2 player"}, sel = 1}
 
 function Menus.Title:update(state, inputs)
-    -- up
-    if inputs.up:once() and self.sel >= 2 then
-        self.sel = self.sel - 1
+    self.sel = Menu.select(self, inputs)
 
-        -- down
-    elseif inputs.down:once() and self.sel <= 1 then
-        self.sel = self.sel + 1
-
-        -- "select"
-    elseif inputs.yes:once() then
+    if inputs.yes:once() then
         -- flag P2 as a CPU if a 1-player game is selected
         if self.sel == 1 then state.players[2].cpu = true end
 
