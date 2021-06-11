@@ -58,6 +58,7 @@ function CPU.battle.update(state)
         -- move the unit
         unit:move(cell.x, cell.y)
 
+        -- TODO DRY: this should all be moved "up" a level
         -- get the target's defensive modifier
         local def = Cell.def(target.cell.x, target.cell.y, stage)
 

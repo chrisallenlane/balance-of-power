@@ -31,6 +31,7 @@ function Menus.Target:update(state, inputs)
     self.sel = Menu.select(self, inputs)
 
     -- accept the target and attack
+    -- TODO DRY: this should all be moved "up" a level
     if inputs.yes:once() then
         -- hide this menu
         state.menu = nil
