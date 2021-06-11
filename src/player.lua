@@ -47,7 +47,7 @@ function Player.battle.update(state, inputs)
             elseif cur:selected() then
 
                 -- ... and has not acted, then open the balance menu
-                if not unit:acted() and unit.active then
+                if not unit.moved and not unit.attacked and unit.active then
                     Info:set("balance", "unselect", unit)
                     if yes:once() then
                         Menus.Balance:open(cur.unit.sel, idx, state)
@@ -55,7 +55,7 @@ function Player.battle.update(state, inputs)
                     end
 
                     -- ... and has moved but not attacked, allow an undo move
-                elseif unit:moved() and not unit:attacked() then
+                elseif unit.moved and not unit.attacked then
                     Info:set("end turn", "cancel", unit)
                     if yes:once() then
                         Menus.TurnEnd:open(state)
@@ -107,7 +107,7 @@ function Player.battle.update(state, inputs)
 
                 -- if the enemy unit is within the selected unit's attack radius, then attack
                 if cur.unit.sel.radius:contains('atk', unit.cell.x, unit.cell.y) and
-                    not cur.unit.sel:attacked() then
+                    not cur.unit.sel.attacked then
                     Info:set("attack", "unselect", unit)
                     if yes:once() then
                         Menus.Target:open(unit, state)
@@ -117,7 +117,7 @@ function Player.battle.update(state, inputs)
                     -- if the enemy unit is within the selected unit's danger radius, then automatically move and attack
                 elseif cur.unit.sel.radius:contains('dng', unit.cell.x,
                                                     unit.cell.y) and
-                    not cur.unit.sel:attacked() and not cur.unit.sel:moved() then
+                    not cur.unit.sel.attacked and not cur.unit.sel.moved then
                     Info:set("attack", "unselect", unit)
                     if yes:once() then
                         -- find cells from which the attack at may be launched
@@ -166,7 +166,7 @@ function Player.battle.update(state, inputs)
 
         -- ... but an active, friendly unit has been selected, then move the
         -- friendly unit
-        if cur:selected() and cur.unit.sel.active and not cur.unit.sel:moved() and
+        if cur:selected() and cur.unit.sel.active and not cur.unit.sel.moved and
             Cell.open(cur.cell.x, cur.cell.y, stage) and
             cur.unit.sel.radius:contains('mov', cur.cell.x, cur.cell.y) then
             Info:set("move", "unselect")
@@ -184,7 +184,7 @@ function Player.battle.update(state, inputs)
                 Seq:enqueue({Anim.trans(cur.unit.sel, cur.cell.x, cur.cell.y)})
 
                 -- end the player's turn if the unit is exhausted
-                if cur.unit.sel:attacked() or cur.unit.sel.stat.atk == 0 or
+                if cur.unit.sel.attacked or cur.unit.sel.stat.atk == 0 or
                     cur.unit.sel.stat.rng == 0 then
                     player:turnEnd(state)
                     -- otherwise, show the attack radius

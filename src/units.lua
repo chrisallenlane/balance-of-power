@@ -98,7 +98,7 @@ end
 -- refresh all units
 function Units.refresh(units)
     for _, unit in pairs(units) do
-        unit.active, unit.act.atk, unit.act.mov = true, false, false
+        unit.active, unit.attacked, unit.moved = true, false, false
     end
 end
 

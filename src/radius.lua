@@ -24,11 +24,11 @@ function Radius:update(unit, stage, turn)
 
     -- NB: we're computing the movement and attack radii separately. That's
     -- not computationally optimial, but much simpler to understand.
-    if not unit:moved() then
+    if not unit.moved then
         self:move(self.center.x, self.center.y, unit.stat.mov, stage, turn)
     end
     -- if the unit has range but no attack, don't render an attack radius
-    if not unit:attacked() and unit.stat.atk > 0 then
+    if not unit.attacked and unit.stat.atk > 0 then
         -- don't "pay for" the cell where the unit is placed
         self:append('mov', unit.cell.x, unit.cell.y)
         self:dng(self.center.x, self.center.y, unit.stat.rng, stage, turn)

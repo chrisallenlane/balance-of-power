@@ -20,7 +20,8 @@ function Unit:new(u)
     u.from = {x = nil, y = nil}
 
     -- track actions taken
-    u.act = u.act or {atk = false, mov = false}
+    u.attacked = u.attacked or false
+    u.moved = u.moved or false
 
     -- is the unit active (ie, not exhausted)
     u.active = true
@@ -43,7 +44,8 @@ function Unit.clone(u)
         pwr = u.pwr,
         stat = {atk = u.stat.atk, mov = u.stat.mov, rng = u.stat.rng},
         px = {x = u.px.x, y = u.px.y},
-        act = {atk = u.act.atk, mov = u.act.mov},
+        attacked = u.attacked,
+        moved = u.moved,
         active = u.active,
         -- @todo: this is a shallow copy - though it seems to work?
         radius = u.radius,
@@ -56,7 +58,7 @@ end
 -- Move moves a unit
 function Unit:move(to_x, to_y)
     self.from = {x = self.cell.x, y = self.cell.y}
-    self.cell.x, self.cell.y, self.act.mov = to_x, to_y, true
+    self.cell.x, self.cell.y, self.moved = to_x, to_y, true
 end
 
 -- Reverses the prior move
@@ -73,7 +75,7 @@ function Unit:unmove(state)
     -- refresh all units on this unit's team
     for _, unit in pairs(state.stage.units) do
         if unit.player == self.player then
-            unit.active, unit.act.atk, unit.act.mov = true, false, false
+            unit.active, unit.attacked, unit.moved = true, false, false
         end
     end
 end
@@ -81,7 +83,7 @@ end
 -- Attack attacks a unit
 function Unit:attack(target, stat, atk, def, overflow, state)
     -- record that the unit has attacked
-    self.act.atk = true
+    self.attacked = true
 
     -- set the attacking player's cursor position atop the attacking unit
     -- (This is a QOL feature for the next turn.)
@@ -123,21 +125,6 @@ function Unit:attack(target, stat, atk, def, overflow, state)
     end
 
     return false
-end
-
--- Return true if the unit has moved
-function Unit:moved()
-    return self.act.mov
-end
-
--- Return true if the unit has attacked
-function Unit:attacked()
-    return self.act.atk
-end
-
--- Return true if the unit has taken any action
-function Unit:acted()
-    return self.act.mov or self.act.atk
 end
 
 -- Activate the unit
