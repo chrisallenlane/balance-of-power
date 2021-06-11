@@ -25,7 +25,7 @@ function Stage.load(num, stages, screens, state)
     for i = 1, 2 do
         local unit = Units.first(i, state.stage.units)
         local x, y = unit.cell.x, unit.cell.y
-        state.players[i].cursor:warp(x, y)
+        state.players[i].cursor.cell = {x = x, y = y}
         state.players[i].cursor.vis = true
     end
 

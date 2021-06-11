@@ -49,11 +49,6 @@ function Cursor:selected(unit)
     return self.unit.sel
 end
 
--- immediately move the cursor to the specified cell coordinates
-function Cursor:warp(x, y)
-    self.cell = {x = x, y = y}
-end
-
 -- render the cursor
 -- NB: if I become desperate tokens, I can eliminate the cursor "throb"
 function Cursor:draw(state)
