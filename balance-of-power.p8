@@ -25,44 +25,44 @@ TITLE_STAGE = 1
 Menus = {}
 
 -- build the `State` object (order dependent)
-#include inc/camera.lua
-#include inc/cursor.lua
-#include inc/player.lua
-#include inc/screens.lua
-#include inc/talk.lua
-#include inc/state.lua
+#include build/camera.lua
+#include build/cursor.lua
+#include build/player.lua
+#include build/screens.lua
+#include build/talk.lua
+#include build/state.lua
 
 -- load assets (order independent)
-#include inc/anim.lua
-#include inc/banner.lua
-#include inc/cell.lua
-#include inc/cpu.lua
-#include inc/info.lua
-#include inc/input.lua
-#include inc/inputs.lua
-#include inc/menu-stat.lua
-#include inc/menu-balance.lua
-#include inc/menu-target.lua
-#include inc/menu-title.lua
-#include inc/menu-turn-end.lua
-#include inc/radius.lua
-#include inc/screen-battle.lua
-#include inc/screen-defeat.lua
-#include inc/screen-intr.lua
-#include inc/screen-title.lua
-#include inc/screen-victory.lua
-#include inc/seq.lua
-#include inc/stage.lua
-#include inc/string.lua
-#include inc/unit.lua
-#include inc/units.lua
+#include build/anim.lua
+#include build/banner.lua
+#include build/cell.lua
+#include build/cpu.lua
+#include build/info.lua
+#include build/input.lua
+#include build/inputs.lua
+#include build/menu-stat.lua
+#include build/menu-balance.lua
+#include build/menu-target.lua
+#include build/menu-title.lua
+#include build/menu-turn-end.lua
+#include build/radius.lua
+#include build/screen-battle.lua
+#include build/screen-defeat.lua
+#include build/screen-intr.lua
+#include build/screen-title.lua
+#include build/screen-victory.lua
+#include build/seq.lua
+#include build/stage.lua
+#include build/string.lua
+#include build/unit.lua
+#include build/units.lua
 
 -- load stages
 #include build/stages.lua
 
 -- load main
 #include build/debug.lua
-#include inc/main.lua
+#include build/main.lua
 
 -- media assets
 __gfx__

@@ -46,7 +46,7 @@ docker_image := bop
 
 ## setup: build the docker container and link source files into the cartridge
 .PHONY: setup
-setup: inc
+setup:
 	$(DOCKER) build -t $(docker_image) -f Dockerfile .
 
 ## fast: format and lint
@@ -129,18 +129,6 @@ clean-all: clean
 distclean:
 	$(DOCKER) image rm $(docker_image) --force
 
-## link-dev: link development source files into cartridge
-.PHONY: link-dev
-link-dev:
-	@rm -f inc && ln -s src inc && \
-	echo "linked development assets"
-
-## link-release: link release (minified) source files into cartridge
-.PHONY: link-release
-link-release: trim
-	@rm -f inc && ln -s $(BUILD_DIR) inc && \
-	echo "linked release assets"
-
 ## install: link cartridge into Pico-8 environment
 .PHONY: install
 install:
@@ -163,7 +151,7 @@ lua:
 
 ## build-release: build release versions of the game
 .PHONY: build-release
-build-release: link-release $(DIST_DIR) build-stages check
+build-release: $(DIST_DIR) build-stages check
 	$(PICO8) balance-of-power.p8 \
 		-export "$(EXPORT_DIR) -i 0 -s 1 -c 1" && \
 	$(MV) $(EXPORT_DIR)/*.zip dist/ && \
@@ -181,9 +169,6 @@ build-stages:
 # create the coverage directory
 $(COVER_DIR):
 	@$(MKDIR) $(COVER_DIR)
-
-# by default, link development files into the cartridge
-inc: link-dev
 
 # create `dist` directory
 $(DIST_DIR):
