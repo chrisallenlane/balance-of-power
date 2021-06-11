@@ -75,7 +75,7 @@ trim: minify
 
 ## test: run unit-tests
 .PHONY: test
-test: clean $(COVER_DIR) 
+test: $(COVER_DIR) 
 	@$(DOCKER) run -v $(realpath .):/app $(docker_image) \
 		bash -c 'busted --coverage test/*'
 
@@ -117,12 +117,7 @@ sloc:
 ## clean: remove distributions and coverage report
 .PHONY: clean
 clean:
-	@rm -f $(DIST_DIR)/* $(REPORT_FILE) $(STATS_FILE)
-
-## clean-all: remove coverage report and minified files
-.PHONY: clean-all
-clean-all: clean
-	@rm -f $(BUILD_DIR)/*
+	@$(RMDIR) $(DIST_DIR)/* $(BUILD_DIR)/* $(REPORT_FILE) $(STATS_FILE)
 
 ## distclean: remove the docker container
 .PHONY: distclean
