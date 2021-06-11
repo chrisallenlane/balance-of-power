@@ -102,15 +102,61 @@ function Player.battle.update(state, inputs)
                     end
                 end
 
-                -- ... and if a friendly unit has been selected, and is capable
-                -- of attacking, then attack the enemy unit
-            elseif cur:selected() and not cur.unit.sel:attacked() and
-                cur.unit.sel.active and
-                cur.unit.sel.radius:contains('atk', unit.cell.x, unit.cell.y) then
-                Info:set("attack", "unselect", unit)
-                if yes:once() then
-                    Menus.Target:open(unit, state)
-                    return
+                -- ... and if a friendly unit has been selected, and is active
+            elseif cur:selected() and cur.unit.sel.active then
+
+                -- if the enemy unit is within the selected unit's attack radius, then attack
+                if cur.unit.sel.radius:contains('atk', unit.cell.x, unit.cell.y) and
+                    not cur.unit.sel:attacked() then
+                    Info:set("attack", "unselect", unit)
+                    if yes:once() then
+                        Menus.Target:open(unit, state)
+                        return
+                    end
+
+                    -- if the enemy unit is within the selected unit's danger radius, then automatically move and attack
+                elseif cur.unit.sel.radius:contains('dng', unit.cell.x,
+                                                    unit.cell.y) and
+                    not cur.unit.sel:attacked() and not cur.unit.sel:moved() then
+                    Info:set("attack", "unselect", unit)
+                    if yes:once() then
+                        -- find cells from which the attack at may be launched
+                        -- calculate a new radius (of radius rng) centered on the foe's position
+                        local targetRadius = Radius:new()
+                        targetRadius:atk(unit.cell.x, unit.cell.y,
+                                         cur.unit.sel.stat.rng, state.stage,
+                                         state.player.num)
+
+                        -- identify the subset of cells in the intersection of the selected unit and
+                        -- target radii
+                        local intersection =
+                            targetRadius:intersect('atk', 'mov',
+                                                   cur.unit.sel.radius)
+
+                        -- select a random cell within intersection
+                        -- TODO: sort by best defense iff token space is available
+                        local cell = intersection:rand('atk', state)
+
+                        -- move the unit
+                        cur.unit.sel:move(cell.x, cell.y)
+                        cur.unit.sel.radius:update(cur.unit.sel, stage,
+                                                   player.num)
+
+                        -- deactivate all *other* units belonging to the player
+                        Units.deactivate(stage.units, player.num)
+                        cur.unit.sel:activate()
+
+                        -- enqueue animations
+                        Seq:enqueue({
+                            Anim.trans(cur.unit.sel, cell.x, cell.y),
+                            function()
+                                Menus.Target:open(unit, state)
+                                return true
+                            end,
+                        })
+
+                        return
+                    end
                 end
             end
         end

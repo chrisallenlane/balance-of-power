@@ -36,13 +36,13 @@ Menus = {}
 #include inc/anim.lua
 #include inc/banner.lua
 #include inc/cell.lua
-#include src/cpu.lua
+#include inc/cpu.lua
 #include inc/info.lua
 #include inc/input.lua
 #include inc/inputs.lua
 #include inc/menu-stat.lua
 #include inc/menu-balance.lua
-#include src/menu-target.lua
+#include inc/menu-target.lua
 #include inc/menu-title.lua
 #include inc/menu-turn-end.lua
 #include inc/radius.lua

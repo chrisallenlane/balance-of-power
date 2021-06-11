@@ -1,5 +1,4 @@
 Priority:
-  - Feat: Attack auto-move
   - Feat: Automatic progress save/continue
   - Feat: Implement "swarm" animation
   - Feat: Implement improved attack animation
