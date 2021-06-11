@@ -36,17 +36,18 @@ function Menus.Balance:update(state, inputs)
     local alloc = 0
     for _, stat in pairs(self.choices) do alloc = alloc + unit.stat[stat] end
 
-    -- get the selected stat
+    -- get system stats
     local stat = self.choices[self.sel]
+    local sys = unit.stat[stat]
 
     -- adjust power levels
-    if inputs.left:rep() and unit.stat[stat] >= 1 then
+    if inputs.left:rep() and sys >= 1 then
         sfx(0, -1, 8, 8)
-        unit.stat[stat] = unit.stat[stat] - 1
+        unit.stat[stat] = sys - 1
         radius:update(unit, stage, player.num)
-    elseif inputs.right:rep() and unit.stat[stat] < 5 and alloc < unit.pwr then
+    elseif inputs.right:rep() and sys < 5 and alloc < unit.pwr then
         sfx(0, -1, 0, 8)
-        unit.stat[stat] = unit.stat[stat] + 1
+        unit.stat[stat] = sys + 1
         radius:update(unit, stage, player.num)
     end
 
