@@ -24,11 +24,7 @@ CAT      := cat
 COLUMN   := column
 DOCKER   := docker
 GREP     := grep
-LDOC     := ldoc
 LUA      := lua5.2
-LUACHECK := luacheck
-LUAFMT   := lua-format
-LUAMIN   := luamin
 MKDIR    := mkdir -p
 MV       := mv
 PICO8    := pico8
@@ -63,7 +59,7 @@ minify: $(BUILD_DIR) $(lua_min)
 build/%.lua: src/%.lua
 	echo "minify: $@" && \
 	$(DOCKER) run -tv $(realpath .):/app $(docker_image) \
-		bash -c '$(LUAMIN) -f src/$(notdir $@) > $@'
+		bash -c 'luamin -f src/$(notdir $@) > $@'
 
 ## trim: minify and prune files
 # NB: we truncate `build/debug.lua` because we do not want it to add weight to
@@ -83,7 +79,7 @@ test: $(COVER_DIR)
 .PHONY: build-doc
 build-doc:
 	@$(DOCKER) run -v $(realpath .):/app $(docker_image) \
-		bash -c '$(LDOC) .'
+		bash -c 'ldoc .'
 
 ## doc: build project documentation, and view it in a browser
 .PHONY: doc
@@ -101,7 +97,7 @@ cover: test
 .PHONY: lint
 lint:
 	$(DOCKER) run -v $(realpath .):/app $(docker_image) \
-		$(LUACHECK) scripts/*.lua src/*.lua test/*.lua --formatter=plain --no-color --quiet
+		luacheck scripts/*.lua src/*.lua test/*.lua --formatter=plain --no-color --quiet
 
 ## fmt: format files
 .PHONY: fmt
