@@ -21,9 +21,14 @@ function Stage.load(num, stages, screens, state)
     -- make it player 1's turn
     state.player = state.players[1]
 
+    -- get the units on each team
+    -- NB: `friends` will always be player 1 units here (see above)
+    local friends, foes = Units.teams(state)
+    local team = {friends, foes}
+
     -- set each player's cursor to rest on their first unit
     for i = 1, 2 do
-        local unit = Units.first(i, state.stage.units)
+        local unit = team[i][1]
         local x, y = unit.cell.x, unit.cell.y
         state.players[i].cursor.cell = {x = x, y = y}
         state.players[i].cursor.vis = true

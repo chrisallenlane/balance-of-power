@@ -9,13 +9,6 @@ function Units.at(x, y, units)
     return nil, nil
 end
 
--- Returns the first unit on `player`'s team team
-function Units.first(player, units)
-    for _, unit in pairs(units) do
-        if unit.player == player then return unit end
-    end
-end
-
 -- Group the units into a table of "friends" and "foes" (relative) to the
 -- current player
 function Units.teams(state)
