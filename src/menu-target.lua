@@ -34,7 +34,7 @@ function Menus.Target:update(state, inputs)
         self.sel = self.sel + 1
     end
 
-    -- accept the balance, close the menu, and end the turn
+    -- accept the target and attack
     if inputs.yes:once() then
         -- hide this menu
         state.menu = nil
