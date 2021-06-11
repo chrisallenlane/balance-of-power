@@ -2,7 +2,6 @@ Priority:
   - Feat: Automatic progress save/continue
   - Feat: Implement "swarm" animation
   - Feat: Implement improved attack animation
-  - Feat: Invert buttons option
 
   - Battle: control optimizations
   - Battle: refactor battle loop
@@ -21,6 +20,7 @@ Backlog:
   - CPU: implement 1-player enemy AI
   - Docs: add a license
   - Docs: update the README
+  - Feat: Invert buttons option
   - Map design
   - Music
   - SFX
