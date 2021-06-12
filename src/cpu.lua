@@ -58,6 +58,17 @@ function CPU.battle.update(state)
         -- move the unit
         unit:move(cell.x, cell.y)
 
+        -- record the CPU's (fake) cursor location
+        player.cursor.cellx, player.cursor.celly = cell.x, cell.y
+
+        -- enqueue the animations
+        Seq:enqueue({
+            Anim.delay(30),
+            Anim.trans(unit, cell.x, cell.y),
+            Anim.delay(15),
+        })
+
+        ---
         -- TODO DRY: this should all be moved "up" a level
         -- get the target's defensive modifier
         local def = Cell.def(target.cellx, target.celly, stage)
@@ -66,32 +77,23 @@ function CPU.battle.update(state)
         local killed = unit:attack(target, 'atk', unit.stat.atk, def, false,
                                    state)
 
-        -- enqueue the animations
-        Seq:enqueue({
-            Anim.delay(30),
-            Anim.trans(unit, cell.x, cell.y),
-            Anim.delay(15),
-
-            -- attack the enemy unit
-            Anim.laser(unit, target, false),
-        })
+        -- attack the enemy unit
+        Seq:enqueue({Anim.laser(unit, target, false)})
 
         if killed then
             Seq:enqueue({
-                Anim.explode(target.pxx, target.pxy, state),
                 function()
                     Units.die(target.id, state.stage.units)
                     return true
                 end,
+                Anim.explode(target.pxx, target.pxy, state),
+                Anim.delay(30),
             })
         end
 
+        -- end the CPU turn
         Seq:enqueue({
             function()
-                ---- record the CPU's (fake) cursor location
-                player.cursor.cellx, player.cursor.celly = cell.x, cell.y
-
-                ---- end the CPU turn
                 player:turnEnd(state)
                 return true
             end,
