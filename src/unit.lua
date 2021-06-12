@@ -61,9 +61,9 @@ function Unit.clone(u)
 end
 
 -- Move moves a unit
-function Unit:move(to_x, to_y)
+function Unit:move(x, y)
     self.fromx, self.fromy = self.cellx, self.celly
-    self.cellx, self.celly, self.moved = to_x, to_y, true
+    self.cellx, self.celly, self.moved = x, y, true
 end
 
 -- Reverses the prior move
