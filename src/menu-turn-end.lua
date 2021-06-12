@@ -32,7 +32,7 @@ end
 -- draw the "end turn" menu
 function Menus.TurnEnd:draw(state)
     -- offset the menu location to align with the camera
-    local padx, pady = state.camera.px.x, state.camera.px.y
+    local padx, pady = state.camera.pxx, state.camera.pxy
 
     -- draw the menu
     rectfill(42 + padx, 52 + pady, 86 + padx, 74 + pady, 0)

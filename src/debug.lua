@@ -26,7 +26,7 @@ function Debug.vars(state)
 
     -- iterate over and print each debug message
     for i, msg in pairs(msgs) do
-        print(msg, 4 + camera.px.x, (4 + 8 * i) + camera.px.y, 7)
+        print(msg, 4 + camera.pxx, (4 + 8 * i) + camera.pxy, 7)
     end
 end
 

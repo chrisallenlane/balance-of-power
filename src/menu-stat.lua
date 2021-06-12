@@ -3,7 +3,7 @@ Menus.Stat = {}
 -- DRY out the balance and targeting menus, which are largely the same
 function Menus.Stat.draw(menu, state, remaining)
     -- padding to align the menu location with the camera
-    local camx, camy = state.camera.px.x, state.camera.px.y
+    local camx, camy = state.camera.pxx, state.camera.pxy
 
     -- the menu height
     local menuHeight = remaining and 36 or 28

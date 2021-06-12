@@ -99,7 +99,7 @@ function Anim.explode(x, y, state)
         if frame == 12 then return true end
 
         -- shake the camera
-        state.camera.px.x = state.camera.px.x + (frame % 2 == 0 and -2 or 2)
+        state.camera.pxx = state.camera.pxx + (frame % 2 == 0 and -2 or 2)
 
         -- draw the explosion
         circfill(x + 2, y + 2, 1.5 * frame, split("7,10,9")[frame % 7])

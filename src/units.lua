@@ -73,8 +73,7 @@ function Units.repair(state)
                     state.camera:focus(unit.cell.x, unit.cell.y, state)
                     return true
                 end,
-                Anim.trans(state.camera, state.camera.cell.x,
-                           state.camera.cell.y),
+                Anim.trans(state.camera, state.camera.cellx, state.camera.celly),
                 Anim.repair(unit, state),
             })
         end

@@ -16,7 +16,7 @@ function Info:draw(state)
     if yes == "" and no == "" then return end
 
     -- padding to align the menu location with the camera
-    local camX, camY = state.camera.px.x, state.camera.px.y
+    local camX, camY = state.camera.pxx, state.camera.pxy
 
     -- text position
     local textY = camY + 122
@@ -67,7 +67,7 @@ function Info:draw(state)
         -- draw the tile of interest into the Info bar
         -- implement any specified palette swaps for the stage
         Stage.palswap(state)
-        spr(mget(stage.cell.x + x, stage.cell.y + y), state.camera.px.x + 99,
+        spr(mget(stage.cell.x + x, stage.cell.y + y), state.camera.pxx + 99,
             textY, .70, .70)
         pal()
 

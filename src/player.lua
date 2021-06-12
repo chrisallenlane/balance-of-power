@@ -251,6 +251,6 @@ function Player:turnEnd(state)
             cam:focus(curcell.x, curcell.y, state)
             return true
         end,
-        Anim.trans(cam, cam.cell.x, cam.cell.y),
+        -- Anim.trans(cam, cam.cellx, cam.celly),
     })
 end

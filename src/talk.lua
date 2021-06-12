@@ -59,8 +59,7 @@ function Talk:draw(state)
     if not self.vis then return end
 
     -- get the page and camera coordinates
-    local page, x, y = self.pages[self.page], state.camera.px.x,
-                       state.camera.px.y
+    local page, x, y = self.pages[self.page], state.camera.pxx, state.camera.pxy
 
     -- draw the background box
     rectfill(0 + x, 91 + y, 127 + x, 127 + y, 0)

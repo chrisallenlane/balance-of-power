@@ -22,7 +22,7 @@ function Banner:draw(state)
     if not self.vis then return end
 
     -- calculate padding to align with camera
-    local px, py = state.camera.px.x, state.camera.px.y
+    local px, py = state.camera.pxx, state.camera.pxy
     local xStart, xEnd = 0 + px, 128 + px
 
     -- choose the appropriate color for the winner

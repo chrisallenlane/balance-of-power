@@ -2,7 +2,7 @@
 Camera = {}
 
 function Camera:new()
-    local c = {cell = {x = 0, y = 0}, px = {x = 0, y = 0}}
+    local c = {cellx = 0, celly = 0, pxx = 0, pxy = 0}
     setmetatable(c, self)
     self.__index = self
     return c
@@ -12,8 +12,8 @@ end
 function Camera:update()
     -- ensure that the camera is not at a fractional coordinate, and compute
     -- the destination
-    local x, y, destx, desty = flr(self.px.x), flr(self.px.y), self.cell.x * 8,
-                               self.cell.y * 8
+    local x, y, destx, desty = flr(self.pxx), flr(self.pxy), self.cellx * 8,
+                               self.celly * 8
 
     -- move toward the destination
     x = x < destx and x + 1 or x > destx and x - 1 or x
@@ -34,27 +34,27 @@ function Camera:focus(x, y, state)
     y = y < 0 and 0 or y > h - 16 and h - 16 or y
 
     -- calculate the difference from the current and new camera positions
-    local deltaX, deltaY = abs(self.cell.x - x), abs(self.cell.y - y)
+    local deltaX, deltaY = abs(self.cellx - x), abs(self.celly - y)
 
     -- calculate which cells are now on screen
-    local boundX, boundY = self.cell.x + 15, self.cell.y + 15
+    local boundX, boundY = self.cellx + 15, self.celly + 15
 
     -- if the adjustment to make is minor, don't bother - as long as the focus
     -- cell is still onscreen!
-    if deltaX < 4 and deltaY < 4 and x >= self.cell.x and x <= boundX and y >=
-        self.cell.y and y <= boundY then return end
+    if deltaX < 4 and deltaY < 4 and x >= self.cellx and x <= boundX and y >=
+        self.celly and y <= boundY then return end
 
     -- update the camera position
-    self.cell.x, self.cell.y = x, y
+    self.cellx, self.celly = x, y
 end
 
 -- immediately move the camera to the specified cell coordinates
 function Camera:warp(x, y)
-    self.cell.x, self.cell.y = x, y
-    self.px.x, self.px.y = x * 8, y * 8
+    self.cellx, self.celly = x, y
+    self.pxx, self.pxy = x * 8, y * 8
 end
 
 -- move the game camera
 function Camera:draw()
-    camera(self.px.x, self.px.y)
+    camera(self.pxx, self.pxy)
 end
