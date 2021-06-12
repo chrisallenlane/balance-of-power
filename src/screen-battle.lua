@@ -110,7 +110,4 @@ function Screens.battle.draw(state)
 
     -- play animations
     Seq:play()
-
-    -- display debug output (if so configured)
-    if DEBUG_SHOW then Debug.vars(state) end
 end
