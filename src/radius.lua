@@ -170,7 +170,7 @@ function Radius:rand(key, state)
     local y = rnd(ys)
 
     -- initialize and return a cell
-    return Cell:new(x, y, state.stage.cell.w)
+    return Cell:new(x, y, state.stage.cellw)
 end
 
 -- find cells that are common to both `self` and `rad` iterate over

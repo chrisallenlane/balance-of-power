@@ -36,7 +36,7 @@ function Stage.load(num, stages, screens, state)
     end
 
     -- reset the camera position
-    state.camera:warp(state.stage.camera.x, state.stage.camera.y)
+    state.camera:warp(state.stage.camera.cellx, state.stage.camera.celly)
     state.screen = screens.intr
 
     -- clear enqueued animation sequences
@@ -93,7 +93,7 @@ function Stage.draw(state)
     Stage.palswap(state)
 
     -- draw the map
-    map(s.cell.x, s.cell.y, 0, 0, s.cell.w, s.cell.h)
+    map(s.cellx, s.celly, 0, 0, s.cellw, s.cellh)
 
     -- reset palette swaps
     pal()
@@ -119,11 +119,17 @@ function Stage.unserialize(serialized, spl, ad)
         local fields = spl(stage, '~')
 
         -- unpack the "easy" object properties
+        -- KLUDGE: should change the serialization format and remove this
+        local cell = Stage.unpack("x,y,w,h", fields[4], spl)
+        local cam = Stage.unpack("x,y", fields[3], spl)
         local obj = {
             num = fields[1],
             intr = Stage.unpack("head,body", fields[2], spl),
-            camera = Stage.unpack("x,y", fields[3], spl),
-            cell = Stage.unpack("x,y,w,h", fields[4], spl),
+            camera = {cellx = cam.x, celly = cam.y},
+            cellh = cell.h,
+            cellw = cell.w,
+            cellx = cell.x,
+            celly = cell.y,
             swap = {},
             units = {},
             talk = {start = spl(fields[7], "@"), clear = spl(fields[8], "@")},

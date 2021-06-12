@@ -65,7 +65,7 @@ end
 -- returns true if the specified cell is out-of-bounds
 function Cell.oob(x, y, stage)
     -- return false if the specified coordinates are out-of-bounds
-    if x < 0 or x >= stage.cell.w or y < 0 or y >= stage.cell.h then
+    if x < 0 or x >= stage.cellw or y < 0 or y >= stage.cellh then
         return true
     end
 
@@ -103,32 +103,32 @@ end
 
 -- return the cell repair value at `x`, `y`
 function Cell.repair(x, y, stage)
-    return Cell.data[mget(stage.cell.x + x, stage.cell.y + y)].repair
+    return Cell.data[mget(stage.cellx + x, stage.celly + y)].repair
 end
 
 -- return the cell traversal cost at `x`, `y`
 function Cell.cost(x, y, stage)
-    return Cell.data[mget(stage.cell.x + x, stage.cell.y + y)].cost
+    return Cell.data[mget(stage.cellx + x, stage.celly + y)].cost
 end
 
 -- return the cell traversal cost at `x`, `y`
 -- @todo: this should be de-duplicated with the above
 function Cell.def(x, y, stage)
-    return Cell.data[mget(stage.cell.x + x, stage.cell.y + y)].def
+    return Cell.data[mget(stage.cellx + x, stage.celly + y)].def
 end
 
 -- return the set of cells adjacent to the specified cell
 function Cell.neighbors(x, y, stage)
-    local cell, nbrs = stage.cell, {}
+    local cellw, nbrs = stage.cellw, {}
 
     -- add cells, while being mindful to stay in bounds
-    if x + 1 < cell.w then add(nbrs, Cell:new(x + 1, y, cell.w)) end
-    if x - 1 >= 0 then add(nbrs, Cell:new(x - 1, y, cell.w)) end
+    if x + 1 < cellw then add(nbrs, Cell:new(x + 1, y, cellw)) end
+    if x - 1 >= 0 then add(nbrs, Cell:new(x - 1, y, cellw)) end
     -- NB: the `+ 2` is not a typo. The bottommost row in each map is "empty",
     -- because the Info bar is written on top of it. This adjustment prevents
     -- units from moving behind the Info bar.
-    if y + 2 < cell.h then add(nbrs, Cell:new(x, y + 1, cell.w)) end
-    if y - 1 >= 0 then add(nbrs, Cell:new(x, y - 1, cell.w)) end
+    if y + 2 < stage.cellh then add(nbrs, Cell:new(x, y + 1, cellw)) end
+    if y - 1 >= 0 then add(nbrs, Cell:new(x, y - 1, cellw)) end
 
     return nbrs
 end

@@ -11,7 +11,7 @@ function Info:draw(state)
     local cur = state.player.cursor
 
     -- hide the info bar if it would occlude the cursor
-    if cur.celly == state.stage.cell.h - 1 then return end
+    if cur.celly == state.stage.cellh - 1 then return end
 
     local yes, no = self.yes, self.no
 
@@ -69,7 +69,7 @@ function Info:draw(state)
         -- draw the tile of interest into the Info bar
         -- implement any specified palette swaps for the stage
         Stage.palswap(state)
-        spr(mget(stage.cell.x + x, stage.cell.y + y), state.camera.pxx + 99,
+        spr(mget(stage.cellx + x, stage.celly + y), state.camera.pxx + 99,
             textY, .70, .70)
         pal()
 

@@ -1,4 +1,7 @@
 Priority:
+  - Refactor: "flatten" object properties
+  - Refactor: deprecate `Unit.clone`
+  - Refactor: create "clipboard" state object
   - Feat: Automatic progress save/continue
   - Feat: Implement "swarm" animation
   - Feat: Implement improved attack animation

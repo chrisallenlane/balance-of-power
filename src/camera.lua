@@ -24,7 +24,7 @@ end
 
 -- focus the camera on the specified grid position
 function Camera:focus(x, y, state)
-    local w, h = state.stage.cell.w, state.stage.cell.h
+    local w, h = state.stage.cellw, state.stage.cellh
 
     -- Apply offsets to center on the specified coordinates. (An offset of 8
     -- is being applied because the screen is 16 cells wide.)
