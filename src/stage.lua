@@ -29,8 +29,9 @@ function Stage.load(num, stages, screens, state)
     -- set each player's cursor to rest on their first unit
     for i = 1, 2 do
         local unit = team[i][1]
-        local x, y = unit.cell.x, unit.cell.y
-        state.players[i].cursor.cell = {x = x, y = y}
+        local x, y = unit.cellx, unit.celly
+        state.players[i].cursor.cellx = x
+        state.players[i].cursor.celly = y
         state.players[i].cursor.vis = true
     end
 
@@ -138,7 +139,8 @@ function Stage.unserialize(serialized, spl, ad)
             ad(obj.units, Unit:new({
                 id = #obj.units + 1,
                 player = ud[i],
-                cell = {x = ud[i + 1], y = ud[i + 2]},
+                cellx = ud[i + 1],
+                celly = ud[i + 2],
             }))
         end
 

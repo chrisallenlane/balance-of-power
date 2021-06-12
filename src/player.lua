@@ -17,7 +17,7 @@ function Player.battle.update(state, inputs)
     local cur, player, stage = state.player.cursor, state.player, state.stage
 
     -- determine whether a unit is beneath the cursor
-    local unit, idx = Units.at(cur.cell.x, cur.cell.y, stage.units)
+    local unit, idx = Units.at(cur.cellx, cur.celly, stage.units)
 
     -- if there is a unit beneath the cursor...
     if unit then
@@ -65,8 +65,8 @@ function Player.battle.update(state, inputs)
                         cur.unit.sel.radius.vis = false
                         cur.unit.sel:unmove(state)
                         Seq:enqueue({
-                            Anim.trans(cur.unit.sel, cur.unit.sel.cell.x,
-                                       cur.unit.sel.cell.y),
+                            Anim.trans(cur.unit.sel, cur.unit.sel.cellx,
+                                       cur.unit.sel.celly),
                             function()
                                 cur.unit.sel = nil
                                 return true
@@ -106,7 +106,7 @@ function Player.battle.update(state, inputs)
             elseif cur:selected() and cur.unit.sel.active then
 
                 -- if the enemy unit is within the selected unit's attack radius, then attack
-                if cur.unit.sel.radius:contains('atk', unit.cell.x, unit.cell.y) and
+                if cur.unit.sel.radius:contains('atk', unit.cellx, unit.celly) and
                     not cur.unit.sel.attacked then
                     Info:set("attack", "unselect", unit)
                     if yes:once() then
@@ -115,15 +115,15 @@ function Player.battle.update(state, inputs)
                     end
 
                     -- if the enemy unit is within the selected unit's danger radius, then automatically move and attack
-                elseif cur.unit.sel.radius:contains('dng', unit.cell.x,
-                                                    unit.cell.y) and
+                elseif cur.unit.sel.radius:contains('dng', unit.cellx,
+                                                    unit.celly) and
                     not cur.unit.sel.attacked and not cur.unit.sel.moved then
                     Info:set("attack", "unselect", unit)
                     if yes:once() then
                         -- find cells from which the attack at may be launched
                         -- calculate a new radius (of radius rng) centered on the foe's position
                         local targetRadius = Radius:new()
-                        targetRadius:atk(unit.cell.x, unit.cell.y,
+                        targetRadius:atk(unit.cellx, unit.celly,
                                          cur.unit.sel.stat.rng, state.stage,
                                          state.player.num)
 
@@ -167,13 +167,13 @@ function Player.battle.update(state, inputs)
         -- ... but an active, friendly unit has been selected, then move the
         -- friendly unit
         if cur:selected() and cur.unit.sel.active and not cur.unit.sel.moved and
-            Cell.open(cur.cell.x, cur.cell.y, stage) and
-            cur.unit.sel.radius:contains('mov', cur.cell.x, cur.cell.y) then
+            Cell.open(cur.cellx, cur.celly, stage) and
+            cur.unit.sel.radius:contains('mov', cur.cellx, cur.celly) then
             Info:set("move", "unselect")
 
             if yes:once() then
                 -- move the unit
-                cur.unit.sel:move(cur.cell.x, cur.cell.y)
+                cur.unit.sel:move(cur.cellx, cur.celly)
                 cur.unit.sel.radius.vis = false
 
                 -- deactivate all *other* units belonging to the player
@@ -181,7 +181,7 @@ function Player.battle.update(state, inputs)
                 cur.unit.sel:activate()
 
                 -- enqueue animations
-                Seq:enqueue({Anim.trans(cur.unit.sel, cur.cell.x, cur.cell.y)})
+                Seq:enqueue({Anim.trans(cur.unit.sel, cur.cellx, cur.celly)})
 
                 -- end the player's turn if the unit is exhausted
                 if cur.unit.sel.attacked or cur.unit.sel.stat.atk == 0 or
@@ -244,13 +244,13 @@ function Player:turnEnd(state)
     Units.repair(state)
 
     -- center the screen on the specified coordinates
-    local curcell = state.player.cursor.cell
+    local cur = state.player.cursor
     Seq:enqueue({
         Anim.delay(30),
         function()
-            cam:focus(curcell.x, curcell.y, state)
+            cam:focus(cur.cellx, cur.celly, state)
             return true
         end,
-        -- Anim.trans(cam, cam.cellx, cam.celly),
+        Anim.trans(cam, cam.cellx, cam.celly),
     })
 end

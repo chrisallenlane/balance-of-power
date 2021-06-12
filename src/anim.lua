@@ -40,20 +40,17 @@ Translate an object across the stage
 ]] --
 function Anim.trans(obj, x, y)
     -- warp the object to the specified cell
-    obj.cell.x, obj.cell.y = x, y
+    obj.cellx, obj.celly = x, y
 
     -- animate the pixel location enclosing on the cell location
     return function()
-        local px, py, destx, desty = obj.px.x, obj.px.y, obj.cell.x * 8,
-                                     obj.cell.y * 8
+        local destx, desty = obj.cellx * 8, obj.celly * 8
 
         -- conclude the animation if the object has reached its destination
-        if px == destx and py == desty then return true end
+        if obj.pxx == destx and obj.pxy == desty then return true end
 
-        obj.px = {
-            x = obj.px.x + Anim.step(px, destx, 4),
-            y = obj.px.y + Anim.step(py, desty, 4),
-        }
+        obj.pxx = obj.pxx + Anim.step(obj.pxx, destx, 4)
+        obj.pxy = obj.pxy + Anim.step(obj.pxy, desty, 4)
 
         return false
     end
@@ -76,7 +73,7 @@ function Anim.laser(src, dst)
 
         -- fire the laser!
         local color = frame % 3 == 0 and 7 or frame % 2 == 0 and 10 or 0
-        line(src.px.x + 3, src.px.y + 3, dst.px.x + 3, dst.px.y + 3, color)
+        line(src.pxx + 3, src.pxy + 3, dst.pxx + 3, dst.pxy + 3, color)
 
         -- continue the animation
         frame = frame + 1
@@ -124,7 +121,7 @@ function Anim.repair(unit, _)
         if frame == 0 then return true end
 
         -- draw repair halos
-        circ(unit.px.x + 3, unit.px.y + 3, frame % 5 * 2.5,
+        circ(unit.pxx + 3, unit.pxy + 3, frame % 5 * 2.5,
              frame % 2 == 0 and 12 or 2)
 
         -- continue the animation

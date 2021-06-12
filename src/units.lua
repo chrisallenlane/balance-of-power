@@ -3,7 +3,7 @@ Units = {delay = 0}
 -- At returns the unit at the specified coordinates, or false if none is there
 function Units.at(x, y, units)
     for idx, unit in pairs(units) do
-        if unit.cell.x == x and unit.cell.y == y then return unit, idx end
+        if unit.cellx == x and unit.celly == y then return unit, idx end
     end
 
     return nil, nil
@@ -49,7 +49,7 @@ function Units.draw(state)
             end
         end
 
-        spr(0, unit.px.x, unit.px.y)
+        spr(0, unit.pxx, unit.pxy)
     end
 
     pal()
@@ -61,7 +61,7 @@ function Units.repair(state)
     for _, unit in ipairs(state.stage.units) do
         -- repair the unit if applicable
         if unit.player == state.player.num and
-            Cell.repair(unit.cell.x, unit.cell.y, state.stage) >= 1 and unit.pwr <
+            Cell.repair(unit.cellx, unit.celly, state.stage) >= 1 and unit.pwr <
             10 then
             -- increment the unit power
             unit.pwr = unit.pwr + 1
@@ -70,7 +70,7 @@ function Units.repair(state)
             Seq:enqueue({
                 Anim.delay(30),
                 function()
-                    state.camera:focus(unit.cell.x, unit.cell.y, state)
+                    state.camera:focus(unit.cellx, unit.celly, state)
                     return true
                 end,
                 Anim.trans(state.camera, state.camera.cellx, state.camera.celly),

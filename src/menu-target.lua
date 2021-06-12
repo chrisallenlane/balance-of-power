@@ -40,7 +40,7 @@ function Menus.Target:update(state, inputs)
         Units.deactivate(units, player.num)
         sel:activate()
 
-        local def = Cell.def(self.unit.cell.x, self.unit.cell.y, stage)
+        local def = Cell.def(self.unit.cellx, self.unit.celly, stage)
         local killed = sel:attack(self.unit, self.choices[self.sel],
                                   sel.stat.atk, def, false, state)
 
@@ -57,7 +57,7 @@ function Menus.Target:update(state, inputs)
                     Units.die(self.unit.id, units)
                     return true
                 end,
-                Anim.explode(self.unit.px.x, self.unit.px.y, state),
+                Anim.explode(self.unit.pxx, self.unit.pxy, state),
                 Anim.delay(30),
             })
         end

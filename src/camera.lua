@@ -18,7 +18,8 @@ function Camera:update()
     -- move toward the destination
     x = x < destx and x + 1 or x > destx and x - 1 or x
     y = y < desty and y + 1 or y > desty and y - 1 or y
-    self.px = {x = x, y = y}
+    self.pxx = x
+    self.pxy = y
 end
 
 -- focus the camera on the specified grid position

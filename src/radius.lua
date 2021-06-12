@@ -20,7 +20,7 @@ function Radius:update(unit, stage, turn)
     self:clear()
 
     -- annotate the center of the radii
-    self.center.x, self.center.y = unit.cell.x, unit.cell.y
+    self.center.x, self.center.y = unit.cellx, unit.celly
 
     -- NB: we're computing the movement and attack radii separately. That's
     -- not computationally optimial, but much simpler to understand.
@@ -30,7 +30,7 @@ function Radius:update(unit, stage, turn)
     -- if the unit has range but no attack, don't render an attack radius
     if not unit.attacked and unit.stat.atk > 0 then
         -- don't "pay for" the cell where the unit is placed
-        self:append('mov', unit.cell.x, unit.cell.y)
+        self:append('mov', unit.cellx, unit.celly)
         self:dng(self.center.x, self.center.y, unit.stat.rng, stage, turn)
         self:atk(self.center.x, self.center.y, unit.stat.rng, stage, turn)
     end

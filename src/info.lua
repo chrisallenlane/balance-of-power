@@ -7,8 +7,11 @@ end
 
 -- Draw the info box
 function Info:draw(state)
+    -- for brevity
+    local cur = state.player.cursor
+
     -- hide the info bar if it would occlude the cursor
-    if state.player.cursor.cell.y == state.stage.cell.h - 1 then return end
+    if cur.celly == state.stage.cell.h - 1 then return end
 
     local yes, no = self.yes, self.no
 
@@ -60,8 +63,7 @@ function Info:draw(state)
         print("r", camX + 108, textY, 7)
         print(stat.rng, camX + 112, textY, self.colorize(stat.rng))
     else
-        local cell, stage = state.player.cursor.cell, state.stage
-        local x, y = cell.x, cell.y
+        local stage, x, y = state.stage, cur.cellx, cur.celly
         local cost, def = Cell.cost(x, y, stage), Cell.def(x, y, stage)
 
         -- draw the tile of interest into the Info bar

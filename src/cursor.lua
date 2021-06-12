@@ -3,7 +3,8 @@ Cursor = {}
 function Cursor:new()
     local c = {
         -- current cursor cell position
-        cell = {x = 0, y = 0},
+        cellx = 0,
+        celly = 0,
 
         -- the currently selected unit
         -- @todo: remove the `unit` wrapper if I never add additional properties
@@ -23,21 +24,18 @@ end
 
 -- update cursor state
 function Cursor:update(stage, inputs)
-    -- for brevity
-    local cell = self.cell
-
     -- left/right
-    if inputs.left:rep() and cell.x > 0 then
-        cell.x = cell.x - 1
-    elseif inputs.right:rep() and cell.x < stage.cell.w - 1 then
-        cell.x = cell.x + 1
+    if inputs.left:rep() and self.cellx > 0 then
+        self.cellx = self.cellx - 1
+    elseif inputs.right:rep() and self.cellx < stage.cell.w - 1 then
+        self.cellx = self.cellx + 1
     end
 
     -- up/down
-    if inputs.up:rep() and cell.y > 0 then
-        cell.y = cell.y - 1
-    elseif inputs.down:rep() and cell.y < stage.cell.h - 2 then
-        cell.y = cell.y + 1
+    if inputs.up:rep() and self.celly > 0 then
+        self.celly = self.celly - 1
+    elseif inputs.down:rep() and self.celly < stage.cell.h - 2 then
+        self.celly = self.celly + 1
     end
 end
 
@@ -67,5 +65,5 @@ function Cursor:draw(state)
     self.frame = self.frame + 1
 
     -- draw the sprite
-    spr(sprite, self.cell.x * 8, self.cell.y * 8)
+    spr(sprite, self.cellx * 8, self.celly * 8)
 end

@@ -14,10 +14,12 @@ function Unit:new(u)
     u.stat = u.stat or {atk = 3, rng = 3, mov = 4}
 
     -- compute the pixel position from the cell position
-    u.px = {x = u.cell.x * 8, y = u.cell.y * 8}
+    u.pxx = u.cellx * 8
+    u.pxy = u.celly * 8
 
     -- initialize `from` cells
-    u.from = {x = nil, y = nil}
+    u.fromx = nil
+    u.fromy = nil
 
     -- track actions taken
     u.attacked = u.attacked or false
@@ -39,11 +41,14 @@ function Unit.clone(u)
         id = u.id,
         spr = u.spr,
         player = u.player,
-        cell = {x = u.cell.x, y = u.cell.y},
-        from = {x = u.from.x, y = u.from.y},
+        cellx = u.cellx,
+        celly = u.celly,
+        fromx = u.x,
+        fromy = u.y,
         pwr = u.pwr,
         stat = {atk = u.stat.atk, mov = u.stat.mov, rng = u.stat.rng},
-        px = {x = u.px.x, y = u.px.y},
+        pxx = u.pxx,
+        pxy = u.pxy,
         attacked = u.attacked,
         moved = u.moved,
         active = u.active,
@@ -57,21 +62,21 @@ end
 
 -- Move moves a unit
 function Unit:move(to_x, to_y)
-    self.from = {x = self.cell.x, y = self.cell.y}
-    self.cell.x, self.cell.y, self.moved = to_x, to_y, true
+    self.fromx, self.fromy = self.cellx, self.celly
+    self.cellx, self.celly, self.moved = to_x, to_y, true
 end
 
 -- Reverses the prior move
 function Unit:unmove(state)
     -- move the unit to its `from` position
-    self.cell.x, self.cell.y = self.from.x, self.from.y
+    self.cellx, self.celly = self.fromx, self.fromy
 
     -- clear the `from` position
-    self.from = {x = nil, y = nil}
+    self.fromx, self.fromy = nil, nil
 
     -- place the cursor back atop the unit
-    state.player.cursor.cell.x, state.player.cursor.cell.y = self.cell.x,
-                                                             self.cell.y
+    state.player.cursor.cellx, state.player.cursor.celly = self.cellx,
+                                                           self.celly
     -- refresh all units on this unit's team
     for _, unit in pairs(state.stage.units) do
         if unit.player == self.player then
@@ -87,7 +92,8 @@ function Unit:attack(target, stat, atk, def, overflow, state)
 
     -- set the attacking player's cursor position atop the attacking unit
     -- (This is a QOL feature for the next turn.)
-    state.player.cursor.cell = {x = self.cell.x, y = self.cell.y}
+    state.player.cursor.cellx = self.cellx
+    state.player.cursor.celly = self.celly
 
     -- compute the damage inflicted, ensuring that it is at least `1`
     local dmg = atk - def

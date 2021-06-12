@@ -16,7 +16,7 @@ function CPU.battle.update(state)
     for _, friend in ipairs(friends) do
         for _, foe in ipairs(foes) do
             -- flag the aggressor
-            if friend.radius:contains('dng', foe.cell.x, foe.cell.y) and
+            if friend.radius:contains('dng', foe.cellx, foe.celly) and
                 friend.stat.atk >= 1 then add(aggressors, friend) end
         end
     end
@@ -33,7 +33,7 @@ function CPU.battle.update(state)
     local target = false
     for _, foe in ipairs(foes) do
         -- determine if `foe` is within our unit's danger radius
-        if unit.radius:contains('dng', foe.cell.x, foe.cell.y) then
+        if unit.radius:contains('dng', foe.cellx, foe.celly) then
             -- if we've found a target, break out of the loop
             target = foe
             break
@@ -45,7 +45,7 @@ function CPU.battle.update(state)
         -- calculate a new radius (of radius rng+1) centered on the foe's
         -- position
         local targetRadius = Radius:new()
-        targetRadius:atk(target.cell.x, target.cell.y, unit.stat.rng + 1,
+        targetRadius:atk(target.cellx, target.celly, unit.stat.rng + 1,
                          state.stage, 2)
 
         -- identify the subset of cells in the intersection of the unit and
@@ -60,7 +60,7 @@ function CPU.battle.update(state)
 
         -- TODO DRY: this should all be moved "up" a level
         -- get the target's defensive modifier
-        local def = Cell.def(target.cell.x, target.cell.y, stage)
+        local def = Cell.def(target.cellx, target.celly, stage)
 
         -- attack the enemy unit and determine if it was killed
         local killed = unit:attack(target, 'atk', unit.stat.atk, def, false,
@@ -78,7 +78,7 @@ function CPU.battle.update(state)
 
         if killed then
             Seq:enqueue({
-                Anim.explode(target.px.x, target.px.y, state),
+                Anim.explode(target.pxx, target.pxy, state),
                 function()
                     Units.die(target.id, state.stage.units)
                     return true
@@ -89,7 +89,7 @@ function CPU.battle.update(state)
         Seq:enqueue({
             function()
                 ---- record the CPU's (fake) cursor location
-                player.cursor.cell.x, player.cursor.cell.y = cell.x, cell.y
+                player.cursor.cellx, player.cursor.celly = cell.x, cell.y
 
                 ---- end the CPU turn
                 player:turnEnd(state)
@@ -109,7 +109,7 @@ function CPU.battle.update(state)
             Seq:enqueue({Anim.delay(30), Anim.trans(unit, cell.x, cell.y)})
 
             -- record the CPU's (fake) cursor location
-            player.cursor.cell.x, player.cursor.cell.y = cell.x, cell.y
+            player.cursor.cellx, player.cursor.celly = cell.x, cell.y
         end
 
         -- end the CPU turn
