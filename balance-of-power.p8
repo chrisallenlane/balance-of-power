@@ -11,9 +11,6 @@ __lua__
 -- This is minified source code. Unminified source is available here:
 -- https://github.com/chrisallenlane/balance-of-power
 
--- show/hide on-screen debugging info
-DEBUG_SHOW = false
-
 -- enable/disable debugging "cheat" functions
 DEBUG_CHEAT = true
 
