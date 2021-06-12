@@ -35,26 +35,17 @@ function Unit:new(u)
 end
 
 -- Returns a clone (deep copy) of a unit
-function Unit.clone(u)
-    -- create a deep copy of `u`'s properties
-    local clone = {
-        id = u.id,
-        spr = u.spr,
-        player = u.player,
-        cellx = u.cellx,
-        celly = u.celly,
-        fromx = u.x,
-        fromy = u.y,
-        pwr = u.pwr,
-        stat = {atk = u.stat.atk, mov = u.stat.mov, rng = u.stat.rng},
-        pxx = u.pxx,
-        pxy = u.pxy,
-        attacked = u.attacked,
-        moved = u.moved,
-        active = u.active,
-        -- @todo: this is a shallow copy - though it seems to work?
-        radius = u.radius,
-    }
+function Unit.clone(unit)
+
+    local clone = {}
+
+    -- iterate over a table's properties
+    -- XXX: `radius` is a shallow copy - though it seems to work?
+    for key, val in pairs(unit) do clone[key] = val end
+
+    -- create a deep copy of `stat`
+    -- TODO: I can probably refactor this
+    clone.stat = {atk = unit.stat.atk, mov = unit.stat.mov, rng = unit.stat.rng}
 
     -- initialize and return a cloned unit
     return Unit:new(clone)
