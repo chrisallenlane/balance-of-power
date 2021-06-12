@@ -192,6 +192,18 @@ function Radius:intersect(keySelf, keyOther, rad)
     return intersection
 end
 
+-- find cells from which the attacker may attack the target
+function Radius.vantage(attacker, target, state)
+    -- compute a new radius centered on the target's position
+    local rad = Radius:new()
+    rad:atk(target.cellx, target.celly, attacker.stat.rng, state.stage,
+            state.player.num)
+
+    -- identify the subset of cells in the intersection of the selected unit and
+    -- target radii
+    return rad:intersect('atk', 'mov', attacker.radius)
+end
+
 -- draw the radius to the stage
 function Radius:draw(friend)
     if not self.vis then return end

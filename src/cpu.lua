@@ -42,18 +42,10 @@ function CPU.battle.update(state)
 
     -- if we've found a target, move and attack
     if target then
-        -- calculate a new radius (of radius rng) centered on the foe's
-        -- position
-        local targetRadius = Radius:new()
-        targetRadius:atk(target.cellx, target.celly, unit.stat.rng, state.stage,
-                         2)
-
-        -- identify the subset of cells in the intersection of the unit and
-        -- target radii
-        local intersection = targetRadius:intersect('atk', 'mov', unit.radius)
-
-        -- select a random cell within intersection
-        local cell = intersection:rand('atk', state)
+        -- find a cell from which the attacker may attack the target
+        -- TODO: sort by best defense iff token space is available
+        local vantage = Radius.vantage(unit, target, state)
+        local cell = vantage:rand('atk', state)
 
         -- move the unit
         unit:move(cell.x, cell.y)

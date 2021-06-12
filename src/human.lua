@@ -109,22 +109,11 @@ function Human.battle.update(state, inputs)
                     not cur.unit.sel.attacked and not cur.unit.sel.moved then
                     Info:set("attack", "unselect", unit)
                     if yes:once() then
-                        -- find cells from which the attack at may be launched
-                        -- calculate a new radius (of radius rng) centered on the foe's position
-                        local targetRadius = Radius:new()
-                        targetRadius:atk(unit.cellx, unit.celly,
-                                         cur.unit.sel.stat.rng, state.stage,
-                                         state.player.num)
-
-                        -- identify the subset of cells in the intersection of the selected unit and
-                        -- target radii
-                        local intersection =
-                            targetRadius:intersect('atk', 'mov',
-                                                   cur.unit.sel.radius)
-
-                        -- select a random cell within intersection
+                        -- find a cell from which the attacker may attack the target
                         -- TODO: sort by best defense iff token space is available
-                        local cell = intersection:rand('atk', state)
+                        local vantage =
+                            Radius.vantage(cur.unit.sel, unit, state)
+                        local cell = vantage:rand('atk', state)
 
                         -- move the unit
                         cur.unit.sel:move(cell.x, cell.y)
