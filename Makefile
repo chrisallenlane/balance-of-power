@@ -47,7 +47,7 @@ setup:
 
 ## fast: format and lint
 .PHONY: fast
-fast: | fmt lint build-stages trim
+fast: | fmt lint minify build-stages
 
 ## check: format, lint, and test
 .PHONY: check
@@ -60,14 +60,6 @@ build/%.lua: src/%.lua
 	echo "minify: $@" && \
 	$(DOCKER) run -tv $(realpath .):/app $(docker_image) \
 		bash -c 'luamin -f src/$(notdir $@) > $@'
-
-## trim: minify and prune files
-# NB: we truncate `build/debug.lua` because we do not want it to add weight to
-# the production release.
-.PHONY: trim
-trim: minify
-	$(DOCKER) run -tv $(realpath .):/app $(docker_image) \
-		bash -c 'truncate -s 0 $(BUILD_DIR)/debug.lua'
 
 ## test: run unit-tests
 .PHONY: test
