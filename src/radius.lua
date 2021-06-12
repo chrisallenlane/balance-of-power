@@ -15,7 +15,7 @@ function Radius:new()
 end
 
 -- draw a radius at the specified coordinates
-function Radius:update(unit, stage, turn)
+function Radius:update(unit, state, turn)
     -- clear the prior radius
     self:clear()
 
@@ -25,14 +25,14 @@ function Radius:update(unit, stage, turn)
     -- NB: we're computing the movement and attack radii separately. That's
     -- not computationally optimial, but much simpler to understand.
     if not unit.moved then
-        self:move(self.center.x, self.center.y, unit.stat.mov, stage, turn)
+        self:move(self.center.x, self.center.y, unit.stat.mov, state, turn)
     end
     -- if the unit has range but no attack, don't render an attack radius
     if not unit.attacked and unit.stat.atk > 0 then
         -- don't "pay for" the cell where the unit is placed
         self:append('mov', unit.cellx, unit.celly)
-        self:dng(self.center.x, self.center.y, unit.stat.rng, stage, turn)
-        self:atk(self.center.x, self.center.y, unit.stat.rng, stage, turn)
+        self:dng(self.center.x, self.center.y, unit.stat.rng, state, turn)
+        self:atk(self.center.x, self.center.y, unit.stat.rng, state, turn)
     end
 
     -- annotate that the radius is visible
@@ -40,7 +40,7 @@ function Radius:update(unit, stage, turn)
 end
 
 -- Compute a movement radius centered on `x`, `y`
-function Radius:move(x, y, mvmt, stage, turn)
+function Radius:move(x, y, mvmt, state, turn)
     -- short circuit if the unit has no `mov` points
     if mvmt == 0 then return end
 
@@ -49,20 +49,20 @@ function Radius:move(x, y, mvmt, stage, turn)
     if self:cached('mov', x, y, mvmt) then return end
 
     -- iteratively search this cell's neighbors
-    for _, cell in pairs(Cell.neighbors(x, y, stage)) do
+    for _, cell in pairs(Cell.neighbors(x, y, state)) do
         -- determine the cost to traverse the tile
-        local cost = Cell.cost(cell.x, cell.y, stage)
-        if mvmt >= cost and Cell.pass(cell.x, cell.y, stage, turn) then
-            if Cell.open(cell.x, cell.y, stage) then
+        local cost = Cell.cost(cell.x, cell.y, state)
+        if mvmt >= cost and Cell.pass(cell.x, cell.y, state, turn) then
+            if Cell.open(cell.x, cell.y, state) then
                 self:append('mov', cell.x, cell.y)
             end
-            self:move(cell.x, cell.y, mvmt - cost, stage, turn)
+            self:move(cell.x, cell.y, mvmt - cost, state, turn)
         end
     end
 end
 
 -- Compute an attack radius centered on `x`, `y`
-function Radius:atk(x, y, rng, stage, turn)
+function Radius:atk(x, y, rng, state, turn)
     -- exit early if we've visited this cell before (with `rng` range points remaining)
     if self:cached('atk', x, y, rng) then return end
 
@@ -73,21 +73,21 @@ function Radius:atk(x, y, rng, stage, turn)
     if rng < 0 then return end
 
     -- iteratively search this cell's neighbors
-    for _, cell in pairs(Cell.neighbors(x, y, stage)) do
+    for _, cell in pairs(Cell.neighbors(x, y, state)) do
         -- append the cell to the attack radius if and only if:
         -- 1. the cell is unoccupied
         -- 2. the cell is occupied by an enemy unit
-        local unit = Units.at(cell.x, cell.y, stage.units)
+        local unit = Units.at(cell.x, cell.y, state.stage.units)
         if not unit or unit and unit.player ~= turn then
             self:append('atk', cell.x, cell.y)
         end
 
-        self:atk(cell.x, cell.y, rng, stage, turn)
+        self:atk(cell.x, cell.y, rng, state, turn)
     end
 end
 
 -- Compute a danger radius centered on `x`, `y`
-function Radius:dng(x, y, rng, stage, turn)
+function Radius:dng(x, y, rng, state, turn)
     -- exit early if we've visited this cell before (with `rng` range points remaining)
     if self:cached('dng', x, y, rng) then return end
 
@@ -99,16 +99,16 @@ function Radius:dng(x, y, rng, stage, turn)
     if rng == 0 then return end
 
     -- iteratively search this cell's neighbors
-    for _, cell in pairs(Cell.neighbors(x, y, stage)) do
+    for _, cell in pairs(Cell.neighbors(x, y, state)) do
         -- append the cell to the danger radius if and only if:
         -- 1. the cell is unoccupied
         -- 2. the cell is occupied by an enemy unit
-        local unit = Units.at(cell.x, cell.y, stage.units)
+        local unit = Units.at(cell.x, cell.y, state.stage.units)
         if not unit or unit and unit.player ~= turn then
             self:append('dng', cell.x, cell.y)
         end
 
-        self:dng(cell.x, cell.y, rng, stage, turn)
+        self:dng(cell.x, cell.y, rng, state, turn)
     end
 end
 
@@ -165,7 +165,7 @@ function Radius:rand(key, state)
     local y = rnd(ys)
 
     -- initialize and return a cell
-    return Cell:new(x, y, state.stage.cellw)
+    return Cell:new(x, y, state)
 end
 
 -- find cells that are common to both `self` and `rad` iterate over
@@ -191,7 +191,7 @@ end
 function Radius.vantage(attacker, target, state)
     -- compute a new radius centered on the target's position
     local rad = Radius:new()
-    rad:atk(target.cellx, target.celly, attacker.stat.rng, state.stage,
+    rad:atk(target.cellx, target.celly, attacker.stat.rng, state,
             state.player.num)
 
     -- identify the subset of cells in the intersection of the selected unit and

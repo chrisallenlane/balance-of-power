@@ -55,17 +55,17 @@ function Cell.init()
 end
 
 -- Cell constructor
-function Cell:new(x, y, w)
-    local c = {x = x, y = y, id = (y * w) + x}
+function Cell:new(x, y, state)
+    local c = {x = x, y = y, id = (y * state.stage.cellw) + x}
     setmetatable(c, self)
     self.__index = self
     return c
 end
 
 -- returns true if the specified cell is out-of-bounds
-function Cell.oob(x, y, stage)
+function Cell.oob(x, y, state)
     -- return false if the specified coordinates are out-of-bounds
-    if x < 0 or x >= stage.cellw or y < 0 or y >= stage.cellh then
+    if x < 0 or x >= state.stage.cellw or y < 0 or y >= state.stage.cellh then
         return true
     end
 
@@ -73,23 +73,23 @@ function Cell.oob(x, y, stage)
 end
 
 -- return true if a unit may be placed on the tile
-function Cell.open(x, y, stage)
+function Cell.open(x, y, state)
     -- if the cell is out-of-bounds, it's not open
-    if Cell.oob(x, y, stage) then return false end
+    if Cell.oob(x, y, state) then return false end
 
     -- return false if a unit is at the specified coordinates
-    if Units.at(x, y, stage.units) then return false end
+    if Units.at(x, y, state.stage.units) then return false end
     return true
 end
 
 -- return true if a unit may pass through the tile
-function Cell.pass(x, y, stage, turn)
+function Cell.pass(x, y, state, turn)
     -- if the cell is out-of-bounds, it's not passable
-    if Cell.oob(x, y, stage) then return false end
+    if Cell.oob(x, y, state) then return false end
 
     -- check for a unit at the specified coordinates
     -- @todo: de-duplicate with `self.open`, possibly via a state var
-    local unit = Units.at(x, y, stage.units)
+    local unit = Units.at(x, y, state.stage.units)
 
     -- if no unit is found, return true
     if not unit then return true end
@@ -102,33 +102,33 @@ function Cell.pass(x, y, stage, turn)
 end
 
 -- return the cell repair value at `x`, `y`
-function Cell.repair(x, y, stage)
-    return Cell.data[mget(stage.cellx + x, stage.celly + y)].repair
+function Cell.repair(x, y, state)
+    return Cell.data[mget(state.stage.cellx + x, state.stage.celly + y)].repair
 end
 
 -- return the cell traversal cost at `x`, `y`
-function Cell.cost(x, y, stage)
-    return Cell.data[mget(stage.cellx + x, stage.celly + y)].cost
+function Cell.cost(x, y, state)
+    return Cell.data[mget(state.stage.cellx + x, state.stage.celly + y)].cost
 end
 
 -- return the cell traversal cost at `x`, `y`
 -- @todo: this should be de-duplicated with the above
-function Cell.def(x, y, stage)
-    return Cell.data[mget(stage.cellx + x, stage.celly + y)].def
+function Cell.def(x, y, state)
+    return Cell.data[mget(state.stage.cellx + x, state.stage.celly + y)].def
 end
 
 -- return the set of cells adjacent to the specified cell
-function Cell.neighbors(x, y, stage)
-    local cellw, nbrs = stage.cellw, {}
+function Cell.neighbors(x, y, state)
+    local cellw, nbrs = state.stage.cellw, {}
 
     -- add cells, while being mindful to stay in bounds
-    if x + 1 < cellw then add(nbrs, Cell:new(x + 1, y, cellw)) end
-    if x - 1 >= 0 then add(nbrs, Cell:new(x - 1, y, cellw)) end
+    if x + 1 < cellw then add(nbrs, Cell:new(x + 1, y, state)) end
+    if x - 1 >= 0 then add(nbrs, Cell:new(x - 1, y, state)) end
     -- NB: the `+ 2` is not a typo. The bottommost row in each map is "empty",
     -- because the Info bar is written on top of it. This adjustment prevents
     -- units from moving behind the Info bar.
-    if y + 2 < stage.cellh then add(nbrs, Cell:new(x, y + 1, cellw)) end
-    if y - 1 >= 0 then add(nbrs, Cell:new(x, y - 1, cellw)) end
+    if y + 2 < state.stage.cellh then add(nbrs, Cell:new(x, y + 1, state)) end
+    if y - 1 >= 0 then add(nbrs, Cell:new(x, y - 1, state)) end
 
     return nbrs
 end

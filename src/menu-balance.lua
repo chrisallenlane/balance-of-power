@@ -44,11 +44,11 @@ function Menus.Balance:update(state, inputs)
     if inputs.left:rep() and sys >= 1 then
         sfx(0, -1, 8, 8)
         unit.stat[stat] = sys - 1
-        radius:update(unit, stage, player.num)
+        radius:update(unit, state, player.num)
     elseif inputs.right:rep() and sys < 5 and alloc < unit.pwr then
         sfx(0, -1, 0, 8)
         unit.stat[stat] = sys + 1
-        radius:update(unit, stage, player.num)
+        radius:update(unit, state, player.num)
     end
 
     -- accept the balance, close the menu, and end the turn

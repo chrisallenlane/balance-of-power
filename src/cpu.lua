@@ -5,7 +5,7 @@ function CPU.battle.update(state)
     Info:set("", "")
 
     -- shorthand
-    local player, stage = state.player, state.stage
+    local player = state.player
 
     -- split units into teams
     local friends, foes = Units.teams(state)
@@ -24,7 +24,7 @@ function CPU.battle.update(state)
     local unit = rnd(#aggressors >= 1 and aggressors or friends)
 
     -- calculate the unit's radius
-    unit.radius:update(unit, stage, 2)
+    unit.radius:update(unit, state, 2)
 
     -- TODO: this is inefficient. We can determine above which unit the enemy
     -- is in contact with.

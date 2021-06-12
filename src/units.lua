@@ -61,8 +61,7 @@ function Units.repair(state)
     for _, unit in ipairs(state.stage.units) do
         -- repair the unit if applicable
         if unit.player == state.player.num and
-            Cell.repair(unit.cellx, unit.celly, state.stage) >= 1 and unit.pwr <
-            10 then
+            Cell.repair(unit.cellx, unit.celly, state) >= 1 and unit.pwr < 10 then
             -- increment the unit power
             unit.pwr = unit.pwr + 1
 

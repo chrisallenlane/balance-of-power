@@ -29,7 +29,7 @@ function Human.battle.update(state, inputs)
                         end
                     end
 
-                    unit.radius:update(unit, stage, player.num)
+                    unit.radius:update(unit, state, player.num)
                     return
                 end
 
@@ -78,7 +78,7 @@ function Human.battle.update(state, inputs)
                     Info:set("view radii", "", unit)
                     if yes:once() then
                         -- draw the radii for the enemy player
-                        unit.radius:update(unit, stage,
+                        unit.radius:update(unit, state,
                                            player.num == 2 and 1 or 2)
                         return
                     end
@@ -118,7 +118,7 @@ function Human.battle.update(state, inputs)
 
                         -- move the unit
                         cur.unit.sel:move(cell.x, cell.y)
-                        cur.unit.sel.radius:update(cur.unit.sel, stage,
+                        cur.unit.sel.radius:update(cur.unit.sel, state,
                                                    player.num)
 
                         -- deactivate all *other* units belonging to the player
@@ -146,7 +146,7 @@ function Human.battle.update(state, inputs)
         -- ... but an active, friendly unit has been selected, then move the
         -- friendly unit
         if cur:selected() and cur.unit.sel.active and not cur.unit.sel.moved and
-            Cell.open(cur.cellx, cur.celly, stage) and
+            Cell.open(cur.cellx, cur.celly, state) and
             cur.unit.sel.radius:contains('mov', cur.cellx, cur.celly) then
             Info:set("move", "unselect")
 
@@ -168,7 +168,7 @@ function Human.battle.update(state, inputs)
                     player:turnEnd(state)
                     -- otherwise, show the attack radius
                 else
-                    cur.unit.sel.radius:update(cur.unit.sel, stage, player.num)
+                    cur.unit.sel.radius:update(cur.unit.sel, state, player.num)
                 end
                 return
             end

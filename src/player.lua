@@ -13,8 +13,8 @@ end
 
 -- attack the enemy unit
 function Player.attack(attacker, target, system, state)
-    local killed = attacker:attack(target, system, attacker.stat.atk, Cell.def(
-                                       target.cellx, target.celly, state.stage),
+    local killed = attacker:attack(target, system, attacker.stat.atk,
+                                   Cell.def(target.cellx, target.celly, state),
                                    false, state)
 
     -- hide the attacker's radii
@@ -37,7 +37,7 @@ function Player.attack(attacker, target, system, state)
     -- it moves
     add(seqs, function()
         if not attacker.moved and attacker.stat.mov >= 1 then
-            attacker.radius:update(attacker, state.stage, state.player.num)
+            attacker.radius:update(attacker, state, state.player.num)
         else
             state.player:turnEnd(state)
         end
