@@ -69,7 +69,7 @@ function Screens.battle.update(state, inputs)
         cur:update(state.stage, inputs)
 
         -- update the battle state
-        Player.battle.update(state, inputs)
+        Human.battle.update(state, inputs)
     else
         CPU.battle.update(state)
     end
