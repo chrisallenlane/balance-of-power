@@ -56,9 +56,6 @@ end
 function Player:turnEnd(state)
     local cam = state.camera
 
-    -- hide radii
-    Radius.clearAll(state.stage.units)
-
     -- unselect the unit
     state.player.cursor.unit.sel = nil
 

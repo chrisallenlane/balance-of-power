@@ -151,11 +151,6 @@ function Radius:clear()
     self.vis = false
 end
 
--- KLUDGE
-function Radius.clearAll(units)
-    for _, unit in pairs(units) do unit.radius.vis = false end
-end
-
 -- return a random cell contained within the radius
 function Radius:rand(key, state)
     -- track x and y keys
