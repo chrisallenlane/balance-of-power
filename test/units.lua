@@ -7,13 +7,10 @@ describe("unit", function()
     describe("at", function()
         it("should return the unit at coordinates", function()
             -- initialize the units
-            local needle = Unit:new({
-                spr = 80,
-                player = 1,
-                cell = {x = 2, y = 2},
-            })
+            local needle =
+                Unit:new({spr = 80, player = 1, cellx = 2, celly = 2})
             local haystack = {
-                Unit:new({spr = 80, player = 1, cell = {x = 1, y = 1}}),
+                Unit:new({spr = 80, player = 1, cellx = 1, celly = 1}),
                 needle,
             }
 
@@ -28,8 +25,8 @@ describe("unit", function()
         it("should return nil if no unit is found", function()
             -- initialize the units
             local haystack = {
-                Unit:new({spr = 80, player = 1, cell = {x = 1, y = 1}}),
-                Unit:new({spr = 80, player = 1, cell = {x = 2, y = 2}}),
+                Unit:new({spr = 80, player = 1, cellx = 1, celly = 1}),
+                Unit:new({spr = 80, player = 1, cellx = 2, celly = 2}),
             }
 
             -- search for the unit

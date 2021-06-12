@@ -9,7 +9,8 @@ describe("unit", function()
             local u = Unit:new({
                 spr = 1,
                 player = 2,
-                cell = {x = 3, y = 4},
+                cellx = 3,
+                celly = 4,
                 id = 1,
             })
 
@@ -19,11 +20,14 @@ describe("unit", function()
                 attacked = false,
                 moved = false,
                 active = true,
-                cell = {x = 3, y = 4},
-                from = {x = nil, y = nil},
+                cellx = 3,
+                celly = 4,
+                fromx = nil,
+                fromy = nil,
                 player = 2,
                 pwr = 10,
-                px = {x = 24, y = 32},
+                pxx = 24,
+                pxy = 32,
                 spr = 1,
                 radius = Radius:new(),
                 stat = {atk = 3, mov = 4, rng = 3},
@@ -39,8 +43,10 @@ describe("unit", function()
             local orig = Unit:new({
                 spr = 1,
                 player = 2,
-                cell = {x = 3, y = 4},
-                from = {x = 5, y = 6},
+                cellx = 3,
+                celly = 4,
+                fromx = 5,
+                fromy = 6,
             })
             local clone = Unit.clone(orig)
 
@@ -56,14 +62,14 @@ describe("unit", function()
     describe("move", function()
         it("should change the unit state", function()
             -- initialize a unit
-            local u = Unit:new({spr = 1, player = 2, cell = {x = 3, y = 4}})
+            local u = Unit:new({spr = 1, player = 2, cellx = 3, celly = 4})
 
             -- move the unit
             u:move(5, 6)
 
             -- assert that the correct state changes have been made
-            assert.equal(5, u.cell.x)
-            assert.equal(6, u.cell.y)
+            assert.equal(5, u.cellx)
+            assert.equal(6, u.celly)
             assert.equal(true, u.moved)
         end)
     end)
@@ -71,7 +77,7 @@ describe("unit", function()
     describe("moved", function()
         it("should report whether the unit has moved", function()
             -- initialize a unit
-            local u = Unit:new({spr = 1, player = 2, cell = {x = 3, y = 4}})
+            local u = Unit:new({spr = 1, player = 2, cellx = 3, celly = 4})
 
             -- assert that the unit has not moved
             assert.equal(false, u.moved)
@@ -87,7 +93,7 @@ describe("unit", function()
     describe("attacked", function()
         it("should report whether the unit has attacked", function()
             -- initialize a unit
-            local u = Unit:new({spr = 1, player = 2, cell = {x = 3, y = 4}})
+            local u = Unit:new({spr = 1, player = 2, cellx = 3, celly = 4})
 
             -- assert that the unit has not attacked
             assert.equal(false, u.attacked)

@@ -8,7 +8,7 @@ describe("string", function()
         end
 
         -- stub a state object
-        local state = {camera = {px = {x = 10, y = 10}}}
+        local state = {camera = {pxx = 10, pxy = 10}}
 
         -- run assertions on spied values
         local str, x, y, color =
