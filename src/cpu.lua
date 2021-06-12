@@ -42,11 +42,11 @@ function CPU.battle.update(state)
 
     -- if we've found a target, move and attack
     if target then
-        -- calculate a new radius (of radius rng+1) centered on the foe's
+        -- calculate a new radius (of radius rng) centered on the foe's
         -- position
         local targetRadius = Radius:new()
-        targetRadius:atk(target.cellx, target.celly, unit.stat.rng + 1,
-                         state.stage, 2)
+        targetRadius:atk(target.cellx, target.celly, unit.stat.rng, state.stage,
+                         2)
 
         -- identify the subset of cells in the intersection of the unit and
         -- target radii
