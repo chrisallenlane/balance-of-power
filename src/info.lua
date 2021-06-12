@@ -64,7 +64,8 @@ function Info:draw(state)
         print(stat.rng, camX + 112, textY, self.colorize(stat.rng))
     else
         local stage, x, y = state.stage, cur.cellx, cur.celly
-        local cost, def = Cell.cost(x, y, state), Cell.def(x, y, state)
+        local cost, def = Cell.datum(x, y, 'cost', state),
+                          Cell.datum(x, y, 'def', state)
 
         -- draw the tile of interest into the Info bar
         -- implement any specified palette swaps for the stage

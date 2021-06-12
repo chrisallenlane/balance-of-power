@@ -101,28 +101,17 @@ function Cell.pass(x, y, state, turn)
     return false
 end
 
--- return the cell repair value at `x`, `y`
-function Cell.repair(x, y, state)
-    return Cell.data[mget(state.stage.cellx + x, state.stage.celly + y)].repair
-end
-
--- return the cell traversal cost at `x`, `y`
-function Cell.cost(x, y, state)
-    return Cell.data[mget(state.stage.cellx + x, state.stage.celly + y)].cost
-end
-
--- return the cell traversal cost at `x`, `y`
--- @todo: this should be de-duplicated with the above
-function Cell.def(x, y, state)
-    return Cell.data[mget(state.stage.cellx + x, state.stage.celly + y)].def
+-- fetch information about a cell
+function Cell.datum(x, y, key, state)
+    return Cell.data[mget(state.stage.cellx + x, state.stage.celly + y)][key]
 end
 
 -- return the set of cells adjacent to the specified cell
 function Cell.neighbors(x, y, state)
-    local cellw, nbrs = state.stage.cellw, {}
+    local nbrs = {}
 
     -- add cells, while being mindful to stay in bounds
-    if x + 1 < cellw then add(nbrs, Cell:new(x + 1, y, state)) end
+    if x + 1 < state.stage.cellw then add(nbrs, Cell:new(x + 1, y, state)) end
     if x - 1 >= 0 then add(nbrs, Cell:new(x - 1, y, state)) end
     -- NB: the `+ 2` is not a typo. The bottommost row in each map is "empty",
     -- because the Info bar is written on top of it. This adjustment prevents

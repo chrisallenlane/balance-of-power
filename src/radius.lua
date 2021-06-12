@@ -51,7 +51,7 @@ function Radius:move(x, y, mvmt, state, turn)
     -- iteratively search this cell's neighbors
     for _, cell in pairs(Cell.neighbors(x, y, state)) do
         -- determine the cost to traverse the tile
-        local cost = Cell.cost(cell.x, cell.y, state)
+        local cost = Cell.datum(cell.x, cell.y, 'cost', state)
         if mvmt >= cost and Cell.pass(cell.x, cell.y, state, turn) then
             if Cell.open(cell.x, cell.y, state) then
                 self:append('mov', cell.x, cell.y)

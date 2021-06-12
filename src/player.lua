@@ -14,8 +14,8 @@ end
 -- attack the enemy unit
 function Player.attack(attacker, target, system, state)
     local killed = attacker:attack(target, system, attacker.stat.atk,
-                                   Cell.def(target.cellx, target.celly, state),
-                                   false, state)
+                                   Cell.datum(target.cellx, target.celly, 'def',
+                                              state), false, state)
 
     -- hide the attacker's radii
     attacker.radius.vis = false
