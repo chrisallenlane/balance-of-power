@@ -1,7 +1,6 @@
 CPU = {battle = {}}
 
 -- NB: this is a stub
--- TODO: DRY out significant repetition here
 function CPU.battle.update(state)
     Info:set("", "")
 

@@ -135,6 +135,7 @@ function Unit:deactivate()
 end
 
 -- Return the first functional unit system
+-- XXX: what happens when all stats are 0? (unallocated power)
 function Unit:functional()
     for _, stat in ipairs({'atk', 'rng', 'mov'}) do
         if self.stat[stat] >= 1 then return stat end

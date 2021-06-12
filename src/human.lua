@@ -6,6 +6,7 @@ function Human.battle.update(state, inputs)
     local cur, player, stage = state.player.cursor, state.player, state.stage
 
     -- determine whether a unit is beneath the cursor
+    -- TODO: deprecate `idx`
     local unit, idx = Units.at(cur.cellx, cur.celly, stage.units)
 
     -- if there is a unit beneath the cursor...

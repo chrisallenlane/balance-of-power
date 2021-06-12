@@ -8,6 +8,7 @@ function Cursor:new()
 
         -- the currently selected unit
         -- @todo: remove the `unit` wrapper if I never add additional properties
+        -- @todo: possibly move this to player.unitSelected or something
         unit = {sel = nil},
 
         -- is the cursor visible?

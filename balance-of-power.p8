@@ -12,6 +12,7 @@ __lua__
 -- https://github.com/chrisallenlane/balance-of-power
 
 -- enable/disable debugging "cheat" functions
+-- TODO: sensitize this value to `make`
 DEBUG_CHEAT = true
 
 -- load which stage from the title screen?
