@@ -68,36 +68,8 @@ function CPU.battle.update(state)
             Anim.delay(15),
         })
 
-        ---
-        -- TODO DRY: this should all be moved "up" a level
-        -- get the target's defensive modifier
-        local def = Cell.def(target.cellx, target.celly, stage)
-
-        -- attack the enemy unit and determine if it was killed
-        local killed = unit:attack(target, 'atk', unit.stat.atk, def, false,
-                                   state)
-
-        -- attack the enemy unit
-        Seq:enqueue({Anim.laser(unit, target, false)})
-
-        if killed then
-            Seq:enqueue({
-                function()
-                    Units.die(target.id, state.stage.units)
-                    return true
-                end,
-                Anim.explode(target.pxx, target.pxy, state),
-                Anim.delay(30),
-            })
-        end
-
-        -- end the CPU turn
-        Seq:enqueue({
-            function()
-                player:turnEnd(state)
-                return true
-            end,
-        })
+        -- attack the target and enqeue the resultant animations
+        Seq:enqueue(Player.attack(unit, target, 'atk', state))
 
         -- otherwise, make a valid random move
     else
