@@ -6,10 +6,10 @@ Priority:
       - Camera: optimizations
 
   - Feat: Automatic progress save/continue
+  - Feat: remove ships as swarm takes damage
+  - Feat: momentarily hide all enemy radii on attack
   - Feat: speed up "selected" units
   - Feat: elongate radii during dogfights
-  - Feat: make defensive modifiers multiplicative (versus additive)?
-  - Feat: turn-based talk triggers
   - Refactor: create "clipboard" state object
   - Refactor: deprecate `Unit.clone`
   - Refactor: remove `Unit` "index" (`idx`) in all contexts
