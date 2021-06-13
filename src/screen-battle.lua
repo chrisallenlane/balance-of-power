@@ -1,10 +1,5 @@
 -- update the battle screen
 function Screens.battle.update(state, inputs)
-    -- update the unit swarm animations
-    for _, unit in ipairs(state.stage.units) do
-        unit.swarm:update(unit.pxx, unit.pxy)
-    end
-
     -- return early if a sequence is playing
     if not Seq:done() then return end
 

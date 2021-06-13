@@ -10,6 +10,15 @@ function Unit:new(u)
     -- total available power
     u.pwr = u.pwr or 10
 
+    -- swarm rotation in degrees ([0-1])
+    u.deg = u.deg or 0
+
+    -- swarm rotation per frame
+    u.step = u.step or 0.001
+
+    -- swarm radius
+    u.rad = u.rad or 4
+
     -- player-facing unit stats
     u.stat = u.stat or {atk = 3, rng = 3, mov = 4}
 
@@ -31,9 +40,6 @@ function Unit:new(u)
     -- cache the radii
     u.radius = Radius:new()
 
-    -- initialize a ship swarm
-    u.swarm = Swarm:new(u.pxx, u.pxy)
-
     return u
 end
 
@@ -48,10 +54,6 @@ function Unit.clone(unit)
     -- create a deep copy of `stat`
     -- TODO: I can probably refactor this
     clone.stat = {atk = unit.stat.atk, mov = unit.stat.mov, rng = unit.stat.rng}
-
-    -- copy the swarm
-    -- XXX: this is also a shallow copy
-    clone.swarm = unit.swarm
 
     -- initialize and return a cloned unit
     return Unit:new(clone)
@@ -158,5 +160,23 @@ end
 function Unit:functional()
     for _, stat in ipairs({'atk', 'rng', 'mov'}) do
         if self.stat[stat] >= 1 then return stat end
+    end
+end
+
+-- get the position of ship number `num`
+function Unit:ship(num)
+    local offset = (1 / ceil(self.pwr / 2)) * num
+    return self.pxx + 4 + self.rad * cos(self.deg + offset),
+           self.pxy + 3 + self.rad * sin(self.deg + offset)
+end
+
+-- draw the unit swarm
+function Unit:draw()
+    -- XXX: we're cheating a bit here by updating unit state within a `draw` method
+    self.deg = self.deg < 1 and self.deg + self.step or 0
+
+    for i = 1, ceil(self.pwr / 2) do
+        local sx, sy = self:ship(i)
+        spr(0, sx, sy)
     end
 end

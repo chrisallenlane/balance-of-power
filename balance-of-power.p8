@@ -54,7 +54,6 @@ Menus = {}
 #include build/seq.lua
 #include build/stage.lua
 #include build/string.lua
-#include build/swarm.lua
 #include build/unit.lua
 #include build/units.lua
 

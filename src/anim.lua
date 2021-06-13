@@ -66,13 +66,23 @@ function Anim.laser(attacker, target)
     -- animation duration
     local frame = 0
 
+    -- speed up the unit rotations
+    attacker.step, target.step = 0.01, 0.01
+
     return function()
         -- end the animation after the specified number of frames
-        if frame == 20 then return true end
+        if frame == 20 then
+            attacker.step, target.step = 0.001, 0.001
+            return true
+        end
+
+        -- get the x,y coordinates of the attacking and targeted ships
+        local ax, ay = attacker:ship(1)
+        local tx, ty = target:ship(1)
 
         -- fire the laser!
         local color = frame % 3 == 0 and 7 or frame % 2 == 0 and 10 or 0
-        line(attacker.pxx + 1, attacker.pxy, target.pxx + 1, target.pxy, color)
+        line(ax + 1, ay, tx + 1, ty, color)
 
         -- continue the animation
         frame = frame + 1
