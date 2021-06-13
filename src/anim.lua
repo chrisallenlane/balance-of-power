@@ -66,8 +66,8 @@ function Anim.laser(attacker, target)
     -- animation duration
     local frame = 0
 
-    -- randomly choose an attacker and target ship
-    local as, ts = rnd(attacker:swarm()) + 1, rnd(target:swarm()) + 1
+    -- speed up the unit rotations
+    attacker.step, target.step = 0.01, 0.01
 
     return function()
         -- end the animation after the specified number of frames
@@ -76,19 +76,13 @@ function Anim.laser(attacker, target)
             return true
         end
 
-        -- speed up the unit rotations
-        attacker.step, target.step = 0.01, 0.01
-
-        -- get ship coordinates
-        local ax, ay = attacker:ship(as)
-        local tx, ty = target:ship(ts)
+        -- get the x,y coordinates of the attacking and targeted ships
+        local ax, ay = attacker:ship(1)
+        local tx, ty = target:ship(1)
 
         -- fire the laser!
         local color = frame % 3 == 0 and 7 or frame % 2 == 0 and 10 or 0
         line(ax + 1, ay, tx + 1, ty, color)
-
-        -- draw a blast
-        Anim.blast(tx + 1, ty, 0.20 * frame, frame)
 
         -- continue the animation
         frame = frame + 1

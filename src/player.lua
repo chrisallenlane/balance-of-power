@@ -16,9 +16,6 @@ function Player.attack(attacker, target, system, state)
     -- hide the attacker's radii
     attacker.radius.vis = false
 
-    -- get the defensive modifier for the target's cell
-    local def = Cell.datum(target.cellx, target.celly, 'def', state)
-
     -- NB: This "cloning" bit is confusing at a glance.
     -- The intention here is to allow the animations to play before showing
     -- their consequences. (Ex: don't remove ships from the swarm until after
@@ -32,43 +29,14 @@ function Player.attack(attacker, target, system, state)
     -- The following function simply encapsulates the process of inflicting
     -- damage on the targeted unit (or its clone), because that process must be
     -- executed twice.
-    local clone, damage = Unit.clone(target), function(u, atk)
-        return attacker:attack(u, system, atk, def, false, state)
+    local clone, damage = Unit.clone(target), function(u)
+        return attacker:attack(u, system, attacker.stat.atk,
+                               Cell.datum(u.cellx, u.celly, 'def', state),
+                               false, state)
     end
 
     -- determine if the target will be killed, and begin enqueing animations
-    local killed = damage(clone, attacker.stat.atk)
-
-    -- visrad: track all units with visible radii
-    -- seqs: aggregate animations to enqueue
-    local visrad, seqs = {}, {}
-
-    -- stop shooting if there's nothing left
-    local shots = attacker.stat.atk <= target:swarm() and attacker.stat.atk or
-                      target:swarm()
-
-    -- visrad: identify all units with visible radii, and temporarily hide their radii.
-    -- (This makes the animation look cleaner.)
-    for i, unit in ipairs(state.stage.units) do
-        if unit.radius.vis then
-            unit.radius.vis = false
-            add(visrad, i)
-        end
-    end
-
-    -- launch an attack (and apply damage to the attacker) for every point in
-    -- the attacker's attack system
-    for _ = 1, shots do
-        add(seqs, Anim.laser(attacker, target))
-
-        -- TODO: if terrain bonuses were multiplicative rather than additive
-        -- (and thus commuted), we could do this, which would animate each ship
-        -- being shot done in real-time!
-        -- add(seqs, function()
-        -- damage(target, 1)
-        -- return true
-        -- end)
-    end
+    local killed, seqs = damage(clone), {Anim.laser(attacker, target)}
 
     -- kill the enemy unit if it was destroyed
     if killed then
@@ -83,9 +51,7 @@ function Player.attack(attacker, target, system, state)
     -- XXX: this logic may become faulty when the AI is able to attack *before*
     -- it moves
     add(seqs, function()
-        -- XXX: see TODO above
-        damage(target, attacker.stat.atk)
-
+        damage(target)
         if not attacker.moved and attacker.stat.mov >= 1 then
             attacker.radius:update(attacker, state, state.player.num)
 

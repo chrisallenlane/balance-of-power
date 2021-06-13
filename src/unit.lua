@@ -165,38 +165,17 @@ end
 
 -- get the position of ship number `num`
 function Unit:ship(num)
-    local offset = (1 / self:swarm()) * num
+    local offset = (1 / ceil(self.pwr / 2)) * num
     return self.pxx + 4 + self.rad * cos(self.deg + offset),
            self.pxy + 3 + self.rad * sin(self.deg + offset)
 end
 
--- return the number of ships in the swarm
-function Unit:swarm()
-    return ceil(self.pwr / 2)
-end
-
 -- draw the unit swarm
 function Unit:draw()
-    -- NB: this is a bit of a hack. If the unit's radii are displaying, this
-    -- causes the unit to rotate more quickly.
-    --
-    -- This is useful because:
-    --
-    --   1. It will cause "selected" units to rotate more quickly (only one
-    --      friendly radii will ever be displayed at a time)
-    --
-    --   2. It will indicate which enemy units are displaying their radii.
-    --      (This can become confusing without this indication.)
-    --
     -- XXX: we're cheating a bit here by updating unit state within a `draw` method
-    self.step = self.radius.vis and 0.005 or 0.001
-
-    -- progress the ships along their orbit
     self.deg = self.deg < 1 and self.deg + self.step or 0
 
-    -- we're drawing a number of ships proportionate to the unit's health,
-    -- thus the `self.pwr` reference
-    for i = 1, self:swarm() do
+    for i = 1, ceil(self.pwr / 2) do
         local sx, sy = self:ship(i)
         spr(0, sx, sy)
     end
