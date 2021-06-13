@@ -66,8 +66,8 @@ function Anim.laser(attacker, target)
     -- animation duration
     local frame = 0
 
-    -- speed up the unit rotations
-    attacker.step, target.step = 0.01, 0.01
+    -- randomly choose an attacker and target ship
+    local as, ts = rnd(attacker:swarm()) + 1, rnd(target:swarm()) + 1
 
     return function()
         -- end the animation after the specified number of frames
@@ -76,13 +76,19 @@ function Anim.laser(attacker, target)
             return true
         end
 
-        -- get the x,y coordinates of the attacking and targeted ships
-        local ax, ay = attacker:ship(1)
-        local tx, ty = target:ship(1)
+        -- speed up the unit rotations
+        attacker.step, target.step = 0.01, 0.01
+
+        -- get ship coordinates
+        local ax, ay = attacker:ship(as)
+        local tx, ty = target:ship(ts)
 
         -- fire the laser!
         local color = frame % 3 == 0 and 7 or frame % 2 == 0 and 10 or 0
         line(ax + 1, ay, tx + 1, ty, color)
+
+        -- draw a blast
+        Anim.blast(tx + 1, ty, 0.20 * frame, frame)
 
         -- continue the animation
         frame = frame + 1
@@ -108,12 +114,22 @@ function Anim.explode(x, y, state)
         state.camera.pxx = state.camera.pxx + (frame % 2 == 0 and -2 or 2)
 
         -- draw the explosion
-        circfill(x + 2, y + 2, 1.5 * frame, split("7,10,9")[frame % 7])
+        Anim.blast(x + 2, y + 2, 1.5 * frame, frame)
 
         -- continue the animation
         frame = frame + 1
         return false
     end
+end
+
+--[[--
+Draw a (single-frame) blast
+@param x The x coordinate of center
+@param y The y coordinate of center
+@param frame The animation frame
+]] --
+function Anim.blast(x, y, r, frame)
+    circfill(x, y, r, split("7,10,9")[frame % 7])
 end
 
 --[[--

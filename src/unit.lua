@@ -170,6 +170,11 @@ function Unit:ship(num)
            self.pxy + 3 + self.rad * sin(self.deg + offset)
 end
 
+-- return the number of ships in the swarm
+function Unit:swarm()
+    return self.pwr / 2
+end
+
 -- draw the unit swarm
 function Unit:draw()
     -- XXX: we're cheating a bit here by updating unit state within a `draw` method

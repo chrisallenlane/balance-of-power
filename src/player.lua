@@ -16,6 +16,9 @@ function Player.attack(attacker, target, system, state)
     -- hide the attacker's radii
     attacker.radius.vis = false
 
+    -- get the defensive modifier for the target's cell
+    local def = Cell.datum(target.cellx, target.celly, 'def', state)
+
     -- NB: This "cloning" bit is confusing at a glance.
     -- The intention here is to allow the animations to play before showing
     -- their consequences. (Ex: don't remove ships from the swarm until after
@@ -29,14 +32,32 @@ function Player.attack(attacker, target, system, state)
     -- The following function simply encapsulates the process of inflicting
     -- damage on the targeted unit (or its clone), because that process must be
     -- executed twice.
-    local clone, damage = Unit.clone(target), function(u)
-        return attacker:attack(u, system, attacker.stat.atk,
-                               Cell.datum(u.cellx, u.celly, 'def', state),
-                               false, state)
+    local clone, damage = Unit.clone(target), function(u, atk)
+        return attacker:attack(u, system, atk, def, false, state)
     end
 
     -- determine if the target will be killed, and begin enqueing animations
-    local killed, seqs = damage(clone), {Anim.laser(attacker, target)}
+    local killed = damage(clone, attacker.stat.atk)
+
+    -- launch an attack (and apply damage to the attacker) for every point in
+    -- the attacker's attack system
+    local seqs = {}
+
+    -- stop shooting if there's nothing left
+    local shots = attacker.stat.atk <= target:swarm() and attacker.stat.atk or
+                      target:swarm()
+
+    for _ = 1, shots do
+        add(seqs, Anim.laser(attacker, target))
+
+        -- TODO: if terrain bonuses were multiplicative rather than additive
+        -- (and thus commuted), we could do this, which would animate each ship
+        -- being shot done in real-time!
+        -- add(seqs, function()
+        -- damage(target, 1)
+        -- return true
+        -- end)
+    end
 
     -- kill the enemy unit if it was destroyed
     if killed then
@@ -51,7 +72,9 @@ function Player.attack(attacker, target, system, state)
     -- XXX: this logic may become faulty when the AI is able to attack *before*
     -- it moves
     add(seqs, function()
-        damage(target)
+        -- XXX: see TODO above
+        damage(target, attacker.stat.atk)
+
         if not attacker.moved and attacker.stat.mov >= 1 then
             attacker.radius:update(attacker, state, state.player.num)
         else
