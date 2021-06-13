@@ -21,7 +21,9 @@ function Player.attack(attacker, target, system, state)
     attacker.radius.vis = false
 
     -- aggregate sequences to enqueue
-    local seqs = {Anim.laser(attacker, target)}
+    local seqs = {
+        Anim.laser(rnd(attacker.swarm.ships), rnd(target.swarm.ships)),
+    }
 
     -- kill the enemy unit if it was destroyed
     if killed then

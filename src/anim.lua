@@ -58,12 +58,11 @@ end
 
 --[[--
 Fire a laser from `src` to `dst`
-@param src The laser origin
-@param dst The laser destination
-@param showRadius Show radius when animation is complete?
+@param attacker The attacking ship
+@param target The targeted ship
 @return done `true` if the animation is complete; `false` otherwise
 ]] --
-function Anim.laser(src, dst)
+function Anim.laser(attacker, target)
     -- animation duration
     local frame = 0
 
@@ -73,7 +72,7 @@ function Anim.laser(src, dst)
 
         -- fire the laser!
         local color = frame % 3 == 0 and 7 or frame % 2 == 0 and 10 or 0
-        line(src.pxx + 3, src.pxy + 3, dst.pxx + 3, dst.pxy + 3, color)
+        line(attacker.pxx + 1, attacker.pxy, target.pxx + 1, target.pxy, color)
 
         -- continue the animation
         frame = frame + 1

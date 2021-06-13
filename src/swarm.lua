@@ -3,14 +3,14 @@ Swarm = {}
 -- initialize a swarm
 function Swarm:new(x, y)
     local s = {
-        x = x,
-        y = y,
+        pxx = x,
+        pxy = y,
         ships = {
-            {x = 0, y = 0, deg = 0},
-            {x = 0, y = 0, deg = .2},
-            {x = 0, y = 0, deg = .4},
-            {x = 0, y = 0, deg = .6},
-            {x = 0, y = 0, deg = .8},
+            {pxx = 0, pxy = 0, deg = 0},
+            {pxx = 0, pxy = 0, deg = .2},
+            {pxx = 0, pxy = 0, deg = .4},
+            {pxx = 0, pxy = 0, deg = .6},
+            {pxx = 0, pxy = 0, deg = .8},
         },
     }
 
@@ -23,18 +23,18 @@ end
 -- update the position of each ship in the swarm
 function Swarm:update(x, y)
     -- move the swarm with the unit
-    self.x, self.y = x, y
+    self.pxx, self.pxy = x, y
 
     -- rotate each ship
     for _, ship in pairs(self.ships) do
         ship.deg = ship.deg + 0.001
         ship.deg = ship.deg > 1 and 0 or ship.deg
-        ship.x = self.x + 4 * cos(ship.deg)
-        ship.y = self.y + 4 * sin(ship.deg)
+        ship.pxx = self.pxx + 4 + 4 * cos(ship.deg)
+        ship.pxy = self.pxy + 3 + 4 * sin(ship.deg)
     end
 end
 
 -- draw the warm
 function Swarm:draw()
-    for _, ship in pairs(self.ships) do spr(0, ship.x + 4, ship.y + 3) end
+    for _, ship in pairs(self.ships) do spr(0, ship.pxx, ship.pxy) end
 end
