@@ -130,6 +130,19 @@ function Unit:attack(target, stat, atk, def, overflow, state)
     return false
 end
 
+-- Repair a unit
+function Unit:repair()
+    -- NB: don't iterate over `self.stats` here. We want to iterate over these
+    -- systems in this order
+    for _, stat in ipairs({"atk", "rng", "mov"}) do
+        local val = self.stat[stat]
+        if val < 5 then
+            self.stat[stat], self.pwr = val + 1, self.pwr + 1
+            break
+        end
+    end
+end
+
 -- Activate the unit
 function Unit:activate()
     self.active = true

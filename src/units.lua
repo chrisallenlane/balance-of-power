@@ -59,12 +59,12 @@ end
 function Units.repair(state)
     -- iterate over each unit that belongs to the player
     for _, unit in ipairs(state.stage.units) do
-        -- repair the unit if applicable
-        if unit.player == state.player.num and
-            Cell.datum(unit.cellx, unit.celly, 'repair', state) >= 1 and
-            unit.pwr < 10 then
-            -- increment the unit power
-            unit.pwr = unit.pwr + 1
+        -- repair value of the cell on which the unit rests
+        local repair = Cell.datum(unit.cellx, unit.celly, 'repair', state)
+
+        -- if the unit rests on a repair cell, repair the unit
+        if unit.player == state.player.num and repair >= 1 and unit.pwr < 10 then
+            unit:repair()
 
             -- play the repair animation
             Seq:enqueue({

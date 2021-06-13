@@ -1,6 +1,6 @@
 Priority:
+  - Feat: Mark units whose radii are displayed
   - Feat: Automatic progress save/continue
-  - Feat: Automatically allocate repaired power
   - Feat: remove ships as swarm takes damage
   - Refactor: create "clipboard" state object
   - Refactor: deprecate `Unit.clone`
