@@ -165,14 +165,14 @@ end
 
 -- get the position of ship number `num`
 function Unit:ship(num)
-    local offset = (1 / ceil(self.pwr / 2)) * num
+    local offset = (1 / self:swarm()) * num
     return self.pxx + 4 + self.rad * cos(self.deg + offset),
            self.pxy + 3 + self.rad * sin(self.deg + offset)
 end
 
 -- return the number of ships in the swarm
 function Unit:swarm()
-    return self.pwr / 2
+    return ceil(self.pwr / 2)
 end
 
 -- draw the unit swarm
@@ -182,7 +182,7 @@ function Unit:draw()
 
     -- we're drawing a number of ships proportionate to the unit's health,
     -- thus the `self.pwr` reference
-    for i = 1, ceil(self.pwr / 2) do
+    for i = 1, self:swarm() do
         local sx, sy = self:ship(i)
         spr(0, sx, sy)
     end
