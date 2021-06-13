@@ -84,6 +84,9 @@ function Anim.laser(attacker, target)
         local color = frame % 3 == 0 and 7 or frame % 2 == 0 and 10 or 0
         line(ax + 1, ay, tx + 1, ty, color)
 
+        -- draw a blast
+        Anim.blast(tx + 1, ty, 0.20 * frame, frame)
+
         -- continue the animation
         frame = frame + 1
         return false
