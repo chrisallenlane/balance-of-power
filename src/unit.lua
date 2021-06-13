@@ -175,6 +175,8 @@ function Unit:draw()
     -- XXX: we're cheating a bit here by updating unit state within a `draw` method
     self.deg = self.deg < 1 and self.deg + self.step or 0
 
+    -- we're drawing a number of ships proportionate to the unit's health,
+    -- thus the `self.pwr` reference
     for i = 1, ceil(self.pwr / 2) do
         local sx, sy = self:ship(i)
         spr(0, sx, sy)
