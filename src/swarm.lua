@@ -24,16 +24,14 @@ end
 -- update the position of each ship in the swarm
 function Swarm:update(x, y)
     -- move the swarm with the unit
-    self.pxx, self.pxy = x, y
-    self.deg = self.deg + 0.001
-    self.deg = self.deg > 1 and 0 or self.deg
+    self.deg = self.deg < 1 and self.deg + 0.001 or self.deg
 
     -- rotate each ship
     for i, ship in pairs(self.ships) do
         local offset = (1 / #self.ships) * i
         -- NB: the +3/+4 center the ships in the cell
-        ship.pxx = self.pxx + 4 + 4 * cos(self.deg + offset)
-        ship.pxy = self.pxy + 3 + 4 * sin(self.deg + offset)
+        ship.pxx = x + 4 + 4 * cos(self.deg + offset)
+        ship.pxy = y + 3 + 4 * sin(self.deg + offset)
     end
 end
 
