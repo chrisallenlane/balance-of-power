@@ -133,6 +133,7 @@ globals = {
 	"Stages",
 	"State",
 	"String",
+	"Swarm",
 	"TITLE_STAGE",
 	"Talk",
 	"Turn",

@@ -49,7 +49,7 @@ function Units.draw(state)
             end
         end
 
-        spr(0, unit.pxx, unit.pxy)
+        unit.swarm:draw()
     end
 
     pal()

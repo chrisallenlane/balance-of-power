@@ -31,12 +31,14 @@ function Unit:new(u)
     -- cache the radii
     u.radius = Radius:new()
 
+    -- initialize a ship swarm
+    u.swarm = Swarm:new(u.pxx, u.pxy)
+
     return u
 end
 
 -- Returns a clone (deep copy) of a unit
 function Unit.clone(unit)
-
     local clone = {}
 
     -- iterate over a table's properties
@@ -46,6 +48,10 @@ function Unit.clone(unit)
     -- create a deep copy of `stat`
     -- TODO: I can probably refactor this
     clone.stat = {atk = unit.stat.atk, mov = unit.stat.mov, rng = unit.stat.rng}
+
+    -- copy the swarm
+    -- XXX: this is also a shallow copy
+    clone.swarm = unit.swarm
 
     -- initialize and return a cloned unit
     return Unit:new(clone)
