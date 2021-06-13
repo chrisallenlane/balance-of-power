@@ -164,8 +164,11 @@ function Radius:rand(key, state)
     for y, _ in pairs(self.cells[key][x]) do add(ys, y) end
     local y = rnd(ys)
 
-    -- initialize and return a cell
-    return Cell:new(x, y, state)
+    -- NB: if a unit has an empty movement radius, x and y will both be empty.
+    -- We only test for `x` here to save tokens, because each cell necessarily
+    -- has an x, y coordinate. If `x` is empty, we can be confident that the
+    -- movement radius is empty, and thus return false.
+    return x and Cell:new(x, y, state) or false
 end
 
 -- find cells that are common to both `self` and `rad` iterate over
