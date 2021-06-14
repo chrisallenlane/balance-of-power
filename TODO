@@ -1,22 +1,28 @@
 Priority:
+  - Feat: Minor (temporary) improvements to title/game-over screens
+  - Feat: make bridges super damaging
+      - Feat: double up/down arrows
+  - Feat: momentarily hide all enemy radii on attack
+  - Camera: "offscreen" focus bug
+      - Bug: cursor can become trapped offscreen
+      - Bug: enemy units can move offscreen (to the right, anyway) (probably bad +1) (is this the camera bug?)
+      - Camera: optimizations
+
   - Feat: Mark units whose radii are displayed
   - Feat: Automatic progress save/continue
-  - Feat: remove ships as swarm takes damage
-  - Feat: momentarily hide all enemy radii on attack
   - Feat: speed up "selected" units
   - Feat: elongate radii during dogfights
+  - Feat: make defensive modifiers multiplicative (versus additive)?
+  - Feat: turn-based talk triggers
   - Refactor: create "clipboard" state object
   - Refactor: deprecate `Unit.clone`
   - Refactor: remove `Unit` "index" (`idx`) in all contexts
 
   - Battle: control optimizations
   - Battle: refactor battle loop
-  - Bug: cursor can become trapped offscreen
-  - Bug: enemy units can move offscreen (to the right, anyway) (probably bad +1)
+  - Bug: `Info` bar displays enemy data when it shouldn't
   - Bug: map fails to clear if winning player still has movement point
   - Bug: talk happens immediately on non-initial stage load
-  - Camera: "offscreen" focus bug
-  - Camera: optimizations
   - Talk: stage clear
 
 Backlog:
