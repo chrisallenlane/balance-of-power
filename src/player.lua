@@ -39,14 +39,25 @@ function Player.attack(attacker, target, system, state)
     -- determine if the target will be killed, and begin enqueing animations
     local killed = damage(clone, attacker.stat.atk)
 
-    -- launch an attack (and apply damage to the attacker) for every point in
-    -- the attacker's attack system
-    local seqs = {}
+    -- visrad: track all units with visible radii
+    -- seqs: aggregate animations to enqueue
+    local visrad, seqs = {}, {}
 
     -- stop shooting if there's nothing left
     local shots = attacker.stat.atk <= target:swarm() and attacker.stat.atk or
                       target:swarm()
 
+    -- visrad: identify all units with visible radii, and temporarily hide their radii.
+    -- (This makes the animation look cleaner.)
+    for i, unit in ipairs(state.stage.units) do
+        if unit.radius.vis then
+            unit.radius.vis = false
+            add(visrad, i)
+        end
+    end
+
+    -- launch an attack (and apply damage to the attacker) for every point in
+    -- the attacker's attack system
     for _ = 1, shots do
         add(seqs, Anim.laser(attacker, target))
 
@@ -77,6 +88,11 @@ function Player.attack(attacker, target, system, state)
 
         if not attacker.moved and attacker.stat.mov >= 1 then
             attacker.radius:update(attacker, state, state.player.num)
+
+            -- restore all hidden enemy radii
+            for _, i in ipairs(visrad) do
+                state.stage.units[i].radius.vis = true
+            end
         else
             state.player:turnEnd(state)
         end

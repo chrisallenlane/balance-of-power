@@ -1,6 +1,5 @@
 Priority:
   - Feat: Minor (temporary) improvements to title/game-over screens
-  - Feat: momentarily hide all enemy radii on attack
   - Camera: "offscreen" focus bug
       - Bug: cursor can become trapped offscreen
       - Bug: enemy units can move offscreen (to the right, anyway) (probably bad +1) (is this the camera bug?)
