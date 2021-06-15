@@ -92,8 +92,8 @@ end
 -- refresh all units
 function Units.refresh(units)
     for _, unit in pairs(units) do
-        unit.active, unit.attacked, unit.moved, unit.radius.vis = true, false,
-                                                                  false, false
+        unit.active, unit.attacked, unit.moved, unit.radius.vis, unit.step =
+            true, false, false, false, 0.001
     end
 end
 
