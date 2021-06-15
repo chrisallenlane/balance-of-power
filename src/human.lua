@@ -21,12 +21,7 @@ function Human.battle.update(state, inputs)
             if not cur:selected(unit) and unit.active then
                 Info:set("select", "", unit)
                 if yes:once() then
-                    -- XXX: slow down a previously selected unit
-                    if cur.unit.sel then
-                        cur.unit.sel.step = 0.001
-                    end
                     cur.unit.sel = unit
-                    cur.unit.sel.step = 0.005
                     -- hide all other friendly unit radii
                     for _, u in pairs(state.stage.units) do
                         if u.player == player.num then
@@ -159,7 +154,6 @@ function Human.battle.update(state, inputs)
                 -- move the unit
                 cur.unit.sel:move(cur.cellx, cur.celly)
                 cur.unit.sel.radius.vis = false
-                cur.unit.sel.step = 0.001
 
                 -- deactivate all *other* units belonging to the player
                 Units.deactivate(stage.units, player.num)
@@ -195,7 +189,6 @@ function Human.battle.update(state, inputs)
         if cur:selected() then
             -- unselect the unit if it is ours
             cur.unit.sel.radius.vis = false
-            cur.unit.sel.step = 0.001
             cur.unit.sel = nil
             -- show the "end turn" menu
         else
