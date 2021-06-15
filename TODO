@@ -5,7 +5,6 @@ Priority:
       - Bug: enemy units can move offscreen (to the right, anyway) (probably bad +1) (is this the camera bug?)
       - Camera: optimizations
 
-  - Feat: Mark units whose radii are displayed
   - Feat: Automatic progress save/continue
   - Feat: speed up "selected" units
   - Feat: elongate radii during dogfights
