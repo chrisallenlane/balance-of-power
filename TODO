@@ -15,7 +15,6 @@ Priority:
   - Battle: control optimizations
   - Battle: refactor battle loop
   - Bug: `Info` bar displays enemy data when it shouldn't
-  - Bug: map fails to clear if winning player still has movement point
   - Bug: talk happens immediately on non-initial stage load
   - Talk: stage clear
 
