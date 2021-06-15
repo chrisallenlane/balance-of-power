@@ -84,13 +84,24 @@ function Info:draw(state)
     end
 end
 
+-- draw up/down arrows to illustrate terrain modifiers
 function Info.arrow(val, x, y)
+    -- draw single up/down arrows
     if val > 0 then
         sspr(32, 0, 5, 3, x, y)
     elseif val == 0 then
         sspr(32, 3, 5, 1, x, y + 2)
     elseif val < 0 then
         sspr(32, 4, 5, 3, x, y + 2)
+    end
+
+    -- double up on up/down arrows
+    -- NB: don't merge this into the above, even those it's simpler. Doing this
+    -- DRY's out an extra call to `sspr`
+    if val > 1 then
+        sspr(32, 0, 5, 3, x, y + 2)
+    elseif val < -1 then
+        sspr(32, 4, 5, 3, x, y)
     end
 end
 

@@ -1,7 +1,5 @@
 Priority:
   - Feat: Minor (temporary) improvements to title/game-over screens
-  - Feat: make bridges super damaging
-      - Feat: double up/down arrows
   - Feat: momentarily hide all enemy radii on attack
   - Camera: "offscreen" focus bug
       - Bug: cursor can become trapped offscreen
