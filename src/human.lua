@@ -82,6 +82,8 @@ function Human.battle.update(state, inputs)
                 if unit.radius.vis == false then
                     Info:set("view radii", "", unit)
                     if yes:once() then
+                        -- increase the unit rotation speed
+                        unit.step = 0.005
                         -- draw the radii for the enemy player
                         unit.radius:update(unit, state,
                                            player.num == 2 and 1 or 2)
@@ -92,6 +94,8 @@ function Human.battle.update(state, inputs)
                 elseif unit.radius.vis == true then
                     Info:set("hide radii", "", unit)
                     if yes:once() or no:once() then
+                        -- decrease the unit rotation speed
+                        unit.step = 0.001
                         unit.radius.vis = false
                         return
                     end
