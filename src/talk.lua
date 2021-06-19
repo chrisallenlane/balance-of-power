@@ -39,7 +39,7 @@ end
 -- type text into the talk box
 function Talk:say(lines, state)
     -- don't display the talk dialog if so configured
-    if state.quiet then return end
+    if state.optNoTalk then return end
 
     -- reset state
     self.page, self.frame, self.pages, self.said = 1, 0, {}, ""

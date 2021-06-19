@@ -26,5 +26,5 @@ State = {
     stage = {},
 
     -- suppress talk dialog
-    quiet = false,
+    optNoTalk = false,
 }
