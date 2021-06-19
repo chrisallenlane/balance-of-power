@@ -48,7 +48,8 @@ function Info:draw(state)
     end
 
     -- output the unit hud if applicable
-    if self.unit then
+    if self.unit and self.unit.cellx == cur.cellx and self.unit.celly ==
+        cur.celly then
         local stat = self.unit.stat
 
         -- atk

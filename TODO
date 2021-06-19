@@ -1,4 +1,5 @@
 Priority:
+  - Battle: control optimizations
   - Camera: "offscreen" focus bug
       - Bug: cursor can become trapped offscreen
       - Bug: enemy units can move offscreen (to the right, anyway) (probably bad +1) (is this the camera bug?)
@@ -6,15 +7,12 @@ Priority:
 
   - Feat: Automatic progress save/continue
   - Feat: elongate radii during dogfights
-  - Feat: make defensive modifiers multiplicative (versus additive)?
   - Feat: turn-based talk triggers
   - Refactor: create "clipboard" state object
   - Refactor: deprecate `Unit.clone`
   - Refactor: remove `Unit` "index" (`idx`) in all contexts
 
-  - Battle: control optimizations
   - Battle: refactor battle loop
-  - Bug: `Info` bar displays enemy data when it shouldn't
   - Bug: talk happens immediately on non-initial stage load
   - Talk: stage clear
 
