@@ -39,6 +39,7 @@ RUN luarocks install busted               && \
 RUN cd /tmp                            && \
 	git clone                             \
 		--depth=1                         \
+		--shallow-submodules              \
 		--recurse-submodules $LUA_FMT  && \
 	cd LuaFormatter                    && \
 	cmake .                            && \
