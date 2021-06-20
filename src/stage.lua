@@ -68,18 +68,12 @@ end
 
 -- return true if the stage has been cleared
 function Stage.clear(state)
-    -- get units remaining for each player
-    local _, foes = Units.teams(state)
+    local friends, foes = Units.teams(state)
 
-    -- player 1 is victorious
-    if state.player.num == 1 and #foes == 0 then
-        return true, 1
-
-        -- player 2 is victorious
-    elseif state.player.num == 2 and #foes == 0 then
-        return true, 2
-
-        -- the match is ungoing
+    if #friends == 0 then
+        return true, state.player.num == 1 and 2 or 1
+    elseif #foes == 0 then
+        return true, state.player.num
     else
         return false, nil
     end
