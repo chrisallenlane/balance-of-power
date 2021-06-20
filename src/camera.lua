@@ -12,12 +12,32 @@ end
 function Camera:update()
     -- ensure that the camera is not at a fractional coordinate, and compute
     -- the destination
-    local x, y, destx, desty = flr(self.pxx), flr(self.pxy), self.cellx * 8,
+    local x, y, destx, desty = self.pxx, self.pxy, self.cellx * 8,
                                self.celly * 8
 
     -- move toward the destination
     self.pxx = x < destx and x + 1 or x > destx and x - 1 or x
     self.pxy = y < desty and y + 1 or y > desty and y - 1 or y
+end
+
+-- follow the cursor
+function Camera:follow(state)
+    local cur, stage = state.player.cursor, state.stage
+    local curx, cury, camx, camy = cur.cellx, cur.celly, self.cellx, self.celly
+
+    -- horizonal
+    if curx >= camx + 12 and camx < stage.cellw - 16 then
+        self.cellx = camx + 1
+    elseif curx <= camx + 4 and camx > 0 then
+        self.cellx = camx - 1
+    end
+
+    -- vertical
+    if cury >= camy + 12 and camy < stage.cellh - 16 then
+        self.celly = camy + 1
+    elseif cury <= camy + 4 and camy > 0 then
+        self.celly = camy - 1
+    end
 end
 
 -- focus the camera on the specified grid position

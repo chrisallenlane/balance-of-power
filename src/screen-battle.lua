@@ -7,7 +7,7 @@ function Screens.battle.update(state, inputs)
     local cur = state.player.cursor
 
     -- have the camera follow the cursor
-    state.camera:focus(cur.cellx, cur.celly, state)
+    state.camera:follow(state)
     state.camera:update(state)
 
     -- determine if the stage has been cleared
