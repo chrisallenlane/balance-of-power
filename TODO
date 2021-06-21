@@ -1,21 +1,19 @@
 Priority:
   - Battle: control optimizations
-
+  - Battle: refactor battle loop
+  - Bug: talk happens immediately on non-initial stage load
+  - Docs: add a license
+  - Docs: update the README
+  - Feat: Invert buttons option
   - Refactor: create "clipboard" state object
   - Refactor: deprecate `Unit.clone`
   - Refactor: remove `Unit` "index" (`idx`) in all contexts
-
-  - Battle: refactor battle loop
-  - Bug: talk happens immediately on non-initial stage load
   - Talk: stage clear
 
 Backlog:
   - Animation: "wipe" animation?
   - Art: title, credits creen, "game over" screen
   - CPU: implement 1-player enemy AI
-  - Docs: add a license
-  - Docs: update the README
-  - Feat: Invert buttons option
   - Feat: elongate radii during dogfights
   - Feat: turn-based talk triggers
   - Map design
