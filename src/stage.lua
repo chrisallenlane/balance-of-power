@@ -11,6 +11,9 @@ end
 function Stage.load(num, stages, screens, state)
     -- XXX: is it necessary to free memory from the prior stage here?
 
+    -- state.savedStage = num
+    dset(0, num)
+
     -- load the specified stage
     -- NB: this indirection is necessary in order to facilitate the "reset map"
     -- function. Each stage must be initialized atop a new literal object in

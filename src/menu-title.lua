@@ -4,11 +4,20 @@ function Menus.Title:update(state, inputs)
     self.sel = Menu.select(self, inputs)
 
     if inputs.yes:once() then
-        -- flag P2 as a CPU if a 1-player game is selected
-        if self.sel == 1 then state.players[2].cpu = true end
+        local loadStage = TITLE_STAGE
+
+        -- 1 player (new game)
+        if self.sel == 1 then
+            state.players[2].cpu = true
+
+            -- 1 player (continue)
+        elseif self.sel == 3 then
+            loadStage = state.savedStage
+            state.players[2].cpu = true
+        end
 
         -- load the first stage
-        Stage.load(TITLE_STAGE, Stages, Screens, state)
+        Stage.load(loadStage, Stages, Screens, state)
     end
 end
 

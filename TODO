@@ -1,9 +1,6 @@
 Priority:
   - Battle: control optimizations
 
-  - Feat: Automatic progress save/continue
-  - Feat: elongate radii during dogfights
-  - Feat: turn-based talk triggers
   - Refactor: create "clipboard" state object
   - Refactor: deprecate `Unit.clone`
   - Refactor: remove `Unit` "index" (`idx`) in all contexts
@@ -19,6 +16,8 @@ Backlog:
   - Docs: add a license
   - Docs: update the README
   - Feat: Invert buttons option
+  - Feat: elongate radii during dogfights
+  - Feat: turn-based talk triggers
   - Map design
   - Music
   - SFX

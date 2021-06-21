@@ -25,6 +25,9 @@ State = {
     -- the current stage
     stage = {},
 
+    -- saved progress stage number
+    savedStage = 0,
+
     -- suppress talk dialog
     optNoTalk = false,
 }
