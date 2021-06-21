@@ -7,6 +7,11 @@ Inputs = {
     yes = Input:new(5),
 }
 
+-- Invert the "yes" and "no" buttons
+function Inputs:invert()
+    self.no, self.yes = self.yes, self.no
+end
+
 -- Poll the inputs. This runs once per update loop.
 function Inputs:poll(player)
     local ins = {self.left, self.right, self.up, self.down, self.no, self.yes}
