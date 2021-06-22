@@ -14,7 +14,7 @@ function Seq:play()
     if #self.queue == 0 then return end
 
     -- otherwise, play the sequence at the front of the queue
-    if (self.queue[1]()) then
+    if (self.queue[1]() ~= false) then
         -- if the sequence has completed, remove it from the queue
         deli(self.queue, 1)
     end

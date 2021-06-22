@@ -54,7 +54,6 @@ function Stage.load(num, stages, screens, state)
             Anim.delay(90),
             function()
                 state.talk:say(state.stage.talk.start, state)
-                return true
             end,
         })
     end

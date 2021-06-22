@@ -74,7 +74,6 @@ function Player.attack(attacker, target, system, state)
     if killed then
         add(seqs, function()
             Units.die(target.id, state.stage.units)
-            return true
         end)
         add(seqs, Anim.explode(target.pxx, target.pxy, state))
         add(seqs, Anim.delay(30))
@@ -96,7 +95,6 @@ function Player.attack(attacker, target, system, state)
         else
             state.player:turnEnd(state)
         end
-        return true
     end)
 
     return seqs
@@ -129,7 +127,6 @@ function Player:turnEnd(state)
         Anim.delay(30),
         function()
             cam:focus(cur.cellx, cur.celly, state)
-            return true
         end,
         Anim.trans(cam, cam.cellx, cam.celly),
     })

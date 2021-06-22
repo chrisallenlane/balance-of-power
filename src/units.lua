@@ -69,13 +69,11 @@ function Units.repair(state)
                 Anim.delay(30),
                 function()
                     state.camera:focus(unit.cellx, unit.celly, state)
-                    return true
                 end,
                 Anim.trans(state.camera, state.camera.cellx, state.camera.celly),
                 Anim.repair(unit, state),
                 function()
                     unit:repair()
-                    return true
                 end,
             })
         end

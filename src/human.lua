@@ -64,7 +64,6 @@ function Human.battle.update(state, inputs)
                                        cur.unit.sel.celly),
                             function()
                                 cur.unit.sel = nil
-                                return true
                             end,
                         })
                         return
@@ -139,7 +138,6 @@ function Human.battle.update(state, inputs)
                             Anim.trans(cur.unit.sel, cell.x, cell.y),
                             function()
                                 Menus.Target:open(unit, state)
-                                return true
                             end,
                         })
 

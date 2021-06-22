@@ -27,7 +27,6 @@ function Screens.battle.update(state, inputs)
                     Banner:display(1, "victory", 300),
                     function()
                         state.stage:advance(Stages, Screens, state)
-                        return true
                     end,
                 })
             else
@@ -36,7 +35,6 @@ function Screens.battle.update(state, inputs)
                     Banner:display(2, "defeat", 300),
                     function()
                         state.screen = Screens.defeat
-                        return true
                     end,
                 })
             end
@@ -49,7 +47,6 @@ function Screens.battle.update(state, inputs)
                 Banner:display(victor, msg, 300),
                 function()
                     state.screen = Screens.title
-                    return true
                 end,
             })
         end
