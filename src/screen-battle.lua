@@ -24,16 +24,20 @@ function Screens.battle.update(state, inputs)
             if victor == 1 then
                 -- show player 1 "victory" banner for 300 frames, then advance to the next stage
                 Seq:enqueue({
-                    Banner:display(1, "victory", 300, function()
+                    Banner:display(1, "victory", 300),
+                    function()
                         state.stage:advance(Stages, Screens, state)
-                    end),
+                        return true
+                    end,
                 })
             else
                 -- show player 1 "defeat" banner for 300 frames, then show the "defeat" screen
                 Seq:enqueue({
-                    Banner:display(2, "defeat", 300, function()
+                    Banner:display(2, "defeat", 300),
+                    function()
                         state.screen = Screens.defeat
-                    end),
+                        return true
+                    end,
                 })
             end
 
@@ -42,9 +46,11 @@ function Screens.battle.update(state, inputs)
             -- display the winning player's banner, then go to the title screen
             local msg = "player " .. victor .. " victory"
             Seq:enqueue({
-                Banner:display(victor, msg, 300, function()
+                Banner:display(victor, msg, 300),
+                function()
                     state.screen = Screens.title
-                end),
+                    return true
+                end,
             })
         end
 

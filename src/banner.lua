@@ -1,7 +1,7 @@
 Banner = {vis = false}
 
--- set, show, and hide the banner, then call a callback
-function Banner:display(player, msg, delay, done)
+-- set, show, and hide the banner
+function Banner:display(player, msg, delay)
     return function()
         -- assign banner properties
         self.msg, self.player, self.vis = msg, player, true
@@ -10,10 +10,8 @@ function Banner:display(player, msg, delay, done)
         delay = delay - 1
         if delay ~= 0 then return false end
 
-        -- hide the banner and call the callback
+        -- hide the banner
         self.vis = false
-        done()
-
         return true
     end
 end
