@@ -1,21 +1,23 @@
 Priority:
-  - Battle: control optimizations
-  - Battle: refactor battle loop
-  - Bug: talk happens immediately on non-initial stage load
   - Docs: add a license
   - Docs: update the README
+  - Feat: stage clear talk
+  - Fix: talk happens immediately on non-initial stage load
+  - Refactor: Battle: control optimizations
   - Refactor: create "clipboard" state object
   - Refactor: deprecate `Unit.clone`
+  - Refactor: refactor battle loop
   - Refactor: remove `Unit` "index" (`idx`) in all contexts
-  - Talk: stage clear
 
 Backlog:
-  - Animation: "wipe" animation?
-  - Art: title, credits creen, "game over" screen
-  - CPU: implement 1-player enemy AI
+  - Chore: build Docker container on Alpine
+  - Feat: Animation: "wipe" animation?
+  - Feat: Art: title, credits creen, "game over" screen
+  - Feat: CPU: implement 1-player enemy AI
+  - Feat: Map design
+  - Feat: Music
+  - Feat: SFX
+  - Feat: Simple AI aggression
+  - Feat: Story
   - Feat: elongate radii during dogfights
   - Feat: turn-based talk triggers
-  - Map design
-  - Music
-  - SFX
-  - Story
