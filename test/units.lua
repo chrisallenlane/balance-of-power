@@ -1,17 +1,19 @@
-require("../src/radius")
-require("../src/unit")
-require("../src/units")
+require('../src/radius')
+require('../src/unit')
+require('../src/units')
 
-describe("unit", function()
+describe(
+  'unit', function()
 
-    describe("at", function()
-        it("should return the unit at coordinates", function()
+    describe(
+      'at', function()
+        it(
+          'should return the unit at coordinates', function()
             -- initialize the units
-            local needle =
-                Unit:new({spr = 80, player = 1, cellx = 2, celly = 2})
+            local needle = Unit:new({spr = 80, player = 1, cellx = 2, celly = 2})
             local haystack = {
-                Unit:new({spr = 80, player = 1, cellx = 1, celly = 1}),
-                needle,
+              Unit:new({spr = 80, player = 1, cellx = 1, celly = 1}),
+              needle,
             }
 
             -- search for the unit
@@ -20,13 +22,15 @@ describe("unit", function()
             -- assert
             assert.equal(needle, unit)
             assert.equal(2, idx)
-        end)
+          end
+        )
 
-        it("should return nil if no unit is found", function()
+        it(
+          'should return nil if no unit is found', function()
             -- initialize the units
             local haystack = {
-                Unit:new({spr = 80, player = 1, cellx = 1, celly = 1}),
-                Unit:new({spr = 80, player = 1, cellx = 2, celly = 2}),
+              Unit:new({spr = 80, player = 1, cellx = 1, celly = 1}),
+              Unit:new({spr = 80, player = 1, cellx = 2, celly = 2}),
             }
 
             -- search for the unit
@@ -35,6 +39,9 @@ describe("unit", function()
             -- assert
             assert.equal(nil, unit)
             assert.equal(nil, idx)
-        end)
-    end)
-end)
+          end
+        )
+      end
+    )
+  end
+)

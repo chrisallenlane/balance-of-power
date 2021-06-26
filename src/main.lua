@@ -1,49 +1,57 @@
 function _init()
-    -- set up cartridge persistence
-    cartdata("mudbound_dragon_balance_of_power_v_alpha")
+  -- set up cartridge persistence
+  cartdata('mudbound_dragon_balance_of_power_v_alpha')
 
-    -- load autosave data
-    State.savedStage = dget(0)
-    if State.savedStage ~= 0 then add(Menus.Title.choices, "continue") end
+  -- load autosave data
+  State.savedStage = dget(0)
+  if State.savedStage ~= 0 then add(Menus.Title.choices, 'continue') end
 
-    -- implement "invert buttons" function
-    menuitem(1, "invert buttons", function()
-        Inputs:invert()
-        dset(1, dget(1) == 1 and 0 or 1)
-    end)
-
-    -- implement a "reset stage" menu function
-    menuitem(2, "reset stage", function()
-        Stage.load(State.stage.num, Stages, Screens, State)
-    end)
-
-    -- implement an "advance stage" debug function
-    if DEBUG_CHEAT then
-        menuitem(3, "advance stage", function()
-            State.stage:advance(Stages, Screens, State)
-        end)
-
-        -- clear autosave data
-        menuitem(4, "clear autosave", function()
-            dset(0, 0)
-        end)
+  -- implement "invert buttons" function
+  menuitem(
+    1, 'invert buttons', function()
+      Inputs:invert()
+      dset(1, dget(1) == 1 and 0 or 1)
     end
+  )
 
-    -- build an in-memory table of cell traversal costs
-    Cell.data = Cell.init()
+  -- implement a "reset stage" menu function
+  menuitem(
+    2, 'reset stage', function()
+      Stage.load(State.stage.num, Stages, Screens, State)
+    end
+  )
 
-    -- unserialize stage data
-    Stages = Stage.unserialize(StageData)
+  -- implement an "advance stage" debug function
+  if DEBUG_CHEAT then
+    menuitem(
+      3, 'advance stage', function()
+        State.stage:advance(Stages, Screens, State)
+      end
+    )
 
-    -- invert the "yes" and "no" buttons if so configured
-    if dget(1) == 1 then Inputs:invert() end
+    -- clear autosave data
+    menuitem(
+      4, 'clear autosave', function()
+        dset(0, 0)
+      end
+    )
+  end
+
+  -- build an in-memory table of cell traversal costs
+  Cell.data = Cell.init()
+
+  -- unserialize stage data
+  Stages = Stage.unserialize(StageData)
+
+  -- invert the "yes" and "no" buttons if so configured
+  if dget(1) == 1 then Inputs:invert() end
 end
 
 function _update60()
-    Inputs:poll(State.player.num or 1)
-    State.screen.update(State, Inputs)
+  Inputs:poll(State.player.num or 1)
+  State.screen.update(State, Inputs)
 end
 
 function _draw()
-    State.screen.draw(State)
+  State.screen.draw(State)
 end
