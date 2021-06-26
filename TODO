@@ -10,7 +10,6 @@ Priority:
   - Refactor: remove `Unit` "index" (`idx`) in all contexts
 
 Backlog:
-  - Chore: build Docker container on Alpine
   - Feat: Animation: "wipe" animation?
   - Feat: Art: title, credits creen, "game over" screen
   - Feat: CPU: implement 1-player enemy AI

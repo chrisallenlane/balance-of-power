@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # NB: this appears more complex than necessary at a glance, but this behavior
 # is intentional. `lua-format -i` updates a file's timestamp **regardless of

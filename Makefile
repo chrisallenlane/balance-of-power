@@ -31,6 +31,7 @@ PICO8    := pico8
 RMDIR    := rm -rf 
 SCC      := /root/go/bin/scc
 SED      := sed
+SH       := /bin/ash
 SORT     := sort
 
 # files (used for minification
@@ -38,7 +39,7 @@ lua_src := $(wildcard ./src/*.lua)
 lua_min := $(lua_src:./src/%.lua=./build/%.lua)
 
 # vars
-docker_image := bop
+docker_image := bop-build
 
 ## setup: build the docker container and link source files into the cartridge
 .PHONY: setup
@@ -59,19 +60,19 @@ minify: $(BUILD_DIR) $(lua_min)
 build/%.lua: src/%.lua
 	echo "minify: $@" && \
 	$(DOCKER) run -tv $(realpath .):/app $(docker_image) \
-		bash -c 'luamin -f src/$(notdir $@) > $@'
+		$(SH) -c 'luamin -f src/$(notdir $@) > $@'
 
 ## test: run unit-tests
 .PHONY: test
 test: $(COVER_DIR) 
 	@$(DOCKER) run -v $(realpath .):/app $(docker_image) \
-		bash -c 'busted --coverage test/*'
+		$(SH) -c 'busted --coverage test/*'
 
 ## build-doc: build project documentation
 .PHONY: build-doc
 build-doc:
 	@$(DOCKER) run -v $(realpath .):/app $(docker_image) \
-		bash -c 'ldoc .'
+		$(SH) -c 'ldoc .'
 
 ## doc: build project documentation, and view it in a browser
 .PHONY: doc
@@ -82,7 +83,7 @@ doc: build-doc
 .PHONY: cover
 cover: test
 	@$(DOCKER) run -v $(realpath .):/app $(docker_image) \
-		bash -c 'luacov -r lcov && genhtml $(REPORT_FILE) -o $(COVER_DIR)' && \
+		$(SH) -c 'luacov -r lcov && genhtml $(REPORT_FILE) -o $(COVER_DIR)' && \
 		$(BROWSER) $(COVER_REPORT)
 
 ## lint: lint files
@@ -122,10 +123,10 @@ install:
 uninstall:
 	rm $(CART_PICO)
 
-## sh: spawn an bash shell inside the docker container
+## sh: spawn a shell inside the docker container
 .PHONY: sh
 sh:
-	$(DOCKER) run -v $(realpath .):/app -ti $(docker_image) /bin/bash || true
+	$(DOCKER) run -v $(realpath .):/app -ti $(docker_image) $(SH) || true
 
 ## lua: open a lua REPL within the docker container (exit with `os.exit()`)
 .PHONY: lua

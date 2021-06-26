@@ -1,50 +1,52 @@
-FROM ubuntu:20.04
+FROM alpine:3.13
 
 # lua-format repo
 ARG LUA_FMT="https://github.com/Koihik/LuaFormatter.git"
 
-# set the timezone
-ENV TZ=America/New_York
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
-# install build dependencies
-RUN apt-get update &&         \
-		apt-get install --yes \
-		build-essential       \
-		ca-certificates       \
-		cmake                 \
-		gcc                   \
-		git                   \
-		golang                \
-		lcov                  \
-		liblua5.2-dev         \
-		libyaml-dev           \
-		lua5.2                \
-		luarocks              \
-		nodejs                \
-		npm
+# add system dependencies
+RUN apk update && apk upgrade && \
+  apk add --no-cache             \
+		cmake      \
+		g++        \
+		git        \
+		go         \
+		lua5.2     \
+		luarocks   \
+		make       \
+		nodejs     \
+		npm        \
+		perl       \
+    lua5.2-dev \
+    yaml-dev
 
 # install luarocks dependencies
-RUN luarocks install busted               && \
-	luarocks install cluacov              && \
-	luarocks install ldoc                 && \
-	luarocks install luacheck             && \
-	luarocks install luacov-reporter-lcov && \
-	luarocks install luafilesystem        && \
-	luarocks install lyaml                && \
-	luarocks install penlight
+RUN luarocks-5.2 install busted             && \
+	luarocks-5.2 install cluacov              && \
+	luarocks-5.2 install ldoc                 && \
+	luarocks-5.2 install luacheck             && \
+	luarocks-5.2 install luacov-reporter-lcov && \
+	luarocks-5.2 install luafilesystem        && \
+	luarocks-5.2 install lyaml                && \
+	luarocks-5.2 install penlight
 
 # install lua-format
 # NB: don't try to do this via luarocks - dependency hell awaits
-RUN cd /tmp                            && \
-	git clone                             \
-		--depth=1                         \
-		--shallow-submodules              \
-		--recurse-submodules $LUA_FMT  && \
-	cd LuaFormatter                    && \
-	cmake .                            && \
-	make                               && \
-	make install
+RUN cd /tmp                       && \
+	git clone                          \
+		--depth=1                        \
+		--shallow-submodules             \
+		--recurse-submodules $LUA_FMT && \
+  cd LuaFormatter                 && \
+  cmake .                         && \
+  make                            && \
+  make install                    && \
+  rm -rf /tmp/LuaFormatter
+
+# install lcov
+RUN cd /tmp && git clone https://github.com/linux-test-project/lcov.git && \
+  cd /tmp/lcov/bin && \
+  cp genhtml get_version.sh /usr/bin && \
+  rm -rf /tmp/lcov
 
 # install go tooling
 RUN go get -u github.com/boyter/scc
@@ -53,16 +55,15 @@ RUN go get -u github.com/boyter/scc
 RUN npm install -g luamin
 
 # uninstall build dependencies
-# NB: don't uninstall `gcc`. It will also remove `lcov`.
-RUN apt-get remove --yes        \
-	build-essential             \
-	cmake                       \
-	git                         \
-	golang                      \
-	npm                      && \
-	rm -rf /tmp/LuaFormatter && \
-	apt-get clean --yes      && \
-	apt-get autoremove --yes
+RUN apk del  \
+  cmake      \
+  g++        \
+  git        \
+  go         \
+  lua5.2-dev \
+  luarocks   \
+  make       \
+  npm
 
 # create an directory for mounting the application
 WORKDIR /app
