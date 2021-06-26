@@ -49,16 +49,18 @@ setup:
 ## fast: format and lint
 .PHONY: fast
 fast: | fmt lint minify build-stages
+	@echo 'done.'
 
 ## check: format, lint, and test
 .PHONY: check
 check: | fmt lint test
+	@echo 'done.'
 
 ## minify: minify source files
 .PHONY: minify
 minify: $(BUILD_DIR) $(lua_min)
 build/%.lua: src/%.lua
-	echo "minify: $@" && \
+	@echo "minify: $@" && \
 	$(DOCKER) run -tv $(realpath .):/app $(docker_image) \
 		$(SH) -c 'luamin -f src/$(notdir $@) > $@'
 
@@ -71,7 +73,7 @@ test: $(COVER_DIR)
 ## build-doc: build project documentation
 .PHONY: build-doc
 build-doc:
-	@$(DOCKER) run -v $(realpath .):/app $(docker_image) \
+	$(DOCKER) run -v $(realpath .):/app $(docker_image) \
 		$(SH) -c 'ldoc .'
 
 ## doc: build project documentation, and view it in a browser
@@ -82,25 +84,28 @@ doc: build-doc
 ## cover: generate a test coverage report
 .PHONY: cover
 cover: test
-	@$(DOCKER) run -v $(realpath .):/app $(docker_image) \
-		$(SH) -c 'luacov -r lcov && genhtml $(REPORT_FILE) -o $(COVER_DIR)' && \
+	@echo 'generating coverage report...' && \
+		$(DOCKER) run -v $(realpath .):/app $(docker_image) \
+			$(SH) -c 'luacov -r lcov && genhtml $(REPORT_FILE) -o $(COVER_DIR)' && \
 		$(BROWSER) $(COVER_REPORT)
 
 ## lint: lint files
 .PHONY: lint
 lint:
+	@echo 'running luacheck...' && \
 	$(DOCKER) run -v $(realpath .):/app $(docker_image) \
 		luacheck scripts/*.lua src/*.lua test/*.lua --formatter=plain --no-color --quiet
 
 ## fmt: format files
 .PHONY: fmt
 fmt:
+	@echo "running lua-format..." && \
 	$(DOCKER) run -v $(realpath .):/app $(docker_image) scripts/fmt.sh
 
 ## sloc: count "semantic lines of code"
 .PHONY: sloc
 sloc:
-	$(DOCKER) run -v $(realpath .):/app $(docker_image) \
+	@$(DOCKER) run -v $(realpath .):/app $(docker_image) \
 		$(SCC) --exclude-dir=vendor --count-as p8:lua
 
 ## clean: remove distributions and coverage report
@@ -111,6 +116,7 @@ clean:
 ## distclean: remove the docker container
 .PHONY: distclean
 distclean:
+	@echo 'removing $(docker_image) docker image...' && \
 	$(DOCKER) image rm $(docker_image) --force
 
 ## install: link cartridge into Pico-8 environment
@@ -147,6 +153,7 @@ $(BUILD_DIR):
 
 ## build-stages: serialize stage data
 build-stages:
+	@echo 'building stages...' && \
 	$(DOCKER) run -v $(realpath .):/app -ti $(docker_image) \
 		$(LUA) scripts/build-stages.lua > build/stages.lua
 
