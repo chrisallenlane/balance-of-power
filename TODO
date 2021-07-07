@@ -1,4 +1,9 @@
 Priority:
+  - Feat: util cart
+    - clear autosave
+  - Feat: Simple AI aggression
+    - test map
+
   - Docs: add a license
   - Docs: update the README
   - Feat: stage clear talk
@@ -16,7 +21,7 @@ Backlog:
   - Feat: Map design
   - Feat: Music
   - Feat: SFX
-  - Feat: Simple AI aggression
   - Feat: Story
+  - Feat: build/deploy web game
   - Feat: elongate radii during dogfights
   - Feat: turn-based talk triggers

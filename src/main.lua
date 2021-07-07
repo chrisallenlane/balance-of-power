@@ -8,9 +8,11 @@ function _init()
 
   -- implement "invert buttons" function
   menuitem(
-    1, 'invert buttons', function()
+    1, 'invert btns ' .. (dget(1) == 1 and 'yes' or 'no'), function()
       Inputs:invert()
       dset(1, dget(1) == 1 and 0 or 1)
+      menuitem(1, 'invert btns ' .. (dget(1) == 1 and 'yes' or 'no'))
+      return true
     end
   )
 
