@@ -30,13 +30,6 @@ function _init()
         State.stage:advance(Stages, Screens, State)
       end
     )
-
-    -- clear autosave data
-    menuitem(
-      4, 'clear autosave', function()
-        dset(0, 0)
-      end
-    )
   end
 
   -- build an in-memory table of cell traversal costs
