@@ -27,6 +27,10 @@ function Screens.battle.update(state, inputs)
           {
             Banner:display(1, 'victory', 300),
             function()
+              -- TODO: display all `clear` talk boxes
+              -- TODO: delay
+              -- TODO: after the talk is clear and then the delay, advance the
+              --       stage
               state.stage:advance(Stages, Screens, state)
             end,
           }

@@ -88,7 +88,7 @@ function Cell.pass(x, y, state, turn)
   if Cell.oob(x, y, state) then return false end
 
   -- check for a unit at the specified coordinates
-  -- @todo: de-duplicate with `self.open`, possibly via a state var
+  -- TODO: de-duplicate with `self.open`, possibly via a state var
   local unit = Units.at(x, y, state.stage.units)
 
   -- if no unit is found, return true

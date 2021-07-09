@@ -98,8 +98,8 @@ function Info.arrow(val, x, y)
   end
 
   -- double up on up/down arrows
-  -- NB: don't merge this into the above, even those it's simpler. Doing this
-  -- DRY's out an extra call to `sspr`
+  -- NB: don't merge this into the above, even though it's simpler. Doing this
+  -- DRYs out an extra call to `sspr`
   if val > 1 then
     sspr(32, 0, 5, 3, x, y + 2)
   elseif val < -1 then

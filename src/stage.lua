@@ -52,6 +52,8 @@ function Stage.load(num, stages, screens, state)
   if state.stage.talk and state.stage.talk.start and state.players[2].cpu then
     Seq:enqueue(
       {
+        -- TODO: this should fire not on stage load, but after the player
+        -- clicks through the interstitial screen
         Anim.delay(90),
         function()
           state.talk:say(state.stage.talk.start, state)

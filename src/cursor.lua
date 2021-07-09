@@ -7,8 +7,8 @@ function Cursor:new()
     celly = 0,
 
     -- the currently selected unit
-    -- @todo: remove the `unit` wrapper if I never add additional properties
-    -- @todo: possibly move this to player.unitSelected or something
+    -- TODO: remove the `unit` wrapper if I never add additional properties
+    -- TODO: possibly move this to player.unitSelected or something
     unit = {sel = nil},
 
     -- is the cursor visible?
@@ -40,7 +40,8 @@ function Cursor:update(stage, inputs)
   end
 end
 
--- @todo: move this into unit state
+-- TODO: this method is gross
+-- TODO: move this into unit state
 -- Return true if `unit` unit is selected, or true if any unit is selected
 -- otherwise
 function Cursor:selected(unit)

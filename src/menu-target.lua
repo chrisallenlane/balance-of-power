@@ -12,7 +12,7 @@ function Menus.Target:open(unit, state)
   self.unit = unit
 end
 
--- @todo: disallow targeting a system with 0 power
+-- TODO: disallow targeting a system with 0 power
 -- update targeting menu state
 function Menus.Target:update(state, inputs)
   Info:set('target', 'cancel', self.unit)

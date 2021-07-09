@@ -1,5 +1,10 @@
 Human = {battle = {}}
 
+-- TODO: try to remove some dot operators to reclaim tokens
+-- TODO: merge `radius:update` into `move` and `attack`
+-- TODO: figure out how to handle enemy-unit radii edge-case above
+-- TODO: use bit masks to query unit state, and simplify this nesting
+-- TODO: deprecate `idx`
 function Human.battle.update(state, inputs)
   -- reclaim tokens
   local yes, no = inputs.yes, inputs.no

@@ -1,4 +1,8 @@
 Priority:
+  - Refactor: deprecate `Unit.clone`
+  - Refactor: refactor battle loop
+  - Refactor: remove `Unit` "index" (`idx`) in all contexts
+
   - Feat: Simple AI aggression
     - test map
 
@@ -8,9 +12,6 @@ Priority:
   - Fix: talk happens immediately on non-initial stage load
   - Refactor: Battle: control optimizations
   - Refactor: create "clipboard" state object
-  - Refactor: deprecate `Unit.clone`
-  - Refactor: refactor battle loop
-  - Refactor: remove `Unit` "index" (`idx`) in all contexts
 
 Backlog:
   - Feat: Animation: "wipe" animation?
