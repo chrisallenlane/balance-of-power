@@ -2,7 +2,7 @@ Cursor = {}
 
 function Cursor:new()
   local c = {
-    -- current cursor cell position
+    -- cell coordinates
     cellx = 0,
     celly = 0,
 
@@ -13,9 +13,6 @@ function Cursor:new()
 
     -- is the cursor visible?
     vis = true,
-
-    -- frame counter used for animations
-    frame = 0,
   }
 
   setmetatable(c, self)
@@ -55,17 +52,6 @@ function Cursor:draw(state)
   -- end early if the cursor should not be visible
   if not self.vis or not Seq:done() or state.talk.vis then return end
 
-  -- choose the appropriate sprite
-  local sprite = 1
-  if self.frame < 30 then
-    sprite = 2
-  elseif self.frame > 60 then
-    self.frame = 0
-  end
-
-  -- increment the frame counter
-  self.frame = self.frame + 1
-
   -- draw the sprite
-  spr(sprite, self.cellx * 8, self.celly * 8)
+  spr(state.frame % 120 <= 59 and 1 or 2, self.cellx * 8, self.celly * 8)
 end
