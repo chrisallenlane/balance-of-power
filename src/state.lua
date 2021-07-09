@@ -1,5 +1,8 @@
 -- track game state
 State = {
+  -- the current frame number
+  frame = 0,
+
   -- the player whose turn is now
   player = {},
 

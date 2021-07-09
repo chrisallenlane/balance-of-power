@@ -43,6 +43,7 @@ function _init()
 end
 
 function _update60()
+  State.frame = State.frame + 1
   Inputs:poll(State.player.num or 1)
   State.screen.update(State, Inputs)
 end
