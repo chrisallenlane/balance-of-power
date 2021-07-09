@@ -46,10 +46,9 @@ function Screens.battle.update(state, inputs)
       -- handle 2-player games
     else
       -- display the winning player's banner, then go to the title screen
-      local msg = 'player ' .. victor .. ' victory'
       Seq:enqueue(
         {
-          Banner:display(victor, msg, 300),
+          Banner:display(victor, 'player ' .. victor .. ' victory', 300),
           function()
             state.screen = Screens.title
           end,
