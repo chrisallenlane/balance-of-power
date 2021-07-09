@@ -8,7 +8,6 @@ function Talk:new()
     page = 1,
     pages = {},
     said = '',
-    frame = 0,
     color = 6,
   }
   setmetatable(t, self)
@@ -42,7 +41,7 @@ function Talk:say(lines, state)
   if state.optNoTalk then return end
 
   -- reset state
-  self.page, self.frame, self.pages, self.said = 1, 0, {}, ''
+  self.page, self.pages, self.said = 1, {}, ''
 
   -- split the block of text into individual lines
   for i, line in ipairs(lines) do
@@ -74,7 +73,5 @@ function Talk:draw(state)
   print(self.said, 38 + x, 95 + y, 7)
 
   -- print the "next" button
-  self.frame = self.frame + 1
-  if self.frame % 30 == 0 then self.color = self.color == 5 and 6 or 5 end
-  print('\142', 119 + x, 121 + y, self.color)
+  print('\142', 119 + x, 121 + y, state.frame % 60 <= 29 and 5 or 6)
 end
