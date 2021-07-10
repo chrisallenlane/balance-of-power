@@ -23,13 +23,12 @@ function Human.battle.update(state, inputs)
     -- ... and the unit is a friend...
     if friend then
       --- ...and is active but not selected, then select it
-      -- if unit.active and not cur.unit.sel or cur.unit.sel ~= unit then
       if unit.active and not unit.selected then
         Info:set('select', '', unit)
         if yes:once() then
-          if cur.unit.sel then cur.unit.sel:unselect() end
-          cur.unit.sel = unit
-          cur.unit.sel:select()
+          if cur.unitSel then cur.unitSel:unselect() end
+          cur.unitSel = unit
+          cur.unitSel:select()
 
           -- TODO: move into `select` logic
           unit.radius:update(unit, state, player.num)
@@ -37,13 +36,13 @@ function Human.battle.update(state, inputs)
         end
 
         -- ... and is selected ...
-      elseif cur.unit.sel and cur.unit.sel.selected then
+      elseif cur.unitSel and cur.unitSel.selected then
 
         -- ... and has not acted, then open the balance menu
         if not unit.moved and not unit.attacked and unit.active then
           Info:set('balance', 'unselect', unit)
           if yes:once() then
-            Menus.Balance:open(cur.unit.sel, idx, state)
+            Menus.Balance:open(cur.unitSel, idx, state)
             return
           end
 
@@ -55,7 +54,7 @@ function Human.battle.update(state, inputs)
             return
           end
           if no:once() then
-            cur.unit.sel:unmove(state)
+            cur.unitSel:unmove(state)
 
             -- refresh all units on this unit's team
             for _, u in pairs(units) do
@@ -66,9 +65,9 @@ function Human.battle.update(state, inputs)
 
             Seq:enqueue(
               {
-                Anim.trans(cur.unit.sel, cur.unit.sel.cellx, cur.unit.sel.celly),
+                Anim.trans(cur.unitSel, cur.unitSel.cellx, cur.unitSel.celly),
                 function()
-                  cur.unit.sel = nil
+                  cur.unitSel = nil
                 end,
               }
             )
@@ -81,7 +80,7 @@ function Human.battle.update(state, inputs)
     elseif not friend then
 
       -- ... and if no friendly unit has been selected ...
-      if not cur.unit.sel then
+      if not cur.unitSel then
 
         -- ... and the enemy's radii are invisible, then show the radii
         if unit.radius.vis == false then
@@ -106,11 +105,11 @@ function Human.battle.update(state, inputs)
         end
 
         -- ... and if a friendly unit has been selected, and is active
-      elseif cur.unit.sel and cur.unit.sel.active then
+      elseif cur.unitSel and cur.unitSel.active then
 
         -- if the enemy unit is within the selected unit's attack radius, then attack
-        if cur.unit.sel.radius:contains('atk', unit.cellx, unit.celly) and
-          not cur.unit.sel.attacked then
+        if cur.unitSel.radius:contains('atk', unit.cellx, unit.celly) and
+          not cur.unitSel.attacked then
           Info:set('attack', 'unselect', unit)
           if yes:once() then
             Menus.Target:open(unit, state)
@@ -118,27 +117,27 @@ function Human.battle.update(state, inputs)
           end
 
           -- if the enemy unit is within the selected unit's danger radius, then automatically move and attack
-        elseif cur.unit.sel.radius:contains('dng', unit.cellx, unit.celly) and
-          not cur.unit.sel.attacked and not cur.unit.sel.moved then
+        elseif cur.unitSel.radius:contains('dng', unit.cellx, unit.celly) and
+          not cur.unitSel.attacked and not cur.unitSel.moved then
           Info:set('attack', 'unselect', unit)
           if yes:once() then
             -- find a cell from which the attacker may attack the target
             -- TODO: sort by best defense iff token space is available
-            local vantage = Radius.vantage(cur.unit.sel, unit, state)
+            local vantage = Radius.vantage(cur.unitSel, unit, state)
             local cell = vantage:rand('atk', state)
 
             -- move the unit
-            cur.unit.sel:move(cell.x, cell.y)
-            cur.unit.sel.radius:update(cur.unit.sel, state, player.num)
+            cur.unitSel:move(cell.x, cell.y)
+            cur.unitSel.radius:update(cur.unitSel, state, player.num)
 
             -- deactivate all *other* units belonging to the player
             Units.deactivate(units, player.num)
-            cur.unit.sel:activate()
+            cur.unitSel:activate()
 
             -- enqueue animations
             Seq:enqueue(
               {
-                Anim.trans(cur.unit.sel, cell.x, cell.y),
+                Anim.trans(cur.unitSel, cell.x, cell.y),
                 function()
                   Menus.Target:open(unit, state)
                 end,
@@ -156,37 +155,37 @@ function Human.battle.update(state, inputs)
 
     -- ... but an active, friendly unit has been selected, then move the
     -- friendly unit
-    if cur.unit.sel and cur.unit.sel.active and not cur.unit.sel.moved and
+    if cur.unitSel and cur.unitSel.active and not cur.unitSel.moved and
       Cell.open(cur.cellx, cur.celly, state) and
-      cur.unit.sel.radius:contains('mov', cur.cellx, cur.celly) then
+      cur.unitSel.radius:contains('mov', cur.cellx, cur.celly) then
       Info:set('move', 'unselect')
 
       if yes:once() then
         -- move the unit
-        cur.unit.sel:move(cur.cellx, cur.celly)
-        cur.unit.sel.radius.vis = false
-        cur.unit.sel.step = 0.001
+        cur.unitSel:move(cur.cellx, cur.celly)
+        cur.unitSel.radius.vis = false
+        cur.unitSel.step = 0.001
 
         -- deactivate all *other* units belonging to the player
         Units.deactivate(units, player.num)
-        cur.unit.sel:activate()
+        cur.unitSel:activate()
 
         -- enqueue animations
-        Seq:enqueue({Anim.trans(cur.unit.sel, cur.cellx, cur.celly)})
+        Seq:enqueue({Anim.trans(cur.unitSel, cur.cellx, cur.celly)})
 
         -- end the player's turn if the unit is exhausted
-        if cur.unit.sel.attacked or cur.unit.sel.stat.atk == 0 or
-          cur.unit.sel.stat.rng == 0 then
+        if cur.unitSel.attacked or cur.unitSel.stat.atk == 0 or
+          cur.unitSel.stat.rng == 0 then
           player:turnEnd(state)
           -- otherwise, show the attack radius
         else
-          cur.unit.sel.radius:update(cur.unit.sel, state, player.num)
+          cur.unitSel.radius:update(cur.unitSel, state, player.num)
         end
         return
       end
 
       -- ... but no unit has been selected, then show the "end turn" menu
-    elseif not cur.unit.sel then
+    elseif not cur.unitSel then
       Info:set('end turn', 'end turn')
       if yes:once() then
         Menus.TurnEnd:open(state)
@@ -198,10 +197,10 @@ function Human.battle.update(state, inputs)
   -- "Z"
   if no:once() then
     -- if a unit is selected, unselect it
-    if cur.unit.sel then
+    if cur.unitSel then
       -- unselect the unit if it is ours
-      cur.unit.sel:unselect()
-      cur.unit.sel = nil
+      cur.unitSel:unselect()
+      cur.unitSel = nil
       -- show the "end turn" menu
     else
       Menus.TurnEnd:open(state)

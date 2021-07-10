@@ -19,7 +19,7 @@ function Menus.Target:update(state, inputs)
 
   -- reclaim tokens
   local player, stage = state.player, state.stage
-  local sel, units = player.cursor.unit.sel, stage.units
+  local sel, units = player.cursor.unitSel, stage.units
 
   -- cancel the balance and close the menu
   if inputs.no:once() then

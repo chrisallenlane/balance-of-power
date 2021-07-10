@@ -7,9 +7,7 @@ function Cursor:new()
     celly = 0,
 
     -- the currently selected unit
-    -- TODO: remove the `unit` wrapper if I never add additional properties
-    -- TODO: possibly move this to player.unitSelected or something
-    unit = {sel = nil},
+    unitSel = nil,
 
     -- is the cursor visible?
     vis = true,
