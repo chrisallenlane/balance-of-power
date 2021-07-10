@@ -32,7 +32,6 @@ function Human.battle.update(state, inputs)
 
           -- TODO: move into `select` logic
           unitHov.radius:update(unitHov, state, player.num)
-          return
         end
 
         -- ... and is selected ...
@@ -43,7 +42,6 @@ function Human.battle.update(state, inputs)
           Info:set('balance', 'unselect', unitHov)
           if yes:once() then
             Menus.Balance:open(cur.unitSel, idx, state)
-            return
           end
 
           -- ... and has moved but not attacked, allow an undo move
@@ -51,9 +49,7 @@ function Human.battle.update(state, inputs)
           Info:set('end turn', 'cancel', unitHov)
           if yes:once() then
             Menus.TurnEnd:open(state)
-            return
-          end
-          if no:once() then
+          elseif no:once() then
             cur.unitSel:unmove(state)
 
             -- refresh all units on this unit's team
@@ -66,7 +62,6 @@ function Human.battle.update(state, inputs)
             Seq:enqueue(
               {Anim.trans(cur.unitSel, cur.unitSel.cellx, cur.unitSel.celly)}
             )
-            return
           end
         end
       end
@@ -85,7 +80,6 @@ function Human.battle.update(state, inputs)
             unitHov.step = 0.005
             -- draw the radii for the enemy player
             unitHov.radius:update(unitHov, state, player.num == 2 and 1 or 2)
-            return
           end
 
           -- ... and the enemy's radii are visible, then hide the radii
@@ -95,7 +89,6 @@ function Human.battle.update(state, inputs)
             -- decrease the unit rotation speed
             unitHov.step = 0.001
             unitHov.radius.vis = false
-            return
           end
         end
 
@@ -106,10 +99,7 @@ function Human.battle.update(state, inputs)
         if cur.unitSel.radius:contains('atk', unitHov.cellx, unitHov.celly) and
           not cur.unitSel.attacked then
           Info:set('attack', 'unselect', unitHov)
-          if yes:once() then
-            Menus.Target:open(unitHov, state)
-            return
-          end
+          if yes:once() then Menus.Target:open(unitHov, state) end
 
           -- if the enemy unit is within the selected unit's danger radius, then automatically move and attack
         elseif cur.unitSel.radius:contains('dng', unitHov.cellx, unitHov.celly) and
@@ -138,8 +128,6 @@ function Human.battle.update(state, inputs)
                 end,
               }
             )
-
-            return
           end
         end
       end
@@ -176,16 +164,12 @@ function Human.battle.update(state, inputs)
         else
           cur.unitSel.radius:update(cur.unitSel, state, player.num)
         end
-        return
       end
 
       -- ... but no unit has been selected, then show the "end turn" menu
     elseif not cur.unitSel then
       Info:set('end turn', 'end turn')
-      if yes:once() then
-        Menus.TurnEnd:open(state)
-        return
-      end
+      if yes:once() then Menus.TurnEnd:open(state) end
     end
   end
 
@@ -200,6 +184,5 @@ function Human.battle.update(state, inputs)
     else
       Menus.TurnEnd:open(state)
     end
-    return
   end
 end
