@@ -161,7 +161,7 @@ end
 
 -- Unselect the Unit
 function Unit:unselect()
-  self.selected, self.step, self.radius.vis = false, 0.001, false
+  self.selected, self.radius.vis, self.step = false, false, 0.001
 end
 
 -- Return the first functional unit system
