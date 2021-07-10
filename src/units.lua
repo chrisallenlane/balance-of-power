@@ -16,11 +16,7 @@ function Units.teams(state)
 
   -- iterate over and sort the units
   for _, u in pairs(state.stage.units) do
-    if u.player == state.player.num then
-      add(friends, u)
-    else
-      add(foes, u)
-    end
+    add(u.player == state.player.num and friends or foes, u)
   end
 
   return friends, foes

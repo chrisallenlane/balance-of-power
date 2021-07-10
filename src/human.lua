@@ -85,11 +85,11 @@ function Human.battle.update(state, inputs)
           -- ... and the enemy's radii are visible, then hide the radii
         elseif unitHov.radius.vis == true then
           Info:set('hide radii', '', unitHov)
-          if yes:once() or no:once() then
-            -- decrease the unit rotation speed
-            unitHov.step = 0.001
-            unitHov.radius.vis = false
-          end
+
+          -- NB: we're cheating a bit here, because we don't `:select` enemy
+          -- units. That being this case, we can use `:unselect` to reset the
+          -- rotation speed and hide the radius.
+          if yes:once() or no:once() then unitHov:unselect() end
         end
 
         -- ... and if a friendly unit has been selected, and is active
