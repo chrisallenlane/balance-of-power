@@ -37,6 +37,9 @@ function Unit:new(u)
   -- is the unit active (ie, not exhausted)
   u.active = true
 
+  -- is the unit selected
+  u.selected = false
+
   -- cache the radii
   u.radius = Radius:new()
 
@@ -67,6 +70,9 @@ end
 
 -- Reverses the prior move
 function Unit:unmove(state)
+  -- unselect the unit
+  self:unselect()
+
   -- move the unit to its `from` position
   self.cellx, self.celly = self.fromx, self.fromy
 
@@ -75,12 +81,6 @@ function Unit:unmove(state)
 
   -- place the cursor back atop the unit
   state.player.cursor.cellx, state.player.cursor.celly = self.cellx, self.celly
-  -- refresh all units on this unit's team
-  for _, unit in pairs(state.stage.units) do
-    if unit.player == self.player then
-      unit.active, unit.attacked, unit.moved = true, false, false
-    end
-  end
 end
 
 -- Attack attacks a unit
@@ -152,6 +152,16 @@ end
 -- Deactivate the unit
 function Unit:deactivate()
   self.active = false
+end
+
+-- Select the Unit
+function Unit:select()
+  self.selected, self.step, self.radius.vis = true, 0.005, true
+end
+
+-- Unselect the Unit
+function Unit:unselect()
+  self.selected, self.step, self.radius.vis = false, 0.001, false
 end
 
 -- Return the first functional unit system

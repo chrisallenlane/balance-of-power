@@ -114,7 +114,10 @@ function Player:turnEnd(state)
   local cam = state.camera
 
   -- unselect the unit
-  state.player.cursor.unit.sel = nil
+  if state.player.cursor.unit.sel then
+    state.player.cursor.unit.sel:unselect()
+    state.player.cursor.unit.sel = nil
+  end
 
   -- refresh all units
   Units.refresh(state.stage.units)

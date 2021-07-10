@@ -8,11 +8,12 @@ Human = {battle = {}}
 function Human.battle.update(state, inputs)
   -- reclaim tokens
   local yes, no = inputs.yes, inputs.no
-  local cur, player, stage = state.player.cursor, state.player, state.stage
+  local cur, player, units = state.player.cursor, state.player,
+                             state.stage.units
 
   -- determine whether a unit is beneath the cursor
   -- TODO: deprecate `idx`
-  local unit, idx = Units.at(cur.cellx, cur.celly, stage.units)
+  local unit, idx = Units.at(cur.cellx, cur.celly, units)
 
   -- if there is a unit beneath the cursor...
   if unit then
@@ -22,24 +23,21 @@ function Human.battle.update(state, inputs)
     -- ... and the unit is a friend...
     if friend then
       --- ...and is active but not selected, then select it
-      if unit.active and not cur.unit.sel or cur.unit.sel ~= unit then
+      -- if unit.active and not cur.unit.sel or cur.unit.sel ~= unit then
+      if unit.active and not unit.selected then
         Info:set('select', '', unit)
         if yes:once() then
-          -- XXX: slow down a previously selected unit
-          if cur.unit.sel then cur.unit.sel.step = 0.001 end
+          if cur.unit.sel then cur.unit.sel:unselect() end
           cur.unit.sel = unit
-          cur.unit.sel.step = 0.005
-          -- hide all other friendly unit radii
-          for _, u in pairs(state.stage.units) do
-            if u.player == player.num then u.radius.vis = false end
-          end
+          cur.unit.sel:select()
 
+          -- TODO: move into `select` logic
           unit.radius:update(unit, state, player.num)
           return
         end
 
         -- ... and is selected ...
-      elseif cur.unit.sel and cur.unit.sel == unit then
+      elseif cur.unit.sel and cur.unit.sel.selected then
 
         -- ... and has not acted, then open the balance menu
         if not unit.moved and not unit.attacked and unit.active then
@@ -57,8 +55,15 @@ function Human.battle.update(state, inputs)
             return
           end
           if no:once() then
-            cur.unit.sel.radius.vis = false
             cur.unit.sel:unmove(state)
+
+            -- refresh all units on this unit's team
+            for _, u in pairs(units) do
+              if u.player == unit.player then
+                u.active, u.moved = true, false
+              end
+            end
+
             Seq:enqueue(
               {
                 Anim.trans(cur.unit.sel, cur.unit.sel.cellx, cur.unit.sel.celly),
@@ -127,7 +132,7 @@ function Human.battle.update(state, inputs)
             cur.unit.sel.radius:update(cur.unit.sel, state, player.num)
 
             -- deactivate all *other* units belonging to the player
-            Units.deactivate(stage.units, player.num)
+            Units.deactivate(units, player.num)
             cur.unit.sel:activate()
 
             -- enqueue animations
@@ -163,7 +168,7 @@ function Human.battle.update(state, inputs)
         cur.unit.sel.step = 0.001
 
         -- deactivate all *other* units belonging to the player
-        Units.deactivate(stage.units, player.num)
+        Units.deactivate(units, player.num)
         cur.unit.sel:activate()
 
         -- enqueue animations
@@ -195,8 +200,7 @@ function Human.battle.update(state, inputs)
     -- if a unit is selected, unselect it
     if cur.unit.sel then
       -- unselect the unit if it is ours
-      cur.unit.sel.radius.vis = false
-      cur.unit.sel.step = 0.001
+      cur.unit.sel:unselect()
       cur.unit.sel = nil
       -- show the "end turn" menu
     else
