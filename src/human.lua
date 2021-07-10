@@ -146,8 +146,6 @@ function Human.battle.update(state, inputs)
       if yes:once() then
         -- move the unit
         cur.unitSel:move(cur.cellx, cur.celly)
-        cur.unitSel.radius.vis = false
-        cur.unitSel.step = 0.001
 
         -- deactivate all *other* units belonging to the player
         Units.deactivate(units, player.num)
