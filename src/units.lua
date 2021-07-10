@@ -85,7 +85,7 @@ end
 -- deactivate all units
 function Units.deactivate(units, player)
   for _, unit in pairs(units) do
-    if unit.player == player then unit:deactivate() end
+    if unit.player == player then unit.active = false end
   end
 end
 

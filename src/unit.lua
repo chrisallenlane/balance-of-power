@@ -144,16 +144,6 @@ function Unit:repair()
   end
 end
 
--- Activate the unit
-function Unit:activate()
-  self.active = true
-end
-
--- Deactivate the unit
-function Unit:deactivate()
-  self.active = false
-end
-
 -- Select the Unit
 function Unit:select()
   self.selected, self.step, self.radius.vis = true, 0.005, true

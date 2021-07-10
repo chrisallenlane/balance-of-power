@@ -38,7 +38,7 @@ function Menus.Target:update(state, inputs)
 
     -- deactivate all *other* units belonging to the player
     Units.deactivate(units, player.num)
-    sel:activate()
+    sel.active = true
 
     -- attack the target and enqeue the resultant animations
     Seq:enqueue(Player.attack(sel, self.unit, self.choices[self.sel], state))

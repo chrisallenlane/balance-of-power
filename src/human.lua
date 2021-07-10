@@ -117,7 +117,7 @@ function Human.battle.update(state, inputs)
 
             -- deactivate all *other* units belonging to the player
             Units.deactivate(units, player.num)
-            cur.unitSel:activate()
+            cur.unitSel.active = true
 
             -- enqueue animations
             Seq:enqueue(
@@ -149,7 +149,7 @@ function Human.battle.update(state, inputs)
 
         -- deactivate all *other* units belonging to the player
         Units.deactivate(units, player.num)
-        cur.unitSel:activate()
+        cur.unitSel.active = true
 
         -- enqueue animations
         Seq:enqueue({Anim.trans(cur.unitSel, cur.cellx, cur.celly)})
