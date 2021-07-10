@@ -37,15 +37,6 @@ function Cursor:update(stage, inputs)
   end
 end
 
--- TODO: this method is gross
--- TODO: move this into unit state
--- Return true if `unit` unit is selected, or true if any unit is selected
--- otherwise
-function Cursor:selected(unit)
-  if unit then return self.unit.sel and (self.unit.sel == unit) end
-  return self.unit.sel
-end
-
 -- render the cursor
 -- NB: if I become desperate tokens, I can eliminate the cursor "throb"
 function Cursor:draw(state)

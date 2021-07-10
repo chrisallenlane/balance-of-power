@@ -21,9 +21,8 @@ function Human.battle.update(state, inputs)
 
     -- ... and the unit is a friend...
     if friend then
-
       --- ...and is active but not selected, then select it
-      if not cur:selected(unit) and unit.active then
+      if unit.active and not cur.unit.sel or cur.unit.sel ~= unit then
         Info:set('select', '', unit)
         if yes:once() then
           -- XXX: slow down a previously selected unit
@@ -40,7 +39,7 @@ function Human.battle.update(state, inputs)
         end
 
         -- ... and is selected ...
-      elseif cur:selected() then
+      elseif cur.unit.sel and cur.unit.sel == unit then
 
         -- ... and has not acted, then open the balance menu
         if not unit.moved and not unit.attacked and unit.active then
@@ -77,7 +76,7 @@ function Human.battle.update(state, inputs)
     elseif not friend then
 
       -- ... and if no friendly unit has been selected ...
-      if not cur:selected() then
+      if not cur.unit.sel then
 
         -- ... and the enemy's radii are invisible, then show the radii
         if unit.radius.vis == false then
@@ -102,7 +101,7 @@ function Human.battle.update(state, inputs)
         end
 
         -- ... and if a friendly unit has been selected, and is active
-      elseif cur:selected() and cur.unit.sel.active then
+      elseif cur.unit.sel and cur.unit.sel.active then
 
         -- if the enemy unit is within the selected unit's attack radius, then attack
         if cur.unit.sel.radius:contains('atk', unit.cellx, unit.celly) and
@@ -152,7 +151,7 @@ function Human.battle.update(state, inputs)
 
     -- ... but an active, friendly unit has been selected, then move the
     -- friendly unit
-    if cur:selected() and cur.unit.sel.active and not cur.unit.sel.moved and
+    if cur.unit.sel and cur.unit.sel.active and not cur.unit.sel.moved and
       Cell.open(cur.cellx, cur.celly, state) and
       cur.unit.sel.radius:contains('mov', cur.cellx, cur.celly) then
       Info:set('move', 'unselect')
@@ -182,7 +181,7 @@ function Human.battle.update(state, inputs)
       end
 
       -- ... but no unit has been selected, then show the "end turn" menu
-    elseif not cur:selected() then
+    elseif not cur.unit.sel then
       Info:set('end turn', 'end turn')
       if yes:once() then
         Menus.TurnEnd:open(state)
@@ -194,7 +193,7 @@ function Human.battle.update(state, inputs)
   -- "Z"
   if no:once() then
     -- if a unit is selected, unselect it
-    if cur:selected() then
+    if cur.unit.sel then
       -- unselect the unit if it is ours
       cur.unit.sel.radius.vis = false
       cur.unit.sel.step = 0.001
