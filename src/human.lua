@@ -36,10 +36,10 @@ function Human.battle.update(state, inputs)
         end
 
         -- ... and is selected ...
-      elseif cur.unitSel and cur.unitSel.selected then
+      elseif cur.unitSel and cur.unitSel.selected and not unitHov.attacked then
 
         -- ... and has not acted, then open the balance menu
-        if not unitHov.moved and not unitHov.attacked and unitHov.active then
+        if unitHov.active and not unitHov.moved then
           Info:set('balance', 'unselect', unitHov)
           if yes:once() then
             Menus.Balance:open(cur.unitSel, idx, state)
@@ -47,7 +47,7 @@ function Human.battle.update(state, inputs)
           end
 
           -- ... and has moved but not attacked, allow an undo move
-        elseif unitHov.moved and not unitHov.attacked then
+        elseif unitHov.moved then
           Info:set('end turn', 'cancel', unitHov)
           if yes:once() then
             Menus.TurnEnd:open(state)
