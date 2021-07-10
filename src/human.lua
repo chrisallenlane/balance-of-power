@@ -13,25 +13,25 @@ function Human.battle.update(state, inputs)
 
   -- determine whether a unit is beneath the cursor
   -- TODO: deprecate `idx`
-  local unit, idx = Units.at(cur.cellx, cur.celly, units)
+  local unitHov, idx = Units.at(cur.cellx, cur.celly, units)
 
   -- if there is a unit beneath the cursor...
-  if unit then
+  if unitHov then
     -- is the unit a friend?
-    local friend = unit.player == player.num
+    local friend = unitHov.player == player.num
 
     -- ... and the unit is a friend...
     if friend then
       --- ...and is active but not selected, then select it
-      if unit.active and not unit.selected then
-        Info:set('select', '', unit)
+      if unitHov.active and not unitHov.selected then
+        Info:set('select', '', unitHov)
         if yes:once() then
           if cur.unitSel then cur.unitSel:unselect() end
-          cur.unitSel = unit
+          cur.unitSel = unitHov
           cur.unitSel:select()
 
           -- TODO: move into `select` logic
-          unit.radius:update(unit, state, player.num)
+          unitHov.radius:update(unitHov, state, player.num)
           return
         end
 
@@ -39,16 +39,16 @@ function Human.battle.update(state, inputs)
       elseif cur.unitSel and cur.unitSel.selected then
 
         -- ... and has not acted, then open the balance menu
-        if not unit.moved and not unit.attacked and unit.active then
-          Info:set('balance', 'unselect', unit)
+        if not unitHov.moved and not unitHov.attacked and unitHov.active then
+          Info:set('balance', 'unselect', unitHov)
           if yes:once() then
             Menus.Balance:open(cur.unitSel, idx, state)
             return
           end
 
           -- ... and has moved but not attacked, allow an undo move
-        elseif unit.moved and not unit.attacked then
-          Info:set('end turn', 'cancel', unit)
+        elseif unitHov.moved and not unitHov.attacked then
+          Info:set('end turn', 'cancel', unitHov)
           if yes:once() then
             Menus.TurnEnd:open(state)
             return
@@ -58,18 +58,13 @@ function Human.battle.update(state, inputs)
 
             -- refresh all units on this unit's team
             for _, u in pairs(units) do
-              if u.player == unit.player then
+              if u.player == unitHov.player then
                 u.active, u.moved = true, false
               end
             end
 
             Seq:enqueue(
-              {
-                Anim.trans(cur.unitSel, cur.unitSel.cellx, cur.unitSel.celly),
-                function()
-                  cur.unitSel = nil
-                end,
-              }
+              {Anim.trans(cur.unitSel, cur.unitSel.cellx, cur.unitSel.celly)}
             )
             return
           end
@@ -83,23 +78,23 @@ function Human.battle.update(state, inputs)
       if not cur.unitSel then
 
         -- ... and the enemy's radii are invisible, then show the radii
-        if unit.radius.vis == false then
-          Info:set('view radii', '', unit)
+        if unitHov.radius.vis == false then
+          Info:set('view radii', '', unitHov)
           if yes:once() then
             -- increase the unit rotation speed
-            unit.step = 0.005
+            unitHov.step = 0.005
             -- draw the radii for the enemy player
-            unit.radius:update(unit, state, player.num == 2 and 1 or 2)
+            unitHov.radius:update(unitHov, state, player.num == 2 and 1 or 2)
             return
           end
 
           -- ... and the enemy's radii are visible, then hide the radii
-        elseif unit.radius.vis == true then
-          Info:set('hide radii', '', unit)
+        elseif unitHov.radius.vis == true then
+          Info:set('hide radii', '', unitHov)
           if yes:once() or no:once() then
             -- decrease the unit rotation speed
-            unit.step = 0.001
-            unit.radius.vis = false
+            unitHov.step = 0.001
+            unitHov.radius.vis = false
             return
           end
         end
@@ -108,22 +103,22 @@ function Human.battle.update(state, inputs)
       elseif cur.unitSel and cur.unitSel.active then
 
         -- if the enemy unit is within the selected unit's attack radius, then attack
-        if cur.unitSel.radius:contains('atk', unit.cellx, unit.celly) and
+        if cur.unitSel.radius:contains('atk', unitHov.cellx, unitHov.celly) and
           not cur.unitSel.attacked then
-          Info:set('attack', 'unselect', unit)
+          Info:set('attack', 'unselect', unitHov)
           if yes:once() then
-            Menus.Target:open(unit, state)
+            Menus.Target:open(unitHov, state)
             return
           end
 
           -- if the enemy unit is within the selected unit's danger radius, then automatically move and attack
-        elseif cur.unitSel.radius:contains('dng', unit.cellx, unit.celly) and
+        elseif cur.unitSel.radius:contains('dng', unitHov.cellx, unitHov.celly) and
           not cur.unitSel.attacked and not cur.unitSel.moved then
-          Info:set('attack', 'unselect', unit)
+          Info:set('attack', 'unselect', unitHov)
           if yes:once() then
             -- find a cell from which the attacker may attack the target
             -- TODO: sort by best defense iff token space is available
-            local vantage = Radius.vantage(cur.unitSel, unit, state)
+            local vantage = Radius.vantage(cur.unitSel, unitHov, state)
             local cell = vantage:rand('atk', state)
 
             -- move the unit
@@ -139,7 +134,7 @@ function Human.battle.update(state, inputs)
               {
                 Anim.trans(cur.unitSel, cell.x, cell.y),
                 function()
-                  Menus.Target:open(unit, state)
+                  Menus.Target:open(unitHov, state)
                 end,
               }
             )
@@ -151,7 +146,7 @@ function Human.battle.update(state, inputs)
     end
 
     -- if there is no unit is beneath the cursor...
-  elseif not unit then
+  elseif not unitHov then
 
     -- ... but an active, friendly unit has been selected, then move the
     -- friendly unit
