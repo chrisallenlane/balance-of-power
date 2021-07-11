@@ -47,20 +47,6 @@ function Stage.load(num, stages, screens, state)
 
   -- hide the info bar
   Info:set('', '', {})
-
-  -- play the opening dialogue if provided (for single-player games only)
-  if state.stage.talk and state.stage.talk.start and state.players[2].cpu then
-    state.seq:add(
-      {
-        -- TODO: this should fire not on stage load, but after the player
-        -- clicks through the interstitial screen
-        Anim.delay(90),
-        function()
-          state.talk:say(state.stage.talk.start, state)
-        end,
-      }
-    )
-  end
 end
 
 -- advance to the next stage
