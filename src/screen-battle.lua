@@ -90,8 +90,6 @@ end
 
 -- draw the battle screen
 function Screens.battle.draw(state)
-  cls()
-
   -- move the camera
   state.camera:draw()
 

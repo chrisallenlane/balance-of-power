@@ -18,7 +18,6 @@ function Screens.intr.update(state, inputs)
 end
 
 function Screens.intr.draw(state)
-  cls()
   String.centerX(state.stage.intr.head, 41, 7, state)
   String.centerX(state.stage.intr.body, 55, 7, state)
   camera(state.camera.pxx, state.camera.pxy)

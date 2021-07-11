@@ -49,5 +49,6 @@ function _update60()
 end
 
 function _draw()
+  cls()
   State.screen.draw(State)
 end
