@@ -24,12 +24,12 @@ Menus = {}
 
 -- build the `State` object (order dependent)
 #include build/camera.lua
-#include src/cursor.lua
+#include build/cursor.lua
 #include build/player.lua
 #include build/screens.lua
 #include build/seq.lua
-#include src/talk.lua
-#include src/state.lua
+#include build/talk.lua
+#include build/state.lua
 
 -- load assets (order independent)
 #include build/anim.lua
@@ -47,7 +47,7 @@ Menus = {}
 #include build/menu-turn-end.lua
 #include build/menu.lua
 #include build/radius.lua
-#include src/screen-battle.lua
+#include build/screen-battle.lua
 #include build/screen-defeat.lua
 #include build/screen-intr.lua
 #include build/screen-title.lua
@@ -61,7 +61,7 @@ Menus = {}
 #include build/stages.lua
 
 -- load main
-#include src/main.lua
+#include build/main.lua
 
 -- media assets
 __gfx__

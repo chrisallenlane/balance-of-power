@@ -1,19 +1,20 @@
 Priority:
+  - Feat: integrate sound scaffolding
+  - Feat: stage clear talk
   - Refactor: deprecate `Unit.clone`
   - Refactor: refactor battle loop
   - Refactor: remove `Unit` "index" (`idx`) in all contexts
 
   - Feat: Simple AI aggression
     - test map
-
   - Docs: add a license
   - Docs: update the README
-  - Feat: stage clear talk
-  - Fix: talk happens immediately on non-initial stage load
   - Refactor: Battle: control optimizations
   - Refactor: create "clipboard" state object
+  - Refactor: stage serialization token efficiency
 
 Backlog:
+  - Feat: 2 player interstitial text
   - Feat: Animation: "wipe" animation?
   - Feat: Art: title, credits creen, "game over" screen
   - Feat: CPU: implement 1-player enemy AI
