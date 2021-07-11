@@ -127,7 +127,7 @@ function Player:turnEnd(state)
 
   -- center the screen on the specified coordinates
   local cur = state.player.cursor
-  Seq:enqueue(
+  state.seq:add(
     {
       Anim.delay(30),
       function()

@@ -53,12 +53,12 @@ function CPU.battle.update(state)
     player.cursor.cellx, player.cursor.celly = cell.x, cell.y
 
     -- enqueue the animations
-    Seq:enqueue(
+    state.seq:add(
       {Anim.delay(30), Anim.trans(unit, cell.x, cell.y), Anim.delay(15)}
     )
 
     -- attack the target and enqeue the resultant animations
-    Seq:enqueue(Player.attack(unit, target, 'atk', state))
+    state.seq:add(Player.attack(unit, target, 'atk', state))
 
     -- otherwise, make a valid random move
   else
@@ -69,7 +69,7 @@ function CPU.battle.update(state)
       unit:move(cell.x, cell.y)
 
       -- unqueue the animations
-      Seq:enqueue({Anim.delay(30), Anim.trans(unit, cell.x, cell.y)})
+      state.seq:add({Anim.delay(30), Anim.trans(unit, cell.x, cell.y)})
 
       -- record the CPU's (fake) cursor location
       player.cursor.cellx, player.cursor.celly = cell.x, cell.y

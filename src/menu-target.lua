@@ -41,7 +41,7 @@ function Menus.Target:update(state, inputs)
     sel.active = true
 
     -- attack the target and enqeue the resultant animations
-    Seq:enqueue(Player.attack(sel, self.unit, self.choices[self.sel], state))
+    state.seq:add(Player.attack(sel, self.unit, self.choices[self.sel], state))
   end
 end
 

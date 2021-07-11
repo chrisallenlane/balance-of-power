@@ -27,6 +27,7 @@ Menus = {}
 #include src/cursor.lua
 #include build/player.lua
 #include build/screens.lua
+#include build/seq.lua
 #include src/talk.lua
 #include src/state.lua
 
@@ -51,7 +52,6 @@ Menus = {}
 #include build/screen-intr.lua
 #include build/screen-title.lua
 #include build/screen-victory.lua
-#include build/seq.lua
 #include build/stage.lua
 #include build/string.lua
 #include build/unit.lua

@@ -59,7 +59,7 @@ function Human.battle.update(state, inputs)
               end
             end
 
-            Seq:enqueue(
+            state.seq:add(
               {Anim.trans(cur.unitSel, cur.unitSel.cellx, cur.unitSel.celly)}
             )
           end
@@ -120,7 +120,7 @@ function Human.battle.update(state, inputs)
             cur.unitSel.active = true
 
             -- enqueue animations
-            Seq:enqueue(
+            state.seq:add(
               {
                 Anim.trans(cur.unitSel, cell.x, cell.y),
                 function()
@@ -152,7 +152,7 @@ function Human.battle.update(state, inputs)
         cur.unitSel.active = true
 
         -- enqueue animations
-        Seq:enqueue({Anim.trans(cur.unitSel, cur.cellx, cur.celly)})
+        state.seq:add({Anim.trans(cur.unitSel, cur.cellx, cur.celly)})
 
         -- end the player's turn if the unit is exhausted
         if cur.unitSel.attacked or cur.unitSel.stat.atk == 0 or

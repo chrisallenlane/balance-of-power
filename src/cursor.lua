@@ -39,7 +39,7 @@ end
 -- NB: if I become desperate tokens, I can eliminate the cursor "throb"
 function Cursor:draw(state)
   -- end early if the cursor should not be visible
-  if not self.vis or not Seq:done() or state.talk.vis then return end
+  if not self.vis or #state.seq.queue > 0 or state.talk.vis then return end
 
   -- draw the sprite
   spr(state.frame % 120 <= 59 and 1 or 2, self.cellx * 8, self.celly * 8)

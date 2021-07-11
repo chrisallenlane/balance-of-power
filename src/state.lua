@@ -25,6 +25,9 @@ State = {
   -- the talk screen
   talk = Talk:new(),
 
+  -- animation sequence queue
+  seq = Seq:new(),
+
   -- the current stage
   stage = {},
 

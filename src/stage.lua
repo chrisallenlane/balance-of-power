@@ -43,14 +43,14 @@ function Stage.load(num, stages, screens, state)
   state.screen = screens.intr
 
   -- clear enqueued animation sequences
-  Seq:clear()
+  state.seq.queue = {}
 
   -- hide the info bar
   Info:set('', '', {})
 
   -- play the opening dialogue if provided (for single-player games only)
   if state.stage.talk and state.stage.talk.start and state.players[2].cpu then
-    Seq:enqueue(
+    state.seq:add(
       {
         -- TODO: this should fire not on stage load, but after the player
         -- clicks through the interstitial screen

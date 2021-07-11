@@ -61,7 +61,7 @@ function Units.repair(state)
     -- if the unit rests on a repair cell, repair the unit
     if unit.player == state.player.num and repair >= 1 and unit.pwr < 10 then
       -- play the repair animation, and then heal the unit
-      Seq:enqueue(
+      state.seq:add(
         {
           Anim.delay(30),
           function()
