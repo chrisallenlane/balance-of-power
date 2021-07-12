@@ -1,19 +1,17 @@
 Priority:
   - Feat: integrate sound scaffolding
+  - Feat: simple AI aggression; test-map
   - Feat: stage clear talk
+  - Refactor: create "clipboard" state object
   - Refactor: deprecate `Unit.clone`
+  - Refactor: merge `radius:update` into move and attack
   - Refactor: refactor battle loop
   - Refactor: remove `Unit` "index" (`idx`) in all contexts
-
-  - Feat: Simple AI aggression
-    - test map
-  - Docs: add a license
-  - Docs: update the README
-  - Refactor: Battle: control optimizations
-  - Refactor: create "clipboard" state object
   - Refactor: stage serialization token efficiency
 
 Backlog:
+  - Docs: add a license
+  - Docs: update the README
   - Feat: 2 player interstitial text
   - Feat: Animation: "wipe" animation?
   - Feat: Art: title, credits creen, "game over" screen
@@ -26,3 +24,5 @@ Backlog:
   - Feat: elongate radii during dogfights
   - Feat: turn-based talk triggers
   - Feat: util cart
+  - Refactor: bit-flags for querying unit state?
+  - Refactor: Battle: control optimizations
