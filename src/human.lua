@@ -26,6 +26,7 @@ function Human.battle.update(state, inputs)
       if unitHov.active and not unitHov.selected then
         Info:set('select', '', unitHov)
         if yes:once() then
+          sfx(0, -1, 0, 0)
           if cur.unitSel then cur.unitSel:unselect() end
           cur.unitSel = unitHov
           cur.unitSel:select()
@@ -41,6 +42,7 @@ function Human.battle.update(state, inputs)
         if unitHov.active and not unitHov.moved then
           Info:set('balance', 'unselect', unitHov)
           if yes:once() then
+            sfx(0, -1, 0, 0)
             Menus.Balance:open(cur.unitSel, idx, state)
           end
 
@@ -48,8 +50,11 @@ function Human.battle.update(state, inputs)
         elseif unitHov.moved then
           Info:set('end turn', 'cancel', unitHov)
           if yes:once() then
+            sfx(0, -1, 0, 0)
             Menus.TurnEnd:open(state)
           elseif no:once() then
+            sfx(0, -1, 0, 0)
+
             cur.unitSel:unmove(state)
 
             -- refresh all units on this unit's team
@@ -76,6 +81,7 @@ function Human.battle.update(state, inputs)
         if unitHov.radius.vis == false then
           Info:set('view radii', '', unitHov)
           if yes:once() then
+            sfx(0, -1, 0, 0)
             -- increase the unit rotation speed
             unitHov.step = 0.005
             -- draw the radii for the enemy player
@@ -89,7 +95,10 @@ function Human.battle.update(state, inputs)
           -- NB: we're cheating a bit here, because we don't `:select` enemy
           -- units. That being this case, we can use `:unselect` to reset the
           -- rotation speed and hide the radius.
-          if yes:once() or no:once() then unitHov:unselect() end
+          if yes:once() or no:once() then
+            sfx(0, -1, 0, 0)
+            unitHov:unselect()
+          end
         end
 
         -- ... and if a friendly unit has been selected, and is active
@@ -99,13 +108,17 @@ function Human.battle.update(state, inputs)
         if cur.unitSel.radius:contains('atk', unitHov.cellx, unitHov.celly) and
           not cur.unitSel.attacked then
           Info:set('attack', 'unselect', unitHov)
-          if yes:once() then Menus.Target:open(unitHov, state) end
+          if yes:once() then
+            sfx(0, -1, 0, 0)
+            Menus.Target:open(unitHov, state)
+          end
 
           -- if the enemy unit is within the selected unit's danger radius, then automatically move and attack
         elseif cur.unitSel.radius:contains('dng', unitHov.cellx, unitHov.celly) and
           not cur.unitSel.attacked and not cur.unitSel.moved then
           Info:set('attack', 'unselect', unitHov)
           if yes:once() then
+            sfx(0, -1, 0, 0)
             -- find a cell from which the attacker may attack the target
             -- TODO: sort by best defense iff token space is available
             local vantage = Radius.vantage(cur.unitSel, unitHov, state)
@@ -144,6 +157,8 @@ function Human.battle.update(state, inputs)
       Info:set('move', 'unselect')
 
       if yes:once() then
+        sfx(0, -1, 0, 0)
+
         -- move the unit
         cur.unitSel:move(cur.cellx, cur.celly)
 
@@ -167,12 +182,17 @@ function Human.battle.update(state, inputs)
       -- ... but no unit has been selected, then show the "end turn" menu
     elseif not cur.unitSel then
       Info:set('end turn', 'end turn')
-      if yes:once() then Menus.TurnEnd:open(state) end
+      if yes:once() then
+        sfx(0, -1, 0, 0)
+        Menus.TurnEnd:open(state)
+      end
     end
   end
 
   -- "Z"
   if no:once() then
+    sfx(0, -1, 0, 0)
+
     -- if a unit is selected, unselect it
     if cur.unitSel then
       -- unselect the unit if it is ours

@@ -25,6 +25,9 @@ function Screens.battle.update(state, inputs)
         -- show player 1 "victory" banner for 300 frames, then advance to the next stage
         seq:add(
           {
+            function()
+              sfx(0, -1, 0, 0)
+            end,
             Banner:display(1, 'victory', 300),
             function()
               -- TODO: display all `clear` talk boxes
@@ -39,6 +42,9 @@ function Screens.battle.update(state, inputs)
         -- show player 1 "defeat" banner for 300 frames, then show the "defeat" screen
         seq:add(
           {
+            function()
+              sfx(0, -1, 0, 0)
+            end,
             Banner:display(2, 'defeat', 300),
             function()
               state.screen = Screens.defeat
@@ -52,6 +58,9 @@ function Screens.battle.update(state, inputs)
       -- display the winning player's banner, then go to the title screen
       seq:add(
         {
+          function()
+            sfx(0, -1, 0, 0)
+          end,
           Banner:display(victor, 'player ' .. victor .. ' victory', 300),
           function()
             state.screen = Screens.title

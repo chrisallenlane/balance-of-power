@@ -64,12 +64,15 @@ end
 
 -- Move moves a unit
 function Unit:move(x, y)
+  sfx(0, -1, 0, 0)
   self.fromx, self.fromy = self.cellx, self.celly
   self.cellx, self.celly, self.moved = x, y, true
 end
 
 -- Reverses the prior move
 function Unit:unmove(state)
+  sfx(0, -1, 0, 0)
+
   -- unselect the unit
   self:unselect()
 
@@ -133,6 +136,8 @@ end
 
 -- Repair a unit
 function Unit:repair()
+  sfx(0, -1, 0, 0)
+
   -- NB: don't iterate over `self.stats` here. We want to iterate over these
   -- systems in this order
   for _, stat in ipairs({'atk', 'rng', 'mov'}) do

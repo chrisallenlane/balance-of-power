@@ -104,9 +104,15 @@ Explode `unit`
 @return done `true` if the animation is complete; `false` otherwise
 ]] --
 function Anim.explode(x, y, state)
-  local frame = 0
+  local frame, sound = 0, false
 
   return function()
+    -- play the sound effect exactly one time
+    if not sound then
+      sfx(0, -1, 0, 0)
+      sound = true
+    end
+
     -- end the animation after the specified number of frames
     if frame == 12 then return true end
 

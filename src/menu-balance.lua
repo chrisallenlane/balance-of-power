@@ -24,6 +24,7 @@ function Menus.Balance:update(state, inputs)
 
   -- cancel the balance and close the menu
   if inputs.no:once() then
+    sfx(0, -1, 0, 0)
     state.stage.units[self.idx] = self.orig
     state.menu, self.unit, self.orig = nil, nil, nil
     return
@@ -42,11 +43,11 @@ function Menus.Balance:update(state, inputs)
 
   -- adjust power levels
   if inputs.left:rep() and sys >= 1 then
-    sfx(0, -1, 8, 8)
+    sfx(8, -1, 8, 8)
     unit.stat[stat] = sys - 1
     radius:update(unit, state, player.num)
   elseif inputs.right:rep() and sys < 5 and alloc < unit.pwr then
-    sfx(0, -1, 0, 8)
+    sfx(8, -1, 0, 8)
     unit.stat[stat] = sys + 1
     radius:update(unit, state, player.num)
   end
@@ -57,13 +58,17 @@ function Menus.Balance:update(state, inputs)
   if self:changed() then
     Info:set('confirm', 'cancel', unit)
     if inputs.yes:once() then
+      sfx(0, -1, 0, 0)
       stage.units[self.idx] = Unit.clone(unit)
       player:turnEnd(state)
       self.unit, state.menu = nil, nil
     end
   else
     Info:set('cancel', 'cancel', unit)
-    if inputs.yes:once() then self.unit, state.menu = nil, nil end
+    if inputs.yes:once() then
+      sfx(0, -1, 0, 0)
+      self.unit, state.menu = nil, nil
+    end
   end
 end
 

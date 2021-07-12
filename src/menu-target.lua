@@ -21,8 +21,9 @@ function Menus.Target:update(state, inputs)
   local player, stage = state.player, state.stage
   local sel, units = player.cursor.unitSel, stage.units
 
-  -- cancel the balance and close the menu
+  -- close the targeting menu
   if inputs.no:once() then
+    sfx(0, -1, 0, 0)
     self.unit, state.menu = nil, nil
     return
   end
@@ -33,6 +34,7 @@ function Menus.Target:update(state, inputs)
   -- accept the target and attack
   -- TODO DRY: this should all be moved "up" a level
   if inputs.yes:once() then
+    sfx(0, -1, 0, 0)
     -- hide this menu
     state.menu = nil
 

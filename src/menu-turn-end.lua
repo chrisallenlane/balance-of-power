@@ -20,11 +20,13 @@ function Menus.TurnEnd:update(state, inputs)
 
   -- selection: "yes"
   if inputs.yes:once() and self.sel == 1 then
+    sfx(0, -1, 0, 0)
     state.player:turnEnd(state)
     state.menu = nil
 
     -- selection: "no"
   elseif inputs.no:once() or inputs.yes:once() and self.sel == 2 then
+    sfx(0, -1, 0, 0)
     state.menu = nil
   end
 end

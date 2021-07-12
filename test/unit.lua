@@ -1,3 +1,6 @@
+-- mock the Pico-8 `sfx` global function
+_G.sfx = function() end
+
 require('../src/radius')
 require('../src/unit')
 
