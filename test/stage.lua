@@ -1,8 +1,11 @@
+local stringx = require 'pl.stringx'
+
+_G.split = stringx.split
+_G.add = table.insert
+
 require('../src/radius')
 require('../src/stage')
 require('../src/unit')
-
-local stringx = require 'pl.stringx'
 
 describe(
   'stage', function()
@@ -37,38 +40,38 @@ describe(
         local wantFns = {
           function()
             return {
-              num = 1,
+              num = '1',
               intr = {head = 'stage 1', body = 'lorem ipsum dolor'},
-              camera = {cellx = 1, celly = 2},
-              cellx = 3,
-              celly = 4,
-              cellw = 5,
-              cellh = 6,
-              swap = {{1, 2}, {3, 4}},
+              camera = {cellx = '1', celly = '2'},
+              cellx = '3',
+              celly = '4',
+              cellw = '5',
+              cellh = '6',
+              swap = {{'1', '2'}, {'3', '4'}},
               units = {
-                Unit:new({player = 1, cellx = 7, celly = 8, id = 1}),
-                Unit:new({player = 1, cellx = 9, celly = 10, id = 2}),
-                Unit:new({player = 2, cellx = 11, celly = 12, id = 3}),
-                Unit:new({player = 2, cellx = 13, celly = 14, id = 4}),
+                Unit:new({player = '1', cellx = '7', celly = '8', id = 1}),
+                Unit:new({player = '1', cellx = '9', celly = '10', id = 2}),
+                Unit:new({player = '2', cellx = '11', celly = '12', id = 3}),
+                Unit:new({player = '2', cellx = '13', celly = '14', id = 4}),
               },
               talk = {start = {'foo bar'}, clear = {'baz bat'}},
             }
           end,
           function()
             return {
-              num = 2,
+              num = '2',
               intr = {head = 'stage 2', body = 'lorem ipsum dolor'},
-              camera = {cellx = 1, celly = 2},
-              cellx = 3,
-              celly = 4,
-              cellw = 5,
-              cellh = 6,
-              swap = {{1, 2}, {3, 4}},
+              camera = {cellx = '1', celly = '2'},
+              cellx = '3',
+              celly = '4',
+              cellw = '5',
+              cellh = '6',
+              swap = {{'1', '2'}, {'3', '4'}},
               units = {
-                Unit:new({player = 1, cellx = 7, celly = 8, id = 1}),
-                Unit:new({player = 1, cellx = 9, celly = 10, id = 2}),
-                Unit:new({player = 2, cellx = 11, celly = 12, id = 3}),
-                Unit:new({player = 2, cellx = 13, celly = 14, id = 4}),
+                Unit:new({player = '1', cellx = '7', celly = '8', id = 1}),
+                Unit:new({player = '1', cellx = '9', celly = '10', id = 2}),
+                Unit:new({player = '2', cellx = '11', celly = '12', id = 3}),
+                Unit:new({player = '2', cellx = '13', celly = '14', id = 4}),
               },
               talk = {start = {'foo bar'}, clear = {'baz bat'}},
             }

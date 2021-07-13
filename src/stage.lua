@@ -91,26 +91,22 @@ function Stage.palswap(state)
 end
 
 -- unserialize stage data
-function Stage.unserialize(serialized, spl, ad)
-  -- NB: the unit tests need this
-  spl = spl or split
-  ad = ad or add
-
+function Stage.unserialize(serialized)
   -- initialize a table of stage constructor functions
   local stages = {}
 
   -- stage rows are separated by a `&`
-  for _, stage in ipairs(spl(serialized, '&')) do
+  for _, stage in ipairs(split(serialized, '&')) do
     -- fields are separated by a `~`
-    local fields = spl(stage, '~')
+    local fields = split(stage, '~')
 
     -- unpack the "easy" object properties
     -- KLUDGE: should change the serialization format and remove this
-    local cell = Stage.unpack('x,y,w,h', fields[4], spl)
-    local cam = Stage.unpack('x,y', fields[3], spl)
+    local cell = Stage.unpack('x,y,w,h', fields[4])
+    local cam = Stage.unpack('x,y', fields[3])
     local obj = {
       num = fields[1],
-      intr = Stage.unpack('head,body', fields[2], spl),
+      intr = Stage.unpack('head,body', fields[2]),
       camera = {cellx = cam.x, celly = cam.y},
       cellh = cell.h,
       cellw = cell.w,
@@ -118,17 +114,17 @@ function Stage.unserialize(serialized, spl, ad)
       celly = cell.y,
       swap = {},
       units = {},
-      talk = {start = spl(fields[7], '@'), clear = spl(fields[8], '@')},
+      talk = {start = split(fields[7], '@'), clear = split(fields[8], '@')},
     }
 
     -- parse out swap data
-    local sd = spl(fields[5], '@')
-    for i = 1, #sd, 2 do ad(obj.swap, {sd[i], sd[i + 1]}) end
+    local sd = split(fields[5], '@')
+    for i = 1, #sd, 2 do add(obj.swap, {sd[i], sd[i + 1]}) end
 
     -- parse out unit data
-    local ud = spl(fields[6], '@')
+    local ud = split(fields[6], '@')
     for i = 1, #ud, 3 do
-      ad(
+      add(
         obj.units, Unit:new(
           {
             id = #obj.units + 1,
@@ -141,7 +137,7 @@ function Stage.unserialize(serialized, spl, ad)
     end
 
     -- create a constructor that returns the object
-    ad(
+    add(
       stages, function()
         return obj
       end
@@ -151,14 +147,11 @@ function Stage.unserialize(serialized, spl, ad)
   return stages
 end
 
-function Stage.unpack(keystr, field, spl)
-  -- NB: the unit tests need this
-  spl = spl or split
-
+function Stage.unpack(keystr, field)
   -- NB: specify the comma separator, or the unit-tests will fail
-  local keys, obj = spl(keystr, ','), {}
+  local keys, obj = split(keystr, ','), {}
 
-  for i, val in ipairs(spl(field, '@')) do obj[keys[i]] = val end
+  for i, val in ipairs(split(field, '@')) do obj[keys[i]] = val end
 
   return obj
 end
