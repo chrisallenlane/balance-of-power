@@ -31,6 +31,7 @@ describe(
               step = 0.001,
               rad = 4,
               spr = 1,
+              selected = false,
               radius = Radius:new(),
               stat = {atk = 3, mov = 4, rng = 3},
             }
